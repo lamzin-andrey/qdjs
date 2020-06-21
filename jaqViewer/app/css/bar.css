@@ -1,0 +1,40 @@
+
+.bar {
+	border: 1px solid gray;
+	height: 35px;
+	background-color: rgba(235, 253, 255, 0.7);
+}
+.bar-left {
+	float:left;
+	height: 35px;
+	width:20%;
+}
+.bar img.b{
+	width:24px;
+	margin-top:4px;
+}
+.left-button-first {margin-left:3px;}
+.left-button-second {margin-left:15px;}
+.bar-button-next {margin-left:10px;}
+
+.bar-middle {
+	float:right;
+	height: 35px;
+	width:60%;
+}
+.cnt-button-first {
+	
+}
+.bar-center {
+	width:130px;
+	margin:0 auto;
+}
+
+.bar-right {
+	float:right;
+	height: 35px;
+	width:20%;
+	text-align:right;
+}
+.rbar-button-next{margin-left:9px;}
+.right-button-last {margin-right:8px;}

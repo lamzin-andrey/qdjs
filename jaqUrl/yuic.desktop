@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=MoonPhase
+Exec=/home/andrey/hdata/programs/my/qdjs/jaqUrl/jaqUrl.sh
+Icon=games-solve
+Path=/home/andrey/hdata/programs/my/qdjs/jaqUrl
+Terminal=false
+StartupNotify=false
+Name[ru]=jaqUrl

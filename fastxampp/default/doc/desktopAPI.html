@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<title>Js functions</title>
+	<meta charset="utf-8"/>
+</head>
+
+<body>
+	<h4>Функции, доступные в JavaScript для взаимодействия с ОС</h4>
+
+<h5>Объекты</h5>
+На данный момент существуют объекты <b>PHP</b> <b>Qt</b>.
+
+<h5>Qt</h5>
+String Qt.appDir();
+Возвращает директорию, в которой лежит файл index.html приложения.
+
+Например, если ваш файл index.html лежит в /home/user/soft/js/gjs/myFirstApp  и вы запускаете ваше приложение  на выполнение командой
+gjs /home/user/soft/js/gjs/myFirstAp
+
+вызов Qt.appDir() вернет /home/user/soft/js/gjs/myFirstAp
+
+Qt.setLineDelimeter(String delimeter);
+String = Qt.getLineDelimeter(String);
+
+Позволяют заменить последовательность символов, использующихся для разделения строк.
+
+
+<h5>PHP</h5>
+<h6>Файлы</h6>
+PHP.file_put_contents(String path, String data, int flag = 0);
+Записывает строку data в файл path. 
+Вы можете использовать константу FILE_APPEND для добавления данных в существующий файл.
+
+Пример кода:
+Number PHP.file_put_contents(Qt.appDir() + '/output/file.txt', 'Hello, filesystem!'); //перезапишет файл
+PHP.file_put_contents(Qt.appDir() + '/output/file.txt', '\nЭто снова я!', FILE_APPEND); //Добавит строку в файл
+
+
+Boolean PHP.file_exists(String path);
+Boolean PHP.is_dir(String path);
+
+<h6>Файловая система</h6>
+Array PHP.scandir(String path);
+
+
+
+<h5>Атрибуты</h5>
+<table>
+	<tr>
+		<th>Атрибут</th>
+		<th>Значение</th>
+	</tr>
+	<tr>
+		<td>onlyTop</td>
+		<td>Показывать окно на переднем плане</td>
+	</tr>
+	<tr>
+		<td>noFrame</td>
+		<td>Показывать окно без рамки</td>
+	</tr>
+	<tr>
+		<td>fulScreen</td>
+		<td>Показывать окно без рамки и развернутым на весь экран</td>
+	</tr>
+</table>
+
+</body>
+
+</html>

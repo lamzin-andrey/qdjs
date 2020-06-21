@@ -1,0 +1,7 @@
+html, body {}
+body {padding:0px; margin:0px; width:100%;}
+.ds {/*background:url('./img/design.png') no-repeat; opacity: 0.5;*/ width:100%;}
+
+.view {max-width:90%;text-align:center;vertical-align:middle;}
+.view img {vertical-align:middle;}
+

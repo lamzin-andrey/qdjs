@@ -1,0 +1,6 @@
+append in file /etc/init.d/rc.local
+
+#brightness daemon start
+#/home/andrey/hdata/programs/my/qdjs/brightness/cpp/a.isp &
+/usr/local/bin/jaqbrid
+#/brigtness daemon start

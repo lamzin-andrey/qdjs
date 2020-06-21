@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=CapsLock
+Exec=/home/andrey/hdata/programs/my/qdjs/capslockstate/capslock.sh
+Icon=applications-education-science
+Path=/home/andrey/hdata/programs/my/qdjs/capslockstate
+Terminal=false
+StartupNotify=false

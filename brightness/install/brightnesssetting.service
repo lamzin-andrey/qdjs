@@ -1,0 +1,9 @@
+[Unit]
+Description=Run brightness handle daemon
+ 
+[Service]
+Type=oneshot
+ExecStart=/usr/local/brightnesssetting/a.isp
+ 
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=FlashPlayer
+Comment=Run swf files. Qt WebView + Flash Plugin
+Exec=/home/andrey/hdata/programs/my/qdjs/jaqFlash/jaqFlash.sh
+Icon=/home/andrey/hdata/programs/my/qdjs/jaqFlash/app/i/icons/48.png
+Path=/home/andrey/hdata/programs/my/qdjs/jaqFlash
+Categories=Game;
+Terminal=false
+StartupNotify=false
+Name[ru]=Flash Player
+Name[en]=Flash Player
+Category=Game;

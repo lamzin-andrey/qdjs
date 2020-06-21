@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=phpstorm
+Exec=/home/andrey/hdata/programs/my/qdjs/brightness/jaqMon.sh
+Icon=calligrakrita
+Terminal=false
+StartupNotify=false
+Name[ru_RU]=jaqMon
+Name[ru]=BrightnessHandle

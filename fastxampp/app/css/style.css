@@ -1,0 +1,42 @@
+body {
+	padding:0px;
+	margin:0px;
+	/*display:inline-block;
+	width:350px;
+	height:210px;
+	border: red solid 1px;/**/
+}
+#dompb {
+	background-image:url('./../img/pbar-piece.png');
+	background-repeat: repeat-x;
+	background-position: 0 0;
+	
+}
+#langArea {
+	margin-top:20px;
+}
+/* ============== EXTRACT PROGRESS BAR ============== */
+@media screen and (min-width:1px) {
+	#progressState, #progressStateLabel {
+		font-size:11px;
+	}
+	#progressStateLabel {
+		/*line-height:70px;*/
+		padding: 20px 0px;
+		vertical-align:bottom;
+	}
+	#progressState {
+		margin-top:18px;
+	}
+}
+
+
+.text-right {
+	text-align:right;
+}
+.text-center {
+	text-align:center;
+}
+.pull-right {
+	float:right;
+}

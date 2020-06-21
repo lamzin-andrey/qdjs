@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Flash Player</title>
+		<meta name="windowButtons" content="1110" width="480" height="360">
+		<menubar style="display:none">
+			<menu title="File">
+				<item onselect="onClickSelectSwfFile()" id="menuItemFileOpen">Open Ctrl+O</item>
+				<item onselect="onClickShowFullscreen()" id="menuItemFileOpen">Show fullscreen Ctrl+F</item>
+				<item onselect="onClickRememberFullscreenMenu()" id="menuItemFileOpen">Remember fullscreen for selected game Ctrl+R</item>
+				<item onselect="onClickForgetFullscreenMenu()" id="menuItemFileOpen">Forget fullscreen for selected game</item>
+				<item onselect="onClickExitMenu()" id="menuItemFileExit">Exit Ctrl+Q</item>
+			</menu>
+		</menubar>
+		<link rel="stylesheet" type="text/css" href="./s/0.css" />
+	</head>
+	<body style="padding:0px; margin:0px;overflow:hidden;background-color:black;">
+		<div style="width:100%; text-align:center" >
+			<div id="swfplace" style="margin:auto;"></div>
+		</div>
+	</body>
+	<script type="text/javascript" src="./js/recentdir.js" ></script>
+	<script type="text/javascript" src="./js/recentfile.js" ></script>
+	<script type="text/javascript" src="./js/app.js" ></script>
+</html>

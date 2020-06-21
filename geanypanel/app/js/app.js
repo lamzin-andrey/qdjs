@@ -1,0 +1,4 @@
+$(initApp);
+function initApp() {
+	runGeanyObserver();
+}

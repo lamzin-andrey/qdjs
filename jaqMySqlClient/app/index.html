@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	    <meta charset="Utf-8">
+	    <title>J&amp;Qt MysqlClient</title>
+	    <meta name="windowButtons" content="1110" width="1024" height="768">
+	    <menubar style="display:none">
+		    <menu title="Server">
+			    <item onselect="onClickSelectServer()" id="menuItemFileSelectServer">Open Ctrl+O</item>
+			    <item onselect="onClickAddServer()" id="menuItemAddServer">Add Ctrl+A</item>
+			    <item onselect="onClickExitMenu()" id="menuItemFileExit">Exit Ctrl+Q</item>
+		    </menu>
+	    </menubar>
+	    <link rel="stylesheet" type="text/css" href="./s/g.css" />
+	    <link rel="stylesheet" type="text/css" href="./s/0.css" />
+	    <link rel="stylesheet" type="text/css" href="./s/colors.css" />
+	    <link rel="stylesheet" type="text/css" href="./js/vendor/pjs-popupwnd/dev/popupwin.css" />
+    </head>
+    <body>
+	<div class="screen" id="hMainScreen">
+	    <textarea id="tEdit1" rows="10" style="width:99%; resize:vertical;"></textarea>
+	    <div id="hResultArea" rows="10" style="overflow:scroll; width:99%;" >&nbsp;</div>
+	</div>
+	<div class="screen" id="hMainScreen">&nbsp;
+	</div>
+	<div id="hConfigServerParams" class="hide">
+	    <div class="hConfigServerParamsBody">
+		<div>
+		    <label for="iHost">Хост</label>
+		    <input id="iHost" type="text">
+		</div>
+		<div>
+		    <label for="iPort">Порт</label>
+		    <input id="iPort" type="number" class="number">
+		</div>
+		<div>
+		    <label for="iName">Имя базы</label>
+		    <input id="iName" type="text">
+		</div>
+		<div>
+		    <label for="iUser">Имя пользователя</label>
+		    <input id="iUser" type="text">
+		</div>
+		<div>
+		    <label for="iPassword">Пароль</label>
+		    <input id="iPassword" type="password">
+		</div>
+		<div class="tr">
+		    <input value="Сохранить" id="bHostSave" type="button" onclick="onClickAddServer()">
+		</div>
+	    </div>
+	</div>
+    </body>
+    <!-- shared libs  -->
+    <script type="text/javascript" src="./js/vendor/micron.js" ></script>
+    <script type="text/javascript" src="./js/vendor/pjs-popupwnd/popupwin.js" ></script>
+    <script type="text/javascript" src="./js/vendor/objects/recentdir.js" ></script>
+    <script type="text/javascript" src="./js/vendor/objects/settings.js" ></script>
+    <!-- /shared libs  -->
+    
+    <!-- app libs  -->
+    <script type="text/javascript" src="./js/src/objects/hostssaver.js" ></script>
+    <script type="text/javascript" src="./js/src/classes/addHostDlg.js" ></script>
+    
+    <!-- app /libs  -->
+    
+    <script type="text/javascript" src="./js/src/app.js" ></script>
+</html>

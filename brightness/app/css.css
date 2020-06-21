@@ -1,0 +1,18 @@
+body,input[type=button]{
+	background-color:black;
+	color:aqua;
+	border-color:aqua;
+}
+.left {float:left;}
+.right {float:right;}
+.clear {clear:both;}
+input[type=button] {
+	min-width:100px;
+}
+#current {
+	text-align:center;
+	padding-left:10px;
+	padding-top:30px;
+	color:aqua;
+	font-size:32px;
+}

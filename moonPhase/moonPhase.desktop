@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=MoonPhase
+Exec=/home/andrey/hdata/programs/my/qdjs/moonPhase/moonPhase.sh
+Icon=xfce-internet
+Path=/home/andrey/hdata/programs/my/qdjs/moonPhase
+Terminal=false
+StartupNotify=false
+Name[ru]=MoonPhase
+Categories=Game;

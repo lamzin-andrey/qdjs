@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=FFmpegMp3Cut
+Exec=/home/andrey/hdata/programs/my/qdjs/jaqMp3cut/jaqMp3cut.sh
+Icon=/home/andrey/hdata/programs/my/qdjs/jaqMp3cut/iconraw.png
+Path=/home/andrey/hdata/programs/my/qdjs/jaqVideoConverter
+Categories=AudioVideo;
+Terminal=false
+StartupNotify=false
+Name[ru]=Mp3Cutter
+GenericName=Mp3Cutter

@@ -1,0 +1,10 @@
+input[type=button] {
+	background-color:green;
+	color:#fff;
+	font-weight:bold;
+	border: 2px green solid; /* #37B74D */
+	border-radius:8px;
+}
+textarea {
+	background-color:white;
+}

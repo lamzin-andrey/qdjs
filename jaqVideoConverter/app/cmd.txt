@@ -1,0 +1,34 @@
+ffmpeg -i v_borbe_za_ukrainy.mp4 -c:v libx264 -pix_fmt yuv420p v_borbe_za_ukrainy.avi
+
+#ffmpeg -ss <начало> -t <продолжительность> -i in1.avi -vcodec copy -acodec copy out1.avi
+#ffmpeg -ss 00:00:03 -t 00:00:04 -i maski.avi -vcodec copy -acodec copy YouAreFakeNews.avi
+#ffmpeg -i YouAreFakeNews.avi YouAreFakeNewsShort.mp4
+
+
+
+
+# с выводом в файл
+ffmpeg -i 01.mp4 -c:v libx264 -pix_fmt yuv420p zapekanka_s_tvorogom.avi 1>/home/andrey/log.log 2>&1
+
+# zapekanka_s_tvorogom
+
+
+Попробуй использовать из
+
+Пережать mp4 в webm
+
+ffmpeg -i video.mp4 -b:v 6203.788829380261k -crf 40 -aq-mode 1 -threads 4 -f webm output.webm
+
+Где -threads 4 указывает, что процесс сжатия надо проводить в 4 потока. 
+Количество потоков лучше устанавливать равным количеству физических ядер вашего процессора
+
+Так вот:
+ffmpeg -i 0.mts -c:v libx264 -threads 3 -pix_fmt yuv420p gar-2019-09-14.avi
+
+С одним потоком одна секунда копируется примерно за два "тика"
+С тремя (при запущенном с одним) - практически так же
+После того как один поток отработает, попробую снова с тремя, странно.
+
+
+//--------
+ffmpeg -i dead_or_alive-hit.mp3 -ss 00:00:11 -t 00:04:49 

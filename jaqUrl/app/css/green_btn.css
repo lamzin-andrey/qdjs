@@ -1,0 +1,29 @@
+.btn, input[type=button], input[type=submit] {
+	padding: 5px 4px 1px;
+	border-radius: 4px;
+	font-weight: bold;
+	color: white;
+	text-align: center;
+	background-color: #20DF4C;
+	background: linear-gradient(to top, #0ECD3A, #55DE76, #55DE76, #03AE2A);
+	min-height: 24px;
+	margin: 0 auto;
+	cursor: pointer;
+	border:none;
+	text-shadow: 1px 1px 0px black, 0 0 1px green;
+	font-family:'noto sans';
+	font-size: 12px;
+}
+.btn:hover, input[type=button]:hover, input[type=submit]:hover{
+	background-color : #18CF3C;
+	background: linear-gradient(to top, #0ECD3A, #80EE9A, #80EE9A, #0ECD3A);
+	cursor:pointer;
+}
+input[type=button], input[type=submit] {padding: 7px 14px;}
+
+a.btn  {
+	color:#fff;
+	text-decoration:none;
+	display:inline-block;
+	padding:7px 12px 0px;
+}

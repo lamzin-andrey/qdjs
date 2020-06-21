@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JaqViewer</title>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<meta name="windowButtons" content="1110" fullScreen width="1000" height="1000">
+	<link type="text/css" rel="stylesheet" href="./tb-css.css">
+	<link type="text/css" rel="stylesheet" href="./css/tools.css">
+	<link type="text/css" rel="stylesheet" href="./css/bar.css">
+	<link type="text/css" rel="stylesheet" href="./css/tbl-thumb.css">
+	<link type="text/css" rel="stylesheet" href="./css/view.css">
+	<link type="text/css" rel="stylesheet" href="./css/mainimage.css">
+	<script src="./js/micron.js"></script>
+	<script src="./js/app.js"></script>
+	<menubar style="display:none">
+		<menu title="Файл">
+			<item onselect="onOpen">Открыть Ctrl+O</item>
+			<item onselect="onSaveCopy">Сохранить копию Ctrl+S</item>
+			<item onselect="onProps">Свойства</item>
+			<item onselect="onClose">Закрыть Ctrl+W</item>
+			<item onselect="onQuit">Выйти Ctrl+Q</item>
+		</menu>
+	</menubar>
+</head>
+<body>
+	<div class="ds">
+		<div class="bar" id="bar">
+			<div class="bar-left">
+				<img class="b left-button-first" src="./img/a/document-open.png" id="bOpenFile">
+				<img class="b left-button-second" src="./img/a/document-save-as.png" id="bSaveAs">
+				<img class="b bar-button-next" src="./img/a/edit-delete.png" id="bDrop">
+			</div>
+			<div class="bar-right">
+				<img class="b  rbar-button-next" src="./img/a/zoom-in.png" id="bZoomIn">
+				<img class="b rbar-button-next" src="./img/a/zoom-original.png" id="bZoomBreak">
+				<img class="b rbar-button-next" src="./img/a/zoom-out.png" id="bZoomOut">
+				<img class="b rbar-button-next" src="./img/a/transform-move.png" id="bAdjust">
+				<img class="b rbar-button-next right-button-last" src="./img/a/tool-animator.png" id="bSlideRun">
+			</div>
+			<div class="bar-middle">
+				<div class="bar-center">
+					<img class="b cnt-button-first" src="./img/a/go-prev.png" id="bPrevFile">
+					<img class="b bar-button-next" src="./img/a/media-playback-start.png" id="bPlay">
+					<img class="b bar-button-next" src="./img/a/go-next.png" id="bNextFile">
+				</div>
+			</div>
+			
+			<div class="clear"></div>
+		</div>
+		<!-- /end class bar -->
+		<table style="width:100%;"><tr style="width:100%">
+		<td class="thumb" id="thumb">
+			<ul id="gallery">
+				<li class="relative"><div class="activeQ absolute">&nbsp;</div><img src="./img/data/000.png"></li>
+				<li class="active relative"><div class="activeQ absolute">&nbsp;</div><img src="./img/olenGit.png"></li>
+				<li class="relative"><div class="activeQ absolute">&nbsp;</div><img src="./img/data/000.png"></li>
+				<li class="relative"><div class="activeQ absolute">&nbsp;</div><img src="./img/data/000.png"></li>
+			</ul>
+		</td>
+		<!-- /end class thumb -->
+		<td class="view" style="height:100%;width:100%;vertical-align:top;" id="viewContainer">
+			<div style="display:block;height:100%;overflow:scroll;" class="relative" id="viewWrap">
+				<img src="./img/olenGit.png" id="bigView1" class="absolute" >
+				<img src="./img/olenGit.png" id="bigView2" style="opacity:0;" class="absolute" >
+			</div>
+		</td>
+		</tr>
+		</table>
+	</div>
+</body>
+</html>

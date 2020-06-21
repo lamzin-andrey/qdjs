@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<title>jaqNotepad</title>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<meta name="windowButtons" content="1110" width="800" height="600">
+	<link type="text/css" rel="stylesheet" href="./css.css">
+	<link type="text/css" rel="stylesheet" href="./s/sword.css">
+	<link type="text/css" rel="stylesheet" href="./s/rword.css">
+	<menubar style="display:none">
+		<menu title="File">
+			<item onselect="showOpenFileDlg()" id="menuItemFileOpen">Open Ctrl+O</item>
+			<item onselect="saveNow()" id="menuItemFileSave">Save Ctrl+S</item>
+			<item onselect="showSaveAs()" id="menuItemFileSaveAs">Save as... Ctrl+Shift+S</item>
+		</menu>
+		<menu title="Edit">
+			<item onselect="undoAction()" id="menuItemUndo">Undo Ctrl+Z</item>
+			<item onselect="redoAction()" id="menuItemRedo">Redo Ctrl+Y</item>
+		</menu>
+		<menu title="View">
+			<item onselect="setWhiteMode()" id="menuItemSetWhiteMode">Day</item>
+			<item onselect="setBlackMode()" id="menuItemSetBlackMode">Night</item>
+		</menu>
+		<menu title="Tools">
+			<item onselect="getMethodList()" id="menuItemSetWhiteMode">methodList</item>
+			<item onselect="setBlackMode()" id="menuItemSetBlackMode">Night</item>
+		</menu>
+	</menubar>
+</head>
+<body class="night">
+	<textarea id="ta" tabindex="0" wrap="off"></textarea>
+	<div id="hStatusbar">
+		Line: <span id="qsline"></span>, Col:<span id="qscol"></span> Dbg:<span id="dbg"></span>
+	</div>
+	<script src="./js/jquery-1.11.0.min.js"></script>
+	<script src="./js/microlib.js"></script>
+	<script src="./js/lang.js"></script>
+	<script src="./js/ru.js"></script>
+	<script src="./js/app.js"></script>
+	<script src="./js/tabeditor.js"></script>
+	<script src="./js/unredo.js"></script>
+	<script src="./js/sword.js"></script>
+	<script src="./js/rword.js"></script>
+	<script src="./js/qtphp.js"></script>
+	
+	<script src="./js/php2jstranslator/php.js"></script>
+	<script src="./js/php2jstranslator/php2js.js"></script>
+	<script src="./js/php2jstranslator/classparser.js"></script>
+	<script src="./js/phpparser/phpclassmethodslist.js"></script>
+</body>
+
+</html>

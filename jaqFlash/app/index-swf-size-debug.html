@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="windowButtons" content="1110" width="1280" height="900">
+	</head>
+	<body>
+		<input type="number" id="iW" value="800"><br>
+		<input type="number" id="iH" value="600"><br>
+		<input type="button" id="bSelectSwf" value="selectSwfFile"><br>
+		<textarea id="iFiledata" style="width:99%;" rows="20"></textarea>
+		<div id="log"></div>
+		<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0" id="sonikie" width="800" height="600" align="middle">
+<param name="allowScriptAccess" value="sameDomain">
+	<param name="flashVars" value="none">
+<param name="allowFullScreen" value="false">
+	<param name="bgcolor" value="#FFF">
+	<param name="movie" value="./curveball.swf">
+	<param name="quality" value="hight">
+	<embed src="./curveball.swf" quality="hight" bgcolor="#FFF" flashvars="" name="sonic" id="sonic" allowscriptaccess="sameDomain" allowfullscreen="true" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" width="800" height="600" align="middle">
+	</object>
+	<div id="log"></div>
+	
+	<script>
+		function e(i){return document.getElementById(i);}
+		function onChangeSz() {
+			var w = e('iW').value,
+				h = e('iH').value,
+				obj = e('sonic');
+			e('log').innerHTML = w + 'x' + h;
+			obj.setAttribute('width', w);
+			obj.setAttribute('height', h);
+			
+		}
+		e('iW').addEventListener('input', onChangeSz, true);
+		e('iH').addEventListener('input', onChangeSz, true);
+	</script>
+	<script src="./js/app.js"></script>
+	</body>
+</html>
