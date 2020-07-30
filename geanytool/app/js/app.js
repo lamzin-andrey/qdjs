@@ -1,6 +1,11 @@
 function Camel2Snake() {
 	function tpl() {
 		var s = '<p style="text-align:left; margin:0px; padding:0px;color:gray;">\
+		rusdate\
+		</p>\
+		<input id="inrusdate" rows="10" style="width:99%">\
+		<input id="outrusdate" type="text" style="width:99%">\
+		<p style="text-align:left; margin:0px; padding:0px;color:gray;">\
 		int $nCompanyId, string $stamp, float $nLat, float $nLng) : StdClass\
 		</p>\
 		<p style="text-align:left; margin:0px; padding:0px;">\
@@ -39,6 +44,10 @@ function Camel2Snake() {
 	tpl();
 	
 	window.settingsObject = new SettingsObject('appsettings.json');
+	
+	//Конвертация 2020-07-12 -> 12.07.2020
+	var rusdate = new RusDateConv('inrusdate', 'outrusdate');
+	
 	
 	var nsTool = new NamespacesTool(settingsObject);
 	$('#menu').click(function() {
@@ -101,6 +110,10 @@ function Camel2Snake() {
 	
 	$('#in')[0].onclick = function() {
 		settingsObject.storage('lastClickedFile', 'in');
+	}
+	
+	$('#inrusdate')[0].onclick = function() {
+		settingsObject.storage('lastClickedFile', 'inrusdate');
 	}
 	
 	$('#in')[0].onkeydown = function() {
