@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=AlarmClock
+Comment=Simple javascript alarm clock
+Exec=/home/andrey/hdata/programs/my/qdjs/caller/caller.sh
+Icon=/home/andrey/hdata/programs/my/qdjs/caller/app/i/icons/48.png
+Path=/home/andrey/hdata/programs/my/qdjs/caller
+Categories=Game;
+Terminal=false
+StartupNotify=false
+Name[ru]=Alarm Clock
+Name[en]=Alarm Clock
+Category=Game;

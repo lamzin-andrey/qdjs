@@ -35,7 +35,9 @@ NamespacesTool.prototype.setListeners = function() {
 */
 NamespacesTool.prototype.searchNamespaces = function(s) {
 	this.calculateRootDir();
+	
 	var aList = this.loadListFromCache(s);
+	
 	this.setArrInDisplayList(aList);
 	if (!this.composerDir) {
 		return;
@@ -52,6 +54,7 @@ NamespacesTool.prototype.calculateRootDir = function() {
 		return;
 	}
 	var	currentDir = this.dir, file, a;
+	
 	while (currentDir != '') {
 		file = currentDir + '/composer.json';
 		if (PHP.file_exists(file)) {
@@ -95,6 +98,7 @@ NamespacesTool.prototype.runFindCommand = function(sClassName) {
 	this.sClassName = sClassName;
 	window.namespaceToolSocket = this;
 	//PHP.file_put_contents(this.shellFile, cmd);
+	
 	PHP.exec(cmd, 'namespaceToolOnStopFindVendor', 'namespaceToolNull', 'namespaceToolNull');
 	cmd = cmdTpl.replace('{subdir}', 'src');
 	//PHP.file_put_contents(this.shellFile, cmd);

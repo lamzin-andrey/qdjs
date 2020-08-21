@@ -1,0 +1,3 @@
+#! /bin/bash
+# qdjs /home/andrey/hdata/programs/my/qdjs/notepad/app
+/home/andrey/hdata/soft/desktop-js/qdjs /media/7CC0-61DD/KINGSTON/025/mine/qdjs/notepad/app $1

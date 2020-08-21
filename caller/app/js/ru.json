@@ -1,0 +1,14 @@
+{
+	"File":"File", 
+	"Open Ctrl+O": "Open Ctrl+O",
+	"Save Ctrl+S": "Save Ctrl+S",
+	"Edit": "Edit",
+	"Undo Ctrl+Z": "Undo Ctrl+Z",
+	"Redo Ctrl+Z": "Redo Ctrl+Y",
+	"View": "View",
+	"Day": "Day",
+	"Night": "Night",
+	"Tools": "Tools",
+	"methodList": "methodList",
+	"Save as... Ctrl+Shift+S": "Save as... Ctrl+Shift+S"
+}
