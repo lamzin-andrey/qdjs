@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=AMarketInstaller
+Exec=/home/andrey/hdata/programs/my/qdjs/amarket/amarketinstall.sh
+Icon=xfce-internet
+Path=/home/andrey/hdata/programs/my/qdjs/amarket
+Terminal=false
+StartupNotify=false
+Name[ru]=AMarketInstaller
+Categories=Game;

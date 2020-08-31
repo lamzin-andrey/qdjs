@@ -1,0 +1,50 @@
+body {
+	font-family:"Noto Sans, Ubuntu";
+	background-color: #EFEBE7; /*rgb(236, 239, 240);rgb(239,233,214);*/
+	/*display:inline-block;
+	width:350px;
+	height:210px;
+	border: red solid 1px;/**/
+}
+#dompb {
+	background-image:url('./../img/pbar-piece.png');
+	background-repeat: repeat-x;
+	background-position: 0 0;
+	background-color:#FFF;
+}
+#langArea {
+	margin-top:20px;
+}
+/* ============== EXTRACT PROGRESS BAR ============== */
+
+#progressState, #progressStateLabel {
+	font-size:14px;
+}
+#progressStateLabel {
+	/*line-height:70px;*/
+	padding: 20px 0px;
+	vertical-align:bottom;
+	min-height: 50px;
+}
+#progressState {
+	margin-top:18px;
+}
+#progressFieldsset, #langArea{
+	border: #B9B9B9 solid 1px;/*#79B2FF;*/
+}
+#progressFieldsset legend, #langArea legend{
+	font-size:12px;
+	color:#0400B3;
+}
+
+
+
+.text-right {
+	text-align:right;
+}
+.text-center {
+	text-align:center;
+}
+.pull-right {
+	float:right;
+}
