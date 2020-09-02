@@ -46,21 +46,38 @@
 		    <input id="iPassword" type="password">
 		</div>
 		<div class="tr">
-		    <input value="Сохранить" id="bHostSave" type="button" onclick="onClickAddServer()">
+		    <input value="Сохранить" id="bHostSave" type="button" onclick="W.addHostDlg.onClickBHostSave();">
 		</div>
 	    </div>
 	</div>
+	
+	<div id="hManageServerDlg" class="hide">
+	    <div class="hManageServerDlgBody">
+		<div>
+		    <label for="selHosts" id="hSelServerLabel">Select server</label>
+		    <select id="selHosts"></select>
+		</div>
+		<div class="tr">
+		    <input value="Редактировать" id="bHostEdit" type="button" onclick="W.manageHostsDlg.onClickBHostEdit();">
+		    <input value="Удалить" id="bHostRemove" type="button" onclick="W.manageHostsDlg.onClickBHostRemove();">
+		    <input value="Сделать активным" id="bHostActivity" type="button" onclick="W.manageHostsDlg.onClickBHostActivate();">
+		</div>
+	    </div>
+	</div>
+	
     </body>
     <!-- shared libs  -->
     <script type="text/javascript" src="./js/vendor/micron.js" ></script>
     <script type="text/javascript" src="./js/vendor/pjs-popupwnd/popupwin.js" ></script>
     <script type="text/javascript" src="./js/vendor/objects/recentdir.js" ></script>
     <script type="text/javascript" src="./js/vendor/objects/settings.js" ></script>
+    <script type="text/javascript" src="./js/vendor/lang.js" ></script>
     <!-- /shared libs  -->
     
     <!-- app libs  -->
     <script type="text/javascript" src="./js/src/objects/hostssaver.js" ></script>
     <script type="text/javascript" src="./js/src/classes/addHostDlg.js" ></script>
+    <script type="text/javascript" src="./js/src/classes/manageHostDlg.js" ></script>
     
     <!-- app /libs  -->
     

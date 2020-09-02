@@ -11,26 +11,33 @@ function log(s) {
 	
 }
 function onKeyUp(evt) {
-	if (evt.ctrlKey) {
-		switch(evt.keyCode) {
-			case 65:
-				onClickAddServer();
-				break;
-			case 79:
-				onClickSelectSwfFile();
-				break;
-			case 81:
-				onClickExitMenu();
-				break;
-		}
-		
+    if (evt.ctrlKey) {
+	switch(evt.keyCode) {
+	    case 65:
+		onClickAddServer();
+		break;
+	    case 79:
+		onClickSelectServer();
+		break;
+	    case 81:
+		onClickExitMenu();
+		break;
 	}
+	    
+    }
 	if (evt.keyCode == 27 && window.mainMenuIsHide) {
 		exitFromFullscreen();
 	}
 }
 function onClickAddServer(){
     appWindow('hConfigServerParams', 'Добавить сервер', onClosePopup);
+    W.addHostDlg = new AddHostDlg();
+    
+}
+function onClickSelectServer() {
+    appWindow('hManageServerDlg', 'Настройки соединения с сервером', onClosePopup);
+    W.manageHostsDlg = new ManageHostDlg();
+    
 }
 function onClickExitMenu() {
 	Qt.quit();

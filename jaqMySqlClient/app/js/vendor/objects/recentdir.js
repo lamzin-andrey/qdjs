@@ -37,7 +37,9 @@ window.RecentDir  = {
 			s = PHP.file_get_contents(file);
 			try {
 				obj = JSON.parse(s);
-			} catch(e){;}
+			} catch(e){
+			    alert(e);
+			}
 		}
 		obj = obj || {};
 		return obj;
@@ -55,6 +57,19 @@ window.RecentDir  = {
 		s = JSON.stringify(obj);
 		file = this.jmp3cutGetConfFileName();
 		PHP.file_put_contents(file, s);
+	},
+	jmp3cutRemoveSetting: function(k) {
+	    var s, obj = this.jmp3cutLoadSettings(), file, r = false;
+	    if (obj[k]) {
+		delete obj[k];
+		if (!obj[k]) {
+		    r = true;
+		}
+	    }
+	    s = JSON.stringify(obj);
+	    file = this.jmp3cutGetConfFileName();
+	    PHP.file_put_contents(file, s);
+	    return r;
 	},
 	jmp3cutGetDir: function () {
 		var a = this.filePath.split('/');
