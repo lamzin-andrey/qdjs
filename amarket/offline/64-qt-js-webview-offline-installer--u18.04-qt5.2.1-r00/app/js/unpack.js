@@ -22,9 +22,9 @@ window.Extractor = {
 		c = c.replace('[[Start_copy]]', __('Start_copy'));
 		c = c.replace('[[Extract_files_please_wait]]', __('Extract_files_please_wait'));
 		PHP.file_put_contents(this.dataDir + '/unpack.sh', c);
-		//I stop! Далее изучаем это  Autorun.createCommand
-		//Но лучше всего пусть он достает либы из архива, то есть задействуетм /unpack.sh..
-		// А может и не надо, надо посмотреть в вывод окончательно сгенеренного unpack.sh
+		
+		//он достает либы из архива, то есть задействуетм /unpack.sh..
+		// TODO Надо посмотреть в вывод окончательно сгенеренного unpack.sh
 		// и инициализовать Extractor.FINAL_SIZE
 		// Может cp какие интересные аргументы имеет
 		

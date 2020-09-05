@@ -4,6 +4,7 @@ var LIB_PATH    = '/usr/local/Trolltech/Qt-' + QT_VERSION + '/lib'; //TODO а н
 var EXEC_FOLDER = '/opt/qt-desktop-js';
 var EXEC_FILE   = 'hw';
 var EXEC_NULL = 'Main_defaultFinExecHandler';
+var TARGZ_NAME = 'qdjs.tar.gz';
 
 //TODO set depends from ubuntu modification
 var USER_AUTORUN_FOLDER = '/home/[user]/.config/autostart';
