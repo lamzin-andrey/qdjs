@@ -47,6 +47,9 @@ mount -t tmpfs tmpfs /home/[USER]/.config/fastxampp -o size=1M\n\
 			//I stop! 05 09 2020 18 10
 			this.createAutorunDesktopFile(fastxamppFilesPath);//TODO arg и вообще подумать
 		}
+		//Тут ещё раз внимательно почитать и подумать, зщачем это всё,
+		// но скорее всег просто создать значок для меню разработка, там должен default открываться.
+		
 		//after('Before createAutorunDesktopFile');
 		//copy fastxampp.desktop to menu folder
 		var desktop = PHP.file_get_contents(fastxamppFilesPath + '/fastxampp.desktop.tpl');
