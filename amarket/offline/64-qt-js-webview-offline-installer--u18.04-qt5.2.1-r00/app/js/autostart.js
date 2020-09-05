@@ -1,44 +1,23 @@
-'use strict'
+'use strict';
 var Autorun = {
 	init:function(unpack) {
 		copyFields(unpack, this);
-		this.rcTpl = '#fastxamppdaemon start\n\
+		this.rcTpl = '#mount1MbRAM start\n\
 mount -t tmpfs tmpfs /home/[USER]/.config/fastxampp -o size=1M\n\
-echo "" > /home/[USER]/.config/fastxampp/.sock\n\
-chown [USER]:[USER] /home/[USER]/.config/fastxampp/.sock\n\
-/usr/local/fastxampp/fastxamppd [USER]\n\
-# /fastxamppdaemon start';
-		
+# /mount1MbRAM';
 	},
 	createCommand : function(file) {
-		//create fastxampp files
-		var cmd = "\necho '" + __('create_fastxampp_folder') + "'" + this.createFolderCommand(LIB_PATH),
-			iconFolder = '/usr/share/icons/Faenza/apps/64';
+		//I stop!
+		
+		// Здесь только создание линки на qdjs
+		// и старт монтирования ФС в оперативу.
+		
+		var cmd = "\necho '" + __('create_fastxampp_folder') + "'\n" + this.createFolderCommand(LIB_PATH),
+			iconFolder = '/usr/share/icons/Faenza/apps/64',
+			installFilesPath = Qt.appDir() + '/data/icons';
 		cmd += this.createFolderCommand(EXEC_FOLDER);
 		cmd += this.createFolderCommand(iconFolder);
-		//copy qt files
-		var libFilesPath = Qt.appDir() + '/data/lib';
-		var targetLibDir = LIB_PATH.replace(/\/lib$/, '');
-		cmd += "\ncp -rf " + libFilesPath + ' ' + targetLibDir;
-		var pluginFilesPath = Qt.appDir() + '/data/plugins';
-		cmd += "\ncp -rf " + pluginFilesPath + ' ' + targetLibDir;
-		//copy fastxampp files
-		var fastxamppFilesPath = Qt.appDir() + '/data/bin';
-		cmd += "\ncp -f " + fastxamppFilesPath + '/fastxampp ' + EXEC_FOLDER + '/fastxampp';
-		var runCmd = PHP.file_get_contents(fastxamppFilesPath +  '/fastxampp.tpl.sh');
-		runCmd = runCmd.replace('[version]', QT_VERSION).replace('[version]', QT_VERSION);
-		var arg = '';
-		//if (window.IS_MINT || window.IS_XFCE) {
-			arg = '--force-tray';
-		//}
-		runCmd = runCmd.replace('[arg]', arg);
-		PHP.file_put_contents(fastxamppFilesPath + '/fastxampp.sh', runCmd);
-		cmd += "\ncp -f " + fastxamppFilesPath + '/fastxampp.sh ' + EXEC_FOLDER + '/fastxampp.sh';
-		cmd += "\ncp -f " + fastxamppFilesPath + '/fastxamppd ' + EXEC_FOLDER + '/fastxamppd';
-		cmd += "\ncp -f " + fastxamppFilesPath + '/' + langName + '/lang ' + EXEC_FOLDER + '/lang';
-		cmd += "\ncp -f " + fastxamppFilesPath + '/phv ' + EXEC_FOLDER + '/phv';
-		
-		
+		cmd += this.createQdjsSymlink();
 		
 		//patch rc.local
 		if (!this.systemCtlIsEnable()) {
@@ -52,35 +31,21 @@ chown [USER]:[USER] /home/[USER]/.config/fastxampp/.sock\n\
 		cmd += "\necho '" + __('create_socket') + "'";
 		cmd += "\necho '' > /home/" + USER + "/.config/fastxampp/.sock";
 		cmd += "\nchown " + USER + ":" + USER + " /home/" + USER + "/.config/fastxampp/.sock";
-		cmd += this.createFolderCommand(iconFolder);
-		cmd += '\ncp -f ' + fastxamppFilesPath + '/xampp.png ' + iconFolder + '/fastxampp.png';
+		//cmd += this.createFolderCommand(iconFolder); ?? double?
 		
-		cmd += "\necho '" + __('run_fastxamppd') + "'";
-		cmd += "\nkillall fastxamppd";
-		cmd += "\n/usr/local/fastxampp/fastxamppd " + USER + ' &';
+		//Копируем иконку инсталлятора для GUI установщиков приложений
+		cmd += '\ncp -f ' + installFilesPath + '/exec.png ' + iconFolder + '/exec.png';
+		cmd += '\ncp -f ' + installFilesPath + '/applications-other-64.png ' + iconFolder + '/applications-other-64.png';
+		cmd += '\ncp -f ' + installFilesPath + '/applications-other-128.png ' + iconFolder + '/applications-other-128.png';
+		cmd += '\ncp -f ' + installFilesPath + '/applications-other-256.png ' + iconFolder + '/applications-other-256.png';
 		
-		//copy fastxampp.desktop
-		
-		//copy fastxampp autolauncher
-		//подготовить скрипт запуска, переписать в нем версию qt
-		var launcherFolder = Qt.appDir() + '/data/bin/launcher';
-		var launchShell = PHP.file_get_contents(launcherFolder + '/launch-fastxampp.sh.tpl');
-		launchShell = launchShell.replace('[version]', QT_VERSION).replace('[version]', QT_VERSION);
-		PHP.file_put_contents(launcherFolder + '/launch-fastxampp.sh', launchShell);
-		//Скопировать фалы лаунчера, его запуск - с экспортом.
-		cmd += "\nmkdir /usr/local/fastxampp/launcher";
-		cmd += "\necho '" + __('copy_launcher') + "'";
-		cmd += "\ncp -rf " + launcherFolder + "/app /usr/local/fastxampp/launcher";
-		cmd += "\ncp -rf " + launcherFolder + "/default /usr/local/fastxampp/launcher";
-		cmd += "\necho '" + __('copy_launcher_files') + "'";
-		cmd += "\ncp -f " + launcherFolder + "/launch-fastxampp.sh /usr/local/fastxampp/launcher/launch-fastxampp.sh";
-		cmd += "\ncp -f " + launcherFolder + "/qdjs /usr/local/fastxampp/launcher/qdjs";
 		
 		//Для авторана использовать desktop запускающий лаунчер
 		//alert('Before createAutorunDesktopFile');
 		var isUnity = this.isUnityEnv();
 		if (!isUnity) {//для юнити автозапуска не будет, будет значок в левом меню
-			this.createAutorunDesktopFile(fastxamppFilesPath);
+			//I stop! 05 09 2020 18 10
+			this.createAutorunDesktopFile(fastxamppFilesPath);//TODO arg и вообще подумать
 		}
 		//after('Before createAutorunDesktopFile');
 		//copy fastxampp.desktop to menu folder
@@ -99,6 +64,14 @@ chown [USER]:[USER] /home/[USER]/.config/fastxampp/.sock\n\
 		
 	},
 	/**
+	 * @return {String} команду создания ссылки /usr/bin/qdjs
+	*/
+	createQdjsSymlink:function() {
+		var cmd = '\nrm -f /usr/local/bin/' + APP_NAME;
+		cmd += "\nln -s " + EXEC_FOLDER + '/' + EXEC_FILE + ' /usr/local/bin/' + APP_NAME;
+		return cmd;
+	},
+	/**
 	 * * TODO в main сделать детект kde 5 иначе лажа также можно осторожно использовать  UNITY_FOLDER
 	 * @return {Boolean} true если существует UNITY_FOLDER и установлена IS_UNITY
 	*/
@@ -112,14 +85,14 @@ chown [USER]:[USER] /home/[USER]/.config/fastxampp/.sock\n\
 		Exec.exec("gsettings get com.canonical.Unity.Launcher favorites", 'Autostart_OnFinishGetUnityPanelItems');
 	},
 	/**
-	 * 
+	 * Команда создания файлов сервиса и регистрации сервиса
 	*/
 	createSystemCtlCommand:function() {
 		var rcTpl = this.rcTpl,
-			file = '/usr/local/fastxampp/fastxamppd.sh', //daemon file
+			file = EXEC_FOLDER + '/mountfs.sh', //daemon file
 			result = '';
 		//write daemon file instruction
-		result = '\ncp -f ' + Qt.appDir() + '/data/systemctl/fastxamppd.sh ' + file;
+		result = '\ncp -f ' + Qt.appDir() + '/data/systemctl/mountfs.sh ' + file;
 		result += '\nchmod 766 ' + file;
 		result += "\necho '#! /bin/sh' >> " + file;
 		var cmd = rcTpl.replace(/\[USER\]/mg, USER);
@@ -128,9 +101,9 @@ chown [USER]:[USER] /home/[USER]/.config/fastxampp/.sock\n\
 			result += "\necho '" + a[i] + "' >> " + file;
 		}
 		//copy .service file
-		result += '\ncp -f ' + Qt.appDir() + '/data/systemctl/fastxampp.service ' + '/etc/systemd/system/fastxampp.service';
+		result += '\ncp -f ' + Qt.appDir() + '/data/systemctl/' + APP_NAME + '.service ' + '/etc/systemd/system/' + APP_NAME + '.service';
 		//enable service
-		result += '\nsystemctl enable fastxampp.service';
+		result += '\nsystemctl enable ' + APP_NAME + '.service';
 		return result;
 	},
 	/**

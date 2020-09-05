@@ -1,10 +1,9 @@
-var QT_VERSION  = '5.2.1';
-var LIB_PATH    = '/usr/local/Trolltech/Qt-' + QT_VERSION + '/lib';
-var EXEC_FOLDER = '/usr/local/fastxampp';
-var EXEC_FILE   = 'fastxampp';
+var APP_NAME = 'qdjs';
+var QT_VERSION  = '5.2.1'; //TODO а надо ли в итоге?
+var LIB_PATH    = '/usr/local/Trolltech/Qt-' + QT_VERSION + '/lib'; //TODO а надо ли в итоге?
+var EXEC_FOLDER = '/opt/qt-desktop-js';
+var EXEC_FILE   = 'hw';
 var EXEC_NULL = 'Main_defaultFinExecHandler';
-var ZEND_EXT_DATE = '20190902';
-var TARGZ_NAME = 'xampp-php74.tar.gz';
 
 //TODO set depends from ubuntu modification
 var USER_AUTORUN_FOLDER = '/home/[user]/.config/autostart';

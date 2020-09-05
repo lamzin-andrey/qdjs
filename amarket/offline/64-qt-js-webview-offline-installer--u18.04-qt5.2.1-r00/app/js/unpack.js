@@ -4,14 +4,12 @@ window.Extractor = {
 		e(this.labelId).innerHTML = __('Start_copy') + '..';
 		e('pBarLabel').innerHTML = __('Installation progress');
 		this.dataDir    = Qt.appDir() + '/data';
-		this.FINAL_SIZE = 1258794;
+		this.FINAL_SIZE = 1258794;//TODO set actual
 		this.sizeProcess = 0;
 		this.setPBar(0, 0);
-		Multihost.init(this);
 		Autorun.init(this);
 	},
 	extract:function() {
-		// unpack.tpl.sh распаковывал файлы XAMPP это больше не нужно
 		var cmd = 'cp -f ' + this.dataDir + '/unpack.tpl.sh' + ' ' + this.dataDir + '/unpack.sh';
 		PHP.exec(cmd, 'Extractor_onCopyExtractTpl')
 	},
@@ -24,7 +22,13 @@ window.Extractor = {
 		c = c.replace('[[Start_copy]]', __('Start_copy'));
 		c = c.replace('[[Extract_files_please_wait]]', __('Extract_files_please_wait'));
 		PHP.file_put_contents(this.dataDir + '/unpack.sh', c);
-		Multihost.createCommand(this.dataDir + '/unpack.sh');
+		//I stop! Далее изучаем это  Autorun.createCommand
+		//Но лучше всего пусть он достает либы из архива, то есть задействуетм /unpack.sh..
+		// А может и не надо, надо посмотреть в вывод окончательно сгенеренного unpack.sh
+		// и инициализовать Extractor.FINAL_SIZE
+		// Может cp какие интересные аргументы имеет
+		
+		//Он дописывает в файл!
 		Autorun.createCommand(this.dataDir + '/unpack.sh');
 		this.extractComplete = false;
 		this.extractBuf = '';
