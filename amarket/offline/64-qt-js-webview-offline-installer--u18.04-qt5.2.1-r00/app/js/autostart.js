@@ -53,6 +53,14 @@ mount -t tmpfs tmpfs /home/[USER]/.config/fastxampp -o size=1M\n\
 		//Создаём ссылку на справку  для разработчиков
 		//I stop - createMenuItem не работает!
 		cmd += this.createMenuItem('qt-desktop-js');
+		
+		//copy qt libs
+		cmd += "\necho '" + __('Copy_Qt5_libraries') + "'";
+		cmd += '\nrm -rf ' + EXEC_FOLDER + '/lib/lib';
+		cmd += '\nrm -rf ' + EXEC_FOLDER + '/lib/plugins';
+		
+		cmd += '\ncp -rfv ' + Qt.appDir() + '/data/lib ' + EXEC_FOLDER + '/lib/lib';
+		cmd += '\ncp -rfv ' + Qt.appDir() + '/data/plugins ' + EXEC_FOLDER + '/lib/plugins';
 		PHP.file_put_contents(file, cmd, FILE_APPEND);
 		
 	},

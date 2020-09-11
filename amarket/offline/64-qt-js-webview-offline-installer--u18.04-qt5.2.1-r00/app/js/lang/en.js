@@ -12,5 +12,6 @@ window.en = {
 	'copy_launcher' :'Copy autorun files',
 	'copy_launcher_files' :'Copy autorun service files',
 	'Installation progress' : 'Installation progress',
+	'Copy_Qt5_libraries': 'Copy Qt5 libraries',
 	'copy_extra_complete' :'Configure multihosts complete'
 };

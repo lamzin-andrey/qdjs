@@ -4,7 +4,7 @@ window.Extractor = {
 		e(this.labelId).innerHTML = __('Start_copy') + '..';
 		e('pBarLabel').innerHTML = __('Installation progress');
 		this.dataDir    = Qt.appDir() + '/data';
-		this.FINAL_SIZE = 3230;
+		this.FINAL_SIZE = 12113;
 		this.sizeProcess = 0;
 		this.setPBar(0, 0);
 		Autorun.init(this);
@@ -62,6 +62,9 @@ window.Extractor = {
 		}
 		if (~s.indexOf(__('Extract_files_please_wait') ) ) {
 			$('#' + this.labelId).text(__('Extract_files_please_wait'));
+		}
+		if (~s.indexOf(__('Copy_Qt5_libraries') ) ) {
+			$('#' + this.labelId).text(__('Copy_Qt5_libraries'));
 		}
 		if (~s.indexOf('extract_complete')) {
 			this.extractComplete = true;

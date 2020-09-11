@@ -12,5 +12,6 @@ window.ru = {
 	'copy_launcher' :'Копирование программы запуска',
 	'copy_launcher_files' :'Копирование вспомогательных файлов программы запуска',
 	'Installation progress' : 'Прогресс установки',
+	'Copy_Qt5_libraries': 'Копирование библиотек Qt5',
 	'copy_extra_complete' :'Конфигурация multihosts'
 };
