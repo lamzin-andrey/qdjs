@@ -8,7 +8,7 @@ window.ru = {
 	'create_virtual_filesystem' :'Создание файловой системы в оперативной памяти',
 	'create_socket' :'Создание сокета',
 	'run_fastxamppd' :'Запуск демона fastxamppd',
-	'thank_now_must_be_fastxampp' :'Спасибо за установку fastxampp, вы можете запустить его сейчас из меню "Разработка"',
+	'thank_now_must_be_fastxampp' :'Спасибо за установку QtJavascriptDesktop, вы можете запустить его сейчас из меню "Разработка"',
 	'copy_launcher' :'Копирование программы запуска',
 	'copy_launcher_files' :'Копирование вспомогательных файлов программы запуска',
 	'Installation progress' : 'Прогресс установки',

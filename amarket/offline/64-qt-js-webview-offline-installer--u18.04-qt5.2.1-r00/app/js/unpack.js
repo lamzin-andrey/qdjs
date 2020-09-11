@@ -4,7 +4,7 @@ window.Extractor = {
 		e(this.labelId).innerHTML = __('Start_copy') + '..';
 		e('pBarLabel').innerHTML = __('Installation progress');
 		this.dataDir    = Qt.appDir() + '/data';
-		this.FINAL_SIZE = 1258794;//TODO set actual
+		this.FINAL_SIZE = 3230;
 		this.sizeProcess = 0;
 		this.setPBar(0, 0);
 		Autorun.init(this);
@@ -28,8 +28,9 @@ window.Extractor = {
 		// и инициализовать Extractor.FINAL_SIZE
 		// Может cp какие интересные аргументы имеет
 		
-		//Он дописывает в файл!
+		//Он пишет в файл!
 		Autorun.createCommand(this.dataDir + '/unpack.sh');
+		
 		this.extractComplete = false;
 		this.extractBuf = '';
 		Exec.exec('pkexec ' + this.dataDir + '/unpack.sh &', 'Extractor_onFinExtract', 'Extractor_onExtractOut', 'Extractor_onExtractError');

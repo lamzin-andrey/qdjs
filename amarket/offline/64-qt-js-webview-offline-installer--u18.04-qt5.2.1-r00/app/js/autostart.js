@@ -7,7 +7,6 @@ mount -t tmpfs tmpfs /home/[USER]/.config/fastxampp -o size=1M\n\
 # /mount1MbRAM';
 	},
 	createCommand : function(file) {
-		//I stop!
 		
 		// Здесь только создание линки на qdjs
 		// и старт монтирования ФС в оперативу.
@@ -18,7 +17,6 @@ mount -t tmpfs tmpfs /home/[USER]/.config/fastxampp -o size=1M\n\
 		cmd += this.createFolderCommand(EXEC_FOLDER);
 		cmd += this.createFolderCommand(iconFolder);
 		cmd += this.createQdjsSymlink();
-		
 		//patch rc.local
 		if (!this.systemCtlIsEnable()) {
 			cmd += this.createRcCommand();
@@ -27,35 +25,47 @@ mount -t tmpfs tmpfs /home/[USER]/.config/fastxampp -o size=1M\n\
 		}
 		//run daemon
 		cmd += "\necho '" + __('create_virtual_filesystem') + "'";
-		cmd += "\nmount -t tmpfs tmpfs /home/" + USER + "/.config/fastxampp -o size=1M\nsleep 2";
+		cmd += "\nmount -t tmpfs tmpfs /home/" + USER + "/.config/" + APP_NAME + " -o size=1M\nsleep 2";
 		cmd += "\necho '" + __('create_socket') + "'";
-		cmd += "\necho '' > /home/" + USER + "/.config/fastxampp/.sock";
-		cmd += "\nchown " + USER + ":" + USER + " /home/" + USER + "/.config/fastxampp/.sock";
+		cmd += "\necho '' > /home/" + USER + "/.config/" + APP_NAME + "/.sock";
+		cmd += "\nchown " + USER + ":" + USER + " /home/" + USER + "/.config/" + APP_NAME + "/.sock";
 		//cmd += this.createFolderCommand(iconFolder); ?? double?
 		
 		//Копируем иконку инсталлятора для GUI установщиков приложений
-		cmd += '\ncp -f ' + installFilesPath + '/exec.png ' + iconFolder + '/exec.png';
-		cmd += '\ncp -f ' + installFilesPath + '/applications-other-64.png ' + iconFolder + '/applications-other-64.png';
-		cmd += '\ncp -f ' + installFilesPath + '/applications-other-128.png ' + iconFolder + '/applications-other-128.png';
-		cmd += '\ncp -f ' + installFilesPath + '/applications-other-256.png ' + iconFolder + '/applications-other-256.png';
+		cmd += '\ncp -f -v ' + installFilesPath + '/exec.png ' + iconFolder + '/exec.png';
+		cmd += '\ncp -f -v ' + installFilesPath + '/applications-other-64.png ' + iconFolder + '/applications-other-64.png';
+		cmd += '\ncp -f -v ' + installFilesPath + '/applications-other-128.png ' + iconFolder + '/applications-other-128.png';
+		cmd += '\ncp -f -v ' + installFilesPath + '/applications-other-256.png ' + iconFolder + '/applications-other-256.png';
 		
 		
 		//Для авторана использовать desktop запускающий лаунчер
 		//alert('Before createAutorunDesktopFile');
 		var isUnity = this.isUnityEnv();
 		if (!isUnity) {//для юнити автозапуска не будет, будет значок в левом меню
-			//I stop! 05 09 2020 18 10
-			this.createAutorunDesktopFile(fastxamppFilesPath);//TODO arg и вообще подумать
+			// Здесь нечего запускать при старте this.createAutorunDesktopFile(fastxamppFilesPath);//TODO arg и вообще подумать
 		}
 		//Тут ещё раз внимательно почитать и подумать, зщачем это всё,
 		// но скорее всег просто создать значок для меню разработка, там должен default открываться.
 		
 		//after('Before createAutorunDesktopFile');
 		//copy fastxampp.desktop to menu folder
-		var desktop = PHP.file_get_contents(fastxamppFilesPath + '/fastxampp.desktop.tpl');
-		desktop = desktop.replace('[version]', QT_VERSION);
-		PHP.file_put_contents(fastxamppFilesPath + '/fastxampp.desktop', desktop);
-		cmd += "\ncp -f " + fastxamppFilesPath + '/fastxampp.desktop ' + USER_MENU_FOLDER + "/fastxampp.desktop\n";
+		
+		//Создаём ссылку на справку  для разработчиков
+		//I stop - createMenuItem не работает!
+		cmd += this.createMenuItem('qt-desktop-js');
+		PHP.file_put_contents(file, cmd, FILE_APPEND);
+		
+	},
+	/**
+	 * @description 
+	 * @return {String} команду копирования файла запуска из меню программ
+	*/
+	createMenuItem:function(shortcutName) {
+		var dir = Qt.appDir() + '/data/shortcuts';
+		var desktop = PHP.file_get_contents(dir + '/' + shortcutName + '.desktop.tpl');
+		// desktop = desktop.replace('[version]', QT_VERSION);
+		PHP.file_put_contents(dir + '/' + shortcutName + '.desktop', desktop);
+		var cmd = "\ncp -f " + dir + '/' + shortcutName + '.desktop ' + USER_MENU_FOLDER + "/" + shortcutName + ".desktop\n";
 		
 		if (window.IS_KDE5) {
 			/*cmd += "\nadd-apt-repository ppa:tehnick/xembed-sni-proxy";
@@ -63,15 +73,14 @@ mount -t tmpfs tmpfs /home/[USER]/.config/fastxampp -o size=1M\n\
 			cmd += "\napt-get install -y plasma-systray-legacy";*/
 		}
 		
-		PHP.file_put_contents(file, cmd, FILE_APPEND);
-		
+		return cmd;
 	},
 	/**
 	 * @return {String} команду создания ссылки /usr/bin/qdjs
 	*/
 	createQdjsSymlink:function() {
 		var cmd = '\nrm -f /usr/local/bin/' + APP_NAME;
-		cmd += "\nln -s " + EXEC_FOLDER + '/' + EXEC_FILE + ' /usr/local/bin/' + APP_NAME;
+		cmd += "\nln -s " + EXEC_FOLDER + '/run.sh' + ' /usr/local/bin/' + APP_NAME;
 		return cmd;
 	},
 	/**
@@ -95,7 +104,7 @@ mount -t tmpfs tmpfs /home/[USER]/.config/fastxampp -o size=1M\n\
 			file = EXEC_FOLDER + '/mountfs.sh', //daemon file
 			result = '';
 		//write daemon file instruction
-		result = '\ncp -f ' + Qt.appDir() + '/data/systemctl/mountfs.sh ' + file;
+		result = '\ncp -f -v ' + Qt.appDir() + '/data/systemctl/mountfs.sh ' + file;
 		result += '\nchmod 766 ' + file;
 		result += "\necho '#! /bin/sh' >> " + file;
 		var cmd = rcTpl.replace(/\[USER\]/mg, USER);
@@ -104,7 +113,7 @@ mount -t tmpfs tmpfs /home/[USER]/.config/fastxampp -o size=1M\n\
 			result += "\necho '" + a[i] + "' >> " + file;
 		}
 		//copy .service file
-		result += '\ncp -f ' + Qt.appDir() + '/data/systemctl/' + APP_NAME + '.service ' + '/etc/systemd/system/' + APP_NAME + '.service';
+		result += '\ncp -f -v ' + Qt.appDir() + '/data/systemctl/' + APP_NAME + '.service ' + '/etc/systemd/system/' + APP_NAME + '.service';
 		//enable service
 		result += '\nsystemctl enable ' + APP_NAME + '.service';
 		return result;

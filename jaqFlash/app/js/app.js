@@ -426,6 +426,8 @@ window.onkeyup = onKeyUp;
 function onLoad() {
 	var args = Qt.getArgs();
 	if (args.length > 0) {
+		alert(args[0]);
+		alert(args[1]);
 		onClickSelectSwfFile(args[0]);
 	}
 }

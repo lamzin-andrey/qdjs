@@ -39,7 +39,7 @@ function Main_onGetUser(stdout, stderr) {
 		window.IS_UNITY = true;
 	}
 	USER_AUTORUN_FOLDER = USER_AUTORUN_FOLDER.replace('[user]', USER);
-	Exec.exec('mkdir /home/' + USER + '/.config/fastxampp', 'Main_onConfigFolderCreate');
+	Exec.exec('mkdir /home/' + USER + '/.config/' + APP_NAME, 'Main_onConfigFolderCreate');
 }
 
 function Main_onConfigFolderCreate(stdout, stdin) {

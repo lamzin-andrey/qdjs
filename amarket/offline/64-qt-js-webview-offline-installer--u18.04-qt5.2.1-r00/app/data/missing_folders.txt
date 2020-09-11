@@ -1,0 +1,14 @@
+plugins
+lib
+
+  - https://github.com/lamzin-andrey/gjs/raw/master/releases/ubuntu-14.04-18.4/amd64/desktop-js.tar.gz
+  - extract archive and place p[lugins and lib directories gere/
+  
+qdjs.tar.gz
+	- https://github.com/lamzin-andrey/gjs/raw/master/releases/ubuntu-14.04-18.4/amd64/desktop-js.tar.gz
+	- repack it, so extracted dir was name qt-desktop-js
+	- Content of qt-desktop-js
+	   default
+	   lib
+	   hw
+	   run.sh

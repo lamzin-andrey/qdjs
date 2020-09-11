@@ -1,0 +1,9 @@
+[Unit]
+Description=Run mount RAM folder
+
+[Service]
+Type=oneshot
+ExecStart=/opt/qt-desktop-js/mountfs.sh
+
+[Install]
+WantedBy=multi-user.target
