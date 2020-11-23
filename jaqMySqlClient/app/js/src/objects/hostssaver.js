@@ -12,16 +12,16 @@ window.HostsSaver = {
      * @return Boolean true если всё ок
     */
     addHost:function(host, port, dbname, dbuser, dbpassword) {
-	if (!host || !port || !dbname || !dbuser || !dbpassword) {
-	    return false;
-	}
-        var data = {host: host, port: port, dbname: dbname, dbuser: dbuser, dbpassword: dbpassword, active: 1},
-            id = host + ':' + port;
-        Settings.set(id, data);
-	//save php config
-	this.savePhpConfig(host, port, dbname, dbuser, dbpassword);
-	this.setHostAsActive(id);
-	return true;
+		if (!host || !port || !dbname || !dbuser || !dbpassword) {
+			return false;
+		}
+		var data = {host: host, port: port, dbname: dbname, dbuser: dbuser, dbpassword: dbpassword, active: 1},
+			id = host + ':' + port + ':' + dbname;
+		Settings.set(id, data);
+		//save php config
+		this.savePhpConfig(host, port, dbname, dbuser, dbpassword);
+		this.setHostAsActive(id);
+		return true;
     },
     /**
      * @description Сохранить данные хоста в конфиге PHP

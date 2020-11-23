@@ -134,9 +134,13 @@ function In(a) {
  * @return {Object};
 */
 function storage(key, data) {
-	var L = window.localStorage;
+	// var L = window.localStorage;
+	var L = window.LocalStorageShim;
+	// alert(L);
 	if (L) {
+		// alert('I call + L');
 		if (data === null) {
+			
 			L.removeItem(key);
 		}
 		if (!(data instanceof String)) {
@@ -144,10 +148,11 @@ function storage(key, data) {
 		}
 		if (!data) {
 			data = L.getItem(key);
+			// alert(data);
 			if (data) {
 				try {
 					data = JSON.parse(data);
-				} catch(e){;}
+				} catch(e){alert(e);}
 			}
 		} else {
 			L.setItem(key, data);

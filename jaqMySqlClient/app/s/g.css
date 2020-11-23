@@ -4,6 +4,10 @@ body {
     font-family: geneva,verdana,helvetica,arial !important;
 }
 
+textarea {
+	font-family: DeJavu Sans Mono Book !important;
+}
+
 .tr, .text-right {
     text-align: right;
 }

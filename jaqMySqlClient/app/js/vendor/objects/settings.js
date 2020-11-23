@@ -17,7 +17,7 @@ window.Settings = {
      * @return Object
     */
     findAll:function() {
-	return RecentDir.jmp3cutLoadSettings();
+		return RecentDir.jmp3cutLoadSettings();
     },
     /**
      * @description Удалить данные хоста по id
@@ -25,6 +25,6 @@ window.Settings = {
      * @return Boolean
     */
     remove:function(s) {
-	return RecentDir.jmp3cutRemoveSetting(s);
+		return RecentDir.jmp3cutRemoveSetting(s);
     }
 };

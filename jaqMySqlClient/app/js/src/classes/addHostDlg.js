@@ -13,14 +13,15 @@ AddHostDlg.prototype.setListeners = function () {
 AddHostDlg.prototype.onClickBHostSave = function (evt) {
     var r = false;
     try {
-	r = W.HostsSaver.addHost(iHost.value, iPort.value, iName.value, iUser.value, iPassword.value);
+		r = W.HostsSaver.addHost(iHost.value, iPort.value, iName.value, iUser.value, iPassword.value);
     } catch (e) {
-	alert(e);
+		alert(e);
     }
     if (r ) {
-	alert(L('Параметры соединения сохранены и установлены как текущие'));
+		appWindowClose();
+		alert(L('Параметры соединения сохранены и установлены как текущие'));
     } else {
-	alert(L('Все поля обязательны для заполнения!'));
+		alert(L('Все поля обязательны для заполнения!'));
     }
     
 }

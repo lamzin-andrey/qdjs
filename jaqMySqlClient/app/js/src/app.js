@@ -12,17 +12,17 @@ function log(s) {
 }
 function onKeyUp(evt) {
     if (evt.ctrlKey) {
-	switch(evt.keyCode) {
-	    case 65:
-		onClickAddServer();
-		break;
-	    case 79:
-		onClickSelectServer();
-		break;
-	    case 81:
-		onClickExitMenu();
-		break;
-	}
+		switch(evt.keyCode) {
+			case 65:
+			onClickAddServer();
+			break;
+			case 79:
+			onClickSelectServer();
+			break;
+			case 81:
+			onClickExitMenu();
+			break;
+		}
 	    
     }
 	if (evt.keyCode == 27 && window.mainMenuIsHide) {
@@ -59,8 +59,10 @@ function onLoad() {
     resizeWorkArea(1);
     
     setInterval(function() {
-	resizeWorkArea(1);
+		resizeWorkArea(1);
     }, 200);
+    
+    W.sqlField = new SqlField();
 }
 
 function resizeWorkArea(isNoResizeWindowEvent) {
@@ -73,4 +75,13 @@ function resizeWorkArea(isNoResizeWindowEvent) {
     W.prevEditH = editH;
     var h = (o.h - editH) + 'px';
     stl(hResultArea, 'height', h);
+}
+
+function onExecuteSql(data) {
+	alert(data.status);
+	alert(data.rows[0]['id']);
+}
+
+function Null() {
+	
 }

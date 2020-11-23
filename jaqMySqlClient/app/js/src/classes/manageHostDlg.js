@@ -5,6 +5,7 @@ function ManageHostDlg() {
     this.selHosts = e('selHosts');
     this.loadHosts();
     this.setListeners();
+    this.selHosts.focus();
 }
 
 ManageHostDlg.prototype.setListeners = function () {
