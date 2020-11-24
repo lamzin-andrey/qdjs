@@ -63,6 +63,7 @@ function onLoad() {
     }, 200);
     
     W.sqlField = new SqlField();
+    W.dataGrid = new SqlDataGrid('hResultArea');
 }
 
 function resizeWorkArea(isNoResizeWindowEvent) {
@@ -78,8 +79,26 @@ function resizeWorkArea(isNoResizeWindowEvent) {
 }
 
 function onExecuteSql(data) {
-	alert(data.status);
-	alert(data.rows[0]['id']);
+	/*alert(data.status);
+	alert(data.rows[0]['id']);*/
+	if (data.status == 'ok') {
+		if (parseInt(data.rows)) {
+			//TODO показать мессагу со вставленым id
+			alert('Идентификатор вставленной записи ' + parseInt(data.rows));
+			return;
+		}
+		if (parseInt(data.ar)) {
+			alert(' Затронуто ' + data.ar + ' строк');
+			return;
+		}
+		W.dataGrid.clear();
+		W.dataGrid.set(data.rows, data.n);
+		return;
+	}
+	
+	if (data.status == 'error') {
+		alert(data.msg);
+	}
 }
 
 function Null() {
