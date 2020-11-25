@@ -1,3 +1,11 @@
 .tableHeader, .tableHeader td {
 	background-color:#F6F3DE;
 }
+
+.vScrollHidden {
+	overflow-y: hidden;
+}
+
+.scroll {
+	overflow: scroll;
+}
