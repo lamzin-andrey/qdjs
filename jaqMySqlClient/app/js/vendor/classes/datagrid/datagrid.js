@@ -11,12 +11,26 @@ function DataGrid(blockId) {
  * @description  Заполняет таблицу пустыми значениями чтобы установить динамические стили.
 */
 DataGrid.prototype.initalizeView = function() {
-	var N = 100, i, arr = [];
+	var N = 100, i, arr = [], rows = [], j;
 	for (i = 0; i < N; i++) {
 		arr.push((i + 1));
 	}
 	this.setColumnHeaders(arr);
 	this.setRowHeadersByRange(1, N + 1);
+	for (i = 0; i < N; i++) {
+		rows[i] = [];
+		for (j = 0; j < N; j++) {	
+			rows[i][j] = i + ', ' + j;
+		}
+	}
+	this.setContent(rows);
+	this.setScrollBars();
+}
+
+DataGrid.prototype.setScrollBars = function() {
+	this._divMainTablePlace.style.width = (this.viewContainer.offsetWidth - this.leftHeadersColumn.offsetWidth) + 'px';
+	this._divMainTablePlace.style.height = (this.viewContainer.offsetHeight - this.headerDiv.offsetHeight) + 'px';
+	console.log(this._divMainTablePlace.style.width);
 }
 
 DataGrid.prototype.setContent = function(dataRows) {
@@ -37,24 +51,30 @@ DataGrid.prototype.setRowValues = function(dataRow, tr, rowIndex) {
 	var i, cells = ee(tr, 'td'), j = 0;
 	if (dataRow instanceof Array) {
 		for (i = 0; i < sz(dataRow); i++) {
-			this.setCellContent(dataRow[i], cells, i, rowIndex);
+			/*if (i == 0) {
+				console.log(cells);
+				break;
+			}*/
+			this.setCellContent(dataRow[i], cells, i, rowIndex, tr);
+			// throw new Error('Line 52');
 		}
 	} else {
 		for (i in dataRow) {
-			this.setCellContent(dataRow[i], cells, j, rowIndex);
+			this.setCellContent(dataRow[i], cells, j, rowIndex, tr);
 			j++;
 		}
 	}
 }
 
-DataGrid.prototype.setCellContent = function(value, cells, i, rowIndex) {
+DataGrid.prototype.setCellContent = function(value, cells, i, rowIndex, tr) {
 	var td;
 	if (cells[i]) {
 		td = cells[i];
 		td.innerHTML = value;
 	} else {
-		td = appendChild(cells, 'td', value, {id: ('c' + rowIndex + '_' + i)});
-		this.setCellListeners(td);//TODO define it хотя бы
+		// console.log('will append td ' + i);
+		td = appendChild(tr, 'td', value, {id: ('c' + rowIndex + '_' + i)});
+		// this.setCellListeners(td);//TODO define it хотя бы
 	}
 }
 DataGrid.prototype.setRowContent = function(dataRow, mainTableRows, i) {
@@ -62,9 +82,9 @@ DataGrid.prototype.setRowContent = function(dataRow, mainTableRows, i) {
 	if (mainTableRows[i]) {
 		tr = mainTableRows[i];
 	} else {
-		tr = appendChild(this.mainTable, 'tr');
+		tr = appendChild(this.mainTable, 'tr', '');
 	}
-	this.setRowValues(rows[i], tr, i);
+	this.setRowValues(dataRow, tr, i);
 }
 /**
  * @param {Array} columnHeaders
@@ -110,7 +130,7 @@ DataGrid.prototype.setRowHeadersByRange = function(first, last) {
 		if (ls[j]) {
 			ls[j].innerHTML = i;
 		} else {
-			appendChild(tr, 'div', i);
+			appendChild(td, 'div', i);
 			createdNew = true;
 		}
 	}
@@ -130,11 +150,12 @@ DataGrid.prototype.getViewHeadersRowsDiv = function() {
 	}
 	this.mainFrameTable = appendChild(this.viewContainer, 'table', '');
 	var tr = appendChild(this.mainFrameTable, 'tr', '');
-	var left = appendChild(tr, 'td', '');
-	var right = appendChild(tr, 'td', '');
-	this.headerRows = appendChild(left, 'div', '', {'class': 'vScrollHidden'});		//TODO getter
-	this._divMainTablePlace = appendChild(right, 'div', '', {'class': 'scroll'});  // TODO getter
-	this.mainTable = appendChild(this._divMainTablePlace, 'table', '');
+	var left = appendChild(tr, 'td', '', {'style' : 'vertical-align: top;', 'class' : 'tableHeader'});
+	this.leftHeadersColumn = left;
+	var right = appendChild(tr, 'td', '', {'style' : 'vertical-align: top;'});
+	this.headerRows = appendChild(left, 'div', '', {'class': 'vScrollHidden'});		// TODO getter
+	this._divMainTablePlace = appendChild(right, 'div', '', {'class': 'scroll'});	// TODO getter
+	this.mainTable = appendChild(this._divMainTablePlace, 'table', '', {'class': 'au1'});
 	
 	return this.headerRows;
 }

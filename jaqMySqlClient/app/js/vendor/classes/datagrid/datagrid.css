@@ -1,5 +1,8 @@
 .tableHeader, .tableHeader td {
-	background-color:#F6F3DE;
+	background-color:#EFEDDE;
+	vertical-align:top;
+	text-align:center;
+	color:#000;
 }
 
 .vScrollHidden {
@@ -8,4 +11,13 @@
 
 .scroll {
 	overflow: scroll;
+}
+
+.tableHeader .vScrollHidden div {
+	border: 1px solid black;
+	text-align:center;
+}
+td {
+	background-color:#FFF;
+	color:#000;
 }
