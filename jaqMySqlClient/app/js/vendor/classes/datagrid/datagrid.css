@@ -9,6 +9,10 @@
 	overflow-y: hidden;
 }
 
+.hScrollHidden{
+	overflow-x: hidden;
+}
+
 .scroll {
 	overflow: scroll;
 }
@@ -16,8 +20,21 @@
 .tableHeader .vScrollHidden div {
 	border: 1px solid black;
 	text-align:center;
+	height: 18px;
 }
+
+.topBrick {
+	background-color:#EFEDDE;
+}
+
 td {
 	background-color:#FFF;
 	color:#000;
+}
+.headerRowsInner {
+	border:none!important;
+}
+
+table.au1 td {
+	/*width:50px!important;*/
 }

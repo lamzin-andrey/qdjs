@@ -2,6 +2,10 @@ function DataGrid(blockId) {
 	this.viewContainer = e(blockId);
 	this.mainTableNumCols = 0;
 	this.mainTableNumRows = 0;
+	
+	this.columnNumberWidth = 50;
+	this.columnNumberWidthCorrection = 0;
+	
 	this.initalizeView();
 }
 
@@ -25,12 +29,16 @@ DataGrid.prototype.initalizeView = function() {
 	}
 	this.setContent(rows);
 	this.setScrollBars();
+	this.setListeners();
 }
 
 DataGrid.prototype.setScrollBars = function() {
 	this._divMainTablePlace.style.width = (this.viewContainer.offsetWidth - this.leftHeadersColumn.offsetWidth) + 'px';
+	this.headerDivRight.style.width = (this.viewContainer.offsetWidth - this.leftHeadersColumn.offsetWidth) + 'px';
 	this._divMainTablePlace.style.height = (this.viewContainer.offsetHeight - this.headerDiv.offsetHeight) + 'px';
-	console.log(this._divMainTablePlace.style.width);
+	this.headerRows.style.height = (this.viewContainer.offsetHeight - this.headerDiv.offsetHeight) + 'px';
+	
+	// console.log(this._divMainTablePlace.style.width);
 }
 
 DataGrid.prototype.setContent = function(dataRows) {
@@ -92,12 +100,14 @@ DataGrid.prototype.setRowContent = function(dataRow, mainTableRows, i) {
 DataGrid.prototype.setColumnHeaders = function(columnHeaders) {
 	var tr = this.getViewHeadersColumn(),
 		i, createdNew = false,
-		ls = tr.getElementsByTagName('td');
+		ls = tr.getElementsByTagName('td'),
+		s = '';
 	for (i = 0; i < sz(columnHeaders); i++) {
+		s = columnHeaders[i];
 		if (ls[i]) {
-			ls[i].innerHTML = columnHeaders[i];
+			ls[i].innerHTML = s;
 		} else {
-			appendChild(tr, 'td', columnHeaders[i]);
+			appendChild(tr, 'td', s);
 			createdNew = true;
 		}
 	}
@@ -114,8 +124,16 @@ DataGrid.prototype.getViewHeadersColumn = function(row) {
 		return this.headerColumn;
 	}
 	this.headerDiv = appendChild(this.viewContainer, 'div', '');
-	this.headerTable = appendChild(this.headerDiv, 'table', '');
+	this.headerDivTable = appendChild(this.headerDiv, 'table', '');
+	this.headerDivTableTr = appendChild(this.headerDivTable, 'tr', '');
+	this.topBrick = appendChild(this.headerDivTableTr, 'td', '', {'class' : 'topBrick'});
+	this.rightBrick = appendChild(this.headerDivTableTr, 'td', '');
+	this.headerDivRight = appendChild(this.rightBrick, 'div', '', {'class' : 'hScrollHidden'});
+	// this.headerDivClear = appendChild(this.headerDiv, 'div', '', {'class' : 'clear'});
+	this.headerTable = appendChild(this.headerDivRight, 'table', '');
 	this.headerColumn = appendChild(this.headerTable, 'tr', '', {'class': 'tableHeader'});
+	
+	this.observeGeometry();
 	
 	return this.headerColumn;
 }
@@ -154,10 +172,11 @@ DataGrid.prototype.getViewHeadersRowsDiv = function() {
 	this.leftHeadersColumn = left;
 	var right = appendChild(tr, 'td', '', {'style' : 'vertical-align: top;'});
 	this.headerRows = appendChild(left, 'div', '', {'class': 'vScrollHidden'});		// TODO getter
-	this._divMainTablePlace = appendChild(right, 'div', '', {'class': 'scroll'});	// TODO getter
+	this.headerRowsInner = appendChild(this.headerRows, 'div', '', {'class': 'headerRowsInner'});		
+	this._divMainTablePlace = appendChild(right, 'div', '', {'class': 'scroll', 'id': 'mainScroll'});	// TODO getter
 	this.mainTable = appendChild(this._divMainTablePlace, 'table', '', {'class': 'au1'});
 	
-	return this.headerRows;
+	return this.headerRowsInner;
 }
 
 DataGrid.prototype.getRowsScrollDiv = function() {
@@ -194,4 +213,21 @@ DataGrid.prototype.clearContent = function() {
 
 DataGrid.prototype.setListeners = function() {
 	var self = this;
+	this._divMainTablePlace.addEventListener('scroll', function(evt){ self.onScroll(evt); });
 }
+
+DataGrid.prototype.onScroll = function(evt) {
+	// alert(this._divMainTablePlace.scrollTop);
+	this.headerRowsInner.style.marginTop = (-1 * this._divMainTablePlace.scrollTop) + 'px';
+	this.headerTable.style.marginLeft = (-1 * this._divMainTablePlace.scrollLeft) + 'px';
+	this.observeGeometry();
+}
+
+DataGrid.prototype.observeGeometry = function() {
+	//TODO здесь можно будет измнять ширину столбца с цифрами
+	
+	// topBrick меняем тоже
+	this.topBrick.style.width = this.columnNumberWidth + this.columnNumberWidthCorrection + 'px';
+	
+}
+

@@ -1,4 +1,4 @@
-Для тех, кто любит записывать эфиры радио Маяк и не люьит новости спорта на этой радиостанции.
+Для тех, кто любит записывать эфиры радио Маяк и не любит новости спорта на этой радиостанции.
 Нужны установленные программы Audio-Recorder, mplayer в котором воспроизводится радио.
 
 
@@ -22,3 +22,6 @@ gst-launch-1.0  -e pulsesrc device=alsa_output.pci-0000_00_14.2.analog-stereo.mo
 ! audioresample ! audioconvert \
 ! audio/x-raw,rate=44100,channels=2 ! lamemp3enc name=enc target=0 quality=2 \
 ! filesink location=test.mp3
+
+
+LR 1130 Camelion
