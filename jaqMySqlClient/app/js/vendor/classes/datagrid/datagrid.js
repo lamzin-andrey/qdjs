@@ -5,6 +5,8 @@ function DataGrid(blockId) {
 	
 	this.columnNumberWidth = 50;
 	this.columnNumberWidthCorrection = 0;
+	this.cursorX = 0;
+	this.cursorY = 0;
 	
 	this.initalizeView();
 }
@@ -30,6 +32,9 @@ DataGrid.prototype.initalizeView = function() {
 	this.setContent(rows);
 	this.setScrollBars();
 	this.setListeners();
+	
+	var td = e('c' + this.cursorY + '_' + this.cursorX);
+	this.setActiveCellView(td, td);
 }
 
 DataGrid.prototype.setScrollBars = function() {
@@ -75,6 +80,17 @@ DataGrid.prototype.setRowValues = function(dataRow, tr, rowIndex) {
 }
 
 DataGrid.prototype.setCellContent = function(value, cells, i, rowIndex, tr) {
+	// Добавляю данные в копию, чтобы не было разных бед
+	if (!this.tableData) {
+		this.tableData = [];
+	}
+	
+	if (!this.tableData[rowIndex]) {
+		this.tableData[rowIndex] = [];
+	}
+	
+	this.tableData[rowIndex][i] = value;
+	
 	var td;
 	if (cells[i]) {
 		td = cells[i];
@@ -84,7 +100,152 @@ DataGrid.prototype.setCellContent = function(value, cells, i, rowIndex, tr) {
 		td = appendChild(tr, 'td', value, {id: ('c' + rowIndex + '_' + i)});
 		// this.setCellListeners(td);//TODO define it хотя бы
 	}
+	this.setCellListeners(td);
 }
+
+
+/**
+ * Установка слушателей событий для ячеек таблицы
+*/
+DataGrid.prototype.setCellListeners = function(td) {
+	var self = this;
+	td.onclick = function(evt){
+		self.onClickCell(evt, td);
+	}
+}
+
+
+/**
+ * Установка слушателей событий для ячеек таблицы
+*/
+DataGrid.prototype.onClickCell = function(evt, td) {
+	evt.preventDefault();
+	var currentActiveCell = e('c' + this.cursorY + '_' + this.cursorX);
+	this.setActiveCellView(td, currentActiveCell);
+	
+	var id = td.getAttribute('id'),
+		a, r, c;
+		
+	id = id.replace('c', '');
+	a = id.split('_');
+	r = a[0];
+	c = a[1];
+	this.cursorX = c;
+	this.cursorY = r;
+}
+
+/**
+ * Установка вида ячейки таблицы "активная"
+*/
+DataGrid.prototype.setActiveCellView = function(td, currentActiveCell) {
+	var clr = '#002DEF';// #002DEF  #ACFFD2 rgb(72, 215, 137)
+	this.setCellColor(currentActiveCell, '#000000', 1);
+	this.setCellColor(td, clr, 2);
+}
+
+/**
+ * Установка цвета активной ячейки таблицы
+*/
+DataGrid.prototype.setCellColor = function(td, clr, w) {
+	var id = td.getAttribute('id'),
+		a, r, c;
+		
+	id = id.replace('c', '');
+	a = id.split('_');
+	r = a[0];
+	c = a[1];
+	
+	td.style.borderRight = w + 'px solid ' + clr;
+	td.style.borderBottom = w + 'px solid ' + clr;
+	
+	td = this.getTopCell(r, c);
+	if (td) {
+		td.style.borderBottom = w + 'px solid ' + clr;
+	}
+	
+	td = this.getLeftCell(r, c);
+	if (td) {
+		td.style.borderRight = w + 'px solid ' + clr;
+	}
+	
+}
+
+/**
+ * Получить ячейку (td element) над ячейкой с индексами r и  c
+*/
+DataGrid.prototype.getTopCell = function(r, c) {
+	r = r - 1;
+	var td = e('c' + r + '_' + c);
+	if (!td) {
+		return null;
+	}
+	
+	return td;
+}
+
+/**
+ * Получить ячейку (td element) левее ячейки с индексами r и  c
+*/
+DataGrid.prototype.getLeftCell = function(r, c) {
+	c = c - 1;
+	var td = e('c' + r + '_' + c);
+	if (!td) {
+		return null;
+	}
+	
+	return td;
+}
+
+/**
+ * Установка слушателей событий для ячеек таблицы
+*/
+DataGrid.prototype.onKeyDownCell = function(evt) {
+	evt.preventDefault();
+	
+	var current = e('c' + this.cursorY + '_' + this.cursorX);
+	
+	
+	if (evt.keyCode == 37) { // left
+		this.cursorX--;
+		if (this.cursorX < 0) {
+			this.cursorX = 0;
+		}
+	}
+	
+	var maxX = 0,
+		maxY = 0;
+
+	if (this.tableData.length) {
+		maxY = this.tableData.length;
+		maxX = this.tableData[0].length;
+	}
+		
+	if (evt.keyCode == 39) { // right
+		this.cursorX++;
+		if (this.cursorX > maxX) {
+			this.cursorX = maxX;
+		}
+	}
+	
+	if (evt.keyCode == 40) { // down
+		this.cursorY++;
+		if (this.cursorY > maxY) {
+			this.cursorY = maxY;
+		}
+	}
+	
+	if (evt.keyCode == 38) { // up
+		this.cursorY--;
+		if (this.cursorY < 0) {
+			this.cursorY = 0;
+		}
+	}
+	
+	var td = e('c' + this.cursorY + '_' + this.cursorX);
+	this.setActiveCellView(td, current);
+	
+}
+
 DataGrid.prototype.setRowContent = function(dataRow, mainTableRows, i) {
 	var tr;
 	if (mainTableRows[i]) {
@@ -214,6 +375,10 @@ DataGrid.prototype.clearContent = function() {
 DataGrid.prototype.setListeners = function() {
 	var self = this;
 	this._divMainTablePlace.addEventListener('scroll', function(evt){ self.onScroll(evt); });
+	
+	window.addEventListener('keydown',  function(evt){
+		self.onKeyDownCell(evt);
+	});
 }
 
 DataGrid.prototype.onScroll = function(evt) {
