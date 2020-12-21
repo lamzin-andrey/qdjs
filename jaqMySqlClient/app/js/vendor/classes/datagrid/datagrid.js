@@ -202,7 +202,8 @@ DataGrid.prototype.getLeftCell = function(r, c) {
 DataGrid.prototype.onKeyDownCell = function(evt) {
 	evt.preventDefault();
 	
-	var current = e('c' + this.cursorY + '_' + this.cursorX);
+	var current = e('c' + this.cursorY + '_' + this.cursorX),
+		scrollFunctionName = '';
 	
 	
 	if (evt.keyCode == 37) { // left
@@ -210,6 +211,7 @@ DataGrid.prototype.onKeyDownCell = function(evt) {
 		if (this.cursorX < 0) {
 			this.cursorX = 0;
 		}
+		scrollFunctionName = 'setScrollForLeft';
 	}
 	
 	var maxX = 0,
@@ -225,6 +227,7 @@ DataGrid.prototype.onKeyDownCell = function(evt) {
 		if (this.cursorX > maxX) {
 			this.cursorX = maxX;
 		}
+		scrollFunctionName = 'setScrollForRight';
 	}
 	
 	if (evt.keyCode == 40) { // down
@@ -232,6 +235,7 @@ DataGrid.prototype.onKeyDownCell = function(evt) {
 		if (this.cursorY > maxY) {
 			this.cursorY = maxY;
 		}
+		scrollFunctionName = 'setScrollForDown';
 	}
 	
 	if (evt.keyCode == 38) { // up
@@ -239,10 +243,90 @@ DataGrid.prototype.onKeyDownCell = function(evt) {
 		if (this.cursorY < 0) {
 			this.cursorY = 0;
 		}
+		scrollFunctionName = 'setScrollForUp';
 	}
 	
 	var td = e('c' + this.cursorY + '_' + this.cursorX);
 	this.setActiveCellView(td, current);
+	if (this[scrollFunctionName]) {
+		this[scrollFunctionName]();
+	}
+	
+}
+/**
+ * @description Установить горизонтальный скролл при движении курсором влево
+*/
+DataGrid.prototype.setScrollForLeft = function() {
+	var td, i, offsetLeft = 0;
+	for (i = 0; i < this.cursorX; i++) {
+		td = e('c' + this.cursorY + '_' + i);
+		offsetLeft += td.offsetWidth;
+	}
+	
+	// console.log('this._divMainTablePlace.scrollLeft', this._divMainTablePlace.scrollLeft, 'offsetLeft', offsetLeft);
+	if ( ( offsetLeft - parseInt(this._divMainTablePlace.scrollLeft)) < 0) {
+		this._divMainTablePlace.scrollLeft -= -1*( offsetLeft - parseInt(this._divMainTablePlace.scrollLeft));
+	}
+	
+	if (this.cursorX == 0) {
+		this._divMainTablePlace.scrollLeft = 0;
+	}
+	
+	
+}
+/**
+ * @description Установить горизонтальный скролл при движении курсором вправо
+*/
+DataGrid.prototype.setScrollForRight = function() {
+	var td, i, offsetLeft = 0;
+	for (i = 0; i <= this.cursorX; i++) {
+		td = e('c' + this.cursorY + '_' + i);
+		if (!td) {
+			return;
+		}
+		offsetLeft += td.offsetWidth;
+	}
+	if (offsetLeft > parseInt(this._divMainTablePlace.style.width) ) {
+		this._divMainTablePlace.scrollLeft = ( offsetLeft - parseInt(this._divMainTablePlace.style.width));
+	}
+}
+
+/**
+ * @description Установить горизонтальный скролл при движении курсором вниз
+*/
+DataGrid.prototype.setScrollForDown = function() {
+	var td, i, offsetTop = 0;
+	for (i = 0; i <= this.cursorY; i++) {
+		td = e('c' + i + '_' + this.cursorX);
+		if (!td) {
+			return;
+		}
+		offsetTop += td.offsetHeight;
+	}
+	if (offsetTop > parseInt(this._divMainTablePlace.style.height) ) {
+		this._divMainTablePlace.scrollTop = ( offsetTop - parseInt(this._divMainTablePlace.style.height));
+	}
+}
+
+/**
+ * @description Установить горизонтальный скролл при движении курсором влево
+*/
+DataGrid.prototype.setScrollForUp = function() {
+	var td, i, offsetTop = 0;
+	for (i = 0; i < this.cursorY; i++) {
+		td = e('c' + i + '_' + this.cursorX);
+		offsetTop += td.offsetHeight;
+	}
+	
+	// console.log('this._divMainTablePlace.scrollLeft', this._divMainTablePlace.scrollLeft, 'offsetLeft', offsetLeft);
+	if ( ( offsetTop - parseInt(this._divMainTablePlace.scrollTop)) < 0) {
+		this._divMainTablePlace.scrollTop -= -1*( offsetTop - parseInt(this._divMainTablePlace.scrollTop));
+	}
+	
+	if (this.cursorY == 0) {
+		this._divMainTablePlace.scrollTop = 0;
+	}
+	
 	
 }
 
