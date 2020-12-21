@@ -46,7 +46,102 @@ DataGrid.prototype.setScrollBars = function() {
 	// console.log(this._divMainTablePlace.style.width);
 }
 
+
+DataGrid.prototype.addEmptyRowAndColumn = function(dataRows) {
+	var lastRow, i, j, newRow, numCells = 0, row, emp = '&nbsp;';
+	// append new Empty row
+	if (dataRows instanceof Array) {
+		
+		lastRow = dataRows[sz(dataRows) - 1];
+		if (lastRow instanceof Array) {
+			newRow = [];
+			for (i = 0; i < sz(lastRow); i++) {
+				newRow.push('&nbsp;');
+			}
+			dataRows.push(newRow);
+		} else {
+			newRow = new Object();
+			for (i in lastRow) {
+				newRow[i] = '&nbsp;';
+			}
+			dataRows.push(newRow);
+		}
+		
+	} else {
+		for (i in dataRows) {
+			if (!lastRow) {
+				lastRow = dataRows[i];
+			}
+			numCells++;
+		}
+		if (lastRow instanceof Array) {
+			newRow = [];
+			for (i = 0; i < sz(lastRow); i++) {
+				newRow.push('&nbsp;');
+			}
+			dataRows['datagridLastRow21122020'] = newRow;
+		} else {
+			newRow = new Object();
+			for (i in lastRow) {
+				newRow[i] = '&nbsp;';
+			}
+			dataRows['datagridLastRow21122020'] = newRow;
+		}
+	}
+	
+	// append new Empty column
+	if (dataRows instanceof Array) {
+		for (i = 0; i < sz(dataRows); i++) {
+			row = dataRows[i];
+			if (row instanceof Array) {
+				row.push(emp);
+			} else {
+				row['datagridLastRowLastCell21122020'] = emp;
+			}
+		}
+	} else {
+		for (i in dataRows) {
+			row = dataRows[i];
+			if (row instanceof Array) {
+				row.push(emp);
+			} else {
+				row['datagridLastRowLastCell21122020'] = emp;
+			}
+		}
+	}
+}
+
+
+/**
+ * @description Установить максимальные пределы для изменения значений курсора ячеек
+*/
+DataGrid.prototype.setMaxCursor = function(dataRows) {
+	var i, j = 0, row;
+	if (dataRows instanceof Array) {
+		this.maxCursorY = dataRows.length;
+		row = dataRows[dataRows.length - 1];
+	} else {
+		this.maxCursorY = 0;
+		for (i in dataRows) {
+			if (!row) {
+				row = dataRows[i];
+			}
+			this.maxCursorY++;
+		}
+	}
+	
+	if (row instanceof Array) {
+		this.maxCursorX = row.length;
+	} else {
+		this.maxCursorX = 0;
+		for (i in row) {
+			this.maxCursorX++;
+		}
+	}
+}
 DataGrid.prototype.setContent = function(dataRows) {
+	this.setMaxCursor(dataRows);
+	this.addEmptyRowAndColumn(dataRows);
 	var i, mainTableRows = ee(this.mainTable, 'tr'), j = 0;
 	if (dataRows instanceof Array) {
 		for (i = 0; i < sz(dataRows); i++) {
@@ -214,13 +309,14 @@ DataGrid.prototype.onKeyDownCell = function(evt) {
 		scrollFunctionName = 'setScrollForLeft';
 	}
 	
-	var maxX = 0,
-		maxY = 0;
+	var maxX = this.maxCursorX,
+		maxY = this.maxCursorY;
 
-	if (this.tableData.length) {
+	/*if (this.tableData.length) {
+		// здесь использовать this.maxCursorXY
 		maxY = this.tableData.length;
 		maxX = this.tableData[0].length;
-	}
+	}*/
 		
 	if (evt.keyCode == 39) { // right
 		this.cursorX++;
@@ -347,8 +443,11 @@ DataGrid.prototype.setColumnHeaders = function(columnHeaders) {
 		i, createdNew = false,
 		ls = tr.getElementsByTagName('td'),
 		s = '';
-	for (i = 0; i < sz(columnHeaders); i++) {
+	for (i = 0; i <= sz(columnHeaders); i++) {
 		s = columnHeaders[i];
+		if (String(s) == 'undefined') {
+			s = '';
+		}
 		if (ls[i]) {
 			ls[i].innerHTML = s;
 		} else {
@@ -389,7 +488,7 @@ DataGrid.prototype.getViewHeadersColumn = function(row) {
 DataGrid.prototype.setRowHeadersByRange = function(first, last) {
 	var td = this.getViewHeadersRowsDiv();
 	var i, j = 0, ls = ee(td, 'div'), createdNew = false;
-	for (i = first; i <= last; i++, j++) {
+	for (i = first; i <= last + 1; i++, j++) {
 		if (ls[j]) {
 			ls[j].innerHTML = i;
 		} else {

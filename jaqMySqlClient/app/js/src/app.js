@@ -74,8 +74,12 @@ function resizeWorkArea(isNoResizeWindowEvent) {
     }
     var o = getViewport(), editH = tEdit1.offsetHeight;
     W.prevEditH = editH;
-    var h = (o.h - editH) + 'px';
+    var h = (o.h - editH - 40) + 'px';
     stl(hResultArea, 'height', h);
+    
+    if (W.dataGrid) {
+		W.dataGrid.setScrollBars();
+	}
 }
 
 function onExecuteSql(data) {

@@ -47,3 +47,7 @@ SqlDataGrid.prototype.setListeners = function() {
     
 }
 
+SqlDataGrid.prototype.setScrollBars = function() {
+	this.dataGrid.setScrollBars();
+}
+
