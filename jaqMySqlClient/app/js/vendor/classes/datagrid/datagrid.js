@@ -545,7 +545,6 @@ DataGrid.prototype.setRowHeadersByRange = function(first, last) {
 	}
 
 	if (!createdNew) {
-		alert(1);
 		for (j + 1; j < sz(ls); j++) {
 			ls[j].innerHTML = '&nbsp;';
 		}
