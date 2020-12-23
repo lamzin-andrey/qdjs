@@ -66,8 +66,10 @@ function query($cmd, &$numRows = 0, &$affectedRows = 0, $skipSqlCache = false) {
 		$SQLCACHE[$cmd] = [];
 		$SQLCACHE[$cmd]['n'] = $numRows;
 		$SQLCACHE[$cmd]['data'] = $data;
+	} else {
+		$affectedRows = $dbaffectedrows = mysqli_affected_rows($link);
 	}
-	$affectedRows = $dbaffectedrows = mysqli_affected_rows($link);
+	
 	if ($insert) {
 		$id = mysqli_insert_id($link);
 		mysqli_close($link);

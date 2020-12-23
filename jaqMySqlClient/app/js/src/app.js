@@ -95,7 +95,7 @@ function onExecuteSql(data) {
 			alert(' Затронуто ' + data.ar + ' строк');
 			return;
 		}
-		W.dataGrid.clear();
+		alert('Выбрано ' + data.n + ' строк');
 		W.dataGrid.set(data.rows, data.n);
 		return;
 	}

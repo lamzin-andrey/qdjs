@@ -7,8 +7,10 @@ function SqlDataGrid(blockId) {
 
 SqlDataGrid.prototype.set = function(rows, n) {
 	var columnHeaders = this.getColumnHeaders(rows);
+	this.clear();
 	this.dataGrid.setColumnHeaders(columnHeaders);
 	this.dataGrid.setRowHeadersByRange(1, n + 1);
+	
 	this.dataGrid.setContent(rows);//TODO
 }
 
@@ -38,8 +40,8 @@ SqlDataGrid.prototype.getColumnHeaders = function(rows) {
 }
 
 SqlDataGrid.prototype.clear = function() {
-	this.dataGrid.clearHeaders();//TODO
-	this.dataGrid.clearContent();//TODO
+	this.dataGrid.clearHeaders();
+	this.dataGrid.clearContent();
 }
 
 SqlDataGrid.prototype.setListeners = function() {

@@ -17,16 +17,20 @@ function DataGrid(blockId) {
  * @description  Заполняет таблицу пустыми значениями чтобы установить динамические стили.
 */
 DataGrid.prototype.initalizeView = function() {
-	var N = 100, i, arr = [], rows = [], j;
+	var N = 100, i, arr = [], rows = [], j, v;
 	for (i = 0; i < N; i++) {
-		arr.push((i + 1));
+		v = (i + 1);
+		if (i == 4) {
+			v = 'Gerodoterda ore';
+		}
+		arr.push(v);
 	}
 	this.setColumnHeaders(arr);
 	this.setRowHeadersByRange(1, N + 1);
 	for (i = 0; i < N; i++) {
 		rows[i] = [];
 		for (j = 0; j < N; j++) {	
-			rows[i][j] = i + ', ' + j;
+			rows[i][j] = i + ', ' + j + ' Sigizmoond Podoozdovatyy III ERarol';
 		}
 	}
 	this.setContent(rows);
@@ -42,6 +46,7 @@ DataGrid.prototype.setScrollBars = function() {
 	this.headerDivRight.style.width = (this.viewContainer.offsetWidth - this.leftHeadersColumn.offsetWidth) + 'px';
 	this._divMainTablePlace.style.height = (this.viewContainer.offsetHeight - this.headerDiv.offsetHeight) + 'px';
 	this.headerRows.style.height = (this.viewContainer.offsetHeight - this.headerDiv.offsetHeight) + 'px';
+	
 	
 	// console.log(this._divMainTablePlace.style.width);
 }
@@ -186,15 +191,39 @@ DataGrid.prototype.setCellContent = function(value, cells, i, rowIndex, tr) {
 	
 	this.tableData[rowIndex][i] = value;
 	
-	var td;
+	var td, headers = this.getViewHeadersColumn(), ths, headerCell, stl, 
+		cutValue, indexB = 6;
+	// TODO это чистить при clear!
+	if (!this.columnHLs) {
+		this.columnHLs = ee(headers, 'td');
+		this.columnHLsWidthList = [];
+	}
+	ths = this.columnHLs;
+	headerCell = ths[i];
+	if (!this.columnHLsWidthList[i] && headerCell) {
+		this.columnHLsWidthList[i] = headerCell.offsetWidth - 1;
+	}
+	indexB = parseInt(this.columnHLsWidthList[i] / 10);
+	cutValue = String(value).substring(0, indexB);
 	if (cells[i]) {
 		td = cells[i];
-		td.innerHTML = value;
+		td.innerHTML = cutValue;
+		if (this.columnHLsWidthList[i]) {
+			// alert('set W for row ' + rowIndex + ' Cell ' + i + ' v = ' + this.columnHLsWidthList[i]);
+			td.style['max-width'] = this.columnHLsWidthList[i] + 'px';
+			td.style['min-width'] = this.columnHLsWidthList[i] + 'px';
+		}
 	} else {
 		// console.log('will append td ' + i);
-		td = appendChild(tr, 'td', value, {id: ('c' + rowIndex + '_' + i)});
-		// this.setCellListeners(td);//TODO define it хотя бы
+		stl = ''; // 'overflow-x:hidden;';
+		if (this.columnHLsWidthList[i]) {
+			stl += 'max-width: ' + this.columnHLsWidthList[i] + 'px;';
+			stl += 'min-width: ' + this.columnHLsWidthList[i] + 'px';
+		}
+		td = appendChild(tr, 'td', cutValue, {id: ('c' + rowIndex + '_' + i), style: stl});
 	}
+	
+	
 	this.setCellListeners(td);
 }
 
@@ -295,7 +324,8 @@ DataGrid.prototype.getLeftCell = function(r, c) {
  * Установка слушателей событий для ячеек таблицы
 */
 DataGrid.prototype.onKeyDownCell = function(evt) {
-	evt.preventDefault();
+	//TODO если фокус в поле ввода, выходить
+	evt.preventDefault(); 
 	
 	var current = e('c' + this.cursorY + '_' + this.cursorX),
 		scrollFunctionName = '';
@@ -436,6 +466,23 @@ DataGrid.prototype.setRowContent = function(dataRow, mainTableRows, i) {
 	this.setRowValues(dataRow, tr, i);
 }
 /**
+ * @description Устанавливает ширину колонок такой же, как ширина колонок - заголовков
+*/
+DataGrid.prototype.setColumnWidthes = function() {
+	var headersTr = this.getViewHeadersColumn(), i, th, td,
+		ths = ee(headersTr, 'td');
+	for (i = 0; i < sz(ths); i++) {
+		th = ths[i];
+		this.getCellByIndex(0, i).style.maxWidth = th.offsetWidth + 'px';
+	}
+}
+/**
+ * @param {Array} columnHeaders
+*/
+DataGrid.prototype.getCellByIndex = function(rowN, cellN) {
+	return e('c' + rowN + '_' + cellN);
+}
+/**
  * @param {Array} columnHeaders
 */
 DataGrid.prototype.setColumnHeaders = function(columnHeaders) {
@@ -535,15 +582,14 @@ DataGrid.prototype.getMainTableWrapper = function() {
 */
 DataGrid.prototype.clearHeaders = function() {
 	var div = this.getViewHeadersRowsDiv();
-	var i, ls = ee(td, 'div');
+	var i, ls = ee(div, 'td'), emp = '&nbsp;';
 	for (i = 0; i < sz(ls); i++) {
-		ls[i].innerHTML = '';
+		ls[i].innerHTML = emp;
 	}
-	
 	var td = this.getViewHeadersColumn();
 	ls = ee(td, 'td');
 	for (i = 0; i < sz(ls); i++) {
-		ls[i].innerHTML = '';
+		ls[i].innerHTML = emp;
 	}
 }
 
@@ -551,8 +597,12 @@ DataGrid.prototype.clearHeaders = function() {
 DataGrid.prototype.clearContent = function() {
 	var ls = ee(this.mainTable, 'td'), i;
 	for (i = 0; i < sz(ls); i++) {
-		ls[i].innerHTML = '';
+		ls[i].innerHTML = '&nbsp;';
+		ls[i].style['max-width'] = null;
+		ls[i].style['min-width'] = null;
 	}
+	this.columnHLs = null;
+	this.columnHLsWidthList = null;
 }
 
 DataGrid.prototype.setListeners = function() {
@@ -561,7 +611,8 @@ DataGrid.prototype.setListeners = function() {
 	
 	window.addEventListener('keydown',  function(evt){
 		self.onKeyDownCell(evt);
-	});
+		return true;
+	}, true);
 }
 
 DataGrid.prototype.onScroll = function(evt) {
