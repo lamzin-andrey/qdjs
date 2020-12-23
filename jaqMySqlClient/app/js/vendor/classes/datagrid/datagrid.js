@@ -325,7 +325,7 @@ DataGrid.prototype.getLeftCell = function(r, c) {
 */
 DataGrid.prototype.onKeyDownCell = function(evt) {
 	//TODO если фокус в поле ввода, выходить
-	evt.preventDefault(); 
+	// evt.preventDefault(); 
 	
 	var current = e('c' + this.cursorY + '_' + this.cursorX),
 		scrollFunctionName = '';
@@ -598,8 +598,8 @@ DataGrid.prototype.clearContent = function() {
 	var ls = ee(this.mainTable, 'td'), i;
 	for (i = 0; i < sz(ls); i++) {
 		ls[i].innerHTML = '&nbsp;';
-		/*ls[i].style.maxWidth = null;
-		ls[i].style['min-width'] = null;*/
+		ls[i].style.maxWidth = null;
+		ls[i].style['min-width'] = null;
 	}
 	this.columnHLs = null;
 	this.columnHLsWidthList = null;
