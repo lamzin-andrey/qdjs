@@ -9,7 +9,7 @@ SqlDataGrid.prototype.set = function(rows, n) {
 	var columnHeaders = this.getColumnHeaders(rows);
 	this.clear();
 	this.dataGrid.setColumnHeaders(columnHeaders);
-	this.dataGrid.setRowHeadersByRange(1, n + 1);
+	this.dataGrid.setRowHeadersByRange(1, n);
 	
 	this.dataGrid.setContent(rows);//TODO
 }

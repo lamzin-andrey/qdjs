@@ -20,9 +20,9 @@ DataGrid.prototype.initalizeView = function() {
 	var N = 100, i, arr = [], rows = [], j, v;
 	for (i = 0; i < N; i++) {
 		v = (i + 1);
-		if (i == 4) {
+		/*if (i == 4) {
 			v = 'Gerodoterda ore';
-		}
+		}*/
 		arr.push(v);
 	}
 	this.setColumnHeaders(arr);
@@ -30,7 +30,7 @@ DataGrid.prototype.initalizeView = function() {
 	for (i = 0; i < N; i++) {
 		rows[i] = [];
 		for (j = 0; j < N; j++) {	
-			rows[i][j] = i + ', ' + j + ' Sigizmoond Podoozdovatyy III ERarol';
+			rows[i][j] = '';// i + ', ' + j + ' Sigizmoond Podoozdovatyy III ERarol';
 		}
 	}
 	this.setContent(rows);
@@ -545,8 +545,9 @@ DataGrid.prototype.setRowHeadersByRange = function(first, last) {
 	}
 
 	if (!createdNew) {
+		alert(1);
 		for (j + 1; j < sz(ls); j++) {
-			ls[j].innerHTML = '';
+			ls[j].innerHTML = '&nbsp;';
 		}
 	}
 }
@@ -554,8 +555,8 @@ DataGrid.prototype.setRowHeadersByRange = function(first, last) {
  * @description Строит основной вид таблицы
 */
 DataGrid.prototype.getViewHeadersRowsDiv = function() {
-	if (this.headerRows) {
-		return this.headerRows;
+	if (this.headerRowsInner) {
+		return this.headerRowsInner;
 	}
 	this.mainFrameTable = appendChild(this.viewContainer, 'table', '');
 	var tr = appendChild(this.mainFrameTable, 'tr', '');
@@ -582,7 +583,7 @@ DataGrid.prototype.getMainTableWrapper = function() {
 */
 DataGrid.prototype.clearHeaders = function() {
 	var div = this.getViewHeadersRowsDiv();
-	var i, ls = ee(div, 'td'), emp = '&nbsp;';
+	var i, ls = ee(div, 'div'), emp = '&nbsp;';
 	for (i = 0; i < sz(ls); i++) {
 		ls[i].innerHTML = emp;
 	}
@@ -598,8 +599,8 @@ DataGrid.prototype.clearContent = function() {
 	var ls = ee(this.mainTable, 'td'), i;
 	for (i = 0; i < sz(ls); i++) {
 		ls[i].innerHTML = '&nbsp;';
-		ls[i].style['max-width'] = null;
-		ls[i].style['min-width'] = null;
+		/*ls[i].style.maxWidth = null;
+		ls[i].style['min-width'] = null;*/
 	}
 	this.columnHLs = null;
 	this.columnHLsWidthList = null;
