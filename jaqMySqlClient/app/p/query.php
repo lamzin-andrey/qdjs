@@ -1,7 +1,9 @@
 <?php
 include __DIR__ . '/q/custom.php';
+include __DIR__ . '/q/utils.php';
 include __DIR__ . '/q/mysql.php';
 function main() {
+	$_REQUEST['xhr'] = true;
 	$sqlfile = __DIR__ . '/command.sql';
 	if (!file_exists($sqlfile)) {
 		$result = ['status' => 'error', 'msg' => 'File command.sql not found!'];
