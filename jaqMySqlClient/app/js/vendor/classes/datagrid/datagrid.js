@@ -620,6 +620,11 @@ DataGrid.prototype.clearContent = function() {
 	this.tableData = [];
 	this.columnHLs = null;
 	this.columnHLsWidthList = null;
+	var currentActiveTd = this.getCellByIndex(this.cursorY, this.cursorX),
+		td = this.getCellByIndex(0, 0);
+	this.cursorX = 0;
+	this.cursorY = 0;
+	this.setActiveCellView(td, currentActiveTd);
 }
 
 DataGrid.prototype.setListeners = function() {
