@@ -53,3 +53,10 @@ SqlDataGrid.prototype.setScrollBars = function() {
 	this.dataGrid.setScrollBars();
 }
 
+/**
+ * @param {Boolean} bValue
+*/
+SqlDataGrid.prototype.setIsFocused = function(bValue) {
+	this.dataGrid.isFocused = bValue;
+}
+

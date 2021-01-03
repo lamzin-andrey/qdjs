@@ -11,6 +11,8 @@ function DataGrid(blockId) {
 	this.initalizeView();
 	/** @property {Boolean} после первой очистки принимает false */
 	this.isFirstRender = true;
+	/** @property {Boolean} надо устанавливать ее в false когда вы не хотите, чтобы grid реагировал на клавиши */
+	this.isFocused = true;
 }
 
 
@@ -327,7 +329,10 @@ DataGrid.prototype.getLeftCell = function(r, c) {
 */
 DataGrid.prototype.onKeyDownCell = function(evt) {
 	//TODO если фокус в поле ввода, выходить
-	// evt.preventDefault(); 
+	if (!this.isFocused) {
+		return;
+	}
+	evt.preventDefault(); 
 	
 	var current = e('c' + this.cursorY + '_' + this.cursorX),
 		scrollFunctionName = '';
@@ -588,6 +593,7 @@ DataGrid.prototype.clearHeaders = function() {
 	for (i = 0; i < sz(ls); i++) {
 		ls[i].innerHTML = emp;
 	}
+	
 	var td = this.getViewHeadersColumn();
 	ls = ee(td, 'td');
 	for (i = 0; i < sz(ls); i++) {
@@ -602,10 +608,10 @@ DataGrid.prototype.clearContent = function() {
 		return;
 	}
 	// Get cells count
-	var row = this.tableData[0] ? this.tableData[0] : {}, i, sZ = 0, j, td;
-	for (i in row) {
-		sZ++;
-	}
+	var row = this.tableData[0] ? this.tableData[0] : {}, 
+		sZ = this.count(row),
+		i, j, td;
+	
 	// Clear
 	for (i = 0; i < sz(this.tableData); i++) {
 		for (j = 0; j < sZ; j++) {
@@ -650,5 +656,17 @@ DataGrid.prototype.observeGeometry = function() {
 	// topBrick меняем тоже
 	this.topBrick.style.width = this.columnNumberWidth + this.columnNumberWidthCorrection + 'px';
 	
+}
+
+DataGrid.prototype.count = function(row) {
+	var i, sZ = 0;
+	if (row instanceof Array) {
+		return row.length;
+	}
+	for (i in row) {
+		sZ++;
+	}
+	
+	return sZ;
 }
 

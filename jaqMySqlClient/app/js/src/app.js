@@ -64,7 +64,19 @@ function onLoad() {
     
     W.sqlField = new SqlField();
     W.dataGrid = new SqlDataGrid('hResultArea');
+    
+    W.sqlField.onfocus = onSqlFieldFocused;
+    W.sqlField.onblur = onSqlFieldBlured;
 }
+
+function onSqlFieldFocused() {
+	W.dataGrid.setIsFocused(false);
+}
+
+function onSqlFieldBlured() {
+	W.dataGrid.setIsFocused(true);
+}
+
 
 function resizeWorkArea(isNoResizeWindowEvent) {
     if (isNoResizeWindowEvent && String(W.prevEditH) != 'undefined') {

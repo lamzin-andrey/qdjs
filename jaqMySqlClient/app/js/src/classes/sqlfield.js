@@ -44,6 +44,18 @@ SqlField.prototype.setListeners = function () {
 		}
 		return true;
 	};
+	
+	this.view.onfocus = function(evt) {
+		if (self.onfocus instanceof Function) {
+			self.onfocus();
+		}
+	}
+	
+	this.view.onblur = function(evt) {
+		if (self.onblur instanceof Function) {
+			self.onblur();
+		}
+	}
 }
 
 SqlField.prototype.onKeyDown = function(e) {
@@ -54,6 +66,7 @@ SqlField.prototype.exec = function(sql) {
 	PHP.file_put_contents(Qt.appDir() + '/p/command.sql', sql);
 	PHP.exec('php ' + Qt.appDir() + '/p/query.php', 'sqlfield_onFin', 'Null', 'Null');
 }
+
 
 function sqlfield_onFin(stdout, stderr) {
 	var r = PHP.file_get_contents(Qt.appDir() + '/p/result.json');
