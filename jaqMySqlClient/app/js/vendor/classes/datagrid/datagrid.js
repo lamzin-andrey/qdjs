@@ -9,6 +9,8 @@ function DataGrid(blockId) {
 	this.cursorY = 0;
 	
 	this.initalizeView();
+	/** @property {Boolean} после первой очистки принимает false */
+	this.isFirstRender = true;
 }
 
 
@@ -186,7 +188,7 @@ DataGrid.prototype.setCellContent = function(value, cells, i, rowIndex, tr) {
 	}
 	
 	if (!this.tableData[rowIndex]) {
-		this.tableData[rowIndex] = [];
+		this.tableData[rowIndex] = {};
 	}
 	
 	this.tableData[rowIndex][i] = value;
@@ -595,12 +597,33 @@ DataGrid.prototype.clearHeaders = function() {
 
 
 DataGrid.prototype.clearContent = function() {
-	var ls = ee(this.mainTable, 'td'), i;
+	if (this.isFirstRender) {
+		this.isFirstRender = false;
+		return;
+	}
+	// Get cells count
+	var row = this.tableData[0] ? this.tableData[0] : {}, i, sZ = 0, j, td;
+	for (i in row) {
+		sZ++;
+	}
+	// Clear
+	for (i = 0; i < sz(this.tableData); i++) {
+		for (j = 0; j < sZ; j++) {
+			td = this.getCellByIndex(i, j);
+			if (td) {
+				td.innerHTML = '&nbsp;';
+				td.style.maxWidth = null;
+				td.style['min-width'] = null;
+			}
+		}
+	}
+	
+	/*var ls = ee(this.mainTable, 'td'), i;
 	for (i = 0; i < sz(ls); i++) {
 		ls[i].innerHTML = '&nbsp;';
 		ls[i].style.maxWidth = null;
 		ls[i].style['min-width'] = null;
-	}
+	}*/
 	this.columnHLs = null;
 	this.columnHLsWidthList = null;
 }
