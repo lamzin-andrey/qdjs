@@ -617,13 +617,7 @@ DataGrid.prototype.clearContent = function() {
 			}
 		}
 	}
-	
-	/*var ls = ee(this.mainTable, 'td'), i;
-	for (i = 0; i < sz(ls); i++) {
-		ls[i].innerHTML = '&nbsp;';
-		ls[i].style.maxWidth = null;
-		ls[i].style['min-width'] = null;
-	}*/
+	this.tableData = [];
 	this.columnHLs = null;
 	this.columnHLsWidthList = null;
 }
