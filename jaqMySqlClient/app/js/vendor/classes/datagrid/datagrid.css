@@ -43,3 +43,9 @@ td {
 table.au1 td {
 	/*width:50px!important;*/
 }
+
+.editinput {
+	border:none;
+	width:100%;
+	height:100%;
+}

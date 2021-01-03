@@ -197,18 +197,9 @@ DataGrid.prototype.setCellContent = function(value, cells, i, rowIndex, tr) {
 	
 	var td, headers = this.getViewHeadersColumn(), ths, headerCell, stl, 
 		cutValue, indexB = 6;
-	// TODO это чистить при clear!
-	if (!this.columnHLs) {
-		this.columnHLs = ee(headers, 'td');
-		this.columnHLsWidthList = [];
-	}
-	ths = this.columnHLs;
-	headerCell = ths[i];
-	if (!this.columnHLsWidthList[i] && headerCell) {
-		this.columnHLsWidthList[i] = headerCell.offsetWidth - 1;
-	}
-	indexB = parseInt(this.columnHLsWidthList[i] / 10);
-	cutValue = String(value).substring(0, indexB);
+	
+	cutValue = this.subValue(value, i);
+	
 	if (cells[i]) {
 		td = cells[i];
 		td.innerHTML = cutValue;
@@ -231,6 +222,28 @@ DataGrid.prototype.setCellContent = function(value, cells, i, rowIndex, tr) {
 	this.setCellListeners(td);
 }
 
+/**
+ * Получить подстроку из значения таблицы для отображения в гриде
+ * @param {String} value
+ * @param {Number} i
+*/
+DataGrid.prototype.subValue = function(value, i) {
+	var headers = this.getViewHeadersColumn(), ths, indexB, cutValue;
+	// TODO это чистить при clear!
+	if (!this.columnHLs) {
+		this.columnHLs = ee(headers, 'td');
+		this.columnHLsWidthList = [];
+	}
+	ths = this.columnHLs;
+	headerCell = ths[i];
+	if (!this.columnHLsWidthList[i] && headerCell) {
+		this.columnHLsWidthList[i] = headerCell.offsetWidth - 1;
+	}
+	indexB = parseInt(this.columnHLsWidthList[i] / 10);
+	cutValue = String(value).substring(0, indexB);
+	
+	return cutValue;
+}
 
 /**
  * Установка слушателей событий для ячеек таблицы
@@ -260,6 +273,9 @@ DataGrid.prototype.onClickCell = function(evt, td) {
 	c = a[1];
 	this.cursorX = c;
 	this.cursorY = r;
+	if (this.editCellX != c && this.editCellY != r) {
+		this.setCellViewReadable();
+	}
 }
 
 /**
@@ -328,17 +344,24 @@ DataGrid.prototype.getLeftCell = function(r, c) {
  * Установка слушателей событий для ячеек таблицы
 */
 DataGrid.prototype.onKeyDownCell = function(evt) {
+	if (evt.keyCode in In([27, 13, 38, 40])) { // Esc or Down or Up or Enter
+		this.setCellViewReadable();
+	}
+	
 	//TODO если фокус в поле ввода, выходить
-	if (!this.isFocused) {
-		return;
+	if (!this.isFocused || this.isEditMode) {
+		return true;
 	}
 	evt.preventDefault(); 
 	
 	var current = e('c' + this.cursorY + '_' + this.cursorX),
-		scrollFunctionName = '';
+		scrollFunctionName = '', isCursorKey = false;
+	
+	
 	
 	
 	if (evt.keyCode == 37) { // left
+		isCursorKey = true;
 		this.cursorX--;
 		if (this.cursorX < 0) {
 			this.cursorX = 0;
@@ -356,6 +379,7 @@ DataGrid.prototype.onKeyDownCell = function(evt) {
 	}*/
 		
 	if (evt.keyCode == 39) { // right
+		isCursorKey = true;
 		this.cursorX++;
 		if (this.cursorX > maxX) {
 			this.cursorX = maxX;
@@ -364,6 +388,7 @@ DataGrid.prototype.onKeyDownCell = function(evt) {
 	}
 	
 	if (evt.keyCode == 40) { // down
+		isCursorKey = true;
 		this.cursorY++;
 		if (this.cursorY > maxY) {
 			this.cursorY = maxY;
@@ -372,6 +397,7 @@ DataGrid.prototype.onKeyDownCell = function(evt) {
 	}
 	
 	if (evt.keyCode == 38) { // up
+		isCursorKey = true;
 		this.cursorY--;
 		if (this.cursorY < 0) {
 			this.cursorY = 0;
@@ -379,13 +405,55 @@ DataGrid.prototype.onKeyDownCell = function(evt) {
 		scrollFunctionName = 'setScrollForUp';
 	}
 	
-	var td = e('c' + this.cursorY + '_' + this.cursorX);
-	this.setActiveCellView(td, current);
-	if (this[scrollFunctionName]) {
-		this[scrollFunctionName]();
+	if (evt.keyCode == 113) { // F2
+		this.setCellViewEditable();
 	}
 	
+	
+	if (isCursorKey) {
+		var td = e('c' + this.cursorY + '_' + this.cursorX);
+		this.setActiveCellView(td, current);
+		if (this[scrollFunctionName]) {
+			this[scrollFunctionName]();
+		}
+	}
 }
+/**
+ * @description 
+*/
+DataGrid.prototype.setCellViewReadable = function() {
+	if (!isNaN(this.editCellX) && !isNaN(this.editCellY)) {
+		this.isEditMode = false;
+		var td = e('c' + this.editCellY + '_' + this.editCellX),
+			data = this.tableData[this.editCellY][this.editCellX];
+		td.innerHTML = this.subValue(data, this.editCellY);
+		this.editCellX = this.editCellY = parseInt('NaN');
+	}
+}
+
+/**
+ * @description 
+*/
+DataGrid.prototype.setCellViewEditable = function() {
+	var td = e('c' + this.cursorY + '_' + this.cursorX),
+		data = this.tableData[this.cursorY][this.cursorX];
+		
+	if (data && td) {
+		this.setCellViewReadable();
+		this.isEditMode = true;
+		this.editCellX = this.cursorX;
+		this.editCellY = this.cursorY;
+		td.innerHTML = '';
+		
+		var inp = appendChild(td, 'input', '', {value: data, 'class': 'editinput'});
+		// TODO configure!
+		setTimeout(function(){
+			inp.focus();
+			inp.select();
+		}, 100);
+	}
+}
+
 /**
  * @description Установить горизонтальный скролл при движении курсором влево
 */
