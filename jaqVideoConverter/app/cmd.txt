@@ -4,6 +4,8 @@ ffmpeg -i v_borbe_za_ukrainy.mp4 -c:v libx264 -pix_fmt yuv420p v_borbe_za_ukrain
 #ffmpeg -ss 00:00:03 -t 00:00:04 -i maski.avi -vcodec copy -acodec copy YouAreFakeNews.avi
 #ffmpeg -i YouAreFakeNews.avi YouAreFakeNewsShort.mp4
 
+# ffmpeg -i /media/andrey/Transcend/HBPVR/МАЯК-01092021-0937.mts -q:a 0 -map a /media/andrey/Transcend/HBPVR/new_year-09-01-2021.mp3
+
 
 
 
