@@ -345,6 +345,8 @@ DataGrid.prototype.getLeftCell = function(r, c) {
 */
 DataGrid.prototype.onKeyDownCell = function(evt) {
 	if (evt.keyCode in In([27, 13, 38, 40])) { // Esc or Down or Up or Enter
+		this.updateData(evt.keyCode);
+		this.emitOnChangeCellData(evt.keyCode);
 		this.setCellViewReadable();
 	}
 	
@@ -418,6 +420,40 @@ DataGrid.prototype.onKeyDownCell = function(evt) {
 		}
 	}
 }
+
+/**
+ * @description Сохраняет значение в модели данных, которую использует this
+*/
+DataGrid.prototype.updateData = function(keyCode) {
+	if (keyCode != 13) {
+		return;
+	}
+
+	var u = 'undefined';
+	if (String(this.tableData[this.editCellY]) == u || String(this.tableData[this.editCellY][this.editCellX]) == u) {
+		return;
+	}
+	this.tableData[this.editCellY][this.editCellX] = this.editInput.value;
+}
+/**
+ * @description Вызывает обработку сохранения значения в исходном источнике
+*/
+DataGrid.prototype.emitOnChangeCellData = function(keyCode) {
+	if (keyCode != 13) {
+		return;
+	}
+
+	if (!this.onChangeCellData || !(this.onChangeCellData instanceof Function)) {
+		return;
+	}
+	
+	var u = 'undefined';
+	if (String(this.tableData[this.editCellY]) == u || String(this.tableData[this.editCellY][this.editCellX]) == u) {
+		return;
+	}
+	this.onChangeCellData(this.tableData[this.editCellY][this.editCellX], this.editCellY, this.editCellX);
+}
+
 /**
  * @description 
 */
@@ -446,6 +482,7 @@ DataGrid.prototype.setCellViewEditable = function() {
 		td.innerHTML = '';
 		
 		var inp = appendChild(td, 'input', '', {value: data, 'class': 'editinput'});
+		this.editInput = inp;
 		// TODO configure!
 		setTimeout(function(){
 			inp.focus();
