@@ -1,0 +1,12 @@
+.fl {
+	float:left;
+}
+.c {
+	clear:both;
+}
+.dbgb {
+	border: 1px solid black;
+}
+.dbgr {
+	border: 1px solid red;
+}
