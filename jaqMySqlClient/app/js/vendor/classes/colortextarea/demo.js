@@ -1,4 +1,5 @@
 window.addEventListener('load', onLoad);
 function onLoad() {
-	window.colorTa = new ColorTextArea('demo', 'hello');
+	var sqlColorTextRules = new ColorRuleSql();
+	window.colorTa = new ColorTextArea('demo', sqlColorTextRules);
 }
