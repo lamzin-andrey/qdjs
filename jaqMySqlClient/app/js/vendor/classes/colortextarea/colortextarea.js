@@ -53,7 +53,6 @@ ColorTextArea.prototype.initalizeView = function() {
 	this.setListeners();
 	// Set color rule class
 	// 	this.colorRule.setContext(this);
-	// 	ColorRule.context.setColor(indexA, indexB, color, fontStyle);
 }
 
 /** 
@@ -70,9 +69,24 @@ ColorTextArea.prototype.setListeners = function() {
  * @description Установка слушателей событий
 */
 ColorTextArea.prototype.onInput = function(evt) {
-	this.mirror.innerHTML = this.subjectTa.value;
+	var s = this.subjectTa.value, i, ch, q = '', cls = 'class="kw"'; //
+	// this.colorRule.calc(s); TODO
+	// ColorRule.context.setRules(rules);
+	// rules: [n: sCssClassName,, n + 1: undefined ] ..
+	for (i = 0; i < sz(s); i++) {
+		ch = s.charAt(i);
+		if (ch == '\n') {
+			ch = '<br>';
+		} else {
+			// cls = this.getRule(i);// TODO return 'class="kw" ' or ''
+			ch = '<i ' + cls + '>' + ch + '</i>'
+		}
+		q += ch;
+	}
+	this.mirror.innerHTML = q;
 }
 /** 
+ * TODO скорее всего излишне
  * @description Установка цвета. В mirror каждый символ завернут в <i></i>
  * @param {Number} indexA 0
  * @param {Number} indexB
