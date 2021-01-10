@@ -35,5 +35,7 @@ class ColorRuleSql extends ColorRuleBase
 }
 
 
+В целом, наследники ColorRuleBase скорее всего будут просто переопределять списки ключевых слов.
+
 
 
