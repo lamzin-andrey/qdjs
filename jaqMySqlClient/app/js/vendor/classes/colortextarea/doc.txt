@@ -1,1 +1,24 @@
+Наследник ColorRuleBase
+обязательно должен либо не перегружать 
+ColorRuleBase::calc
+либо сохранить при перегрузке вызов
+
+ColorRule.context.setRules(rules);
+
+Например
+class ColorRuleSql extends ColorRuleBase
+{
+	// Если пришлось перегрузить calc
+	calc(sValue) {
+		// .... здесь какая-то логика
+		
+		// этот вызов должен быть обязательно
+		this.context.setRules(aRules);
+		
+		// // aRules: [sCssClassName, undefined, sOtherCssClassName, ... ]
+	}
+}
+
+
+
 
