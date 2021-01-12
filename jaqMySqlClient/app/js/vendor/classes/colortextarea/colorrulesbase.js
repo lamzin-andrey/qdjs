@@ -126,6 +126,20 @@ ColorRuleBase.prototype.checkIsEndRE = function(s, startREPos, i) {
 	return (slashCounter == 2);
 }
 /* @description Определяет, не заканчивается ли строка
+ * TODO может глючить на длинных списках строковых аргуметов '', '', '', '', '', '
+ * -- Пример
+ * var 'dsdsd'
+// ds d 
+
+/* 
+'ds ds ds' 
+* /
+
+SELECT * FROM `table` d WHERE x IN ('a', 'd', 
+'f8455555', 'd'
+);
+ -- конец примера 
+
  * 
  * @param {String} s
  * @param {String} ch
@@ -150,7 +164,7 @@ ColorRuleBase.prototype.checkIsEndComment = function(s, i, isOnestringComment) {
 	if (isOnestringComment && s.charAt(i) == '\n') {
 		return true;
 	}
-	if (!isOnestringComment && s.charAt(i) == '*' && s.charAt(i) == '/') {
+	if (!isOnestringComment && s.charAt(i) == '*' && s.charAt(i + 1) == '/') {
 		return true;
 	}
 	return false;
@@ -199,7 +213,6 @@ ColorRuleBase.prototype.writeCharStyle = function(r, isInComment, isInStr, isInR
 	}
 }
 /**
- * TODO подсветка регулярок не работает, возможно дело в функции поиска окончания
  * @description Определяет, не начинается ли в позиции i регулярное выражение
  * 
  * @param {String} s
