@@ -84,7 +84,10 @@ function appendChild(parent, tag, innerHTML, obj, dataObj) {
 	return el;
 }
 function sz(a) {
-	return a.length;
+	if (!isU(a)) {
+		return a.length;
+	}
+	return 0;
 }
 function attr(o, name, val) {
 	o = e(o);
@@ -122,12 +125,19 @@ function In(a) {
 		for (i in a) {
 			o[a[i]] = 1;
 		}
+	} else if (a instanceof String) {
+		for (i = 0; i < sz(a); i++) {
+			o[a.charAt(i)] = 1;
+		}
 	} else {
 		for (i = 0; i < sz(arguments); i++) {
 			o[arguments[i]] = 1;
 		}
 	}
 	return o;
+}
+function isU(v) {
+	return (String(v) === 'undefined');
 }
 /**
  * @description Индексирует массив по указанному полю

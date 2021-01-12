@@ -1,11 +1,11 @@
 function ColorRuleBase() {
-	this.init();
 	this.configure();
 }
 ColorRuleBase.prototype.configure = function() {
 	this.keywords = [];
 	this.cssKeywords = 'kw';
 	this.cssSingleString = 'ss';
+	this.cssApString = 'as';
 	this.cssString = 's';
 	this.cssComments = 'c';
 	this.cssRE = 'r';
@@ -21,23 +21,23 @@ ColorRuleBase.prototype.calc = function(sValue) {
 		isInRegExp = false,
 		u = 'undefined',
 		quoteType,
+		startStrPos,
+		startREPos,
 		ch,
 		b,
 		lnk = {},
 		r = {};
-	
+	this.prevColorType = 'undefined';
 	for (i = 0; i < sz(sValue); i++) {
 		ch = sValue.charAt(i);
 		// Не начался ли комментарий?
 		if (!isInComment && !isInStr && !isInRegExp) {
-			// TODO
 			isInComment = this.checkIsStartOnestringComment(sValue, i); // Чтобы можно было перегружать в наследниках, например Pascal, С++, SQL
 			if (isInComment) {
 				isOnestringComment = true;
 			}
 		}
 		if (!isInComment && !isInStr && !isInRegExp) {
-			// TODO
 			isInComment = this.checkIsStartManystringComment(sValue, i); // Чтобы можно было перегружать в наследниках, например Pascal, С++
 			if (isInComment) {
 				isOnestringComment = false;
@@ -46,30 +46,28 @@ ColorRuleBase.prototype.calc = function(sValue) {
 		
 		// Не началась ли строка?
 		if (!isInComment && !isInStr && !isInRegExp) {
-			// TODO
 			isInStr = this.checkIsStartString(sValue, ch); // Чтобы можно было перегружать в наследниках, например Pascal, Javascript, C++
 			if (isInStr) {
 				quoteType = ch;
+				startStrPos = i;
 			}
-			
-			/*if (ch == '"' || ch == "'") {
-				isInStr = true;
-				quoteType = ch;
-			}*/
 		}
 		
 		// Не началось ли регулярное выражение?
 		if (!isInComment && !isInStr && !isInRegExp) {
-			//TODO
+			// console.log('check re start');
 			isInRegExp = this.checkIsStartRegExp(sValue, i); // Чтобы можно было перегружать в наследниках, например Pascal, Javascript, C++
+			if (isInRegExp) {
+				startREPos = i;
+			}
 		}
 		
-		// TODO здесь записать в r состояние
-		this.writeCharStyle(r, isInComment, isInStr, isInRegExp, i);
+		// здесь записать в r состояние
+		// console.log('здесь записать в r состояние');
+		this.writeCharStyle(r, isInComment, isInStr, isInRegExp, quoteType, i);
 		
 		// Далее смотрим, не закончились ли эти сущности, если сейчас позиция внутри одной из них
 		if (isInComment) {
-			// TODO
 			b = this.checkIsEndComment(sValue, i, isOnestringComment);// Чтобы можно было перегружать в наследниках
 			if (b) {
 				isInComment = false;
@@ -78,8 +76,7 @@ ColorRuleBase.prototype.calc = function(sValue) {
 		}
 		
 		if (isInStr) {
-			// TODO
-			b = this.checkIsEndString(sValue, ch, quoteType);// Чтобы можно было перегружать в наследниках
+			b = this.checkIsEndString(sValue, ch, quoteType, startStrPos, i);// Чтобы можно было перегружать в наследниках
 			if (b) {
 				isInStr = false;
 				quoteType = u;
@@ -87,9 +84,10 @@ ColorRuleBase.prototype.calc = function(sValue) {
 		}
 		
 		if (isInRegExp) {
-			// TODO
-			b = this.checkIsEndRE(sValue, i);// Чтобы можно было перегружать в наследниках
+			// console.log('check re end');
+			b = this.checkIsEndRE(sValue, startREPos, i);// Чтобы можно было перегружать в наследниках
 			if (b) {
+				// console.log('check re end IS TRUE');
 				isInRegExp = false;
 			}
 		}
@@ -108,6 +106,172 @@ ColorRuleBase.prototype.calc = function(sValue) {
 	}
 	
 }
+/* @description Определяет, не заканчивается ли регулярное выражение
+ * 
+ * @param {String} s
+ * @param {Number} startREPos
+ * @param {Number} i
+*/
+ColorRuleBase.prototype.checkIsEndRE = function(s, startREPos, i) {
+	var j, slashCounter = 0, ch;
+	if (s.charAt(i) != '\n') {
+		return false;
+	}
+	for (j = startREPos; j <= i; j++) {
+		ch = s.charAt(j);
+		if (ch == '/' && s.charAt(j - 1) != '\\') {
+			slashCounter++;
+		}
+	}
+	return (slashCounter == 2);
+}
+/* @description Определяет, не заканчивается ли строка
+ * 
+ * @param {String} s
+ * @param {String} ch
+ * @param {String} quoteType
+ * @param {Number} startStrPos
+ * @param {Number} i
+*/
+ColorRuleBase.prototype.checkIsEndString = function(s, ch, quoteType, startStrPos, i) {
+	if (startStrPos === i) {
+		return false;
+	}
+	return (ch === quoteType);
+}
+/**
+ * @description Определяет, не заканчивается ли в строке комментарий
+ * 
+ * @param {String} s
+ * @param {Number} i
+ * @param {Boolean} isOnestringComment
+*/
+ColorRuleBase.prototype.checkIsEndComment = function(s, i, isOnestringComment) {
+	if (isOnestringComment && s.charAt(i) == '\n') {
+		return true;
+	}
+	if (!isOnestringComment && s.charAt(i) == '*' && s.charAt(i) == '/') {
+		return true;
+	}
+	return false;
+}
+/**
+ * @description Записывает в r данные о символах, которые надо подсветить
+ * 
+ * @param {Object} r
+ * @param {Boolean} isInComment
+ * @param {Boolean} isInStr
+ * @param {Boolean} isInRegExp
+ * @param {String} quoteType
+ * @param {Number} i
+*/
+ColorRuleBase.prototype.writeCharStyle = function(r, isInComment, isInStr, isInRegExp, quoteType, i) {
+	var k = '';
+	if (isInComment) {
+		k = this.cssComments;
+	} else if(isInStr) {
+		if (quoteType == '"') {
+			k = this.cssString;
+		} else if (quoteType == "'") {
+			k = this.cssSingleString;
+		} else if (quoteType == "`") {
+			k = this.cssApString;
+		}
+	} else if(isInRegExp) {
+		k = this.cssRE;
+	}
+	
+	if (k) {
+		// console.log('Found k = ' + k + ', i = ' + i + ', this.prevColorType = ' + this.prevColorType);
+		if (!r[k]) {
+			r[k] = [];
+			// console.log('Create array in item ' + k);
+		}
+		if (isU(this.prevColorType) || this.prevColorType != k) {
+			r[k].push(i);
+			r[k].push(i);
+			// console.log('INSERT in array  "' + k + '" i = ' + i);
+		} else {
+			r[k][r[k].length - 1]++;
+			// console.log('Increment in array  "' + k + '" i = ' + (r[k].length - 1) );
+		}
+		this.prevColorType = k;
+	}
+}
+/**
+ * TODO подсветка регулярок не работает, возможно дело в функции поиска окончания
+ * @description Определяет, не начинается ли в позиции i регулярное выражение
+ * 
+ * @param {String} s
+ * @param {Number} i
+*/
+ColorRuleBase.prototype.checkIsStartRegExp = function(s, i) {
+	var j,
+		slashCounter = 1,
+		ch,
+		isInvalidModifier = false,
+		mods = 'mig,;';
+	if (s.charAt(i) == '/' && s.charAt(i + 1) != '/') {
+		for (j = i + 1; j < s.length; j++) {
+			ch = s.charAt(j);
+			if (ch == '/' && s.charAt(j - 1) != '\\') {
+				slashCounter++;
+				continue;
+			}
+			if (slashCounter == 2 && ch != '\n') {
+				if (ch in In(mods)) {
+					isInvalidModifier = true;
+				}
+			}
+			if (ch == '\n' || j == s.length -1) {
+				break;
+			}
+		}
+		if (slashCounter != 2 || isInvalidModifier) {
+			if (isInvalidModifier) {
+				console.log('isInvalidModifier');
+			} else {
+				console.log('slashCounter != 2');
+			}
+			
+			return false;
+		}
+		return true;
+	}
+	return false;
+}
+/**
+ * @description Определяет, не начинается ли с символа ch строка
+ * 
+ * @param {String} s
+ * @param {String} ch
+*/
+ColorRuleBase.prototype.checkIsStartString = function(s, ch) {
+	if (ch == '"' || ch == "'" || ch == "`") {
+		return true;
+	}
+	return false;
+}
+/**
+ * @description Определяет, не начинается ли в позиции i многострочный комментарий '/*'
+ * 
+ * @param {String} s
+ * @param {Number} i
+*/
+ColorRuleBase.prototype.checkIsStartManystringComment = function(s, i) {
+	var q = s.charAt(i) + s.charAt(i + 1);
+	return (q == '/*');
+}
+/**
+ * @description Определяет, не начинается ли в позиции i однострочный комментарий '//'
+ * 
+ * @param {String} s
+ * @param {Number} i
+*/
+ColorRuleBase.prototype.checkIsStartOnestringComment = function(s, i) {
+	var q = s.charAt(i) + s.charAt(i + 1);
+	return (q == '//');
+}
 
 /**
  * @description Подсвечиваем все ключевые слова если они не на позициях, 
@@ -124,12 +288,13 @@ ColorRuleBase.prototype.calcKeywords = function(r, s) {
 		word = this.keywords[i].toLowerCase();
 		
 		do {
-			searchResult = word.indexOf(word, searchResult);
+			searchResult = s.indexOf(word, searchResult);
 			if (searchResult == -1) {
 				break;
 			}
 			indexA = searchResult;
 			indexB = searchResult + word.length;
+			searchResult = indexA + 1;
 			
 			// Проверяем, не входит ли слово в комментарий, строку или регулярное выражение
 			//  Похоже, достаточно проверить лишь вхождение первого символа
@@ -149,15 +314,18 @@ ColorRuleBase.prototype.calcKeywords = function(r, s) {
 	}
 }
 
-(indexA, r[this.cssComments])
+
 
 /**
- * @description Вернет true если n входит в один из заданных в массиве диапазонов
+ * @description Вернет true если n входит в один из заданых в массиве диапазонов
  * @param {Number} n
  * @param {Array} arr определяет диапазоны таким образом: каждый чётный элемент - это начало диапазона, следующий за ним - конец
  * @return Boolean
 */
 ColorRuleBase.prototype.isInDiapason = function(n, arr) {
+	if (isU(arr)) {
+		return false;
+	}
 	var i, left, right;
 	for (i = 0; i < sz(arr); i += 2) {
 		left = arr[i];

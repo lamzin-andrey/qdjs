@@ -1,7 +1,7 @@
 function ColorTextArea(blockId, colorRule) {
 	this.subjectTa = e(blockId);
 	this.colorRule = colorRule;
-	// TODO this.colorRule.setContext(this);
+	this.colorRule.setContext(this);
 	this.initalizeView();
 }
 
@@ -65,20 +65,21 @@ ColorTextArea.prototype.setListeners = function() {
 	}
 }
 /** 
- * TODO тут заворачивать в <i>
- * @description Установка слушателей событий
+ * @description Заворачивает каждый символ в <i> и добавляет классы подсветки символов
 */
 ColorTextArea.prototype.onInput = function(evt) {
 	var s = this.subjectTa.value, i, ch, q = '', cls = 'class="kw"'; //
-	// this.colorRule.calc(s); TODO
+	this.colorRule.calc(s);
+	// console.log(this.colorRules);
+	// return;
 	// ColorRule.context.setRules(rules);
-	// rules: [n: sCssClassName,, n + 1: undefined ] ..
+	// rules: {cssClassName: [0,5, 12,14, ...], cssClassName2: [9,14, 20,28, ...]}
 	for (i = 0; i < sz(s); i++) {
 		ch = s.charAt(i);
 		if (ch == '\n') {
 			ch = '<br>';
 		} else {
-			// cls = this.getRule(i);// TODO return 'class="kw" ' or ''
+			cls = this.getRule(i);
 			ch = '<i ' + cls + '>' + ch + '</i>'
 		}
 		q += ch;
@@ -86,16 +87,26 @@ ColorTextArea.prototype.onInput = function(evt) {
 	this.mirror.innerHTML = q;
 }
 /** 
- * TODO скорее всего излишне
- * @description Установка цвета. В mirror каждый символ завернут в <i></i>
- * @param {Number} indexA 0
- * @param {Number} indexB
- * @param {String} color '#0000AA'
- * @param {String} fontStyle 'b' 'i' 'n'
- * @param {String} bgColor '#000099'
+ * @description Этот метод определяет, надо ли подсвечивать очередной символ, и каким цветом
+ * @param {Number} i
+ * @return String 'class="kw" ' or ''
 */
-ColorTextArea.prototype.setColor = function(indexA, indexB, color, fontStyle, bgColor) {
-	
+ColorTextArea.prototype.getRule = function(i) {
+	var r = this.colorRules, k, j, q = '"';
+	for (k in r) {
+		if (this.colorRule.isInDiapason(i, r[k])) {
+			return 'class=' + q + k + q;
+		}
+	}
+	return '';
+}
+
+/** 
+ * @description Этот метод вызывает ColorRuleBase или его наследник и передаёт объект с данными о символах,
+ * 	которые необходимо раскрасить
+*/
+ColorTextArea.prototype.setRules = function(rules) {
+	this.colorRules = rules;
 }
 
 

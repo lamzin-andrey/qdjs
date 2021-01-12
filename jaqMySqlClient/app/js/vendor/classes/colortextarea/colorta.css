@@ -1,3 +1,19 @@
 i {
 	font-style:normal;
 }
+.kw {
+	color: blue;
+	/*font-weight:bold;*/
+}
+.ss, .s {
+	color: green;
+}
+.c {
+	color: gray;
+}
+
+.r {
+	color: brown;
+}
+
+
