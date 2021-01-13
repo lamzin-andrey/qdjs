@@ -126,21 +126,6 @@ ColorRuleBase.prototype.checkIsEndRE = function(s, startREPos, i) {
 	return (slashCounter == 2);
 }
 /* @description Определяет, не заканчивается ли строка
- * TODO может глючить на длинных списках строковых аргуметов '', '', '', '', '', '
- * -- Пример
- * var 'dsdsd'
-// ds d 
-
-/* 
-'ds ds ds' 
-* /
-
-SELECT * FROM `table` d WHERE x IN ('a', 'd', 
-'f8455555', 'd'
-);
- -- конец примера 
-
- * 
  * @param {String} s
  * @param {String} ch
  * @param {String} quoteType
@@ -210,6 +195,8 @@ ColorRuleBase.prototype.writeCharStyle = function(r, isInComment, isInStr, isInR
 			// console.log('Increment in array  "' + k + '" i = ' + (r[k].length - 1) );
 		}
 		this.prevColorType = k;
+	} else {
+		this.prevColorType = 'undefined';
 	}
 }
 /**
