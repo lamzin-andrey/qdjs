@@ -8,10 +8,12 @@ function AppController(id) {
 }
 
 AppController.prototype.onStartLoadDisks = function () {
+	// alert('END 2!');
 	this.view.innerHTML = 'Обновление..';
 }
 
 AppController.prototype.onEndLoadDisks = function () {
+	// alert('END!');
 	this.view.innerHTML = '&nbsp;';
 }
 

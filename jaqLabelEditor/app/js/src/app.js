@@ -58,11 +58,11 @@ function onLoad() {
 		 './i/icons/udisk16.png'
 		 );
 		W.diskListController.onProcesLoadEventEnd = {
-			m: W.appController.onStartLoadDisks,
+			m: W.appController.onEndLoadDisks,
 			context: W.appController
 		};
 		W.diskListController.onProcesLoadEvent = {
-			m: W.appController.onEndLoadDisks,
+			m: W.appController.onStartLoadDisks,
 			context: W.appController
 		};
 		W.diskListController.build();
@@ -86,6 +86,7 @@ function onUserData(out, err) {
 
 
 function resizeWorkArea(isNoResizeWindowEvent) {
+	return;
 	if (!W.tEdit1) {
 		return;
 	}

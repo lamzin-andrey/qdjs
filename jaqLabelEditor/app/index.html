@@ -5,7 +5,7 @@
 	    <title>JAndQt MysqlClient</title>
 	    <meta name="windowButtons" content="1110" width="1024" height="768">
 	    <menubar style="display:none">
-		    <menu title="Server">
+		    <menu title="File">
 			    <item onselect="onClickExitMenu()" id="menuItemFileExit">Exit Ctrl+Q</item>
 		    </menu>
 	    </menubar>
@@ -13,51 +13,19 @@
 	    <link rel="stylesheet" type="text/css" href="./s/0.css" />
 	    <link rel="stylesheet" type="text/css" href="./s/colors.css" />
 	    <link rel="stylesheet" type="text/css" href="./js/vendor/pjs-popupwnd/dev/popupwin.css" />
-	    <!-- link rel="stylesheet" type="text/css" href="./js/vendor/classes/datagrid/classictable.css" /-->
-	    <!-- link rel="stylesheet" type="text/css" href="./js/vendor/classes/datagrid/datagrid.css" /-->
     </head>
     <body>
 	<div class="screen" id="hMainScreen">
-	    <div style="width:99%;" >&nbsp;
-			<fieldset >
+	    <div style="width:99%;" >
+			<fieldset>
 				<legend id="devicesListLegend">Редактирование меток дисков</legend>
-				<div id="hResultArea">/div>
+				<div id="hResultArea"></div>
 				<div id="hUpdateLabel">&nbsp;</div>
 			</fieldset>
 			<div id="shoreHelp">Кликните для редактирования</div>
 	    </div>
 	</div>
-	<div class="screen" >&nbsp;
-	</div>
-	<!--div id="hConfigServerParams" class="hide">
-	    <div class="hConfigServerParamsBody">
-		<div>
-		    <label for="iHost">Хост</label>
-		    <input id="iHost" type="text" placeholder="127.0.0.1">
-		</div>
-		<div>
-		    <label for="iPort">Порт</label>
-		    <input id="iPort" type="number" class="number" placeholder="3306">
-		</div>
-		<div>
-		    <label for="iName">Имя базы</label>
-		    <input id="iName" type="text" placeholder="test">
-		</div>
-		<div>
-		    <label for="iUser">Имя пользователя</label>
-		    <input id="iUser" type="text" placeholder="root">
-		</div>
-		<div>
-		    <label for="iPassword">Пароль</label>
-		    <input id="iPassword" type="password">
-		</div>
-		<div class="tr">
-		    <input value="Сохранить" id="bHostSave" type="button" onclick="W.addHostDlg.onClickBHostSave();">
-		</div>
-	    </div>
-	</div-->
-	
-	
+	<div class="screen" >&nbsp;</div>
 	
     </body>
     <!-- shared libs  -->
@@ -76,7 +44,7 @@
     <script type="text/javascript" src="./js/src/classes/disklistcontroller.js" ></script>
     <script type="text/javascript" src="./js/src/classes/appcontroller.js" ></script>
     <script type="text/javascript" src="./js/src/classes/clickeditelementcontroller.js" ></script>
-    <!--script type="text/javascript" src="./js/src/objects/hostssaver.js" ></script-->
+    
     
     <!-- app /libs  -->
     

@@ -43,7 +43,9 @@ DiskListController.prototype.onBuildComplete = function(ls) {
 }
 
 DiskListController.prototype.emitProcesLoadEventEnd = function () {
+	// alert('emitProcesLoadEventEnd!');
 	if (this.onProcesLoadEventEnd && (this.onProcesLoadEventEnd.m instanceof Function) ) {
+		
 		this.onProcesLoadEventEnd.m.call(this.onProcesLoadEventEnd.context);
 	} else {
 		alert('You must set handler diskListController.onProcesLoadEventEnd = {m, context}');
@@ -51,8 +53,11 @@ DiskListController.prototype.emitProcesLoadEventEnd = function () {
 }
 
 DiskListController.prototype.emitProcesLoadEvent = function () {
-	if (this.onProcesLoadEvent&& (this.onProcesLoadEvent.m instanceof Function) ) {
-		this.onProcesLoadEvent.m.call(this.onProcesLoadEvent.context);
+	// alert('emitProcesLoadEvent!');
+	if (this.onProcesLoadEvent && (this.onProcesLoadEvent.m instanceof Function) ) {
+		// if (!this.loadProcessFinished ) {
+			this.onProcesLoadEvent.m.call(this.onProcesLoadEvent.context);
+		//}
 	} else {
 		alert('You must set handler diskListController.onProcesLoadEvent = {m, context}');
 	}
