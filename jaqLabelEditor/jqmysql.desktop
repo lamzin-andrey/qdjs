@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=JaQt Disk Label Editor
+Comment=
+Exec=/home/andrey/hdata/programs/my/qdjs/jaqLabelEditor/jaqLabelEditor.sh
+Icon=/home/andrey/hdata/programs/my/qdjs/jaqLabelEditor/app/i/icons/48.png
+Path=/home/andrey/hdata/programs/my/qdjs/jaqLabelEditor
+Categories=Development;System;
+Terminal=false
+StartupNotify=false
+Name[ru]=JaQt Disk Label Editor
+Name[en]=JaQt Disk Label Editor

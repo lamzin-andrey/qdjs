@@ -1,0 +1,21 @@
+body {
+    max-height:100%;
+    overflow:hidden;
+}
+html, body {
+    max-height:100%;
+}
+
+.hConfigServerParamsBody  label {
+    display:block;
+}
+.hConfigServerParamsBody  input[type=text],
+    .hConfigServerParamsBody  input[type=password],
+    .hConfigServerParamsBody  input[type=number]
+    {
+    width: 100%;
+}
+
+.hConfigServerParamsBody {
+    padding: 10px 8px;
+}
