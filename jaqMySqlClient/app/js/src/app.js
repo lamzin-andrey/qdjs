@@ -67,6 +67,12 @@ function onLoad() {
     
     W.sqlField.onfocus = onSqlFieldFocused;
     W.sqlField.onblur = onSqlFieldBlured;
+    
+    /*setTimeout(function(){
+		alert(W.tEdit1.selectionStart);
+		alert(W.tEdit1.selectionEnd);
+	}, 3*1000
+    );*/
 }
 
 function onSqlFieldFocused() {

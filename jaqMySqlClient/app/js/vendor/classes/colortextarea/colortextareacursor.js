@@ -100,17 +100,14 @@ ColorTextAreaCursor.prototype.getCaretPosition = function(ta) {
 		clone.moveToElementText(ta);
 		clone.setEndPoint('EndToEnd', sel);
 		return (clone.text.length);
-		/*input.focus();
-		var sel = document.selection.createRange();
-		var n = sel.moveStart ('character', -1*input.value.length);
-		sel.collapse(true);
-		alert(n);
-		pos = sel.text.length;
-		alert(pos);*/
 	}
 	// Firefox support
 	else if (input.selectionStart || input.selectionStart == '0'){
-		pos = input.selectionStart;		
+		if (input.selectionEnd && input.selectionEnd > input.selectionStart) {
+			pos = input.selectionEnd;
+		} else {
+			pos = input.selectionStart;
+		}
 	}
 	return pos;
 }

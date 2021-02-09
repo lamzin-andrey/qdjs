@@ -3,6 +3,7 @@ function ColorTextArea(blockId, colorRule) {
 	this.subjectTa = ee(this.container, 'textarea')[0];
 	this.colorRule = colorRule;
 	this.colorRule.setContext(this);
+	this.selection = new ColorTextAreaSelection(this.subjectTa, this);
 	this.initalizeView();
 }
 
@@ -66,6 +67,43 @@ ColorTextArea.prototype.setListeners = function() {
 	this.subjectTa.oninput = function(evt) {
 		self.onInput(evt);
 	}
+	this.subjectTa.addEventListener('keydown',function(evt) {
+		setTimeout(function() {
+			self.onInput(evt);
+		}, 100);
+	}, false);
+	this.subjectTa.onmousedown = function(evt) {
+		self.onMouseDown(evt);
+	}
+	this.subjectTa.onmouseup = function(evt) {
+		self.onMouseUp(evt);
+	}
+	window.addEventListener('mouseup',function(evt) {
+		self.onMouseUp(evt);
+	}, false);
+	this.subjectTa.onmousemove = function(evt) {
+		self.onMouseMove(evt);
+	}
+}
+/** 
+ * @description Мониторит выделение
+*/
+ColorTextArea.prototype.onMouseDown = function(evt) {
+	this.mouseIsDown = true;
+}
+/** 
+ * @description Мониторит выделение
+*/
+ColorTextArea.prototype.onMouseUp = function(evt) {
+	this.mouseIsDown = false;
+}
+/** 
+ * @description Мониторит выделение
+*/
+ColorTextArea.prototype.onMouseMove = function(evt) {
+	if (this.mouseIsDown) {
+		this.onInput();
+	}
 }
 /** 
  * @description Заворачивает каждый символ в <i> и добавляет классы подсветки символов
@@ -73,6 +111,8 @@ ColorTextArea.prototype.setListeners = function() {
 ColorTextArea.prototype.onInput = function(evt) {
 	var s = this.subjectTa.value, i, ch, q = '', cls = 'class="kw"'; //
 	this.colorRule.calc(s);
+	// Переустановит (дополнит данными о позиции выделения текста) те же rules что и this.colorRule.calc
+	this.selection.calc();
 	// console.log(this.colorRules);
 	// return;
 	// ColorRule.context.setRules(rules);
@@ -96,9 +136,13 @@ ColorTextArea.prototype.onInput = function(evt) {
  * @return String 'class="kw" ' or ''
 */
 ColorTextArea.prototype.getRule = function(i) {
-	var r = this.colorRules, k, j, q = '"';
+	var r = this.colorRules, k, j, q = '"',
+		selectionCss = 'sl';
 	for (k in r) {
 		if (this.colorRule.isInDiapason(i, r[k])) {
+			if (r[selectionCss] && this.colorRule.isInDiapason(i, r[selectionCss])) {
+				return 'class=' + q + selectionCss + q;
+			}
 			return 'class=' + q + k + q;
 		}
 	}
