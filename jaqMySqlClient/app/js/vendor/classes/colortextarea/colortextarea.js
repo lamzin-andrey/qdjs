@@ -80,7 +80,7 @@ ColorTextArea.prototype.buildLayout = function() {
 	this.mirror.style.top = 0;
 	this.cursor.style.top = 0;
 	
-	this.subjectTa.style.opacity = 0;
+	this.subjectTa.style.opacity = 0.01;
 }
 /** 
  * @description Установка слушателей событий
@@ -110,6 +110,12 @@ ColorTextArea.prototype.setListeners = function() {
 	this.subjectTa.onscroll = function(evt) {
 		self.onScroll(evt);
 	}
+	/*this.subjectTa.onmousewheel = function(evt) {
+		self.onScroll(evt);
+	}*/
+	this.mirror.onscroll = function(evt) {
+		evt.preventDefault();
+	}
 	/*this.subjectTa.addEventListener('resize', function(evt) {
 		self.onResize(evt);
 	}, false);*/
@@ -131,8 +137,22 @@ ColorTextArea.prototype.onResize = function(evt) {
  * @description Мониторит вертикальную прокрутку
 */
 ColorTextArea.prototype.onScroll = function(evt) {
-	// console.log(this.subjectTa.scrollTop);
+	console.log(this.subjectTa.scrollTop);
 	this.mirror.scrollTo(0, this.subjectTa.scrollTop);
+	console.log(this.subjectTa.scrollTop + ' -aft');
+	this.textCursor.setCursorPosition();
+}
+/** 
+ * @description Мониторит вертикальную прокрутку, эмуляция нормального слушателя onmousewheel
+ *  Удалось не использовать  за счет ta.opacity = 0.01
+*/
+ColorTextArea.prototype.emulateOnScroll = function(evt) {
+	// console.log(this.prevScrollTop);
+	// console.log(this.subjectTa.scrollTop);
+	if (isU(this.prevScrollTop) || this.prevScrollTop != this.subjectTa.scrollTop) {
+		this.prevScrollTop = this.subjectTa.scrollTop;
+		this.onScroll(evt);
+	}
 }
 /** 
  * @description Мониторит выделение
@@ -177,10 +197,11 @@ ColorTextArea.prototype.onInput = function(evt) {
 	// rules: {cssClassName: [0,5, 12,14, ...], cssClassName2: [9,14, 20,28, ...]}
 	for (i = 0; i < sz(s); i++) {
 		ch = s.charAt(i);
+		if (ch == ' ') {
+			ch = '&nbsp;';
+		}
 		if (ch == '\n') {
 			ch = '<i><br></i>';
-		} else if (ch == ' ') {
-			ch = '<i>&nbsp;</i>';
 		} else {
 			cls = this.getRule(i);
 			ch = '<i ' + cls + '>' + ch + '</i>'
