@@ -1,5 +1,6 @@
 function ColorTextArea(blockId, colorRule) {
-	this.subjectTa = e(blockId);
+	this.container = e(blockId);
+	this.subjectTa = ee(this.container, 'textarea')[0];
 	this.colorRule = colorRule;
 	this.colorRule.setContext(this);
 	this.initalizeView();
@@ -13,7 +14,7 @@ function ColorTextArea(blockId, colorRule) {
 ColorTextArea.prototype.initalizeView = function() {
 	// Get mirror
 	// Get Cursor Layer
-	var parentNode = this.subjectTa.parentNode,
+	var parentNode = this.container,
 		mirror = cs(parentNode, 'mirror')[0],
 		cursorBlock = cs(parentNode, 'cursor')[0],
 		styles;
@@ -53,6 +54,7 @@ ColorTextArea.prototype.initalizeView = function() {
 	this.setListeners();
 	// Set color rule class
 	// 	this.colorRule.setContext(this);
+	this.textCursor = new ColorTextAreaCursor(cursorBlock, this.subjectTa, mirror, this.container);
 }
 
 /** 
@@ -85,6 +87,7 @@ ColorTextArea.prototype.onInput = function(evt) {
 		q += ch;
 	}
 	this.mirror.innerHTML = q;
+	this.textCursor.setCursorPosition();
 }
 /** 
  * @description Этот метод определяет, надо ли подсвечивать очередной символ, и каким цветом
