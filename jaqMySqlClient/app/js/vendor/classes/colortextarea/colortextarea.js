@@ -41,19 +41,42 @@ ColorTextArea.prototype.initalizeView = function() {
 	//mirror.style.marginBottom = styles.marginBottom;
 	mirror.style['font-size'] = styles.fontSize;
 	mirror.style.fontFamily = styles.fontFamily;
-	mirror.style.wordBreak = 'break-all'; // TODO тут может быть косяк с поддержкой?В FF с pre не работает
+	mirror.style.wordBreak = 'break-word'; // break-all TODO тут может быть косяк с поддержкой?В FF с pre не работает
 	mirror.style['overflow-y'] = 'scroll';
 	// mirror.style['overflow-x'] = 'none'; // TODO возможна засада
 	console.log('styles.wordBreak:', 'break-word');// break-all
 	console.log('styles.fontFamily:', styles.fontFamily);
 	// Set listeners input, resize, scroll
 	this.setListeners();
+	this.buildLayout();
 	// Set color rule class
 	// 	this.colorRule.setContext(this);
 	this.textCursor = new ColorTextAreaCursor(cursorBlock, this.subjectTa, mirror, this.container);
 	this.onInput();
 }
 
+/** 
+ * @description Построить блоки в кучу
+*/
+ColorTextArea.prototype.buildLayout = function() {
+	this.container.style.position = 'relative';
+	this.subjectTa.style.position = 'absolute';
+	this.mirror.style.position = 'absolute';
+	this.cursor.style.position = 'absolute';
+	
+	this.subjectTa.style.zIndex = 3;
+	this.mirror.style.zIndex = 2;
+	this.cursor.style.zIndex = 1;
+	
+	this.subjectTa.style.left = 0;
+	this.mirror.style.left = 0;
+	this.cursor.style.left = 0;
+	this.subjectTa.style.top = 0;
+	this.mirror.style.top = 0;
+	this.cursor.style.top = 0;
+	
+	this.subjectTa.style.opacity = 0;
+}
 /** 
  * @description Установка слушателей событий
 */
@@ -82,15 +105,14 @@ ColorTextArea.prototype.setListeners = function() {
 	this.subjectTa.onscroll = function(evt) {
 		self.onScroll(evt);
 	}
-	this.subjectTa.addEventListener('resize', function(evt) {
+	/*this.subjectTa.addEventListener('resize', function(evt) {
 		self.onResize(evt);
-	}, false);
+	}, false);*/
 }
 /** 
  * @description Мониторит вертикальную прокрутку
 */
 ColorTextArea.prototype.onResize = function(evt) {
-	console.log('I Call');
 	var styles = getComputedStyle(this.subjectTa),
 		mirror = this.mirror,
 		cursorBlock = this.cursor;
@@ -99,9 +121,6 @@ ColorTextArea.prototype.onResize = function(evt) {
 	cursorBlock.style.width = styles.width;
 	mirror.style.height = styles.height;
 	cursorBlock.style.height = styles.height;
-	
-	console.log(styles.height);
-	// this.mirror.scrollTo(0, this.subjectTa.scrollTop);
 }
 /** 
  * @description Мониторит вертикальную прокрутку

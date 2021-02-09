@@ -22,11 +22,14 @@ function ColorTextAreaCursor(htmlDiv, textarea, mirror, container) {
  * @description  
 */
 ColorTextAreaCursor.prototype.initalizeView = function() {
+	var styles = getComputedStyle(this.textarea);
 	this.view.style.position = 'relative';
 	this.view.innerHTML = '';
 	this.cursor = appendChild(this.view, 'div', '&nbsp;');
 	this.cursor.style.position = 'absolute';
 	this.cursor.style.width = '10px';
+	this.cursor.style['max-height'] = (parseInt(styles.lineHeight) - 0) + 'px';
+	this.cursor.style['height'] = (parseInt(styles.lineHeight) - 0) + 'px';
 	this.cursor.style.backgroundColor = '#85F0BC';
 	this.cursor.style.top = '0px';
 	this.cursor.style.left = '0px';
@@ -70,8 +73,8 @@ ColorTextAreaCursor.prototype.setCursorPosition = function() {
 	}
 	// console.log('pos aft corr', pos);
 	if (ls[pos]) {
-		y = (ls[pos].offsetTop - this.container.offsetTop - this.textarea.scrollTop);
-		x = (ls[pos].offsetLeft - this.container.offsetLeft);
+		y = (ls[pos].offsetTop /*- this.container.offsetTop*/ - this.textarea.scrollTop);
+		x = (ls[pos].offsetLeft /*- this.container.offsetLeft*/);
 		// console.log('ls[pos].offsetTop', y);
 		// console.log('ls[pos].offsetLeft', x);
 		this.cursor.style.top = y + 'px';
