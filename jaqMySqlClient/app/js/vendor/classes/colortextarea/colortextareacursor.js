@@ -62,22 +62,20 @@ ColorTextAreaCursor.prototype.setCursorPosition = function() {
 		return;
 	}
 	ls = ee(this.mirror, 'i');
-	console.log('ls', ls);
-	console.log('pos', pos);
+	// console.log('ls', ls);
+	// console.log('pos', pos);
 	sZ = sz(ls);
 	if (pos > sZ - 1) {
 		pos = sZ - 1;
 	}
-	console.log('pos aft corr', pos);
+	// console.log('pos aft corr', pos);
 	if (ls[pos]) {
-		y = (ls[pos].offsetTop - this.container.offsetTop);
+		y = (ls[pos].offsetTop - this.container.offsetTop - this.textarea.scrollTop);
 		x = (ls[pos].offsetLeft - this.container.offsetLeft);
-		console.log('ls[pos].offsetTop', y);
-		console.log('ls[pos].offsetLeft', x);
+		// console.log('ls[pos].offsetTop', y);
+		// console.log('ls[pos].offsetLeft', x);
 		this.cursor.style.top = y + 'px';
 		this.cursor.style.left = x + 'px';
-	} else {
-		console.log('Danken');
 	}
 }
 

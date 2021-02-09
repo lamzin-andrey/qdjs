@@ -84,6 +84,16 @@ ColorTextArea.prototype.setListeners = function() {
 	this.subjectTa.onmousemove = function(evt) {
 		self.onMouseMove(evt);
 	}
+	this.subjectTa.onscroll = function(evt) {
+		self.onScroll(evt);
+	}
+}
+/** 
+ * @description Мониторит выделение
+*/
+ColorTextArea.prototype.onScroll = function(evt) {
+	// console.log(this.subjectTa.scrollTop);
+	this.mirror.scrollTo(0, this.subjectTa.scrollTop);
 }
 /** 
  * @description Мониторит выделение
