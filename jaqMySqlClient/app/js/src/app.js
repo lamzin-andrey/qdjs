@@ -68,6 +68,9 @@ function onLoad() {
     W.sqlField.onfocus = onSqlFieldFocused;
     W.sqlField.onblur = onSqlFieldBlured;
     
+    var sqlColorTextRules = new ColorRuleSql();
+	window.colorTa = new ColorTextArea('richTextEditor1', sqlColorTextRules);
+    
     /*setTimeout(function(){
 		alert(W.tEdit1.selectionStart);
 		alert(W.tEdit1.selectionEnd);
@@ -85,10 +88,20 @@ function onSqlFieldBlured() {
 
 
 function resizeWorkArea(isNoResizeWindowEvent) {
-    if (isNoResizeWindowEvent && String(W.prevEditH) != 'undefined') {
-	if (tEdit1.offsetHeight == W.prevEditH) {
-	    return;
+	
+	try {
+		if (W.colorTa) {
+			// W.colorTa.emulateOnScroll();
+			W.colorTa.onResize();
+		}
+	} catch(e) {
+		alert(e);
+		W.isCatched = true;
 	}
+    if (isNoResizeWindowEvent && String(W.prevEditH) != 'undefined') {
+		if (tEdit1.offsetHeight == W.prevEditH) {
+			return;
+		}
     }
     var o = getViewport(), editH = tEdit1.offsetHeight;
     W.prevEditH = editH;
@@ -113,8 +126,10 @@ function onExecuteSql(data) {
 			alert(' Затронуто ' + data.ar + ' строк');
 			return;
 		}
-		alert('Выбрано ' + data.n + ' строк');
+		// alert('Выбрано ' + data.n + ' строк');
+		
 		W.dataGrid.set(data.rows, data.n);
+		
 		return;
 	}
 	

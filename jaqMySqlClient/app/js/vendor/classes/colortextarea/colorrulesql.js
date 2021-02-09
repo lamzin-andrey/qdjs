@@ -17,12 +17,19 @@ ColorRuleSql.prototype.configure = function() {
 		'not',
 		'null',
 		'on',
+		'or',
+		'and',
 		'left',
 		'right',
 		'is',
 		'as',
 		'union',
 		'join',
+		'limit',
+		'order',
+		'desc',
+		'asc',
+		'by',
 		'inner'
 	];
 }

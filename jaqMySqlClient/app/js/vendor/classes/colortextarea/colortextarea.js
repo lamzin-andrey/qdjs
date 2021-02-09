@@ -1,6 +1,14 @@
+
+/**
+ * @description  
+ * @param {String} blockId id block, wrapped textarea element. For excample `<div id="test"><textarea></textarea></div>`
+ * 	var rte = new ColorTextArea('test', sqlColorRules);
+*/
 function ColorTextArea(blockId, colorRule) {
 	this.container = e(blockId);
 	this.subjectTa = ee(this.container, 'textarea')[0];
+	appendChild(this.container, 'div', '', {'class': 'mirror'});
+	appendChild(this.container, 'div', '', {'class': 'cursor'});
 	this.colorRule = colorRule;
 	this.colorRule.setContext(this);
 	this.selection = new ColorTextAreaSelection(this.subjectTa, this);
@@ -35,6 +43,8 @@ ColorTextArea.prototype.initalizeView = function() {
 	this.onResize();
 	styles = getComputedStyle(this.subjectTa);
 	
+	addClass(this.container, 'ctaBgColor');
+	
 	mirror.style['line-height'] = styles.lineHeight;
 	mirror.style.padding = styles.padding;
 	mirror.style.margin = styles.margin;
@@ -45,9 +55,9 @@ ColorTextArea.prototype.initalizeView = function() {
 	mirror.style.wordBreak = 'break-all'; // break-all TODO тут может быть косяк с поддержкой?В FF с pre не работает
 	this.subjectTa.style.wordBreak = 'break-all';
 	mirror.style['overflow-y'] = 'scroll';
-	// mirror.style['overflow-x'] = 'none'; // TODO возможна засада
-	console.log('styles.wordBreak:', 'break-word');// break-all
-	console.log('styles.fontFamily:', styles.fontFamily);
+	
+	// console.log('styles.wordBreak:', 'break-word');// break-all
+	// console.log('styles.fontFamily:', styles.fontFamily);
 	// Set listeners input, resize, scroll
 	this.setListeners();
 	this.buildLayout();
@@ -80,7 +90,7 @@ ColorTextArea.prototype.buildLayout = function() {
 	this.mirror.style.top = 0;
 	this.cursor.style.top = 0;
 	
-	this.subjectTa.style.opacity = 0.01;
+	this.subjectTa.style.opacity = 0.02;
 }
 /** 
  * @description Установка слушателей событий
@@ -137,9 +147,12 @@ ColorTextArea.prototype.onResize = function(evt) {
  * @description Мониторит вертикальную прокрутку
 */
 ColorTextArea.prototype.onScroll = function(evt) {
-	console.log(this.subjectTa.scrollTop);
-	this.mirror.scrollTo(0, this.subjectTa.scrollTop);
-	console.log(this.subjectTa.scrollTop + ' -aft');
+	/*if (!W.DDD) {
+		alert(this.subjectTa.scrollTop);
+		W.DDD = true;
+	}*/
+	// this.mirror.scrollTo(0, this.subjectTa.scrollTop);
+	this.mirror.scrollTop = this.subjectTa.scrollTop;
 	this.textCursor.setCursorPosition();
 }
 /** 
@@ -147,8 +160,6 @@ ColorTextArea.prototype.onScroll = function(evt) {
  *  Удалось не использовать  за счет ta.opacity = 0.01
 */
 ColorTextArea.prototype.emulateOnScroll = function(evt) {
-	// console.log(this.prevScrollTop);
-	// console.log(this.subjectTa.scrollTop);
 	if (isU(this.prevScrollTop) || this.prevScrollTop != this.subjectTa.scrollTop) {
 		this.prevScrollTop = this.subjectTa.scrollTop;
 		this.onScroll(evt);
@@ -195,13 +206,31 @@ ColorTextArea.prototype.onInput = function(evt) {
 	// return;
 	// ColorRule.context.setRules(rules);
 	// rules: {cssClassName: [0,5, 12,14, ...], cssClassName2: [9,14, 20,28, ...]}
+	
+	// Всем переносам строк, которые без текста добавляем пробел
+	var prevCh, lastEmptyBr = sz(s) - 1;
+	for (i = sz(s) - 1; i > -1; i--) {
+		ch = s.charAt(i);
+		if (ch == '\n' && prevCh == '\n') {
+			lastEmptyBr = i;
+		} else {
+			break;
+		}
+		prevCh = ch;
+	}
+	// alert(lastEmptyBr);
+	
 	for (i = 0; i < sz(s); i++) {
 		ch = s.charAt(i);
 		if (ch == ' ') {
 			ch = '&nbsp;';
 		}
 		if (ch == '\n') {
-			ch = '<i><br></i>';
+			if (i < lastEmptyBr) {
+				ch = '<i><br></i>';
+			} else {
+				ch = '<i><br>&nbsp;</i>';
+			}
 		} else {
 			cls = this.getRule(i);
 			ch = '<i ' + cls + '>' + ch + '</i>'

@@ -59,11 +59,10 @@ ColorTextAreaCursor.prototype.setListeners = function() {
  * @description Устанавливает курсор в блоке соответственно реальному курсору в реальном поле ввода 
 */
 ColorTextAreaCursor.prototype.setCursorPosition = function() {
-	console.log('OI calls');
 	var pos = this.getCaretPosition(this.textarea),
 		ls, sZ, y = 0, x = 0;
 	if (pos < 0 || isNaN(pos)) {
-		console.log('Exit here');
+		// console.log('Exit here');
 		return;
 	}
 	ls = ee(this.mirror, 'i');
