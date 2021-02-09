@@ -55,6 +55,7 @@ ColorTextArea.prototype.initalizeView = function() {
 	// Set color rule class
 	// 	this.colorRule.setContext(this);
 	this.textCursor = new ColorTextAreaCursor(cursorBlock, this.subjectTa, mirror, this.container);
+	this.onInput();
 }
 
 /** 
@@ -79,7 +80,7 @@ ColorTextArea.prototype.onInput = function(evt) {
 	for (i = 0; i < sz(s); i++) {
 		ch = s.charAt(i);
 		if (ch == '\n') {
-			ch = '<br>';
+			ch = '<i><br></i>';
 		} else {
 			cls = this.getRule(i);
 			ch = '<i ' + cls + '>' + ch + '</i>'
