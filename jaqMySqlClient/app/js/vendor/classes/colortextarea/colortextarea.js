@@ -88,7 +88,7 @@ ColorTextArea.prototype.setListeners = function() {
 	this.subjectTa.addEventListener('keydown',function(evt) {
 		setTimeout(function() {
 			self.onInput(evt);
-		}, 100);
+		}, 10);
 	}, false);
 	this.subjectTa.onmousedown = function(evt) {
 		self.onMouseDown(evt);
@@ -166,6 +166,8 @@ ColorTextArea.prototype.onInput = function(evt) {
 		ch = s.charAt(i);
 		if (ch == '\n') {
 			ch = '<i><br></i>';
+		} else if (ch == ' ') {
+			ch = '<i>&nbsp;</i>';
 		} else {
 			cls = this.getRule(i);
 			ch = '<i ' + cls + '>' + ch + '</i>'

@@ -26,3 +26,33 @@ ColorRuleSql.prototype.configure = function() {
 	];
 }
 
+/**
+ * @description Определяет, не начинается ли в позиции i однострочный комментарий '//'
+ * 
+ * @param {String} s
+ * @param {Number} i
+*/
+ColorRuleSql.prototype.checkIsStartOnestringComment = function(s, i) {
+	var q = s.charAt(i) + s.charAt(i + 1);
+	return (q == '--');
+}
+
+/**
+ * @description Определяет, не начинается ли в позиции i регулярное выражение
+ * 
+ * @param {String} s
+ * @param {Number} i
+*/
+ColorRuleSql.prototype.checkIsStartRegExp = function(s, i) {
+	return false;
+}
+
+/* @description Определяет, не заканчивается ли регулярное выражение
+ * 
+ * @param {String} s
+ * @param {Number} startREPos
+ * @param {Number} i
+*/
+ColorRuleSql.prototype.checkIsEndRE = function(s, startREPos, i) {
+	return false;
+}
