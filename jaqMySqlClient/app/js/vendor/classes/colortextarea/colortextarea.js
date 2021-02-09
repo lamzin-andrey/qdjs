@@ -42,7 +42,8 @@ ColorTextArea.prototype.initalizeView = function() {
 	//mirror.style.marginBottom = styles.marginBottom;
 	mirror.style['font-size'] = styles.fontSize;
 	mirror.style.fontFamily = styles.fontFamily;
-	mirror.style.wordBreak = 'break-word'; // break-all TODO тут может быть косяк с поддержкой?В FF с pre не работает
+	mirror.style.wordBreak = 'break-all'; // break-all TODO тут может быть косяк с поддержкой?В FF с pre не работает
+	this.subjectTa.style.wordBreak = 'break-all';
 	mirror.style['overflow-y'] = 'scroll';
 	// mirror.style['overflow-x'] = 'none'; // TODO возможна засада
 	console.log('styles.wordBreak:', 'break-word');// break-all
@@ -54,9 +55,9 @@ ColorTextArea.prototype.initalizeView = function() {
 	// 	this.colorRule.setContext(this);
 	this.textCursor = new ColorTextAreaCursor(cursorBlock, this.subjectTa, mirror, this.container);
 	this.onInput();
-	setTimeout(function() {
+	/*setTimeout(function() {
 		self.textCursor.setCursorPosition();
-	}, 100);
+	}, 100);*/
 }
 
 /** 

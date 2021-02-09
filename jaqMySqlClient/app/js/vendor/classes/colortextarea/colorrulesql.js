@@ -20,6 +20,7 @@ ColorRuleSql.prototype.configure = function() {
 		'left',
 		'right',
 		'is',
+		'as',
 		'union',
 		'join',
 		'inner'
