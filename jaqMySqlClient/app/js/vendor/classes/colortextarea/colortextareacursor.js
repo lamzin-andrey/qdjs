@@ -57,15 +57,16 @@ ColorTextAreaCursor.prototype.setListeners = function() {
 */
 ColorTextAreaCursor.prototype.setCursorPosition = function() {
 	var pos = this.getCaretPosition(this.textarea),
-		ls, i, y = 0, x = 0;
+		ls, sZ, y = 0, x = 0;
 	if (pos < 0 || isNaN(pos)) {
 		return;
 	}
 	ls = ee(this.mirror, 'i');
 	console.log('ls', ls);
 	console.log('pos', pos);
-	if (pos >= sz(ls) - 1) {
-		pos = sz(ls) - 2;
+	sZ = sz(ls);
+	if (pos > sZ - 1) {
+		pos = sZ - 1;
 	}
 	console.log('pos aft corr', pos);
 	if (ls[pos]) {
