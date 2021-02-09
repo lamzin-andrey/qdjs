@@ -18,7 +18,8 @@ ColorTextArea.prototype.initalizeView = function() {
 	var parentNode = this.container,
 		mirror = cs(parentNode, 'mirror')[0],
 		cursorBlock = cs(parentNode, 'cursor')[0],
-		styles;
+		styles,
+		self = this;
 	if (mirror) {
 		this.mirror = mirror;
 	}
@@ -53,6 +54,9 @@ ColorTextArea.prototype.initalizeView = function() {
 	// 	this.colorRule.setContext(this);
 	this.textCursor = new ColorTextAreaCursor(cursorBlock, this.subjectTa, mirror, this.container);
 	this.onInput();
+	setTimeout(function() {
+		self.textCursor.setCursorPosition();
+	}, 100);
 }
 
 /** 
@@ -134,6 +138,13 @@ ColorTextArea.prototype.onScroll = function(evt) {
 */
 ColorTextArea.prototype.onMouseDown = function(evt) {
 	this.mouseIsDown = true;
+	if (this.colorRules['sl']) {
+		this.colorRules['sl'] = null;
+		delete this.colorRules['sl'];
+		var x = this.textCursor.getCaretPosition(this.subjectTa);
+		this.subjectTa.setSelectionRange(x, x);
+		this.onInput();
+	}
 }
 /** 
  * @description Мониторит выделение
@@ -156,6 +167,7 @@ ColorTextArea.prototype.onMouseMove = function(evt) {
 ColorTextArea.prototype.onInput = function(evt) {
 	var s = this.subjectTa.value, i, ch, q = '', cls = 'class="kw"'; //
 	this.colorRule.calc(s);
+	
 	// Переустановит (дополнит данными о позиции выделения текста) те же rules что и this.colorRule.calc
 	this.selection.calc();
 	// console.log(this.colorRules);

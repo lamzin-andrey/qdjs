@@ -10,6 +10,7 @@ ColorTextAreaSelection.prototype.calc = function() {
 	var r = this.context.colorRules,
 		start = this.textarea.selectionStart,
 		end = this.textarea.selectionEnd;
+	// console.log(document.getSelection().isCollapsed);
 	if (!isNaN(start) && !isNaN(end) && start != end) {
 		r['sl'] = [start, end - 1];
 	}

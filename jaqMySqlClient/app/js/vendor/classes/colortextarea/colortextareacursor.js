@@ -75,6 +75,11 @@ ColorTextAreaCursor.prototype.setCursorPosition = function() {
 	if (ls[pos]) {
 		y = (ls[pos].offsetTop /*- this.container.offsetTop*/ - this.textarea.scrollTop);
 		x = (ls[pos].offsetLeft /*- this.container.offsetLeft*/);
+		if (y > this.mirror.offsetHeight) {
+			this.cursor.style.opacity = 0;
+		} else {
+			this.cursor.style.opacity = 1;
+		}
 		// console.log('ls[pos].offsetTop', y);
 		// console.log('ls[pos].offsetLeft', x);
 		this.cursor.style.top = y + 'px';
