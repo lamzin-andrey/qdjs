@@ -16,14 +16,19 @@ function onKeyUp(evt) {
 			case 65:
 				onClickAddServer();
 			break;
+			
 			case 79:
 				onClickSelectServer();
 			break;
+			
 			case 81:
 				onClickExitMenu();
 			break;
+			
+			case 82://TODO R
+				onClickResetWindow();
+			break;
 		}
-	    
     }
 	if (evt.keyCode == 27 && window.mainMenuIsHide) {
 		exitFromFullscreen();
@@ -38,9 +43,33 @@ function onClickAddServer(){
 function onClickSelectServer() {
     appWindow('hManageServerDlg', 'Настройки соединения с сервером', onClosePopup);
     W.manageHostsDlg = new ManageHostDlg();
-    W.dataGrid.setIsFocused(false);
-    
+    W.dataGrid.setIsFocused(false);   
 }
+
+function onClickDeleteConfig() {
+	if (confirm('Are you sure, than you want delete all configurations? All server connections will be losed. Continue?')) {
+		PHP.file_put_contents(Qt.appDir() + '/config.json', '{}');
+	}
+}
+
+function onClickOpenSqlFile() {
+	var lastDir = storage(W.sqlField.SKEY_LAST_FILE);
+	if (!lastDir) {
+		lastDir = Qt.appDir();
+	}
+	var fileName = Qt.openFileDialog('Select sql file', lastDir, '*.sql');
+	var s = PHP.file_get_contents(fileName);
+	W.tEdit1.value = s;
+	storage(W.sqlField.SKEY_LAST_FILE, fileName)
+}
+
+function onClickResetWindow() {
+	if (confirm('Reset window size?')) {
+		storage('lasttEdit1H', 0);
+		storage('lastWndSize', {});
+	}
+}
+
 function onClickExitMenu() {
 	Qt.quit();
 }
@@ -56,9 +85,26 @@ window.onresize = onResizeWindow;
 window.onload = onLoad;
 window.onkeyup = onKeyUp;
 function onLoad() {
+	
     W.tEdit1 = e('tEdit1');
     W.hResultArea = e('hResultArea');
     resizeWorkArea(1);
+    
+    try {
+		var lastSize = storage('lastWndSize');
+		if (lastSize.w && lastSize.h) {
+			Qt.resizeTo(lastSize.w, lastSize.h);
+		}
+		var lasttEdit1H = storage('lasttEdit1H');
+		if (lasttEdit1H) {
+			lasttEdit1H = parseInt(lasttEdit1H);
+		}
+		if (lasttEdit1H) {
+			W.tEdit1.style.height = lasttEdit1H + 'px';
+		}
+	} catch(e) {
+		alert('onLoad:\n' + e);
+	}
     
     setInterval(function() {
 		resizeWorkArea(1);
@@ -101,6 +147,17 @@ function resizeWorkArea(isNoResizeWindowEvent) {
 		alert(e);
 		W.isCatched = true;
 	}
+	
+	
+	if (!isNoResizeWindowEvent && W.initalizedForSaveResize) {
+		try {
+			storage('lastWndSize', {w:screen.width, h:screen.height});
+		} catch(e) {
+			alert('App::resizeWorkArea:\n' + e);
+		}
+	}
+	W.initalizedForSaveResize = true;
+	
     if (isNoResizeWindowEvent && String(W.prevEditH) != 'undefined') {
 		if (tEdit1.offsetHeight == W.prevEditH) {
 			return;
@@ -114,6 +171,15 @@ function resizeWorkArea(isNoResizeWindowEvent) {
     if (W.dataGrid) {
 		W.dataGrid.setScrollBars();
 	}
+	W.newEdit1HForStore = editH;
+	setTimeout(function(){
+		if (W.newEdit1HForStore) {
+			storage('lasttEdit1H', W.newEdit1HForStore);
+			W.newEdit1HForStore = 0;
+		}
+	},
+	1000);
+	
 }
 
 function onExecuteSql(data) {
@@ -128,6 +194,9 @@ function onExecuteSql(data) {
 		if (parseInt(data.ar)) {
 			alert(' Затронуто ' + data.ar + ' строк');
 			return;
+		}
+		if (data.n == 0) {
+			alert('Выбрано ' + data.n + ' строк');
 		}
 		// alert('Выбрано ' + data.n + ' строк');
 		

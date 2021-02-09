@@ -1,8 +1,23 @@
 function SqlField(mediator) {
 	this.mediator = mediator;
 	this.SKEY = 'tEdit1Value';
+	this.SKEY_LAST_FILE = 'tEdit1lastFile';
     this.view = W.tEdit1;
-    this.view.value = storage(this.SKEY);
+    var lastFile = storage(this.SKEY_LAST_FILE);
+    var value;
+    if (PHP.file_exists(lastFile)) {
+		var s = PHP.file_get_contents(lastFile);
+		alert('Content loaded!');
+		this.view.value = s;
+		alert('Content setted in ta!');
+	} else {
+		value = storage(this.SKEY);
+		
+		if (value instanceof Object) {
+			value = '';
+		}
+		this.view.value = value;
+	}
     this.setListeners();
 }
 

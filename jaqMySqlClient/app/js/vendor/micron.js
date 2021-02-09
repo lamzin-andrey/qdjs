@@ -159,12 +159,14 @@ function storage(key, data) {
 			data = JSON.stringify(data);
 		}
 		if (!data) {
-			data = L.getItem(key);
+			try{
+				data = L.getItem(key);
+			} catch(e){'micron.js::storage::L.getItem:\n' + alert(e);}
 			// alert(data);
-			if (data) {
+			if (data && (data != '[object Object]')) {
 				try {
 					data = JSON.parse(data);
-				} catch(e){alert(e);}
+				} catch(e){'micron.js::storage::' + alert(e);}
 			}
 		} else {
 			L.setItem(key, data);
