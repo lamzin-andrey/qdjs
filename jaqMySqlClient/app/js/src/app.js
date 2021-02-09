@@ -64,14 +64,15 @@ function onLoad() {
 		resizeWorkArea(1);
     }, 200);
     
-    W.sqlField = new SqlField(W);
+    
     W.dataGrid = new SqlDataGrid('hResultArea');
+    W.sqlField = new SqlField(W);
     
     W.sqlField.onfocus = onSqlFieldFocused;
     W.sqlField.onblur = onSqlFieldBlured;
     
     var sqlColorTextRules = new ColorRuleSql();
-	window.colorTa = new ColorTextArea('richTextEditor1', sqlColorTextRules);
+	window.colorTa = new Qt5ColorTextArea('richTextEditor1', sqlColorTextRules);
     
     /*setTimeout(function(){
 		alert(W.tEdit1.selectionStart);
