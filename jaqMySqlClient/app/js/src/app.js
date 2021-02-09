@@ -14,13 +14,13 @@ function onKeyUp(evt) {
     if (evt.ctrlKey) {
 		switch(evt.keyCode) {
 			case 65:
-			onClickAddServer();
+				onClickAddServer();
 			break;
 			case 79:
-			onClickSelectServer();
+				onClickSelectServer();
 			break;
 			case 81:
-			onClickExitMenu();
+				onClickExitMenu();
 			break;
 		}
 	    
@@ -32,11 +32,13 @@ function onKeyUp(evt) {
 function onClickAddServer(){
     appWindow('hConfigServerParams', 'Добавить сервер', onClosePopup);
     W.addHostDlg = new AddHostDlg();
+    W.dataGrid.setIsFocused(false);
     
 }
 function onClickSelectServer() {
     appWindow('hManageServerDlg', 'Настройки соединения с сервером', onClosePopup);
     W.manageHostsDlg = new ManageHostDlg();
+    W.dataGrid.setIsFocused(false);
     
 }
 function onClickExitMenu() {
@@ -47,7 +49,7 @@ function onResizeWindow() {
 }
 
 function onClosePopup() {
-    //alert('It Will close!');
+    W.dataGrid.setIsFocused(true);
 }
 
 window.onresize = onResizeWindow;
@@ -62,7 +64,7 @@ function onLoad() {
 		resizeWorkArea(1);
     }, 200);
     
-    W.sqlField = new SqlField();
+    W.sqlField = new SqlField(W);
     W.dataGrid = new SqlDataGrid('hResultArea');
     
     W.sqlField.onfocus = onSqlFieldFocused;

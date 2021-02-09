@@ -1,4 +1,5 @@
-function SqlField() {
+function SqlField(mediator) {
+	this.mediator = mediator;
 	this.SKEY = 'tEdit1Value';
     this.view = W.tEdit1;
     this.view.value = storage(this.SKEY);
@@ -19,9 +20,10 @@ SqlField.prototype.setListeners = function () {
 			}
 		} else {
 			switch(evt.keyCode) {
-				case 116:
+				case 116: // F5
 					self.exec(self.view.value.trim());
 					evt.preventDefault();
+					this.mediator.dataGrid.clear();
 					break;
 			}
 		}

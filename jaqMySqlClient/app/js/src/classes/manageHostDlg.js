@@ -32,20 +32,21 @@ ManageHostDlg.prototype.loadHosts = function () {
 
 ManageHostDlg.prototype.onClickBHostEdit = function (evt) {
     var id = this.selHosts.options[this.selHosts.selectedIndex].value,
-	connection;
+		connection;
     
     var r = false;
     try {
-	appWindow('hConfigServerParams', 'Добавить сервер', onClosePopup);
-	W.addHostDlg = new AddHostDlg();
-	connection = W.HostsSaver.loadHostData(id);
-	iHost.value = connection.host;
-	iPort.value = connection.port;
-	iName.value = connection.dbname;
-	iUser.value = connection.dbuser;
-	iPassword.value = connection.dbpassword;
+		appWindow('hConfigServerParams', 'Добавить сервер', onClosePopup);
+		W.addHostDlg = new AddHostDlg();
+		connection = W.HostsSaver.loadHostData(id);
+		iHost.value = connection.host;
+		iPort.value = connection.port;
+		iName.value = connection.dbname;
+		iUser.value = connection.dbuser;
+		iPassword.value = connection.dbpassword;
+		W.dataGrid.setIsFocused(false);
     } catch (e) {
-	alert(e);
+		alert(e);
     }
 }
 
@@ -53,7 +54,7 @@ ManageHostDlg.prototype.onClickBHostRemove = function (evt) {
     var id = this.selHosts.options[this.selHosts.selectedIndex].value, r;
     r = W.HostsSaver.remove(id);
     if (r) {
-	this.loadHosts();
+		this.loadHosts();
     }
 }
 
