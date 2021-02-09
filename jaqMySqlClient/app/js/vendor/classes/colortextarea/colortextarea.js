@@ -31,13 +31,8 @@ ColorTextArea.prototype.initalizeView = function() {
 		return;
 	}
 	// Set css for mirror from textarea
+	this.onResize();
 	styles = getComputedStyle(this.subjectTa);
-	mirror.style.width = styles.width;
-	// mirror.style.maxWidth = styles.width;
-	cursorBlock.style.width = styles.width;
-	mirror.style.height = styles.height;
-	cursorBlock.style.height = styles.height;
-	
 	
 	mirror.style['line-height'] = styles.lineHeight;
 	mirror.style.padding = styles.padding;
@@ -87,9 +82,29 @@ ColorTextArea.prototype.setListeners = function() {
 	this.subjectTa.onscroll = function(evt) {
 		self.onScroll(evt);
 	}
+	this.subjectTa.addEventListener('resize', function(evt) {
+		self.onResize(evt);
+	}, false);
 }
 /** 
- * @description Мониторит выделение
+ * @description Мониторит вертикальную прокрутку
+*/
+ColorTextArea.prototype.onResize = function(evt) {
+	console.log('I Call');
+	var styles = getComputedStyle(this.subjectTa),
+		mirror = this.mirror,
+		cursorBlock = this.cursor;
+	mirror.style.width = styles.width;
+	// mirror.style.maxWidth = styles.width;
+	cursorBlock.style.width = styles.width;
+	mirror.style.height = styles.height;
+	cursorBlock.style.height = styles.height;
+	
+	console.log(styles.height);
+	// this.mirror.scrollTo(0, this.subjectTa.scrollTop);
+}
+/** 
+ * @description Мониторит вертикальную прокрутку
 */
 ColorTextArea.prototype.onScroll = function(evt) {
 	// console.log(this.subjectTa.scrollTop);
@@ -112,6 +127,7 @@ ColorTextArea.prototype.onMouseUp = function(evt) {
 */
 ColorTextArea.prototype.onMouseMove = function(evt) {
 	if (this.mouseIsDown) {
+		this.onResize();// TODO попробуй, вдруг Qt лучше! А если не лучше, удали из setListeners
 		this.onInput();
 	}
 }
