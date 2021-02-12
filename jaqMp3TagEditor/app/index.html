@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	    <meta charset="Utf-8" />
+	    <title>JAndQt Mp3 Tag Editor</title>
+	    <meta name="windowButtons" content="1110" width="1024" height="768" />
+	    <menubar style="display:none">
+		    <menu title="File">
+			    <item onselect="onClickExitMenu()" id="menuItemFileExit">Exit Ctrl+Q</item>
+		    </menu>
+	    </menubar>
+	    <link rel="stylesheet" type="text/css" href="./s/g.css" />
+	    <link rel="stylesheet" type="text/css" href="./s/0.css" />
+	    <link rel="stylesheet" type="text/css" href="./s/colors.css" />
+	    <link rel="stylesheet" type="text/css" href="./js/vendor/pjs-popupwnd/dev/popupwin.css" />
+	    <link rel="stylesheet" type="text/css" href="./js/vendor/classes/pbar/pbar.css" />
+    </head>
+    <body>
+	<div class="screen" id="hMainScreen">
+	    <div style="width:99%;">
+			<fieldset>
+				<legend id="devicesListLegend">Редактирование тегов mp3 файлов</legend>
+				<div class="mp3_inputs">
+					<div>
+						<label for="iNumber" id="hNumberLabel">Номер:</label>
+						<input type="number" id="iNumber">
+						<div class="small" id="hNumberSmallText">
+							<input type="checkbox" id="cbAutoincrement" checked>
+							<label id="hAutoincrement" for="cbAutoincrement">Увеличивать автоматически для каждого файла</label>
+						</div>
+					</div>
+					<div>
+						<label for="iYear" id="hYearLabel">Год:</label>
+						<input type="number" id="iYear">
+					</div>
+					<div>
+						<label for="iArtist" id="hArtistLabel">Артист:</label>
+						<input type="text" id="iArtist">
+					</div>
+					<div>
+						<label for="iTitle" id="hTitleLabel">Название:</label>
+						<input type="text" id="iTitle">
+						<div class="small" id="hTitleSmallText">
+							<input type="checkbox" id="cbTitle" checked>
+							<label id="hCopyOrigin" for="cbTitle">Копировать имена файлов</label>
+						</div>
+					</div>
+					<div>
+						<label for="iAlbum" id="hAlbumLabel">Альбом:</label>
+						<input type="text" id="iAlbum">
+					</div>
+					<div>
+						<label for="iComment" id="hCommentLabel">Комментарий:</label>
+						<input type="text" id="iComment">
+						<div class="small" id="hCommentSmallText">Доступны только латинские символы!</div>
+					</div>
+					<div>
+						<label for="iGenre" id="hGenreLabel">Жанр:</label>
+						<input type="text" id="iGenre">
+					</div>
+				</div>
+				<input type="button" id="bSelectDirectory" value="Обзор"><label id="selectFileLegend">Выберите каталог с mp3 файлами</label>
+				<div id="hResultArea">
+					
+					<div id="extractPBar" style="display:none;">
+						 <fieldset id="progressFieldsset">
+							 <legend id="pBarLabel">Progress</legend>
+							 <div class="text-center" id="progressStateLabel">
+								Files in process, please wait...
+							 </div>
+							 <div style="line-height:28px;">
+								 <!-- #1A772C -->
+								 <div style="width:100%; border:1px solid #8398B3; border-radius:4px; height:10px;background-color:#FFF;">
+									 <!--/* #D7DFE9 */-->
+									 
+									<div style="width:0%;  height:10px;" id="dompb">&nbsp;</div>
+								 </div>
+							 </div>
+							 <div class="text-center" id="progressState">
+								10200 / 8821848 (50%)
+							 </div>
+							 <div class="text-center">
+								<input type="button" value="Установить теги" id="bConvertNow">
+							 </div>
+						</fieldset>
+					 </div>
+					
+				</div>
+				<div id="hUpdateLabel">&nbsp;</div>
+			</fieldset>
+	    </div>
+	</div>
+	<div class="screen" >&nbsp;</div>
+	
+    </body>
+    <!-- shared libs  -->
+    <script type="text/javascript" src="./js/vendor/micron.js" ></script>
+    <script type="text/javascript" src="./js/vendor/pjs-popupwnd/popupwin.js" ></script>
+    <script type="text/javascript" src="./js/vendor/objects/recentdir.js" ></script>
+    <script type="text/javascript" src="./js/vendor/objects/settings.js" ></script>
+    <script type="text/javascript" src="./js/vendor/objects/localstorageinterface.js" ></script>
+    <script type="text/javascript" src="./js/vendor/classes/pbar/pbar.js" ></script>
+    <script type="text/javascript" src="./js/vendor/classes/ffmpeg/ffmpeg.js" ></script>
+    
+    
+    <script type="text/javascript" src="./js/vendor/lang.js" ></script>
+    <!-- /shared libs  -->
+    
+    <!-- app libs  -->
+    <script type="text/javascript" src="./js/src/classes/appcontroller.js" ></script>
+    
+    
+    <!-- app /libs  -->
+    
+    <script type="text/javascript" src="./js/src/app.js" ></script>
+</html>

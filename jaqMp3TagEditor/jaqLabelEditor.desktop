@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=JaQt Mp3 Tag Editor
+Comment=
+Exec=/home/andrey/hdata/programs/my/qdjs/jaqMp3TagEditor/jaqMp3TagEditor.sh
+Icon=/home/andrey/hdata/programs/my/qdjs/jaqMp3TagEditor/app/i/icons/48.png
+Path=/home/andrey/hdata/programs/my/qdjs/jaqMp3TagEditor
+Categories=AudioVideo;
+Terminal=false
+StartupNotify=false
+Name[ru]=JaQt Mp3 Tag Editor
+Name[en]=JaQt Mp3 Tag Editor
