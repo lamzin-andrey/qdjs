@@ -132,7 +132,7 @@ AppController.prototype.onBrowse = function(evt) {
 		e('progressState').innerHTML = '0%';
 	} else {
 		// TODO pluralize
-		this.hStatusText.innerHTML = L('В каталоге найдено ') + sZ + ' ' + L('mp3 файлa');
+		this.hStatusText.innerHTML = L('В каталоге найдено') + ' ' + sZ + ' ' + L('mp3 файлa');
 		stl(e('extractPBar'), 'display', 'block');
 		e('progressStateLabel').innerHTML = L('Нажмите кнопку ниже');
 		e('progressState').innerHTML = '0 / ' + sZ + ' (0%)';
