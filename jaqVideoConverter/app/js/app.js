@@ -3,6 +3,7 @@ function init(){
 	window.procId = 0;
 	e('bPlusFile').onclick = jmp3cutOnBrowse;
 	e('bConvert').onclick = jmp3cutOnConvertClick;
+	Qt.setWindowIconImage(Qt.appDir() + '/img/ffmpeg24.png');
 }
 function jmp3cutOnConvertClick() {
 	if (W.convertProcIsRun == 1) {
