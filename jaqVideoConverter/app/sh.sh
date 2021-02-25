@@ -1,4 +1,4 @@
 #! /bin/bash
-cd '/home/andrey/tmp/00/01';
-rm -f 06_РОССИЯ-К-01212021-0830-out.avi;
-ffmpeg -i 06_РОССИЯ-К-01212021-0830.mts -c:v libx264 -threads 3 -pix_fmt yuv420p 06_РОССИЯ-К-01212021-0830-out.avi 1>/home/andrey/hdata/programs/my/qdjs/jaqVideoConverter/app/06_РОССИЯ-К-01212021-0830-out.avi.log 2>&1 
+cd '/home/andrey/tmp';
+rm -f keosayan-2020-09-13-17-38-00-out.avi;
+ffmpeg -i keosayan-2020-09-13-17-38-00.mp4 -c:v libx264 -threads 3 -pix_fmt yuv420p keosayan-2020-09-13-17-38-00-out.avi 1>/home/andrey/hdata/programs/my/qdjs/jaqVideoConverter/app/keosayan-2020-09-13-17-38-00-out.avi.log 2>&1 

@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=MoonPhase
+Exec=/home/andrey/hdata/programs/my/qdjs/jaqVideoConverter/jaqVC.sh
+Icon=/home/andrey/hdata/programs/my/qdjs/jaqVideoConverter/app/img/ffmpeg60.png
+Path=/home/andrey/hdata/programs/my/qdjs/jaqVideoConverter/
+Terminal=false
+StartupNotify=false
+Name[ru]=JaqFFMPEGConverter
+Name[en]=JaqFFMPEGConverter
+Categories=AudioVideo;
