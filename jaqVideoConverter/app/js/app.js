@@ -22,15 +22,20 @@ function jmp3cutOnConvertClick() {
 		//cmd = 'cd ' + jmp3cutGetDir() + ';\navconv -i ' + jmp3cutGetName() + ' -ss ' + e('start').value + ' -t ' + e('duration').value + ' ' +
 			//jmp3cutGetOutfile();
 		
-		procId = PHP.exec(name, 'jmp3cutOnFinish', 'jmp3cutOnStd', 'jmp3cutOnErr');
-		W.convertProcIsRun = 1;
+		
 		//TODO следить за изменением размера файла, если перестал увеличиваться, значит финиш
 		window.ival = setInterval(jmp3Observe, 500);
+		
+		procId = PHP.exec(name, 'jmp3cutOnFinish', 'jmp3cutOnStd', 'jmp3cutOnErr');
+		W.convertProcIsRun = 1;
 	} else {
 		alert('Вам надо выбрать mp4 или mts файл');
 	}
 }
 function jmp3Observe() {
+	if (!window.procId) {
+		return;
+	}
 	if (window.observeProcIsRun) {
 		return;
 	}

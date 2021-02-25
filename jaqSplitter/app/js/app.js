@@ -19,7 +19,7 @@ function onClickSelectTextFile() {
 	saveLastDir(filepath);
 }
 /**
- * @description Получить имя файла вида fole000Suffix.txt
+ * @description Получить имя файла вида file000Suffix.txt
  * @param filepath путь к исходному файлу
  * @param {Number} suffix цифровой суффикс
  * @param {Number}  sz размер исходного файла
@@ -42,13 +42,14 @@ function getFilename(filepath, suffix, sz, limit)
 	if (dir) {
 		out = dir + '/' + prefix + String(suffix) + shortname;
 	}
+	alert('out: ' + out);
 	return out;
 }
 
 function removeOutdir(filepath) {
 	var s = getTargetDir(filepath);
 	if (s) {
-		PHP.exec('rm -rf ' + s + '\n', 'onFin', 'onFin2', 'onFin2');
+		PHP.exec('rm -rf "' + s + '"\n', 'onFin', 'onFin2', 'onFin2');
 	}
 }
 
@@ -60,8 +61,9 @@ function getTargetDir(filepath) {
 
 function onFin(){
 	var s = getTargetDir(window.filepath);
+	alert('onFin->getTargetDir: "'  + s + '"');
 	if (s) {
-		PHP.exec('mkdir ' + s, 'onFin3', 'onFin2', 'onFin2');
+		PHP.exec('mkdir "' + s + '"', 'onFin3', 'onFin2', 'onFin2');
 	}
 }
 
@@ -71,8 +73,9 @@ function onFin3(stdin, stdout){
 	var sz = PHP.filesize(filepath);
 	var s = '', i, q = '', nCounter = 0, suffix = 1, limit = 100*1024,
 		arr = PHP.file_get_contents(filepath).split('\n'),
+		et = '"',
 		currentFile;
-	
+	alert(arr.length);
 	for (i = 0; i < arr.length; i++) {
 		s = arr[i];
 		q += s + '\n';
@@ -80,6 +83,7 @@ function onFin3(stdin, stdout){
 		if (nCounter > limit) {
 			nCounter = 0;
 			currentFile = getFilename(filepath, suffix, sz, limit);
+			currentFile = et + currentFile + et;
 			if (currentFile) {
 				PHP.file_put_contents(currentFile, q);
 			} else {
@@ -92,6 +96,7 @@ function onFin3(stdin, stdout){
 	
 	if (q != '') {
 		currentFile = getFilename(filepath, suffix, sz, limit);
+		currentFile = et + currentFile + et;
 		if (currentFile) {
 			PHP.file_put_contents(currentFile, q);
 		} else {

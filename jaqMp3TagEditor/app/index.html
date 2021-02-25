@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
     <head>
 	    <meta charset="Utf-8" />
 	    <title>JAndQt Mp3 Tag Editor</title>
@@ -7,6 +7,9 @@
 	    <menubar style="display:none">
 		    <menu title="File">
 			    <item onselect="onClickExitMenu()" id="menuItemFileExit">Exit Ctrl+Q</item>
+		    </menu>
+		    <menu title="Language">
+			    <item onselect="onClickChangeLang()" id="menuItemChangeLang">Change lang</item>
 		    </menu>
 	    </menubar>
 	    <link rel="stylesheet" type="text/css" href="./s/g.css" />
@@ -71,7 +74,7 @@
 							 <div style="line-height:28px;">
 								 <!-- #1A772C -->
 								 <div style="width:100%; border:1px solid #8398B3; border-radius:4px; height:10px;background-color:#FFF;">
-									 <!--/* #D7DFE9 */-->
+									 <!-- /* #D7DFE9 */ -->
 									 
 									<div style="width:0%;  height:10px;" id="dompb">&nbsp;</div>
 								 </div>
@@ -92,6 +95,22 @@
 	</div>
 	<div class="screen" >&nbsp;</div>
 	
+	<div id="hLangChooser" class="hide">
+	    <div class="hLangChooserBody">
+			<div>&nbsp;</div>
+			<div class="mb-4">
+				<input id="cben" type="radio" name="lang"><label for="cben" id="hLangE">English</label>
+			</div>
+			<div>
+				<input id="cbru" type="radio" name="lang"><label for="cbru" id="hLangR">Russian</label>
+			</div>
+			<div class="tr">
+				<input value="Применить" id="bApplyLang" type="button" onclick="appWindowClose();">
+			</div>
+	    </div>
+	</div>
+	
+	
     </body>
     <!-- shared libs  -->
     <script type="text/javascript" src="./js/vendor/micron.js" ></script>
@@ -109,6 +128,7 @@
     <!-- app libs  -->
     <script type="text/javascript" src="./js/src/classes/appcontroller.js" ></script>
     <script type="text/javascript" src="./js/src/local.js" ></script>
+    <script type="text/javascript" src="./js/src/localru.js" ></script>
     
     
     <!-- app /libs  -->

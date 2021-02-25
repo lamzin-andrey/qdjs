@@ -36,6 +36,30 @@ function onClickExitMenu() {
 function onResizeWindow() {
     resizeWorkArea();
 }
+function onClickChangeLang() {
+	appWindow('hLangChooser', L('Выберите язык'), onDlgClose);
+}
+function onDlgClose() {
+	if (e('cben').checked) {
+		W.jaqedLang = W.langEn;
+		setLocale();
+		e('hCommentSmallText').innerHTML = L('hCommentSmallText');
+		storage('lang', 'en');
+		var s = PHP.file_get_contents(Qt.appDir() + '/index.html');
+		s = s.replace('<html lang="ru">', '<html lang="en">');
+		PHP.file_put_contents(Qt.appDir() + '/index.html', s);
+	}
+	
+	if (e('cbru').checked) {
+		W.jaqedLang = W.langRu;
+		setLocale();
+		storage('lang', 'ru');
+		e('hCommentSmallText').innerHTML = L('hCommentSmallText');
+		var s = PHP.file_get_contents(Qt.appDir() + '/index.html');
+		s = s.replace('<html lang="en">', '<html lang="ru">');
+		PHP.file_put_contents(Qt.appDir() + '/index.html', s);
+	}
+}
 
 
 window.onresize = onResizeWindow;
@@ -49,6 +73,11 @@ function onLoad() {
 		resizeWorkArea(1);
     }, 200);
     try {
+		var lang = storage('lang');
+		if (lang && e('cb' + lang)) {
+			e('cb' + lang).checked = true;
+			onDlgClose();
+		}
 		W.ffmpeg = new FFMpeg(Qt.appDir() + '/js/vendor/classes/ffmpeg');
 		W.appController = new AppController('hUpdateLabel', 'bSelectDirectory', ffmpeg);
 	}  catch(E) {

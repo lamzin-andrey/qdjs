@@ -424,6 +424,7 @@ window.onresize = onResizeWindow;
 window.onload = onLoad;
 window.onkeyup = onKeyUp;
 function onLoad() {
+	Qt.setWindowIconImag(Qt.appDir() + '/i/icons/24.png');
 	var args = Qt.getArgs();
 	if (args.length > 0) {
 		alert(args[0]);
