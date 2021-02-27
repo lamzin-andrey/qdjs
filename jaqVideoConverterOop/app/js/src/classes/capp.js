@@ -31,7 +31,8 @@ App.prototype.onConvert2Mp3Click = function(evt) {
 		return;
 	}
 	this.mediaIterator = 0;
-	var isRun = this.mediaFiles[this.mediaIterator].convert('mp3');
+	this.outputFormat = 'mp3';
+	var isRun = this.mediaFiles[this.mediaIterator].convert(this.outputFormat);
 	if (!isRun) {
 		alert('Вам надо выбрать mp4 или mts файл');
 	} else {
@@ -45,7 +46,8 @@ App.prototype.onConvert2AviClick = function(evt) {
 		return;
 	}
 	this.mediaIterator = 0;
-	var isRun = this.mediaFiles[this.mediaIterator].convert('avi');
+	this.outputFormat = 'avi';
+	var isRun = this.mediaFiles[this.mediaIterator].convert(this.outputFormat);
 	if (!isRun) {
 		alert('Вам надо выбрать mp4 или mts файл');
 	} else {
@@ -61,7 +63,7 @@ App.prototype.onObserveOneFile = function(std, err) {
 App.prototype.onFinishOneFile = function(std, err) {
 	this.mediaIterator++;
 	if (this.mediaIterator < this.mediaFiles.length) {
-		this.mediaFiles[this.mediaIterator].convert();
+		this.mediaFiles[this.mediaIterator].convert(this.outputFormat);
 	} else {
 		
 		var msg = 'Done!';
