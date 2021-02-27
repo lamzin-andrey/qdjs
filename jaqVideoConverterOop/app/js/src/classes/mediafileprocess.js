@@ -1,5 +1,6 @@
 function MediaFileProcess() {
 	this.procId = 0;
+	this.outputFormat = 'avi';
 }
 
 
@@ -8,20 +9,34 @@ MediaFileProcess.prototype.resetParams = function() {
 	this.durationSetted = 0;
 	this.isInterrupt = 0;
 	this.filePath = '';
+	this.outputFormat = 'avi';
 }
 
 /**
  * @return Boolean isRun
 */
-MediaFileProcess.prototype.convert = function() {
+MediaFileProcess.prototype.convert = function(outputFormat) {
 	if (this.filePath && PHP.file_exists(this.filePath)) {
+		this.outputFormat = outputFormat;
 		var cmd = '', dir, name = '', outfile, o = this;
 		
 		PHP.file_put_contents(this.getLogFilename(), '');
-		//ffmpeg -i 01.mp4 -c:v libx264 -pix_fmt yuv420p zapekanka_s_tvorogom.avi 1>/home/andrey/log.log 2>&1
-		cmd = '#! /bin/bash\ncd ' + this.getDir() + ';\nrm -f "' + this.getOutfile() +
+		
+		if ('avi' == outputFormat) {
+			//ffmpeg -i 01.mp4 -c:v libx264 -pix_fmt yuv420p zapekanka_s_tvorogom.avi 1>/home/andrey/log.log 2>&1
+			cmd = '#! /bin/bash\ncd ' + this.getDir() + ';\nrm -f "' + this.getOutfile() +
 			'";\nffmpeg -i "'	+ this.getName() + '" -c:v libx264 -threads 3 -pix_fmt yuv420p "' +
 			this.getOutfile() + '" 1>"' + this.getLogFilename() + '" 2>&1 \n';
+		}
+		
+		if ('mp3' == outputFormat) {
+			//ffmpeg -i /media/andrey/Transcend/HBPVR/МАЯК-01092021-0937.mts -q:a 0 -map a /media/andrey/Transcend/HBPVR/new_year-09-01-2021.mp3
+			cmd = '#! /bin/bash\ncd ' + this.getDir() + ';\nrm -f "' + this.getOutfile() +
+			'";\nffmpeg -i "'	+ this.getName() + '" -q:a 0 -map a -threads 3  "' +
+			this.getOutfile() + '" 1>"' + this.getLogFilename() + '" 2>&1 \n';
+		}
+		
+		
 		// alert(cmd);
 		name = Qt.appDir() + '/sh.sh';
 		PHP.file_put_contents(name, cmd);
@@ -70,9 +85,16 @@ MediaFileProcess.prototype.onObserve = function(std, err) {
 	this.observeProcIsRun = 0;
 }
 
+MediaFileProcess.prototype.removeLogFile = function(std, err) {
+	var cmd = '#! /bin/bash\nrm -f "' + this.getLogFilename() + '"', s = 'on', name;
+	name = Qt.appDir() + '/sh.sh';
+	PHP.file_put_contents(name, cmd);
+	PHP.exec(Qt.appDir() + '/sh.sh', s, s, s);	
+}
 // TODO тут поле для деятельности
 MediaFileProcess.prototype.onComplete = function(std, err) {
 	clearInterval(this.ival);
+	this.removeLogFile();
 	this.resetParams();
 	this.progressStateLabel.innerHTML = (std == 'user_interrupt') ? 'Прервано пользователем' : 'Готово';
 	
@@ -229,7 +251,7 @@ MediaFileProcess.prototype.getOutfile = function() {
 		ext = a[sz(a) - 1],
 		base;
 	a.pop();
-	base = a.join('.') + '-out.avi';
+	base = a.join('.') + '-out.' + this.outputFormat;
 	return base;
 }
 

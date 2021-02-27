@@ -8,10 +8,14 @@ App.prototype.setListeners = function() {
 	e('bPlusFile').onclick = function(evt) {
 		o.onBrowse(evt);
 	};
-	// TODO bConvertToAvi
+	
 	e('bConvertToAvi').onclick = function(evt) {
 		o.onConvert2AviClick(evt);
 	};
+	e('bConvertToMp3').onclick = function(evt) {
+		o.onConvert2Mp3Click(evt);
+	};
+	
 }
 
 App.prototype.resetParams = function() {
@@ -21,13 +25,27 @@ App.prototype.resetParams = function() {
 	this.idCounter = 1;
 }
 
+App.prototype.onConvert2Mp3Click = function(evt) {
+	if (this.convertProcIsRun == 1) {
+		alert('Уже выполняется конвертация');
+		return;
+	}
+	this.mediaIterator = 0;
+	var isRun = this.mediaFiles[this.mediaIterator].convert('mp3');
+	if (!isRun) {
+		alert('Вам надо выбрать mp4 или mts файл');
+	} else {
+		this.convertProcIsRun = 1;
+	}
+}
+
 App.prototype.onConvert2AviClick = function(evt) {
 	if (this.convertProcIsRun == 1) {
 		alert('Уже выполняется конвертация');
 		return;
 	}
 	this.mediaIterator = 0;
-	var isRun = this.mediaFiles[this.mediaIterator].convert();
+	var isRun = this.mediaFiles[this.mediaIterator].convert('avi');
 	if (!isRun) {
 		alert('Вам надо выбрать mp4 или mts файл');
 	} else {

@@ -167,8 +167,13 @@ body {
 	height: 98px;
 	background-position-y: 6px;
 	margin: 0px auto;
-	width: 90%;
+	width: 99%;
 	background-repeat-y: no-repeat;
+}
+.buttonsCenter {
+	/*height: 98px;*/
+	margin: 0px auto;
+	width: 180px;
 }
 .avi{
 	background-image: url('../img/2avi.png');
@@ -176,6 +181,7 @@ body {
 	width: 83px;
 	cursor:pointer;
 	margin: 14px auto;
+	display:inline-block;
 }
 .avilegend {
 	line-height: 136px;

@@ -1,6 +1,6 @@
 window.onload = init;
 function init(){
-	Qt.setWindowIconImage(Qt.appDir() + '/img/ffmpeg24.png');
+	Qt.setWindowIconImage(Qt.appDir() + '/img/free24.png');
 	W.app = new App();
 }
 
