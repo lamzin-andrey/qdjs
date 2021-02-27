@@ -19,10 +19,10 @@ MediaFileProcess.prototype.convert = function() {
 		
 		PHP.file_put_contents(this.getLogFilename(), '');
 		//ffmpeg -i 01.mp4 -c:v libx264 -pix_fmt yuv420p zapekanka_s_tvorogom.avi 1>/home/andrey/log.log 2>&1
-		cmd = '#! /bin/bash\ncd ' + this.getDir() + ';\nrm -f ' + this.getOutfile() +
-			';\nffmpeg -i '	+ this.getName() + ' -c:v libx264 -threads 3 -pix_fmt yuv420p ' +
-			this.getOutfile() + ' 1>' + this.getLogFilename() + ' 2>&1 \n';
-		alert(cmd);
+		cmd = '#! /bin/bash\ncd ' + this.getDir() + ';\nrm -f "' + this.getOutfile() +
+			'";\nffmpeg -i "'	+ this.getName() + '" -c:v libx264 -threads 3 -pix_fmt yuv420p "' +
+			this.getOutfile() + '" 1>"' + this.getLogFilename() + '" 2>&1 \n';
+		// alert(cmd);
 		name = Qt.appDir() + '/sh.sh';
 		PHP.file_put_contents(name, cmd);
 		
@@ -76,6 +76,11 @@ MediaFileProcess.prototype.onObserve = function(std, err) {
 MediaFileProcess.prototype.onComplete = function(std, err) {
 	clearInterval(this.ival);
 	this.resetParams();
+	this.progressStateLabel.innerHTML = 'Готово';
+	
+	
+	this.onFinishOneFile.call(this.context, std, err);
+	
 	/*var msg = 'Done!';
 	if (this.isInterrupt) {
 		msg = 'Прервано пользователем';
@@ -86,6 +91,11 @@ MediaFileProcess.prototype.onComplete = function(std, err) {
 	e('hFileList').innerHTML = '';
 	alert(msg);//alert('procId = ' + procId + '\n sysId = ' + sysId);
 	*/
+}
+
+MediaFileProcess.prototype.setOnCompleteOneFileListener = function(o, f) {
+	this.context = o;
+	this.onFinishOneFile = f;
 }
 
 MediaFileProcess.prototype.observe = function() {
@@ -185,6 +195,7 @@ MediaFileProcess.prototype.addFileInfoBlock = function(parentId, filePath) {
 	this.extractPBar = view.getElementsByClassName('extractPBar')[0];
 	this.dompb = view.getElementsByClassName('dompb')[0];
 	this.progressState = view.getElementsByClassName('progressState')[0];
+	this.progressStateLabel = view.getElementsByClassName('progressStateLabel')[0];
 }
 
 MediaFileProcess.prototype.onClickRemoveBtn = function() {
@@ -238,7 +249,7 @@ MediaFileProcess.prototype.getFileTpl = function() {
 						<div class="row pbar">\
 							\
 							<div class="extractPBar" style="display:none;">\
-								 <div class="text-center" id="progressStateLabel">\
+								 <div class="text-center progressStateLabel" i>\
 									Выполняется конвертация...\
 								 </div>\
 								 <div style="line-height:28px;">\
@@ -249,7 +260,7 @@ MediaFileProcess.prototype.getFileTpl = function() {
 										<div style="width:0%;  height:10px;" class="dompb">&nbsp;</div>\
 									 </div>\
 								 </div>\
-								 <div class="text-center" class="progressState">\
+								 <div class="text-center progressState">\
 									10200 / 8821848 (50%)\
 								 </div>\
 							 </div>\

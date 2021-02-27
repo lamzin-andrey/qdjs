@@ -9,7 +9,7 @@ App.prototype.setListeners = function() {
 		o.onBrowse(evt);
 	};
 	// TODO bConvertToAvi
-	e('bConvert').onclick = function(evt) {
+	e('bConvertToAvi').onclick = function(evt) {
 		o.onConvert2AviClick(evt);
 	};
 }
@@ -38,7 +38,6 @@ App.prototype.onObserveOneFile = function(std, err) {
 
 // TODO move to onComplete
 App.prototype.onFinishOneFile = function(std, err) {
-	this.mediaFiles[this.mediaIterator].onFinish(std, err);
 	this.mediaIterator++;
 	if (this.mediaIterator < this.mediaFiles.length) {
 		this.mediaFiles[this.mediaIterator].convert();
@@ -70,6 +69,7 @@ App.prototype.onBrowse = function(evt) {
 	//Set filename in view
 	if (filePath) {
 		media = new MediaFileProcess();
+		media.setOnCompleteOneFileListener(this, this.onFinishOneFile);
 		this.mediaFiles.push(media);
 		media.addFileInfoBlock('hFileList', filePath);
 	}
