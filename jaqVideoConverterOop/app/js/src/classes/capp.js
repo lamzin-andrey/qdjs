@@ -16,6 +16,8 @@ App.prototype.setListeners = function() {
 
 App.prototype.resetParams = function() {
 	this.convertProcIsRun = 0;
+	this.mediaIterator = 0;
+	this.mediaFiles = [];
 }
 
 App.prototype.onConvert2AviClick = function(evt) {
@@ -27,9 +29,9 @@ App.prototype.onConvert2AviClick = function(evt) {
 	var isRun = this.mediaFiles[this.mediaIterator].convert();
 	if (!isRun) {
 		alert('Вам надо выбрать mp4 или mts файл');
+	} else {
+		this.convertProcIsRun = 1;
 	}
-	
-	
 }
 
 App.prototype.onObserveOneFile = function(std, err) {

@@ -38,8 +38,6 @@ MediaFileProcess.prototype.convert = function() {
 		this.convertProcIsRun = 1;
 		
 		return true;
-	} else {
-		alert('What? ' + this.filePath);
 	}
 	
 	return false;

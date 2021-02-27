@@ -2,9 +2,9 @@
 Version=1.0
 Type=Application
 Name=MoonPhase
-Exec=/home/andrey/hdata/programs/my/qdjs/jaqVideoConverter/jaqVC.sh
-Icon=/home/andrey/hdata/programs/my/qdjs/jaqVideoConverter/app/img/ffmpeg60.png
-Path=/home/andrey/hdata/programs/my/qdjs/jaqVideoConverter/
+Exec=/home/andrey/hdata/programs/my/qdjs/jaqVideoConverterOop/jaqVC.sh
+Icon=/home/andrey/hdata/programs/my/qdjs/jaqVideoConverterOop/app/img/ffmpeg60.png
+Path=/home/andrey/hdata/programs/my/qdjs/jaqVideoConverterOop/
 Terminal=false
 StartupNotify=false
 Name[ru]=JaqFFMPEGConverter
