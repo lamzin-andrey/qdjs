@@ -74,7 +74,7 @@ MediaFileProcess.prototype.onObserve = function(std, err) {
 MediaFileProcess.prototype.onComplete = function(std, err) {
 	clearInterval(this.ival);
 	this.resetParams();
-	this.progressStateLabel.innerHTML = 'Готово';
+	this.progressStateLabel.innerHTML = (std == 'user_interrupt') ? 'Прервано пользователем' : 'Готово';
 	
 	
 	this.onFinishOneFile.call(this.context, std, err);
@@ -94,6 +94,14 @@ MediaFileProcess.prototype.onComplete = function(std, err) {
 MediaFileProcess.prototype.setOnCompleteOneFileListener = function(o, f) {
 	this.context = o;
 	this.onFinishOneFile = f;
+}
+
+/**
+ * @decription call.f(o, this.order);
+*/
+MediaFileProcess.prototype.setOnInterruptOneFileListener = function(o, f) {
+	this.interruptContext = o;
+	this.onInterruptOneFile = f;
 }
 
 MediaFileProcess.prototype.observe = function() {
@@ -200,13 +208,18 @@ MediaFileProcess.prototype.onClickRemoveBtn = function() {
 	if (this.convertProcIsRun) {
 		this.isInterrupt = 1;
 		var cmd = 'kill ' + this.sysId;
-		PHP.exec(cmd + '\n', 'on');
+		// PHP.exec(cmd + '\n', 'on');
 		// TODO тут что-то придумать надо
-		// PHP.exec('killall ffmpeg' + '\n', 'on');
+		PHP.exec('killall ffmpeg' + '\n', 'on');
+		this.onComplete('user_interrupt', '');
+		var o = this;
+		setTimeout(function(){
+			o.view.parentNode.removeChild(o.view);
+		}, 2000);
 	} else {
 		// e('hFileList').innerHTML = '';
 		this.view.parentNode.removeChild(this.view);
-		this.resetParams();
+		this.onInterruptOneFile.call(this.interruptContext, this.order);
 	}
 }
 

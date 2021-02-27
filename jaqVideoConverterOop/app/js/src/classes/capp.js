@@ -1,5 +1,5 @@
 function App() {
-	this.mediaFiles = [];
+	this.resetParams();
 	this.setListeners();
 }
 
@@ -18,6 +18,7 @@ App.prototype.resetParams = function() {
 	this.convertProcIsRun = 0;
 	this.mediaIterator = 0;
 	this.mediaFiles = [];
+	this.idCounter = 1;
 }
 
 App.prototype.onConvert2AviClick = function(evt) {
@@ -46,7 +47,7 @@ App.prototype.onFinishOneFile = function(std, err) {
 	} else {
 		
 		var msg = 'Done!';
-		/* TODO if (W.app.isInterrupt()) {
+		/* TODO  (?) if (W.app.isInterrupt()) {
 			msg = 'Прервано пользователем';
 		}*/
 		this.resetParams();
@@ -71,8 +72,27 @@ App.prototype.onBrowse = function(evt) {
 	//Set filename in view
 	if (filePath) {
 		media = new MediaFileProcess();
+		media.order = this.idCounter;
+		this.idCounter++;
 		media.setOnCompleteOneFileListener(this, this.onFinishOneFile);
+		media.setOnInterruptOneFileListener(this, this.onInterruptOneFile);
 		this.mediaFiles.push(media);
 		media.addFileInfoBlock('hFileList', filePath);
 	}
+}
+
+/**
+ * @description Вызывается, когда удален из очереди файл, конвертация которого ещё не началась
+*/
+App.prototype.onInterruptOneFile = function(order) {
+	var i, media, target = -1;
+	for (i = 0; i < this.mediaFiles.length; i++) {
+		media = this.mediaFiles[i];
+		if (media.order == order) {
+			target = i;
+			break;
+		}
+	}
+	this.mediaFiles.splice(target, 1);
+	
 }
