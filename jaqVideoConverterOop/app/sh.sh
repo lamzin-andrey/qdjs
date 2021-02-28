@@ -1,4 +1,4 @@
 #! /bin/bash
 cd '/home/andrey/tmp/00/07/IV';
-rm -f "CandD-2-out.mp3";
-ffmpeg -i "CandD-2.mp4" -q:a 0 -map a -threads 3  "CandD-2-out.mp3" 1>"/home/andrey/hdata/programs/my/qdjs/jaqVideoConverterOop/app/CandD-2-out.mp3.log" 2>&1 
+rm -f "Из кабачков-out.avi";
+ffmpeg -i "Из кабачков.mp4" -c:v libx264 -threads 3 -pix_fmt yuv420p "Из кабачков-out.avi" 1>"/home/andrey/hdata/programs/my/qdjs/jaqVideoConverterOop/app/Из кабачков-out.avi.log" 2>&1 

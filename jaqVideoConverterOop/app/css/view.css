@@ -175,13 +175,18 @@ body {
 	margin: 0px auto;
 	width: 180px;
 }
-.avi{
-	background-image: url('../img/2avi.png');
+.avi, .mp3{
 	height: 86px;
 	width: 83px;
 	cursor:pointer;
 	margin: 14px auto;
 	display:inline-block;
+}
+.avi{
+	background-image: url('../img/2avi-2.png');
+}
+.mp3{
+	background-image: url('../img/2mp3.png');
 }
 .avilegend {
 	line-height: 136px;
