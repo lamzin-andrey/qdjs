@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=MoonPhase
+Exec=/home/andrey/hdata/programs/my/qdjs/jaqVideoConverter/jaqVC.sh
+Icon=/home/andrey/hdata/programs/my/qdjs/jaqVideoConverter/iconraw.png
+Path=/home/andrey/hdata/programs/my/qdjs/jaqVideoConverter
+Categories=AudioVideo;Game;
+Terminal=false
+StartupNotify=false
+Name[ru]=VideoConverer
+GenericName=VideoConverer
