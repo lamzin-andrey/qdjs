@@ -50,6 +50,7 @@ MediaFileProcess.prototype.convert = function(outputFormat) {
 		
 		// TODO здесь ничего пока не поделаешь... Хотя похоже что всё можно заменить на on
 		this.procId = PHP.exec(name, 'jmp3cutOnFinish', 'jmp3cutOnStd', 'jmp3cutOnErr');
+		this.sysId = PHP.getSysId(this.procId);
 		this.convertProcIsRun = 1;
 		
 		return true;
@@ -57,9 +58,8 @@ MediaFileProcess.prototype.convert = function(outputFormat) {
 	
 	return false;
 }
-
 MediaFileProcess.prototype.onObserve = function(std, err) {
-	var a = std.split('\n'), i, b, n, found = false, j;
+	var a = std.split('\n'), i, b, n, found = false, j, result, f = 'on';
 	for (i = 0; i < a.length; i++) {
 		b = a[i].split(' ');
 		n = parseInt(b[0].trim(), 10);
@@ -79,27 +79,37 @@ MediaFileProcess.prototype.onObserve = function(std, err) {
 		}
 	}
 
-	if (found == false) {
-		this.onComplete();
+	if (found == false || this.percentsIsComplete) {
+		if (this.percentsIsComplete && found) {
+			var cmd = 'kill ' + this.sysId + '\n';
+			log(cmd);
+			PHP.exec(cmd, f, f, f);
+		}
+		this.onComplete('from onObserve');
 	}
 	this.observeProcIsRun = 0;
 }
 
 MediaFileProcess.prototype.removeLogFile = function(std, err) {
 	var cmd = '#! /bin/bash\nrm -f "' + this.getLogFilename() + '"', s = 'on', name;
-	name = Qt.appDir() + '/sh.sh';
+	log(cmd);
+	name = Qt.appDir() + '/shr.sh';
 	PHP.file_put_contents(name, cmd);
-	PHP.exec(Qt.appDir() + '/sh.sh', s, s, s);	
+	PHP.exec(name, s, s, s);	
 }
 // TODO тут поле для деятельности
 MediaFileProcess.prototype.onComplete = function(std, err) {
+	log('Call onComplete');
 	clearInterval(this.ival);
 	this.removeLogFile();
 	this.resetParams();
 	this.progressStateLabel.innerHTML = (std == 'user_interrupt') ? 'Прервано пользователем' : 'Готово';
 	
-	
-	this.onFinishOneFile.call(this.context, std, err);
+	try {
+		this.onFinishOneFile.call(this.context, std, err);
+	} catch (err) {
+		alert(err);
+	}
 	
 	/*var msg = 'Done!';
 	if (this.isInterrupt) {
@@ -134,7 +144,6 @@ MediaFileProcess.prototype.observe = function() {
 		return;
 	}
 	this.observeProcIsRun = 1;
-	this.sysId = PHP.getSysId(this.procId);
 	// alert(this.sysId);
 	// TODO тут пока ничего не попишешь
 	PHP.exec('ps -Ac', 'jmp3cutOnObserveFinish', 'jmp3cutOnObserveStd', 'jmp3cutOnObserveErr');
@@ -183,10 +192,15 @@ MediaFileProcess.prototype.setCurrentProgress = function() {
 			var oneP = this.durationInSeconds / 100;
 			var current = Math.ceil(nSeconds / oneP);
 			if (!isNaN(nSeconds)) {
-				Qt.setTitle(nSeconds + ' / ' + this.durationInSeconds + '(sTime = ' + sTime + ', start = ' + start + ')');
+				Qt.setTitle(nSeconds + ' / ' + this.durationInSeconds + ' (sTime = ' + sTime + ', start = ' + start + ')' + 'procId: ' + this.sysId);
 				this.extractPBar.style.display = 'block';
 				this.dompb.style.width = current + '%';
-				this.progressState.innerHTML = nSeconds + ' / ' + this.durationInSeconds + '(' + current + '%)';
+				this.progressState.innerHTML = nSeconds + ' / ' + this.durationInSeconds + ' (' + current + '%)';
+				if (nSeconds == this.durationInSeconds && current == 100) {
+					this.percentsIsComplete = true;
+				} else {
+					this.percentsIsComplete = false;
+				}
 			}
 		}
 	}

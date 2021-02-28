@@ -59,13 +59,13 @@ App.prototype.onObserveOneFile = function(std, err) {
 	this.mediaFiles[this.mediaIterator].onObserve(std, err);
 }
 
-// TODO move to onComplete
+// It call from onComplete
 App.prototype.onFinishOneFile = function(std, err) {
+	log('CApp:onFinishOneFile, ' + (this.mediaIterator < this.mediaFiles.length ? 'if OK...' : 'else...') + ', std = ' + std);
 	this.mediaIterator++;
 	if (this.mediaIterator < this.mediaFiles.length) {
 		this.mediaFiles[this.mediaIterator].convert(this.outputFormat);
 	} else {
-		
 		var msg = 'Done!';
 		/* TODO  (?) if (W.app.isInterrupt()) {
 			msg = 'Прервано пользователем';
