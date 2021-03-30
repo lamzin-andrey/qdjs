@@ -61,7 +61,7 @@ App.prototype.onObserveOneFile = function(std, err) {
 
 // It call from onComplete
 App.prototype.onFinishOneFile = function(std, err) {
-	log('CApp:onFinishOneFile, ' + (this.mediaIterator < this.mediaFiles.length ? 'if OK...' : 'else...') + ', std = ' + std);
+	// log('CApp:onFinishOneFile, ' + (this.mediaIterator < this.mediaFiles.length ? 'if OK...' : 'else...') + ', std = ' + std);
 	this.mediaIterator++;
 	if (this.mediaIterator < this.mediaFiles.length) {
 		this.mediaFiles[this.mediaIterator].convert(this.outputFormat);
@@ -86,18 +86,20 @@ App.prototype.onBrowse = function(evt) {
 		alert('Уже выполняется конвертация');
 		return;
 	}
-	var filePath = jqlOpenFileDialog('Выберите mp4 или mts файл', '*.mp4 *.mts'),
-		media;
+	var filePath = jqlOpenFileDialog('Выберите mp4 или mts файл', '*.mp4 *.mts *ts', true),
+		media, i;
 	
 	//Set filename in view
-	if (filePath) {
-		media = new MediaFileProcess();
-		media.order = this.idCounter;
-		this.idCounter++;
-		media.setOnCompleteOneFileListener(this, this.onFinishOneFile);
-		media.setOnInterruptOneFileListener(this, this.onInterruptOneFile);
-		this.mediaFiles.push(media);
-		media.addFileInfoBlock('hFileList', filePath);
+	if (filePath.length) {
+		for (i = 0; i < filePath.length; i++) {
+			media = new MediaFileProcess();
+			media.order = this.idCounter;
+			this.idCounter++;
+			media.setOnCompleteOneFileListener(this, this.onFinishOneFile);
+			media.setOnInterruptOneFileListener(this, this.onInterruptOneFile);
+			this.mediaFiles.push(media);
+			media.addFileInfoBlock('hFileList', filePath[i]);
+		}
 	}
 }
 

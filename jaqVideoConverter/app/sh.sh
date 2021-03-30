@@ -1,4 +1,4 @@
 #! /bin/bash
-cd '/home/andrey/tmp/00/07/IV';
-rm -f "Pink-out.mp3";
-ffmpeg -i "Pink.mp4" -q:a 0 -map a -threads 3  "Pink-out.mp3" 1>"/home/andrey/hdata/programs/my/qdjs/jaqVideoConverter/app/Pink-out.mp3.log" 2>&1 
+cd '/media/andrey/F/films/my_fond';
+rm -f "Падал прошлогодний снег (1983) Пластилиновый мультик Золотая коллекция-out.mp3";
+ffmpeg -i "Падал прошлогодний снег (1983) Пластилиновый мультик Золотая коллекция.mp4" -q:a 0 -map a -threads 3  "Падал прошлогодний снег (1983) Пластилиновый мультик Золотая коллекция-out.mp3" 1>"/home/andrey/hdata/programs/my/qdjs/jaqVideoConverter/app/Падал прошлогодний снег (1983) Пластилиновый мультик Золотая коллекция-out.mp3.log" 2>&1 

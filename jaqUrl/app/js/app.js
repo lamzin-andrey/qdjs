@@ -4,7 +4,12 @@ function init(){
 }
 function jUrlOnConvertClick() {
 	var s = e('iUrl').value;
-	s = str_replace('%2F', '/', s);
-	s = str_replace('%3A', ':', s);
+	// s = str_replace('%2F', '/', s);
+	//s = str_replace('%3A', ':', s);
+	try {
+		s = encodeURI(s);
+	} catch (err) {
+		alert(err);
+	}
 	e('iUrl').value = s;
 }

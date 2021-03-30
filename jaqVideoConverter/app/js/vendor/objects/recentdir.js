@@ -3,8 +3,22 @@
  * @description Запускает Qt.openFileDialog но при этом запоминает последнюю выбранную директорию
  * @param {String} sTitle - тайтл окна диалога
  * @param {String} sFileTypes  - @see Qt.openFileDialog filetypes (for example '*.sql' in Linux)
+ * @param {Boolean} bIsMultiple = false позволяет выбирать много файлов
+ * 
+ * @return String or Array of String (file path or files paths)
 */
-function jqlOpenFileDialog(sTitle, sFileTypes) {
+function jqlOpenFileDialog(sTitle, sFileTypes, bIsMultiple) {
+	var s, a;
+	if (bIsMultiple) {
+		a = Qt.openFilesDialog(sTitle, RecentDir.jmp3cutLastDir(), sFileTypes);
+		if (!a.length) {
+			return [];
+		}
+		RecentDir.filePath = a[0];
+		RecentDir.jmp3cutSaveSetting('lastDir', RecentDir.jmp3cutGetDir());
+		return a;
+	}
+	
 	s = Qt.openFileDialog(sTitle, RecentDir.jmp3cutLastDir(), sFileTypes);
 	if (!s) {
 		return '';

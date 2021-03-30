@@ -45,7 +45,13 @@ MediaFileProcess.prototype.convert = function(outputFormat) {
 		
 		// следить за изменением размера файла, если перестал увеличиваться, значит финиш
 		this.ival = setInterval(function(){
-			o.observe();
+			try {
+				o.observe();
+			} catch (ex) {
+				if (window.debug) {
+					log(ex);
+				}
+			}
 		}, 500);
 		
 		// TODO здесь ничего пока не поделаешь... Хотя похоже что всё можно заменить на on
@@ -59,47 +65,53 @@ MediaFileProcess.prototype.convert = function(outputFormat) {
 	return false;
 }
 MediaFileProcess.prototype.onObserve = function(std, err) {
-	var a = std.split('\n'), i, b, n, found = false, j, result, f = 'on';
-	for (i = 0; i < a.length; i++) {
-		b = a[i].split(' ');
-		n = parseInt(b[0].trim(), 10);
-		j = 1;
-		while (isNaN(n)) {
-			n = parseInt(String(b[j]).trim(), 10);
-			j++;
-			if (j >= sz(b)) {
-				break;
+	try {
+		var a = std.split('\n'), i, b, n, found = false, j, result, f = 'on';
+		for (i = 0; i < a.length; i++) {
+			b = a[i].split(' ');
+			n = parseInt(b[0].trim(), 10);
+			j = 1;
+			while (isNaN(n)) {
+				n = parseInt(String(b[j]).trim(), 10);
+				j++;
+				if (j >= sz(b)) {
+					break;
+				}
+			}
+			if (!isNaN(n)) {
+				if (this.sysId == n) {
+					found = true;
+					break;
+				}
 			}
 		}
-		if (!isNaN(n)) {
-			if (this.sysId == n) {
-				found = true;
-				break;
-			}
-		}
-	}
 
-	if (found == false || this.percentsIsComplete) {
-		if (this.percentsIsComplete && found) {
-			var cmd = 'kill ' + this.sysId + '\n';
-			log(cmd);
-			PHP.exec(cmd, f, f, f);
+		if (found == false || this.percentsIsComplete) {
+			if (this.percentsIsComplete && found) {
+				var cmd = 'kill ' + this.sysId + '\n';
+				// log(cmd);
+				PHP.exec(cmd, f, f, f);
+			}
+			this.onComplete('from onObserve');
 		}
-		this.onComplete('from onObserve');
+		this.observeProcIsRun = 0;
+		
+	} catch (ex) {
+		log(ex);
 	}
-	this.observeProcIsRun = 0;
+	
 }
 
 MediaFileProcess.prototype.removeLogFile = function(std, err) {
 	var cmd = '#! /bin/bash\nrm -f "' + this.getLogFilename() + '"', s = 'on', name;
-	log(cmd);
+	// log(cmd);
 	name = Qt.appDir() + '/shr.sh';
 	PHP.file_put_contents(name, cmd);
 	PHP.exec(name, s, s, s);	
 }
 // TODO тут поле для деятельности
 MediaFileProcess.prototype.onComplete = function(std, err) {
-	log('Call onComplete');
+	// log('Call onComplete');
 	clearInterval(this.ival);
 	this.removeLogFile();
 	this.resetParams();
@@ -137,7 +149,7 @@ MediaFileProcess.prototype.setOnInterruptOneFileListener = function(o, f) {
 }
 
 MediaFileProcess.prototype.observe = function() {
-	if (!this.procId) {
+	if (!this.procId || !this.sysId) {
 		return;
 	}
 	if (this.observeProcIsRun) {
