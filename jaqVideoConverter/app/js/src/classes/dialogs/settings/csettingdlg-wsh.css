@@ -1,0 +1,9 @@
+#settingsDlgViewExample {
+	position:absolute;
+	top:18px;
+	left:10px;
+	z-index:1001;
+	background: url(../../../../../img/2021/000-dlg-wnd.png);
+	width:530px;
+	height:420px;
+}

@@ -4,12 +4,19 @@
 	<title>FFMpeg QT JS Video Conveter</title>
 	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
 	<meta name="windowButtons" content="1110" fixed="true"  width="947" height="654">
+	
 	<link type="text/css" rel="stylesheet" href="./css/view.css">
 	<link type="text/css" rel="stylesheet" href="./css/pbar/pbar.css">
+	
+	<link type="text/css" rel="stylesheet" href="./js/src/classes/dialogs/settings/csettingdlg.css">
+	
 	<script src="./js/vendor/objects/recentdir.js"></script>
 	<script src="./js/vendor/micron.js"></script>
 	
 	<script src="./js/src/classes/mediafileprocess.js"></script>
+	<script src="./js/src/classes/mainmenu/cmainmenu.js"></script>
+	<script src="./js/src/classes/mainmenu/settings/csettingitem.js"></script>
+	<script src="./js/src/classes/dialogs/settings/csettingdlg.js"></script>
 	<script src="./js/src/classes/capp.js"></script>
 	<script src="./js/src/app.js"></script>
 </head>
@@ -20,13 +27,13 @@
 		<div class="menuItemFile">
 			<div class="menuItemFileOpen">Открыть</div>
 		</div>
-		<div class="menuFileContrast">Файл</div>
+		<div class="menuFileContrast" id="menuItemFirstFront">Настройки</div>
 		<div class="wTitle">
 			FFMpeg QT JS Video Conveter
 		</div>
 		<div class="menuBar">
 			<div class="menuItems">
-				<span id="menuItemFirst">Файл</span>
+				<span id="menuItemFirst">Настройки</span>
 				<span id="menuItem">&nbsp;</span>
 			</div>
 			<div class="promo">
@@ -105,6 +112,42 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	
+	<div id="settingsDlgView" style="display:none">
+		<div class="dlgbox">
+			<div class="dlgtitlebg">
+				<div class="dlgtitle" id="hSettingsDlgTitle">Параметры конвертации
+				</div>
+				<div class="dlgclosebtn">&nbsp;</div>
+			</div>
+			
+			<div class="dlgcontentbox">
+				<div id="hAfterConvertSubtitle" class="hAfterConvertSubtitle">
+					После обработки
+				</div>
+				
+				<div>
+					<input type="radio" id="bNothingSource" name="actions">
+					<label id="hNothingSourceLbl" for="bNothingSource">Ничего не делать</label>
+				</div>
+
+				<div>
+					<input type="radio" id="bRemoveSource" name="actions">
+					<label id="hRemoveSourceLbl" for="bRemoveSource">Удалить исходный файл после конвертации</label>
+				</div>
+				
+				<div>
+					<input type="radio" id="bMoveSource" name="actions">
+					<label id="hMoveSourceLbl" for="bMoveSource">Переместить исходный файл в каталог:</label>
+					<input type="text" id="iMoveSourceCatalog" value="source-video">
+				</div>
+			</div>
+			<div class="dlgfooterbox">
+				<div id="bsettingsDlgOk" class="bsettingsDlgOk">Сохранить</div>
+			</div>
+		</div>
+		
 	</div>
 	
 </body>

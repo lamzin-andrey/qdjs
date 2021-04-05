@@ -1,6 +1,12 @@
 function App() {
 	this.resetParams();
 	this.setListeners();
+	try {
+		this.settingDlg = new CSettingsDlg();
+		this.mainMenu = new MainMenu(this.settingDlg);
+	} catch(err) {
+		alert(err);
+	}
 }
 
 App.prototype.setListeners = function() {

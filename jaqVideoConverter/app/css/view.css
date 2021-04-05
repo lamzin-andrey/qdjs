@@ -43,7 +43,7 @@ body {
 	margin-top: 0px;
 	color: white;
     line-height: 34px;
-    opacity:0.5;
+    opacity:0.75;
 }
 #menuItemFirst{
 	margin-left:25px;
@@ -213,12 +213,12 @@ body {
 	width: 250px;
 	height: 25px;
 	z-index: 2;
-	display:none;/* Temp none!  */
+	display:none; /*Temp none!  */
 }
 .menuItemFileOpen {
 	margin-left: 10px;
 	margin-top: 4px;
-	display:none;/* Temp none!  */
+	display:none; /*Temp none!  */
 }
 .menuFileContrast {
 	position: absolute;
@@ -227,10 +227,10 @@ body {
 	z-index: 4;
 	color: #FFF;
 	cursor:pointer;
-	display:none; /* Temp none!  */
+	/*display:none; /* Temp none!  */
 }
 .menuItems {
-	display:none; /* Temp none!  */
+	/*display:none; /* Temp none!  */
 }
 .text-center {
 	text-align:center;
