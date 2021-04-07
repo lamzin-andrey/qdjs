@@ -148,7 +148,6 @@ function isU(v) {
 function storage(key, data) {
 	// var L = window.localStorage;
 	var L = window.LocalStorageShim;
-	// alert(L);
 	if (L) {
 		// alert('I call + L');
 		if (data === null) {
@@ -160,7 +159,7 @@ function storage(key, data) {
 		}
 		if (!data) {
 			data = L.getItem(key);
-			// alert(data);
+			
 			if (data) {
 				try {
 					data = JSON.parse(data);
@@ -298,4 +297,8 @@ function wsStorage(table, id, onData, data) {
 		});
 		
 	}//end if db
+}
+// Patch, while not include lang.js
+function L(s) {
+	return s;
 }
