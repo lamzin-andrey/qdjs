@@ -3,7 +3,7 @@ function App() {
 	this.setListeners();
 	try {
 		this.settingDlg = new CSettingsDlg();
-		this.mainMenu = new MainMenu(this.settingDlg);
+		this.mainMenu = new MainMenu(this.settingDlg, this);
 	} catch(err) {
 		alert(err);
 	}
@@ -32,13 +32,19 @@ App.prototype.resetParams = function() {
 }
 
 App.prototype.onConvert2Mp3Click = function(evt) {
+	if (this.settingDlg.visible) {
+		return;
+	}
 	if (this.convertProcIsRun == 1) {
-		alert('Уже выполняется конвертация');
+		alert(L('Уже выполняется конвертация'));
 		return;
 	}
 	this.mediaIterator = 0;
 	this.outputFormat = 'mp3';
-	var isRun = this.mediaFiles[this.mediaIterator].convert(this.outputFormat);
+	var isRun = false;
+	if (0 != this.mediaFiles.length) {
+		isRun = this.mediaFiles[this.mediaIterator].convert(this.outputFormat);
+	}
 	if (!isRun) {
 		alert('Вам надо выбрать mp4 или mts файл');
 	} else {
@@ -47,15 +53,22 @@ App.prototype.onConvert2Mp3Click = function(evt) {
 }
 
 App.prototype.onConvert2AviClick = function(evt) {
+	if (this.settingDlg.visible) {
+		return;
+	}
 	if (this.convertProcIsRun == 1) {
-		alert('Уже выполняется конвертация');
+		alert(L('Уже выполняется конвертация'));
 		return;
 	}
 	this.mediaIterator = 0;
 	this.outputFormat = 'avi';
-	var isRun = this.mediaFiles[this.mediaIterator].convert(this.outputFormat);
+	
+	var isRun = false;
+	if (0 != this.mediaFiles.length) {
+		isRun = this.mediaFiles[this.mediaIterator].convert(this.outputFormat);
+	}
 	if (!isRun) {
-		alert('Вам надо выбрать mp4 или mts файл');
+		alert(L('Вам надо выбрать mp4 или mts файл'));
 	} else {
 		this.convertProcIsRun = 1;
 	}
@@ -88,6 +101,9 @@ App.prototype.onFinishOneFile = function(std, err) {
  * @description Обработка нажатия кнопки выбора mp3 файла. Сохраняет последнюю директорию.
 */
 App.prototype.onBrowse = function(evt) {
+	if (this.settingDlg.visible) {
+		return;
+	}
 	if (this.convertProcIsRun == 1) {
 		alert('Уже выполняется конвертация');
 		return;

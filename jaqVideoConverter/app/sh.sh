@@ -1,4 +1,4 @@
 #! /bin/bash
-cd '/media/andrey/F/films/my_fond';
-rm -f "Падал прошлогодний снег (1983) Пластилиновый мультик Золотая коллекция-out.mp3";
-ffmpeg -i "Падал прошлогодний снег (1983) Пластилиновый мультик Золотая коллекция.mp4" -q:a 0 -map a -threads 3  "Падал прошлогодний снег (1983) Пластилиновый мультик Золотая коллекция-out.mp3" 1>"/home/andrey/hdata/programs/my/qdjs/jaqVideoConverter/app/Падал прошлогодний снег (1983) Пластилиновый мультик Золотая коллекция-out.mp3.log" 2>&1 
+cd '/home/andrey/hdata/Audio/Новости капитализма/0';
+rm -f "01_ПЕРВЫЙ_КАНАЛ-04042021-2324-out.mp3";
+ffmpeg -i "01_ПЕРВЫЙ_КАНАЛ-04042021-2324.mts" -q:a 0 -map a -threads 3  "01_ПЕРВЫЙ_КАНАЛ-04042021-2324-out.mp3" 1>"/home/andrey/hdata/programs/my/qdjs/jaqVideoConverter/app/01_ПЕРВЫЙ_КАНАЛ-04042021-2324-out.mp3.log" 2>&1 
