@@ -6,6 +6,7 @@ function CSettingsDlg() {
 	this.iCatalogName = e('iMoveSourceCatalog');
 	this.bSave = e('bsettingsDlgOk');
 	this.bClose = e('bCloseSettingsDlg');
+	this.bRemoveMeta = e('bRemoveMeta');
 	this.setListeners();
 }
 
@@ -38,7 +39,8 @@ CSettingsDlg.prototype.onClickSave = function(evt) {
 			break;
 		}
 	}
-
+	sets.removeMeta = this.bRemoveMeta.checked;
+	
 	storage('convertsettings', sets);
 	this.close();
 }
@@ -59,12 +61,16 @@ CSettingsDlg.prototype.loadSettings = function() {
 	if (!sets.catalogName) {
 		sets.catalogName = 'source-videow';
 	}
+	if (!sets.removeMeta) {
+		sets.removeMeta = false;
+	}
 	return sets;
 }
 CSettingsDlg.prototype.show = function() {
 	var sets = this.loadSettings();
 	e(sets.actions).checked = true;
 	this.iCatalogName.value = sets.catalogName;
+	this.bRemoveMeta.checked = sets.removeMeta;
 	
 	
 	this.container.style.opacity = 0;

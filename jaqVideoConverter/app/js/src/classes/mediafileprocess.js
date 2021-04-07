@@ -288,16 +288,29 @@ MediaFileProcess.prototype.getName = function() {
 
 MediaFileProcess.prototype.getOnFinishSettingAction = function() {
 	var shortName = this.getName(),
-		sets = this.context.settingDlg.loadSettings();
+		sets = this.context.settingDlg.loadSettings(),
+		cmd;
 	if (sets.actions == 'bNothingSource') {
 		return '';
 	}
+	
 	if (sets.actions == 'bRemoveSource') {
-		return '\nrm -f "' + shortName + '"\n';
+		cmd = '\nrm -f "' + shortName + '"\n';
+		if (sets.removeMeta) {
+			// cmd += 'rm -f "' + shortName + '.meta"\n';
+			cmd += 'rm -f *.meta\n';
+		}
+		return cmd;
 	}
+	
 	if (sets.actions == 'bMoveSource') {
-		return '\nmkdir "' + sets.catalogName + '"\n' + 
-		'\nmv  "' + shortName + '" "' + sets.catalogName + '/' + shortName + '"\n';
+		cmd = '\nmkdir "' + sets.catalogName + '"\n' + 
+		'\nmv "' + shortName + '" "' + sets.catalogName + '/' + shortName + '"\n';
+		if (sets.removeMeta) {
+			// cmd += 'mv "' + shortName + '.meta" "' + sets.catalogName + '/' + shortName + '.meta"\n';
+			cmd += 'mv *.meta ' + sets.catalogName + '\n';
+		}
+		return cmd;
 	}
 }
 
