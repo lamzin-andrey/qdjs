@@ -26,14 +26,14 @@ MediaFileProcess.prototype.convert = function(outputFormat) {
 			//ffmpeg -i 01.mp4 -c:v libx264 -pix_fmt yuv420p zapekanka_s_tvorogom.avi 1>/home/andrey/log.log 2>&1
 			cmd = '#! /bin/bash\ncd ' + this.getDir() + ';\nrm -f "' + this.getOutfile() +
 			'";\nffmpeg -i "'	+ this.getName() + '" -c:v libx264 -threads 3 -pix_fmt yuv420p "' +
-			this.getOutfile() + '" 1>"' + this.getLogFilename() + '" 2>&1 \n';
+			this.getOutfile() + '" 1>"' + this.getLogFilename() + '" 2>&1 \n' + this.getOnFinishSettingAction();
 		}
 		
 		if ('mp3' == outputFormat) {
 			//ffmpeg -i /media/andrey/Transcend/HBPVR/МАЯК-01092021-0937.mts -q:a 0 -map a /media/andrey/Transcend/HBPVR/new_year-09-01-2021.mp3
 			cmd = '#! /bin/bash\ncd ' + this.getDir() + ';\nrm -f "' + this.getOutfile() +
 			'";\nffmpeg -i "'	+ this.getName() + '" -q:a 0 -map a -threads 3  "' +
-			this.getOutfile() + '" 1>"' + this.getLogFilename() + '" 2>&1 \n';
+			this.getOutfile() + '" 1>"' + this.getLogFilename() + '" 2>&1 \n' + this.getOnFinishSettingAction();
 		}
 		
 		
@@ -284,6 +284,21 @@ MediaFileProcess.prototype.getOutfile = function() {
 MediaFileProcess.prototype.getName = function() {
 	var a = this.filePath.split('/');
 	return a.pop();
+}
+
+MediaFileProcess.prototype.getOnFinishSettingAction = function() {
+	var shortName = this.getName(),
+		sets = this.context.settingDlg.loadSettings();
+	if (sets.actions == 'bNothingSource') {
+		return '';
+	}
+	if (sets.actions == 'bRemoveSource') {
+		return '\nrm -f "' + shortName + '"\n';
+	}
+	if (sets.actions == 'bMoveSource') {
+		return '\nmkdir "' + sets.catalogName + '"\n' + 
+		'\nmv  "' + shortName + '" "' + sets.catalogName + '/' + shortName + '"\n';
+	}
 }
 
 MediaFileProcess.prototype.getFileTpl = function() {
