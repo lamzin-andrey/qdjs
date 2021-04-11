@@ -44,7 +44,7 @@ var langEn = {
 	'' : ''
 };
 
-// var jaqedLang = langEn;
+var jaqedLang = langEn;
 
 
 

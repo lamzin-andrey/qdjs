@@ -22,7 +22,7 @@ var langRu = {
 	'hConvertationInProcess': 'Выполняется конвертация...',
 	'' : ''
 };
-var jaqedLang = langRu;
+
 
 /*var jaqedLang = langRu;
 
