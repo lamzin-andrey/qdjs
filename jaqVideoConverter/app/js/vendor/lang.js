@@ -32,11 +32,30 @@ function setLocale() {
 		}
 	}*/
 	
+	ls = ee(document, 'span');
+	sZ = sz(ls);
+	for (i = 0; i < sZ; i++) {
+		if (ls[i].hasAttribute('id')) {
+			ls[i].innerHTML = L(ls[i].id);
+		}
+	}
+	
 	ls = ee(document, 'input');
 	sZ = sz(ls);
 	for (i = 0; i < sZ; i++) {
 		if (ls[i].id && ls[i].type == 'button') {
 			ls[i].value = L(ls[i].id);
 		}
+	}
+}
+
+function setOneDivLocale(id) {
+	e(id).innerHTML = L(id);
+}
+
+function setLocaleByClassName(className, localeKey) {
+	var ls = cs(D, className), i, sZ = sz(ls);
+	for (i = 0; i < sZ; i++) {
+		ls[i].innerHTML = L(localeKey);
 	}
 }

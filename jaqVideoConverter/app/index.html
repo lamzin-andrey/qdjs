@@ -15,10 +15,16 @@
 	<script src="./js/vendor/objects/localstorageinterface.js"></script>
 	<script src="./js/vendor/micron.js"></script>
 	
+	<script src="./js/vendor/lang.js"></script>
+	
 	<script src="./js/src/classes/mediafileprocess.js"></script>
 	<script src="./js/src/classes/mainmenu/cmainmenu.js"></script>
 	<script src="./js/src/classes/mainmenu/settings/csettingitem.js"></script>
 	<script src="./js/src/classes/dialogs/settings/csettingdlg.js"></script>
+	
+	<script src="./js/src/local.js"></script>
+	<script src="./js/src/localru.js"></script>
+	
 	<script src="./js/src/classes/capp.js"></script>
 	<script src="./js/src/app.js"></script>
 </head>
@@ -46,7 +52,7 @@
 		
 		<div class="topButtons">
 			<div class="plusvid" id="bPlusFile">
-				<span class="vidTitle">Видео</span>
+				<span class="vidTitle" id="hPlusVideoText">Видео</span>
 			</div>
 		</div>
 		
@@ -101,13 +107,13 @@
 			<div class="buttonsArea">
 				<div class="buttonsCenter">
 					<div class="avi" id="bConvertToAvi">
-						<div class="avilegend">
+						<div class="avilegend" id="toAVI">
 							В AVI
 						</div>
 					</div>
 					
 					<div class="mp3" id="bConvertToMp3">
-						<div class="avilegend">
+						<div class="avilegend" id="toMp3">
 							В MP3
 						</div>
 					</div>

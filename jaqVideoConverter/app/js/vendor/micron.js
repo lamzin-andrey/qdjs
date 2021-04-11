@@ -298,7 +298,3 @@ function wsStorage(table, id, onData, data) {
 		
 	}//end if db
 }
-// Patch, while not include lang.js
-function L(s) {
-	return s;
-}

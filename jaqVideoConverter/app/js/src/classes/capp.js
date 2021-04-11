@@ -108,7 +108,7 @@ App.prototype.onBrowse = function(evt) {
 		alert('Уже выполняется конвертация');
 		return;
 	}
-	var filePath = jqlOpenFileDialog('Выберите mp4 или mts файл', '*.mp4 *.mts *ts', true),
+	var filePath = jqlOpenFileDialog(L('Выберите mp4 или mts файл'), '*.mp4 *.mts *ts', true),
 		media, i;
 	
 	//Set filename in view

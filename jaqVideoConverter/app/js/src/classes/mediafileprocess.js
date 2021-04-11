@@ -115,7 +115,7 @@ MediaFileProcess.prototype.onComplete = function(std, err) {
 	clearInterval(this.ival);
 	this.removeLogFile();
 	this.resetParams();
-	this.progressStateLabel.innerHTML = (std == 'user_interrupt') ? 'Прервано пользователем' : 'Готово';
+	this.progressStateLabel.innerHTML = (std == 'user_interrupt') ? L('Прервано пользователем') : L('Готово');
 	
 	try {
 		this.onFinishOneFile.call(this.context, std, err);
@@ -149,6 +149,9 @@ MediaFileProcess.prototype.setOnInterruptOneFileListener = function(o, f) {
 }
 
 MediaFileProcess.prototype.observe = function() {
+	if (this.procId && !this.sysId) {
+		this.sysId = PHP.getSysId(this.procId);
+	}
 	if (!this.procId || !this.sysId) {
 		return;
 	}
@@ -250,6 +253,8 @@ MediaFileProcess.prototype.addFileInfoBlock = function(parentId, filePath) {
 	this.dompb = view.getElementsByClassName('dompb')[0];
 	this.progressState = view.getElementsByClassName('progressState')[0];
 	this.progressStateLabel = view.getElementsByClassName('progressStateLabel')[0];
+	// setOneDivLocale('hConvertationInProcess');
+	setLocaleByClassName('progressStateLabel', 'hConvertationInProcess');
 }
 
 MediaFileProcess.prototype.onClickRemoveBtn = function() {
@@ -336,7 +341,7 @@ MediaFileProcess.prototype.getFileTpl = function() {
 						<div class="row pbar">\
 							\
 							<div class="extractPBar" style="display:none;">\
-								 <div class="text-center progressStateLabel" i>\
+								 <div class="text-center progressStateLabel" i id="hConvertationInProcess">\
 									Выполняется конвертация...\
 								 </div>\
 								 <div style="line-height:28px;">\
