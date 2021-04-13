@@ -9,6 +9,7 @@
 	<link type="text/css" rel="stylesheet" href="./css/pbar/pbar.css">
 	
 	<link type="text/css" rel="stylesheet" href="./js/src/classes/dialogs/settings/csettingdlg.css">
+	<link type="text/css" rel="stylesheet" href="./js/src/classes/dialogs/language/clangdlg.css">
 	
 	<script src="./js/vendor/objects/recentdir.js"></script>
 	<script src="./js/vendor/objects/settings.js"></script>
@@ -21,6 +22,7 @@
 	<script src="./js/src/classes/mainmenu/cmainmenu.js"></script>
 	<script src="./js/src/classes/mainmenu/settings/csettingitem.js"></script>
 	<script src="./js/src/classes/dialogs/settings/csettingdlg.js"></script>
+	<script src="./js/src/classes/dialogs/language/clangdlg.js"></script>
 	
 	<script src="./js/src/local.js"></script>
 	<script src="./js/src/localru.js"></script>
@@ -32,8 +34,9 @@
 	<!--div style="opacity:0.75;border:1px solid red; background-image:url(./img/design.png);width:941px;height:654px"-->
 	<!--div style="border:1px solid red;width:941px;height:654px" class="mainFrame"-->
 	<div class="mainFrame">
-		<div class="menuItemFile">
-			<div class="menuItemFileOpen">Открыть</div>
+		<div class="menuItemFile" id="menuItemFile" style="display:none;">
+			<div class="menuItemFileOpen"><span id="hMMenuSetsConv">Конвертация</span></div>
+			<div class="menuItemFileOpen menuItemTopBorderBlack"><span id="hMMenuSetsLang">Language/Язык</span></div>
 		</div>
 		<div class="menuFileContrast" id="menuItemFirstFront">Настройки</div>
 		<div class="wTitle">
@@ -158,6 +161,34 @@
 			</div>
 			<div class="dlgfooterbox">
 				<div id="bsettingsDlgOk" class="bsettingsDlgOk">Сохранить</div>
+			</div>
+		</div>
+		
+	</div>
+	
+	<div id="languageDlgView" style="display:none">
+		<div class="dlgbox">
+			<div class="dlgtitlebg">
+				<div class="dlgtitle" id="hSettingsDlgTitle">Language / Язык
+				</div>
+				<div id="bCloseLangsDlg" class="dlgclosebtn">&nbsp;</div>
+			</div>
+			
+			<div class="dlgcontentbox">
+
+				<div>
+					<input type="radio" id="bLangRu" name="langs">
+					<label id="bLangRuLbl" for="bLangRu">Russian</label>
+				</div>
+				
+				<div>
+					<input type="radio" id="bLangEn" name="langs">
+					<label id="bLangEnLbl" for="bLangEn">English</label>
+				</div>
+				
+			</div>
+			<div class="dlgfooterbox">
+				<div id="bLangDlgOk" class="bsettingsDlgOk">Сохранить</div>
 			</div>
 		</div>
 		

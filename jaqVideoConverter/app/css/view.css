@@ -211,14 +211,19 @@ body {
 	top: 71px;
 	left: 31px;
 	width: 250px;
-	height: 25px;
+	height: 50px;
 	z-index: 2;
-	display:none; /*Temp none!  */
+	/*display:none; /*Temp none!  */
 }
 .menuItemFileOpen {
-	margin-left: 10px;
-	margin-top: 4px;
-	display:none; /*Temp none!  */
+	padding-left: 10px;
+	padding-top: 4px;
+	padding-bottom: 2px;
+	cursor: pointer;
+	/*display:none; /*Temp none!  */
+}
+.menuItemTopBorderBlack {
+	border-top : 1px solid black;
 }
 .menuFileContrast {
 	position: absolute;

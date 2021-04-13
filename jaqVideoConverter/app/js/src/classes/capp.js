@@ -2,8 +2,10 @@ function App() {
 	this.resetParams();
 	this.setListeners();
 	try {
-		this.settingDlg = new CSettingsDlg();
-		this.mainMenu = new MainMenu(this.settingDlg, this);
+		this.settingDlg = new CSettingsDlg(this);
+		this.langDlg = new CLanguageDlg();
+		this.mainMenu = new MainMenu(this.settingDlg, this.langDlg, this);
+		onLoadLocale(this);
 	} catch(err) {
 		alert(err);
 	}
@@ -32,7 +34,7 @@ App.prototype.resetParams = function() {
 }
 
 App.prototype.onConvert2Mp3Click = function(evt) {
-	if (this.settingDlg.visible) {
+	if (this.settingDlg.visible || this.langDlg.visible) {
 		return;
 	}
 	if (this.convertProcIsRun == 1) {
@@ -53,7 +55,7 @@ App.prototype.onConvert2Mp3Click = function(evt) {
 }
 
 App.prototype.onConvert2AviClick = function(evt) {
-	if (this.settingDlg.visible) {
+	if (this.settingDlg.visible || this.langDlg.visible) {
 		return;
 	}
 	if (this.convertProcIsRun == 1) {
@@ -101,7 +103,7 @@ App.prototype.onFinishOneFile = function(std, err) {
  * @description Обработка нажатия кнопки выбора mp3 файла. Сохраняет последнюю директорию.
 */
 App.prototype.onBrowse = function(evt) {
-	if (this.settingDlg.visible) {
+	if (this.settingDlg.visible || this.langDlg.visible ) {
 		return;
 	}
 	if (this.convertProcIsRun == 1) {

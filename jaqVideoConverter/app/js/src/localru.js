@@ -8,6 +8,8 @@ var langRu = {
 	// qdjsVC keys
 	'menuItemFirst' : 'Настройки',
 	'menuItemFirstFront' : 'Настройки',
+	'hMMenuSetsConv' : 'Конвертация',
+	'hMMenuSetsLang' : 'Languauge / Язык',
 	'menuItem' : '&nbsp;',
 	'hNothingSourceLbl' : 'Ничего не делать',
 	'hRemoveSourceLbl' : 'Удалить исходный файл после конвертации',
@@ -16,6 +18,11 @@ var langRu = {
 	'hSettingsDlgTitle' : 'Параметры конвертации',
 	'hAfterConvertSubtitle' : 'После обработки',
 	'bsettingsDlgOk' : 'Сохранить',
+	
+	'bLangDlgOk' : 'Сохранить',
+	'bLangEnLbl' : 'English',
+	'bLangRuLbl' : 'Russian',
+	
 	'toMp3' : 'в MP3',
 	'toAVI' : 'в AVI',
 	'hPlusVideoText' : 'Видео',

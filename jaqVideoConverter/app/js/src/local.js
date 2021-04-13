@@ -27,6 +27,8 @@ var langEn = {
 	// qdjsVC keys
 	'menuItemFirst' : 'Settings',
 	'menuItemFirstFront' : 'Settings',
+	'hMMenuSetsConv' : 'Convertation',
+	'hMMenuSetsLang' : 'Languauge / Язык',
 	'menuItem' : '&nbsp;',
 	'hNothingSourceLbl' : 'Nothing to do',
 	'hRemoveSourceLbl' : 'Remove source files',
@@ -35,6 +37,11 @@ var langEn = {
 	'hSettingsDlgTitle' : 'Convertation parameters',
 	'hAfterConvertSubtitle' : 'After processing',
 	'bsettingsDlgOk' : 'Save',
+	
+	'bLangDlgOk' : 'Save',
+	'bLangEnLbl' : 'English',
+	'bLangRuLbl' : 'Russian',
+	
 	'toMp3' : 'to MP3',
 	'toAVI' : 'to AVI',
 	'hPlusVideoText' : 'Video',
@@ -48,14 +55,32 @@ var jaqedLang = langEn;
 
 
 
-window.addEventListener('load', function() {
+window.addEventListener('load', onLoadLocale, false);
+
+function onLoadLocale(app) {
+	try {
+		if (!app) {
+			app = window.app;
+		}
+		var dlg = app.langDlg;
+		var sets = dlg.loadSettings();
+		if (sets.lang == 'bLangRu') {
+			jaqedLang = langRu;
+		} else {
+			jaqedLang = langEn;
+		}
+	} catch (errL) {
+		// alert(errL);
+	}
+	
 	setOneDivLocale('menuItemFirstFront');
 	setOneDivLocale('hSettingsDlgTitle');
 	setOneDivLocale('hAfterConvertSubtitle');
 	setOneDivLocale('bsettingsDlgOk');
+	setOneDivLocale('bLangDlgOk');
 	setOneDivLocale('toMp3');
 	setOneDivLocale('toAVI');
 	if (setLocale instanceof Function) {
 		setLocale();
 	}
-}, false);
+}

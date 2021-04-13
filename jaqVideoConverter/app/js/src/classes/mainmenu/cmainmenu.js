@@ -1,5 +1,6 @@
-function MainMenu(settingsDlg, app) {
-	this.settingsMenuItem = new CSettingItem(settingsDlg, app);
+function MainMenu(settingsDlg, langDlg, app) {
+	this.settingsMenuItem = new CSettingItem(settingsDlg, langDlg, app);
+	
 	//this.setListeners();
 }
 
