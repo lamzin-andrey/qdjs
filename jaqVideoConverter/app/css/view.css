@@ -158,6 +158,9 @@ body {
 .fileListMetadata .row.secondStr .fileListMetadataIcon {
 	vertical-align: middle;
 }
+.fileListMetadataIcon, .name {
+	cursor:pointer;
+}
 
 .fileListProgressView .row.pbar {
 	width: 400px;

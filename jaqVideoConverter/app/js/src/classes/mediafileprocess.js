@@ -18,6 +18,7 @@ MediaFileProcess.prototype.resetParams = function() {
 MediaFileProcess.prototype.convert = function(outputFormat) {
 	if (this.filePath && PHP.file_exists(this.filePath)) {
 		this.outputFormat = outputFormat;
+		this.actualizeName();
 		var cmd = '', dir, name = '', outfile, o = this;
 		
 		PHP.file_put_contents(this.getLogFilename(), '');
@@ -102,18 +103,41 @@ MediaFileProcess.prototype.onObserve = function(std, err) {
 	
 }
 
-MediaFileProcess.prototype.removeLogFile = function(std, err) {
+MediaFileProcess.prototype.removeLogFileAndRunPostTriggers = function(std, err) {
 	var cmd = '#! /bin/bash\nrm -f "' + this.getLogFilename() + '"', s = 'on', name;
+	if (this.customOutfilename) {
+		cmd += '\ncd ' + this.getDir() + '';
+		cmd += '\nmv "' + this.getOutfile() + '" "' + this.getActualCustomOutfilename() + '"';
+	}
 	// log(cmd);
 	name = Qt.appDir() + '/shr.sh';
 	PHP.file_put_contents(name, cmd);
 	PHP.exec(name, s, s, s);	
 }
+
+/**
+ * actual output name on finish (for rename)
+*/
+MediaFileProcess.prototype.getActualCustomOutfilename = function() {
+	var a = this.customOutfilename.split('.');
+	a.pop();
+	return a[0] + '.' + this.outputFormat;
+}
+
+/**
+ * Actualize output filename on start convertation
+*/
+MediaFileProcess.prototype.actualizeName = function() {
+	var a = this.nameView.innerHTML.split('.');
+	a.pop();
+	this.nameView.innerHTML = (a[0] + '.' + this.outputFormat);
+}
+
 // TODO тут поле для деятельности
 MediaFileProcess.prototype.onComplete = function(std, err) {
 	// log('Call onComplete');
 	clearInterval(this.ival);
-	this.removeLogFile();
+	this.removeLogFileAndRunPostTriggers();
 	this.resetParams();
 	this.progressStateLabel.innerHTML = (std == 'user_interrupt') ? L('Прервано пользователем') : L('Готово');
 	
@@ -253,6 +277,14 @@ MediaFileProcess.prototype.addFileInfoBlock = function(parentId, filePath) {
 	this.dompb = view.getElementsByClassName('dompb')[0];
 	this.progressState = view.getElementsByClassName('progressState')[0];
 	this.progressStateLabel = view.getElementsByClassName('progressStateLabel')[0];
+	this.nameView = view.getElementsByClassName('name')[0];
+	this.bEditOutputFileName = view.getElementsByClassName('fileListMetadataIcon')[0];
+	this.bEditOutputFileName.onclick = function(evt) {
+		o.onClickEditFileNameBtn(evt);
+	};
+	this.nameView.onclick = function(evt) {
+		o.onClickEditFileNameBtn(evt);
+	};
 	// setOneDivLocale('hConvertationInProcess');
 	setLocaleByClassName('progressStateLabel', 'hConvertationInProcess');
 }
@@ -317,6 +349,17 @@ MediaFileProcess.prototype.getOnFinishSettingAction = function() {
 		}
 		return cmd;
 	}
+}
+
+MediaFileProcess.prototype.onClickEditFileNameBtn = function(evt) {
+	evt.preventDefault();
+	var s = this.customOutfilename ?  this.customOutfilename : this.getOutfile();
+	this.context.outfileDlg.show(this, s);
+}
+
+MediaFileProcess.prototype.setOutputFileName = function(fileName) {
+	this.customOutfilename = fileName + '.' + this.outputFormat;
+	this.nameView.innerHTML = this.customOutfilename;
 }
 
 MediaFileProcess.prototype.getFileTpl = function() {

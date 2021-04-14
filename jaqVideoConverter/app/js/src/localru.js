@@ -18,10 +18,14 @@ var langRu = {
 	'hSettingsDlgTitle' : 'Параметры конвертации',
 	'hAfterConvertSubtitle' : 'После обработки',
 	'bsettingsDlgOk' : 'Сохранить',
-	
 	'bLangDlgOk' : 'Сохранить',
 	'bLangEnLbl' : 'English',
 	'bLangRuLbl' : 'Russian',
+	
+	'hOutputFilenameDlgTitleTxt' : 'Редактировать имя выходного файла',
+	'hEOFNLbl' : 'Имя выходного файла',
+	'bEOFNDlgOk' : 'Сохранить',
+	
 	
 	'toMp3' : 'в MP3',
 	'toAVI' : 'в AVI',

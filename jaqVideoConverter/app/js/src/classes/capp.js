@@ -2,6 +2,7 @@ function App() {
 	this.resetParams();
 	this.setListeners();
 	try {
+		this.outfileDlg = new COutputFileNameDlg(this);
 		this.settingDlg = new CSettingsDlg(this);
 		this.langDlg = new CLanguageDlg();
 		this.mainMenu = new MainMenu(this.settingDlg, this.langDlg, this);

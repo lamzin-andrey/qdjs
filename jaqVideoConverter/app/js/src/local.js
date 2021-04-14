@@ -37,10 +37,14 @@ var langEn = {
 	'hSettingsDlgTitle' : 'Convertation parameters',
 	'hAfterConvertSubtitle' : 'After processing',
 	'bsettingsDlgOk' : 'Save',
-	
 	'bLangDlgOk' : 'Save',
 	'bLangEnLbl' : 'English',
 	'bLangRuLbl' : 'Russian',
+	
+	'hOutputFilenameDlgTitleTxt' : 'Edit output file name',
+	'hEOFNLbl' : 'Output filename',
+	'bEOFNDlgOk' : 'Save',
+	'Имя файла не может быть пустым' : 'Filename do not can be empty',
 	
 	'toMp3' : 'to MP3',
 	'toAVI' : 'to AVI',
@@ -80,6 +84,7 @@ function onLoadLocale(app) {
 	setOneDivLocale('bLangDlgOk');
 	setOneDivLocale('toMp3');
 	setOneDivLocale('toAVI');
+	setOneDivLocale('bEOFNDlgOk');
 	if (setLocale instanceof Function) {
 		setLocale();
 	}

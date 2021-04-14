@@ -10,6 +10,7 @@
 	
 	<link type="text/css" rel="stylesheet" href="./js/src/classes/dialogs/settings/csettingdlg.css">
 	<link type="text/css" rel="stylesheet" href="./js/src/classes/dialogs/language/clangdlg.css">
+	<link type="text/css" rel="stylesheet" href="./js/src/classes/dialogs/outputfilename/cofndlg.css">
 	
 	<script src="./js/vendor/objects/recentdir.js"></script>
 	<script src="./js/vendor/objects/settings.js"></script>
@@ -23,6 +24,7 @@
 	<script src="./js/src/classes/mainmenu/settings/csettingitem.js"></script>
 	<script src="./js/src/classes/dialogs/settings/csettingdlg.js"></script>
 	<script src="./js/src/classes/dialogs/language/clangdlg.js"></script>
+	<script src="./js/src/classes/dialogs/outputfilename/cofndlg.js"></script>
 	
 	<script src="./js/src/local.js"></script>
 	<script src="./js/src/localru.js"></script>
@@ -191,7 +193,32 @@
 				<div id="bLangDlgOk" class="bsettingsDlgOk">Сохранить</div>
 			</div>
 		</div>
-		
+	</div>
+	
+	<div id="editOutputFileDlgView" style="display:none">
+		<div class="dlgbox">
+			<div class="dlgtitlebg">
+				<div class="dlgtitle">
+					<span id="hOutputFilenameDlgTitleTxt">Редактировать имя выходного файла</span>
+				</div>
+				<div id="bCloseEOFNDlg" class="dlgclosebtn">&nbsp;</div>
+			</div>
+			
+			<div class="dlgcontentbox">
+
+				<div>
+					<div>
+						<label id="hEOFNLbl" for="iOutputFilename">Имя выходного файла</label>
+					</div>
+					<textarea class="taclassic" id="iOutputFilename" rows="10" ></textarea>
+				</div>
+				
+				
+			</div>
+			<div class="dlgfooterbox">
+				<div id="bEOFNDlgOk" class="bsettingsDlgOk">Сохранить</div>
+			</div>
+		</div>
 	</div>
 	
 </body>
