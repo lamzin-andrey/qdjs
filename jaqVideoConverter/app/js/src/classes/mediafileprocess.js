@@ -1,6 +1,7 @@
 function MediaFileProcess() {
 	this.procId = 0;
 	this.outputFormat = 'avi';
+	this.ffmpeg = new FFMpeg(Qt.appDir() + '/js/vendor/classes/ffmpeg');
 }
 
 
@@ -22,6 +23,11 @@ MediaFileProcess.prototype.convert = function(outputFormat) {
 		var cmd = '', dir, name = '', outfile, o = this;
 		
 		PHP.file_put_contents(this.getLogFilename(), '');
+		try {
+			this.setPreview();
+		} catch (sp) {
+			alert(sp);
+		}
 		
 		if ('avi' == outputFormat) {
 			//ffmpeg -i 01.mp4 -c:v libx264 -pix_fmt yuv420p zapekanka_s_tvorogom.avi 1>/home/andrey/log.log 2>&1
@@ -261,6 +267,44 @@ MediaFileProcess.prototype.getLogFilename = function() {
 	return Qt.appDir() +  '/' + this.getOutfile() + '.log';
 }
 
+MediaFileProcess.prototype.setPreview = function() {
+	var previewFilename =  Qt.appDir() +  '/' + this.getOutfile() + '.png';
+	this.previewFilename = previewFilename;
+	this.ffmpeg.getPreviewFromVideo(this.filePath, previewFilename, 15, {context:this, m:this.onGetPreview});
+}
+
+MediaFileProcess.prototype.onGetPreview = function(stdin, stdout) {
+	/*
+	 * $sz = getImageSize($srcPath);
+	$srcW = $sz[0];
+	$srcH = $sz[1];
+	$isLandscape = $srcW > $srcH;
+	
+	$isSrcLgBg = $srcW > $nWidth || $srcH > $nHeight;
+	$destX = 0;
+	$destY = 0;
+	$newW = $srcW;
+	$newH = $srcH;
+	
+	//это случай, когда изображение больше фона
+	if ($isSrcLgBg) {
+		if ($isLandscape) {
+			$nScale = $nWidth / $srcW;
+		} else {
+			$nScale = $nHeight / $srcH;
+		}
+		$newW = round($srcW * $nScale);
+		$newH = round($srcH * $nScale);
+	}
+	 * */
+	
+	/*var png = this.previewFilename;
+	if (PHP.file_exists(png)) {
+		this.previewImgElement// TODO ufo
+		utils_resizeImg(this.previewImgElement, png);// TODO
+		
+	}*/
+}
 
 MediaFileProcess.prototype.addFileInfoBlock = function(parentId, filePath) {
 	this.filePath = filePath;

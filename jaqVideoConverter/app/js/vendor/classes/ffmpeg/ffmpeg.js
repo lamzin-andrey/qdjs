@@ -1,3 +1,4 @@
+//1.0.1
 var W = window;
 /**
  *  @description 
@@ -7,6 +8,43 @@ var W = window;
 function FFMpeg(workdir) {
 	this.workdir = workdir;
 	this.statusText = '';
+}
+
+/**
+ *  @description Set metatags in mp3 file fileName.  Comment Idv3 Support.
+ *  @param sTimeOffset = '00:00:15.000'. If 0 <= sTimeOffset <= 60 it translate '00:00:{sTimeOffset}.000'
+*/
+FFMpeg.prototype.getPreviewFromVideo = function(videoFileName, pngFileName, sTimeOffset, oCallback) {
+	sTimeOffset = def(sTimeOffset, 15);
+	if (String(sTimeOffset).indexOf(':') == -1) {
+		var t = parseInt(sTimeOffset);
+		t = isNaN(t) ? 0 : t;
+		if (!(t >= 0 && t <= 60)) {
+			t = 15;
+		}
+		sTimeOffset = '00:00:' + t + '.000';
+	}
+	if (W.ffmpegGPFVProcessIsRun) {
+		// alert('W.ffmpegSetMetadataProcessIsRun = ' + W.ffmpegSetMetadataProcessIsRun);
+		this.GPFVstatusText = 'Another ffmpeg process already run';
+		onFFmpegExecuteGetPreviewFromVideoCommand('', this.statusText);// TODO
+		return;
+	}
+
+	// ffmpeg -i {inputFile} -ss 00:00:01.000 -vframes 1 output.png
+	var tpl = '#!/bin/bash\nffmpeg -i "{inputFile}" -ss {timeOffset} -vframes 1 "{outputFile}"\n',
+		s, outFile, shell;
+	s = tpl.replace('{inputFile}', videoFileName);
+	s = s.replace('{timeOffset}', sTimeOffset);
+	s = s.replace('{outputFile}', pngFileName);
+	
+	
+	PHP.file_put_contents(this.workdir + '/getpreview.sh', s);
+	W.ffmpegGPFVProcessIsRun = true;
+	W.ffmpegGetPreviewFromVideoCallback = oCallback;
+	alert(s);
+	alert(this.workdir + '/getpreview.sh');
+	PHP.exec(this.workdir + '/getpreview.sh', 'onFFmpegExecuteGetPreviewFromVideoCommand', 'on', 'on');
 }
 /**
  *  @description Set metatags in mp3 file fileName.  Comment Idv3 Support.
@@ -78,5 +116,18 @@ function onFFmpegExecuteSetMetadataCommand(stdin, stdout) {
 			// alert('Try calling!');
 			W.ffmpegSetMetadataCallback.m.call(W.ffmpegSetMetadataCallback.context, stdin, stdout);
 			
+	}
+}
+/**
+ * 
+*/
+function onFFmpegExecuteGetPreviewFromVideoCommand(stdin, stdout) {
+	// alert('Call onFFmpegExecuteGetPreviewFromVideoCommand');
+	if (W.ffmpegGetPreviewFromVideoCallback
+		&& W.ffmpegGetPreviewFromVideoCallback.context
+		&& (W.ffmpegGetPreviewFromVideoCallback.m instanceof Function) ) {
+			W.ffmpegGPFVProcessIsRun = false;
+			// alert('Try calling!');
+			W.ffmpegGetPreviewFromVideoCallback.m.call(W.ffmpegGetPreviewFromVideoCallback.context, stdin, stdout);
 	}
 }

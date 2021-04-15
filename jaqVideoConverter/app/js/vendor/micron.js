@@ -1,3 +1,4 @@
+//1.0.0
 var D = document,
 W = window, S = String;
 function e(i) {
@@ -194,6 +195,15 @@ function imgToDataUri(i) {
 		}
 	}
 	return false;
+}
+/**
+ * @description Default value for v
+*/
+function def(v, _default) {
+	if (isU(v)) {
+		return _default;
+	}
+	return v;
 }
 /**
  * @description Сохранить объект имеющий поле id в базе webSql (Chrome) по аналогии со storage
