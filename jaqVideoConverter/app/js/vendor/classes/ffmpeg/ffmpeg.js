@@ -27,8 +27,8 @@ FFMpeg.prototype.getPreviewFromVideo = function(videoFileName, pngFileName, sTim
 	if (W.ffmpegGPFVProcessIsRun) {
 		// alert('W.ffmpegSetMetadataProcessIsRun = ' + W.ffmpegSetMetadataProcessIsRun);
 		this.GPFVstatusText = 'Another ffmpeg process already run';
-		onFFmpegExecuteGetPreviewFromVideoCommand('', this.statusText);
-		// oCallback.m.call(oCallback.context, this.statusText, '');
+		// onFFmpegExecuteGetPreviewFromVideoCommand('', this.statusText);
+		oCallback.m.call(oCallback.context, this.statusText, '');
 		return;
 	}
 
@@ -45,7 +45,7 @@ FFMpeg.prototype.getPreviewFromVideo = function(videoFileName, pngFileName, sTim
 	W.ffmpegGetPreviewFromVideoCallback = oCallback;
 	alert(s);
 	alert(this.workdir + '/getpreview.sh');
-	// jexec(this.workdir + '/getpreview.sh', oCallback, [this, this.on], [this, this.on]);
+	jexec(this.workdir + '/getpreview.sh', oCallback, [this, this.on], [this, this.on]);
 }
 /**
  *  @description Set metatags in mp3 file fileName.  Comment Idv3 Support.
@@ -104,7 +104,7 @@ FFMpeg.prototype.createOutfileName = function(fileName) {
 	
 	return ls.join('/');
 }
-FFMpeg.prototype.on = function(s) {
+FFMpeg.prototype.on = function(s) {}
 
 /**
  * 

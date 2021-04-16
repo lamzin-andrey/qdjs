@@ -48,8 +48,6 @@ MediaFileProcess.prototype.convert = function(outputFormat) {
 		name = Qt.appDir() + '/sh.sh';
 		PHP.file_put_contents(name, cmd);
 		
-		
-		
 		// следить за изменением размера файла, если перестал увеличиваться, значит финиш
 		this.ival = setInterval(function(){
 			try {
@@ -274,6 +272,7 @@ MediaFileProcess.prototype.setPreview = function() {
 }
 
 MediaFileProcess.prototype.onGetPreview = function(stdin, stdout) {
+	alert('ICall');
 	/*
 	 * $sz = getImageSize($srcPath);
 	$srcW = $sz[0];
