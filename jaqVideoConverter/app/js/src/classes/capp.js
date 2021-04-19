@@ -130,7 +130,7 @@ App.prototype.onBrowse = function(evt) {
 }
 
 /**
- * @description Вызывается, когда удален из очереди файл, конвертация которого ещё не началась
+ * @description Call, when from queue removed file, convertation process for it yet not run
 */
 App.prototype.onInterruptOneFile = function(order) {
 	var i, media, target = -1;
