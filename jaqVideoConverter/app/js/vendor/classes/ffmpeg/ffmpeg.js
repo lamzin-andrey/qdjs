@@ -24,28 +24,34 @@ FFMpeg.prototype.getPreviewFromVideo = function(videoFileName, pngFileName, sTim
 		}
 		sTimeOffset = '00:00:' + t + '.000';
 	}
-	if (W.ffmpegGPFVProcessIsRun) {
-		// alert('W.ffmpegSetMetadataProcessIsRun = ' + W.ffmpegSetMetadataProcessIsRun);
-		this.GPFVstatusText = 'Another ffmpeg process already run';
-		// onFFmpegExecuteGetPreviewFromVideoCommand('', this.statusText);
-		oCallback.m.call(oCallback.context, this.statusText, '');
+	
+	if (W.ffmpegGetPreviewProcessIsRun) {
+		oCallback.m.call(oCallback.context, 'Process already run', '');
 		return;
 	}
+	
 
 	// ffmpeg -i {inputFile} -ss 00:00:01.000 -vframes 1 output.png
-	var tpl = '#!/bin/bash\nffmpeg -i "{inputFile}" -ss {timeOffset} -vframes 1 "{outputFile}"\n',
+	var tpl = '#!/bin/bash\nffmpeg -i "{inputFile}" -ss {timeOffset} -vframes 1 "{outputFile}"',
 		s, outFile, shell;
 	s = tpl.replace('{inputFile}', videoFileName);
 	s = s.replace('{timeOffset}', sTimeOffset);
 	s = s.replace('{outputFile}', pngFileName);
+	W.ffmpegGetPreviewProcessIsRun = true;
 	
 	
 	PHP.file_put_contents(this.workdir + '/getpreview.sh', s);
-	W.ffmpegGPFVProcessIsRun = true;
-	W.ffmpegGetPreviewFromVideoCallback = oCallback;
-	alert(s);
-	alert(this.workdir + '/getpreview.sh');
-	jexec(this.workdir + '/getpreview.sh', oCallback, [this, this.on], [this, this.on]);
+	
+	this.callback = oCallback;
+	jexec(this.workdir + '/getpreview.sh', [this, this.onGetPreviewVideo], [this, this.on], [this, this.onGetPreviewVideo]);
+}
+/**
+ *  @description
+ *  
+*/
+FFMpeg.prototype.onGetPreviewVideo = function(stdout, stderr) {
+	W.ffmpegGetPreviewProcessIsRun = false;
+	this.callback.m.call(this.callback.context, stdout, stderr);
 }
 /**
  *  @description Set metatags in mp3 file fileName.  Comment Idv3 Support.
@@ -118,18 +124,5 @@ function onFFmpegExecuteSetMetadataCommand(stdin, stdout) {
 			// alert('Try calling!');
 			W.ffmpegSetMetadataCallback.m.call(W.ffmpegSetMetadataCallback.context, stdin, stdout);
 			
-	}
-}
-/**
- * 
-*/
-function onFFmpegExecuteGetPreviewFromVideoCommand(stdin, stdout) {
-	// alert('Call onFFmpegExecuteGetPreviewFromVideoCommand');
-	if (W.ffmpegGetPreviewFromVideoCallback
-		&& W.ffmpegGetPreviewFromVideoCallback.context
-		&& (W.ffmpegGetPreviewFromVideoCallback.m instanceof Function) ) {
-			W.ffmpegGPFVProcessIsRun = false;
-			// alert('Try calling!');
-			W.ffmpegGetPreviewFromVideoCallback.m.call(W.ffmpegGetPreviewFromVideoCallback.context, stdin, stdout);
 	}
 }

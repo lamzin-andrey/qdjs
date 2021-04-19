@@ -36,7 +36,7 @@ function jmp4convSetProgressView() {
 	jmp4convSetCurrentProgress();
 }
 
-function log(m) {
+function log(m) {return;
 	var dt = new Date(),
 		s = dt.getHours() + ':' + dt.getMinutes() + ':' + dt.getSeconds() + '.' + dt.getMilliseconds();
 	PHP.file_put_contents(Qt.appDir() + '/log.log', m + ' ' + s + '\n', 1);

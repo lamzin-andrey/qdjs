@@ -197,6 +197,16 @@ function imgToDataUri(i) {
 	return false;
 }
 /**
+ * @description Convert image to dataUri
+ * @param {Image} i
+ * @return {Object} {w, h}
+*/
+function getImageSize(i) {
+	var r = {width: i.naturalWidth, height: i.naturalHeight};
+	delete i;
+	return r;
+}
+/**
  * @description Default value for v
 */
 function def(v, _default) {
@@ -223,6 +233,40 @@ function wstorago(table, mixed, id) {
 		}
 	}
 }
+
+/**
+ * @description Calculate preview size
+ * @param {Number} $srcW source image width 
+ * @param {Number} $srcH source image height
+ * @param {Number} $nWidth destination image width
+ * @param {Number} $nHeight destination image max height
+ * @return Object {w, h} - new Size
+*/
+function calculateImageResize($srcW, $srcH, $nWidth, $nHeight) {
+	var $isLandscape, $isSrcLgBg, $destX, $destY, $newW, $newH, $nScale;
+	$isLandscape = $srcW > $srcH;
+
+	$isSrcLgBg = $srcW > $nWidth || $srcH > $nHeight;
+	$destX = 0;
+	$destY = 0;
+	$newW = $srcW;
+	$newH = $srcH;
+
+	//это случай, когда изображение больше фона
+
+	if ($isSrcLgBg) {
+		if ($isLandscape) {
+			$nScale = $nWidth / $srcW;
+		} else {
+			$nScale = $nHeight / $srcH;
+		}
+		$newW = Math.round($srcW * $nScale);
+		$newH = Math.round($srcH * $nScale);
+	}
+	
+	return {w: $newW, h : $newH};
+}
+
 /**
  * @description Сохранить данные в базе webSql (Chrome). По аналогии со storage храним все как JSON объект, но в записи с id как у объекта
  * @param {String} table

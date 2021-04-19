@@ -23,11 +23,7 @@ MediaFileProcess.prototype.convert = function(outputFormat) {
 		var cmd = '', dir, name = '', outfile, o = this;
 		
 		PHP.file_put_contents(this.getLogFilename(), '');
-		try {
-			this.setPreview();
-		} catch (sp) {
-			alert(sp);
-		}
+		
 		
 		if ('avi' == outputFormat) {
 			//ffmpeg -i 01.mp4 -c:v libx264 -pix_fmt yuv420p zapekanka_s_tvorogom.avi 1>/home/andrey/log.log 2>&1
@@ -108,7 +104,9 @@ MediaFileProcess.prototype.onObserve = function(std, err) {
 }
 
 MediaFileProcess.prototype.removeLogFileAndRunPostTriggers = function(std, err) {
-	var cmd = '#! /bin/bash\nrm -f "' + this.getLogFilename() + '"', s = 'on', name;
+	var cmd = '#! /bin/bash\nrm -f "' + this.getLogFilename() + '"\n'	+	
+				'rm -f "' + this.previewFilename + '"\n',
+		s = 'on', name;
 	if (this.customOutfilename) {
 		cmd += '\ncd ' + this.getDir() + '';
 		cmd += '\nmv "' + this.getOutfile() + '" "' + this.getActualCustomOutfilename() + '"';
@@ -271,38 +269,33 @@ MediaFileProcess.prototype.setPreview = function() {
 	this.ffmpeg.getPreviewFromVideo(this.filePath, previewFilename, 15, {context:this, m:this.onGetPreview});
 }
 
-MediaFileProcess.prototype.onGetPreview = function(stdin, stdout) {
-	alert('ICall');
-	/*
-	 * $sz = getImageSize($srcPath);
-	$srcW = $sz[0];
-	$srcH = $sz[1];
-	$isLandscape = $srcW > $srcH;
-	
-	$isSrcLgBg = $srcW > $nWidth || $srcH > $nHeight;
-	$destX = 0;
-	$destY = 0;
-	$newW = $srcW;
-	$newH = $srcH;
-	
-	//это случай, когда изображение больше фона
-	if ($isSrcLgBg) {
-		if ($isLandscape) {
-			$nScale = $nWidth / $srcW;
-		} else {
-			$nScale = $nHeight / $srcH;
-		}
-		$newW = round($srcW * $nScale);
-		$newH = round($srcH * $nScale);
-	}
-	 * */
-	
-	/*var png = this.previewFilename;
-	if (PHP.file_exists(png)) {
-		this.previewImgElement// TODO ufo
-		utils_resizeImg(this.previewImgElement, png);// TODO
+MediaFileProcess.prototype.onGetPreview = function(stdout, stderr) {
+	if (stdout == 'Process already run') {
+		var o = this;
 		
-	}*/
+		setTimeout(function(){
+			o.setPreview();
+		}, 500);
+		
+		return;
+	}
+	this.previewTempImage = new Image();
+	var o = this;
+	this.previewTempImage.onload = function() {
+		o.onLoadPreviewImageForSize();
+	}
+	this.previewTempImage.src = this.previewFilename;
+}
+/**
+ * 
+*/
+MediaFileProcess.prototype.onLoadPreviewImageForSize = function() {
+	var sz = getImageSize(this.previewTempImage),
+		newSz;
+	newSz = calculateImageResize(sz.width, sz.height, 66, 50);
+	this.previewImgElement.setAttribute('width', newSz.w);
+	this.previewImgElement.setAttribute('height', newSz.h);
+	this.previewImgElement.setAttribute('src', this.previewFilename);
 }
 
 MediaFileProcess.prototype.addFileInfoBlock = function(parentId, filePath) {
@@ -321,6 +314,7 @@ MediaFileProcess.prototype.addFileInfoBlock = function(parentId, filePath) {
 	this.progressState = view.getElementsByClassName('progressState')[0];
 	this.progressStateLabel = view.getElementsByClassName('progressStateLabel')[0];
 	this.nameView = view.getElementsByClassName('name')[0];
+	this.previewImgElement = view.getElementsByClassName('ufo')[0];
 	this.bEditOutputFileName = view.getElementsByClassName('fileListMetadataIcon')[0];
 	this.bEditOutputFileName.onclick = function(evt) {
 		o.onClickEditFileNameBtn(evt);
@@ -330,6 +324,11 @@ MediaFileProcess.prototype.addFileInfoBlock = function(parentId, filePath) {
 	};
 	// setOneDivLocale('hConvertationInProcess');
 	setLocaleByClassName('progressStateLabel', 'hConvertationInProcess');
+	try {
+		this.setPreview();
+	} catch (sp) {
+		alert(sp);
+	}
 }
 
 MediaFileProcess.prototype.onClickRemoveBtn = function() {
@@ -409,8 +408,9 @@ MediaFileProcess.prototype.getFileTpl = function() {
 	var tpl = '<div class="file">' +
 				'<div class="fileBgLeft">&nbsp;</div>' + 
 				'<div class="fileBgCenter">' + 
-					'<img class="ufo" src="./img/ufo.png">' + 
-					
+					'<div class="previewPlase">' + 
+						'<img class="ufo" src="./img/ufo.png">' + 
+					'</div>' + 
 					'<div class="fileListMetadata">' +
 						'<div class="row firstStr">' + 
 							'<img class="fileListMetadataIcon" src="./img/pen.png">' + 

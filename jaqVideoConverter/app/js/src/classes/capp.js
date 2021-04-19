@@ -1,4 +1,5 @@
 function App() {
+	this.clearOldLog();
 	this.resetParams();
 	this.setListeners();
 	try {
@@ -141,5 +142,13 @@ App.prototype.onInterruptOneFile = function(order) {
 		}
 	}
 	this.mediaFiles.splice(target, 1);
-	
+}
+/**
+ * @description 
+*/
+App.prototype.clearOldLog = function() {
+	var cmd = '#!/bin/bash\ncd "' + Qt.appDir() + '";\nrm -f *.log;\nrm -f *.png;', 
+		file = Qt.appDir() + '/shr.sh';
+	PHP.file_put_contents(file, cmd);
+	jexec(file, on, on, on);
 }
