@@ -1,0 +1,17 @@
+/usr/share/themes/Adwaita/gtk-2.0/main.rc
+
+search: # Vertical sliders
+search: stretch     = TRUE
+replace: # stretch     = TRUE
+scrollbar-vert-slider.png
+GtkRange::slider-width      = 18 # was 13
+
+/usr/share/themes/Adwaita/gtk-2.0/assets/
+
+replace:
+scrollbar-vert-slider.png
+scrollbar-vert-slider-hover.png
+scrollbar-horz-slider-active.png
+
+
+It wotrk for kokdi+oxygen theme on x18.04
