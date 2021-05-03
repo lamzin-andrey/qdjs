@@ -50,7 +50,7 @@ App.prototype.onConvert2Mp3Click = function(evt) {
 		isRun = this.mediaFiles[this.mediaIterator].convert(this.outputFormat);
 	}
 	if (!isRun) {
-		alert('Вам надо выбрать mp4 или mts файл');
+		alert(L('Вам надо выбрать mp4 или mts файл'));
 	} else {
 		this.convertProcIsRun = 1;
 	}
@@ -109,10 +109,10 @@ App.prototype.onBrowse = function(evt) {
 		return;
 	}
 	if (this.convertProcIsRun == 1) {
-		alert('Уже выполняется конвертация');
+		alert(L('Уже выполняется конвертация'));
 		return;
 	}
-	var filePath = jqlOpenFileDialog(L('Выберите mp4 или mts файл'), '*.mp4 *.mts *ts', true),
+	var filePath = jqlOpenFileDialog(L('Выберите mp4 или mts файл'), '*.mp4 *.mts *.ts *.avi', true),
 		media, i;
 	
 	//Set filename in view

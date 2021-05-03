@@ -68,14 +68,17 @@ function onLoadLocale(app) {
 		}
 		var dlg = app.langDlg;
 		var sets = dlg.loadSettings();
+		var outerLink = 'https://andryuxa.ru/blog/gui_for_ffmpeg_in_xubuntu_2004_and_1804/';
 		if (sets.lang == 'bLangRu') {
 			jaqedLang = langRu;
+			outerLink = 'https://andryuxa.ru/portfolio/desktop/videokonverter_dlya_xubuntu_2004_i_xubuntu_1804/';
 		} else {
 			jaqedLang = langEn;
 		}
 	} catch (errL) {
 		// alert(errL);
 	}
+	attr('promolink', 'href', outerLink);
 	
 	setOneDivLocale('menuItemFirstFront');
 	setOneDivLocale('hSettingsDlgTitle');
