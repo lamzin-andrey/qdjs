@@ -63,7 +63,7 @@ function onFin(){
 	var s = getTargetDir(window.filepath);
 	alert('onFin->getTargetDir: "'  + s + '"');
 	if (s) {
-		PHP.exec('mkdir "' + s + '"', 'onFin3', 'onFin2', 'onFin2');
+		PHP.exec('mkdir ' + s, 'onFin3', 'onFin2', 'onFin2');
 	}
 }
 
@@ -83,7 +83,7 @@ function onFin3(stdin, stdout){
 		if (nCounter > limit) {
 			nCounter = 0;
 			currentFile = getFilename(filepath, suffix, sz, limit);
-			currentFile = et + currentFile + et;
+			currentFile = currentFile;
 			if (currentFile) {
 				PHP.file_put_contents(currentFile, q);
 			} else {
@@ -96,7 +96,7 @@ function onFin3(stdin, stdout){
 	
 	if (q != '') {
 		currentFile = getFilename(filepath, suffix, sz, limit);
-		currentFile = et + currentFile + et;
+		currentFile = currentFile ;
 		if (currentFile) {
 			PHP.file_put_contents(currentFile, q);
 		} else {

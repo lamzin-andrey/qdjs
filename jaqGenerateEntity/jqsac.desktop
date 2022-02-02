@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=JaQt Mysql Client
+Comment=
+Exec=/home/andrey/hdata/soft/bash/merge/clear_rosfin_cache/db_feat/jaqGenerateEntity/jaqGenerateEntity.sh
+Icon=/home/andrey/hdata/soft/bash/merge/clear_rosfin_cache/db_feat/jaqGenerateEntity/app/i/icons/32.png
+Path=/home/andrey/hdata/soft/bash/merge/clear_rosfin_cache/db_feat/jaqGenerateEntity
+Categories=Development;
+Terminal=false
+StartupNotify=false
+Name[ru]=JaQt Generate Entity
+Name[en]=JaQt Generate Entity
+Category=Development;

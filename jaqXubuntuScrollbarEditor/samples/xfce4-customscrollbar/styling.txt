@@ -15,3 +15,8 @@ scrollbar-horz-slider-active.png
 
 
 It wotrk for kokdi+oxygen theme on x18.04
+
+
+# for firefox stopped working from FF 89.0
+  about:config
+  Search scrollbar and customize

@@ -1,2 +1,4 @@
-#! /bin/bash
-rm -f "/home/andrey/hdata/programs/my/qdjs/jaqVideoConverter/app/Enigma-Moment-of-peace-out.mp3.log"
+#!/bin/bash
+cd "/home/andrey/hdata/programs/my/qdjs/jaqVideoConverter/app";
+rm -f *.log;
+rm -f *.png;
