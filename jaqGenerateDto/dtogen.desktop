@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=JaQt DTO Generator
+Comment=
+Exec=/home/andrey/hdata/programs/my/qdjs/jaqGenerateDto/jaqGenerateDTO.sh
+Icon=/home/andrey/hdata/programs/my/qdjs/jaqGenerateDto/app/i/icons/32.png
+Path=/home/andrey/hdata/programs/my/qdjs/jaqGenerateDto
+Categories=Development;
+Terminal=false
+StartupNotify=false
+Name[ru]=DTO Генератор
+Name[en]=Generate DTO
+Category=Development;

@@ -12,6 +12,7 @@ input[type=text],input[type=password], input[type=number] {
     min-height:32px;
     font-size: 20px;
 }
+
 #entityFolder {
 	width: 700px;
 }

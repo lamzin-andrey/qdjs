@@ -1,2 +1,2 @@
 #! /bin/bash
-qdjs /home/andrey/hdata/soft/bash/merge/clear_rosfin_cache/db_feat/jaqGenerateEntity/app
+qdjs /home/andrey/hdata/programs/my/qdjs/jaqGenerateEntity/app
