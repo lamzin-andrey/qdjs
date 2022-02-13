@@ -214,7 +214,7 @@ CEntityCodeGenerator.prototype.setRepository = function() {
 	o.entityTpl = o.entityTpl.replace('<repository>', nsRepository);
 	o.cRepositoryCodeGenerator.setPath(o.path);
 	o.cRepositoryCodeGenerator.setEntityNamespace(nsEntity);
-	o.cRepositoryCodeGenerator.setRepositoryNamespace(nsEntity);
+	o.cRepositoryCodeGenerator.setRepositoryNamespace(nsRepository);
 	o.cRepositoryCodeGenerator.setEntityName(o.entityName);
 	o.repositoryCode = o.cRepositoryCodeGenerator.generate();
 }

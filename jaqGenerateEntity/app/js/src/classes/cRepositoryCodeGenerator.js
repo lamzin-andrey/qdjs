@@ -27,8 +27,9 @@ CRepositoryCodeGenerator.prototype.generateFullClassName = function() {
 	o.code = o.code.replace('<fullClassName>', s);
 }
 CRepositoryCodeGenerator.prototype.generateNs = function() {
-	var o = this;
-	o.code = o.code.replace('<namespace>', o.repositoryNamespace);
+	var o = this,
+		s = o.repositoryNamespace.replace('\\' + o.entityName + 'Repository', '');
+	o.code = o.code.replace('<namespace>', s);
 }
 CRepositoryCodeGenerator.prototype.loadTemplates = function() {
 	var o = this;
