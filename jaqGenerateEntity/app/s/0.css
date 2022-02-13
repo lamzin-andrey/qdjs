@@ -19,9 +19,7 @@ html, body {
 .hConfigServerParamsBody {
     padding: 10px 8px;
 }
-.wBorder {
-	border: solid 1px white;
-}
+
 .btn {
 	cursor:pointer;
 }

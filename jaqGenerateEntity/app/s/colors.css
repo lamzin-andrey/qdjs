@@ -1,4 +1,8 @@
 body {
-    color:white;
-    background-color:black;
+    color:#0A4AA3;
+    background-color:#EFE9D6;
+    border-color: #7E4215;
+}
+.wBorder {
+	border: solid 1px #7E4215;
 }

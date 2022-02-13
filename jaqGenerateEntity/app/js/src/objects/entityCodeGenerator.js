@@ -14,21 +14,47 @@ var EntityCodeGenerator = {
 	onClickGenerate:function() {
 		var o = this,
 			fileName = o.getOutputFilename(),
-			entityCodeGenerator = new CEntityCodeGenerator( // TODO 
+			entityCodeGenerator = new CEntityCodeGenerator(
 				o.getFieldsData(),
 				o.getAutonullValue(),
 				o.getEntityName(),
 				o.getTableName(),
 				fileName
 			), 
-			s = entityCodeGenerator.generate();
+			s = entityCodeGenerator.generate(),
+			repositoryCode = entityCodeGenerator.getRepositoryCode(),
+			repositoryFileName = entityCodeGenerator.getRepositoryFileName(),
+			overwriteFiles = {},
+			aOverwriteFiles = [],
+			confirmLegend = 'Are you sure overwrite file ', i;
+
 		if (PHP.file_exists(fileName)) {
-			if (confirm('Are you sure overwrite file ' + fileName)) {
-				PHP.file_put_contents(fileName, s);
+			overwriteFiles[fileName] = s;
+			aOverwriteFiles.push(fileName);
+		}
+		if (PHP.file_exists(repositoryFileName)) {
+			overwriteFiles[repositoryFileName] = repositoryCode;
+			aOverwriteFiles.push(repositoryFileName);
+		}
+		if (aOverwriteFiles.length > 1) {
+			confirmLegend = 'Are you sure overwrite files: \n';
+		}
+		
+		if (aOverwriteFiles.length > 0) {
+			if (confirm(confirmLegend + aOverwriteFiles.join('\n'))) {
+				for (i in overwriteFiles) {
+					PHP.file_put_contents(i, overwriteFiles[i]);
+				}
 			}
-		} else {
+		}
+		if (!PHP.file_exists(fileName)) {
 			PHP.file_put_contents(fileName, s);
 		}
+		
+		if (!PHP.file_exists(repositoryFileName)) {
+			PHP.file_put_contents(repositoryFileName, repositoryCode);
+		}
+		
 	},
 	getTableName:function(){
 		return e('tablePrefix').value + '_' + e('tableSuffix').value;

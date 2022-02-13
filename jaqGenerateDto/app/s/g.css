@@ -1,7 +1,6 @@
 body {
     padding: 0px;
     margin:0px;
-    font-family: geneva,verdana,helvetica,arial !important;
 }
 
 .tr, .text-right {
@@ -15,4 +14,8 @@ input[type=text],input[type=password], input[type=number] {
 
 #entityFolder {
 	width: 700px;
+}
+.wBorder {
+	margin:4px;
+	padding: 4px;
 }

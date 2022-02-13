@@ -6,6 +6,7 @@ window.onkeyup = onKeyUp;
 
 function onLoad() {
 	try {
+		Qt.setWindowIconImage(Qt.appDir() + '/i/icons/32.png');
 		AppRecentFolder.init();
 		AutonullCheckbox.init();
 		JSONCheckbox.init();

@@ -1,0 +1,7 @@
+@font-face {
+  font-family: 'arial';
+  src: url('./fonts/arial.ttf') format('truetype');
+}
+.wBorder label{
+	font-family: arial;
+}

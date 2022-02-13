@@ -16,6 +16,8 @@ function CEntityCodeGenerator(fieldsData, setAutonull, entityName, tableName, pa
 	o.tableName = tableName;
 	o.path = path;
 	o.result = '<?php';
+	o.repositoryCode = '';
+	o.cRepositoryCodeGenerator = new CRepositoryCodeGenerator();
 	
 }
 /**
@@ -206,9 +208,23 @@ CEntityCodeGenerator.prototype.loadTemplates = function() {
 
 CEntityCodeGenerator.prototype.setRepository = function() {
 	var o = this,
-		ns = o.calculateNamespaceFromPath();
-	ns = ns.replace('Entity', 'Repository') + '\\' + o.entityName + 'Repository';
-	o.entityTpl = o.entityTpl.replace('<repository>', ns);
+		nsEntity = o.calculateNamespaceFromPath(),
+		nsRepository;
+	nsRepository = nsEntity.replace('Entity', 'Repository') + '\\' + o.entityName + 'Repository';
+	o.entityTpl = o.entityTpl.replace('<repository>', nsRepository);
+	o.cRepositoryCodeGenerator.setPath(o.path);
+	o.cRepositoryCodeGenerator.setEntityNamespace(nsEntity);
+	o.cRepositoryCodeGenerator.setRepositoryNamespace(nsEntity);
+	o.cRepositoryCodeGenerator.setEntityName(o.entityName);
+	o.repositoryCode = o.cRepositoryCodeGenerator.generate();
+}
+
+CEntityCodeGenerator.prototype.getRepositoryFileName = function() {
+	return this.cRepositoryCodeGenerator.getRepositoryFileName();
+}
+
+CEntityCodeGenerator.prototype.getRepositoryCode = function() {
+	return this.repositoryCode;
 }
 
 CEntityCodeGenerator.prototype.setNamespace = function() {
