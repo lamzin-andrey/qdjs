@@ -57,7 +57,11 @@ var EntityCodeGenerator = {
 		
 	},
 	getTableName:function(){
-		return e('tablePrefix').value + '_' + e('tableSuffix').value;
+		var pre = e('tablePrefix').value;
+		if (!pre) {
+			return e('tableSuffix').value;
+		}
+		return pre + '_' + e('tableSuffix').value;
 	},
 	getEntityName:function(){
 		return e('entityName').value;
