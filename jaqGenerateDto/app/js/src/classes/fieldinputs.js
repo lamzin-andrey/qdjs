@@ -54,14 +54,14 @@ FieldInputs.prototype.createHtml = function(){
 	o.fieldType = fieldType = appendChild(div, 'input', '', {
 		'type': 'text',
 		'class': 'fieldType',
-		'placeholder': 'DriverDto[]',
+		'placeholder': 'MonkeyDto[]',
 	});
 	
 	
 	fieldName = o.fieldName = appendChild(div, 'input', '', {
 		'type': 'text',
 		'class': 'fieldName',
-		'placeholder': 'updatedTime',
+		'placeholder': 'monkeys',
 	});
 	
 	fieldNotNull = o.fieldNotNull = appendChild(div, 'input', '', {
@@ -73,7 +73,7 @@ FieldInputs.prototype.createHtml = function(){
 	
 	buttonDelete = o.buttonDelete = appendChild(div, 'input', '', {
 		'type': 'button',
-		'class': 'inlineBtn',
+		'class': 'inlineBtn bRemove',
 		'value': 'Remove'
 	});
 	

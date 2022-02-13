@@ -69,7 +69,7 @@ FieldInputs.prototype.createHtml = function(){
 	o.fieldType = fieldType = appendChild(div, 'input', '', {
 		'type': 'text',
 		'class': 'fieldType',
-		'placeholder': 'DriverDto[]',
+		'placeholder': 'MonkeyDto[]',
 	});
 	
 	fieldDoctrineType = o.fieldDoctrineType = appendChild(div, 'input', '', {
@@ -98,7 +98,7 @@ FieldInputs.prototype.createHtml = function(){
 	
 	buttonDelete = o.buttonDelete = appendChild(div, 'input', '', {
 		'type': 'button',
-		'class': 'inlineBtn',
+		'class': 'inlineBtn bRemove',
 		'value': 'Remove'
 	});
 	

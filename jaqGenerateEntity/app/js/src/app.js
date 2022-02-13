@@ -13,7 +13,8 @@ function onLoad() {
 		EntityNameFields.init();
 		FieldList.init();
 		EntityCodeGenerator.init();
-		// alert('Hello!');
+		W.jaqedLang = W['lang' + TextTransform.capitalize(Settings.get('lang', 'en'))];
+		setLocale();
 	} catch (err) {
 		alert(err);
 	}
@@ -90,3 +91,26 @@ function onKeyUp(evt) {
 function onClickExitMenu() {
 	Qt.quit();
 }
+
+// ---- local
+function onClickSelectEn() {
+	// appWindow('hLangChooser', L('Выберите язык'), onDlgClose);
+	W.jaqedLang = W.langEn;
+	setLocale();
+	// e('hCommentSmallText').innerHTML = L('hCommentSmallText');
+	Settings.set('lang', 'en');
+	var s = PHP.file_get_contents(Qt.appDir() + '/index.html');
+	s = s.replace('<html lang="ru">', '<html lang="en">');
+	PHP.file_put_contents(Qt.appDir() + '/index.html', s);
+}
+
+function onClickSelectRu() {
+	W.jaqedLang = W.langRu;
+	setLocale();
+	Settings.set('lang', 'ru');
+	// e('hCommentSmallText').innerHTML = L('hCommentSmallText');
+	var s = PHP.file_get_contents(Qt.appDir() + '/index.html');
+	s = s.replace('<html lang="en">', '<html lang="ru">');
+	PHP.file_put_contents(Qt.appDir() + '/index.html', s);	
+}
+
