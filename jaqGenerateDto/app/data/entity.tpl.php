@@ -11,7 +11,7 @@ class <className><implJson>
 {
 <members>
 
-	<construct>
+<construct>
 
 <getset>
 }

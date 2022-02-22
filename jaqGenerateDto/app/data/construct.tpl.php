@@ -1,4 +1,4 @@
-public function __construct(<arguments>)
+<cannotation>public function __construct(<arguments>)
     {
 <apply>
     }

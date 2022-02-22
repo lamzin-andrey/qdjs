@@ -64,6 +64,10 @@ CDtoCodeGenerator.prototype.getMethodsText = function() {
      * @return <atype>\n\
      */\n    ';
 			s = s.replace(comm, '');
+			comm = '\n/**\n\
+     * @param <atype> $<name>\n\
+     */\n    ';
+			s = s.replace(comm, '\n    ');
 			comm = '/**\n\
      * @param <atype> $<name>\n\
      */\n    ';
@@ -73,7 +77,7 @@ CDtoCodeGenerator.prototype.getMethodsText = function() {
 		s = s.replace('<Name>', TextTransform.capitalize(mem.name));
 		s = s.replace('<Name>', TextTransform.capitalize(mem.name));
 		
-		type = o.correctType(mem.type);
+		type = o.correctType(mem.type, mem.notNull);
 		s = s.replace('<type>', type);
 		s = s.replace('<type>', type);
 		s = s.replace('<name>', mem.name);
@@ -101,14 +105,14 @@ CDtoCodeGenerator.prototype.getMembersText = function() {
 	for (i = 0; i < sZ; i++) {
 		mem = o.fieldsData[i];
 		s = o.memberTpl;
-		type = o.correctType(mem.type);
+		type = o.correctType(mem.type, mem.notNull);
 		if (type.indexOf('?') !== 0 && type != 'array') {
 			s = s.replace(' = <defValue>', '');
 		}
 		
 		s = s.replace('<type>', type);
 		s = s.replace('<name>', mem.name);
-		s = s.replace('<defValue>', o.getDefaultValue(mem.type));
+		s = s.replace('<defValue>', o.getDefaultValue(mem.type, mem.notNull));
 		
 		if (mem.type.indexOf('[]') != -1) {
 			s = s.replace('<atype>', mem.type);
@@ -118,9 +122,7 @@ CDtoCodeGenerator.prototype.getMembersText = function() {
      */\n    ';
 			s = s.replace(comm, '');
 		}
-		
-		
-		
+
 		o.membersList.push(s);
 	}
 	
@@ -128,42 +130,64 @@ CDtoCodeGenerator.prototype.getMembersText = function() {
 }
 
 
-CDtoCodeGenerator.prototype.getDefaultValue = function(type) {
-	var o = this;
+CDtoCodeGenerator.prototype.getDefaultValue = function(type, isNotNull) {
+	var o = this,
+		isAutonull = o.isAutonull;
+	
+	if (isNotNull) {
+		isAutonull = false;
+	}
+	
 	if (type.indexOf('[]') != -1) {
 		return '[]';
 	}
-	if (o.isAutonull) {
+	if (isAutonull) {
 		return 'null';
 	}
 	
 	if ('string' == type) {
-		if (o.isAutonull) {
+		if (isAutonull) {
 			return 'null';
 		}
 		return "''";
 	}
 	
+	if ('float' == type) {
+		if (isAutonull) {
+			return 'null';
+		}
+		return "0.0";
+	}
+	
+	if ('int' == type) {
+		if (isAutonull) {
+			return 'null';
+		}
+		return "0";
+	}
+	
 	return 'null';
 }
 
-CDtoCodeGenerator.prototype.correctType = function(type) {
+CDtoCodeGenerator.prototype.correctType = function(type, notNull) {
+	var isAutonull = this.isAutonull;
+	if (notNull) {
+		isAutonull = false;
+	}
 	if ('DateTime' == type) {
 		type = 'DateTimeInterface';
 	}
 	
-	if (type.indexOf('[]') != -1) {
+	if (type.indexOf('[]') != -1 || type == 'array') {
 		return 'array';
 	}
 	
-	if (this.isAutonull && type.indexOf('Dto') == -1) {
+	if (isAutonull && type.indexOf('Dto') == -1) {
 		type = '?' + type;
 	}
 	
 	return type;
 }
-
-
 
 
 CDtoCodeGenerator.prototype.setMembers = function() {
@@ -185,7 +209,8 @@ CDtoCodeGenerator.prototype.setEntityName = function() {
 */
 CDtoCodeGenerator.prototype.setConstruct = function() {
 	var o = this, i, sZ = o.fieldsData.length, s, mem, type,
-		tab2 = '        ';
+		tab2 = '        ', tab1 = '    ',
+		annotationTypes = [], sAnnotation = '';
 	o.argumentList = [];
 	o.applyList = [];
 	for (i = 0; i < sZ; i++) {
@@ -193,7 +218,11 @@ CDtoCodeGenerator.prototype.setConstruct = function() {
 		if (~mem.type.indexOf('DateTime')) {
 			continue;
 		}
-		type = o.correctType(mem.type);
+		type = o.correctType(mem.type, mem.notNull);
+		
+		if (~mem.type.indexOf('Dto')) {
+			annotationTypes.push(tab1 + ' * @param ' + mem.type + ' $' + mem.name);
+		}
 		
 		o.argumentList.push(type + ' $' + mem.name);
 		o.applyList.push(tab2 + '$this->' + mem.name + ' = $' + mem.name + ';');
@@ -201,7 +230,12 @@ CDtoCodeGenerator.prototype.setConstruct = function() {
 	s = o.constructTpl.replace('<arguments>', o.argumentList.join(', '));
 	s = s.replace('<apply>', o.applyList.join('\n'));
 	
+	if (annotationTypes.length > 0) {
+		sAnnotation = tab1 + '/**\n' + annotationTypes.join('\n') + '\n' + tab1 + ' */\n' + tab1;
+	}
+	
 	o.entityTpl = o.entityTpl.replace('<construct>', s);
+	o.entityTpl = o.entityTpl.replace('<cannotation>', sAnnotation);
 }
 
 /**

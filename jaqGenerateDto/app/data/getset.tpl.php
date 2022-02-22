@@ -5,6 +5,7 @@
     {
         return $this-><name>;
     }
+
     /**
      * @param <atype> $<name>
      */
