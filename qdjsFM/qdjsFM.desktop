@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=QdjsFM
+Comment=Alt browser
+Exec=/home/andrey/hdata/programs/my/qdjs/qdjsFM/qdjsFM.sh
+Icon=/home/andrey/hdata/programs/my/qdjs/qdjsFM/i/folder32.png
+Path=/home/andrey/hdata/programs/my/qdjs/qdjsFM
+Categories=Tools;
+Terminal=false
+StartupNotify=false
+Name[ru]=QDJS File manager
+Name[en]=QDJS File manager
+Category=Tools;

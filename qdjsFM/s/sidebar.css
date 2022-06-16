@@ -1,0 +1,61 @@
+input[type=text] {
+	height:32px;
+	width:100%;
+}
+
+
+.sidebar {
+	font-family: Geneva, Arial!important;
+	background-color: #e8e8e7;
+	color:black;
+}
+
+.section {
+	padding:2px;
+	width: 208px;
+	border: 1px solid black;
+	background-color: white;
+}
+
+.sectionTitle {
+	font-family:arialbd;
+	font-weight:bold;
+	margin-left: 8px;
+	font-size: 13px;
+	margin-top: 7px;
+}
+
+.sectionContent {
+	
+	/*! margin-left: 14px; */
+	margin-top: 7px;
+	/*! background-color: white; */
+}
+
+.sectionItem {
+	height: 32px;
+	cursor: pointer;
+	line-height: 32px;
+	padding-left: 14px;
+}
+
+.sectionItem.selected {
+	background-color:#4A90D9;
+	color:white;
+}
+
+.i24 {
+	max-width: 24px;
+	height: 24px;
+	/*! line-height: 32; */
+	vertical-align: middle;
+}
+
+.i24Text {
+	line-height: 32px;
+	font-weight: normal;
+	font-size: 13px;
+	vertical-align: top;
+	margin-left: -2px;
+}
+

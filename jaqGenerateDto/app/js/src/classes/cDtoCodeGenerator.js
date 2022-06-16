@@ -117,10 +117,10 @@ CDtoCodeGenerator.prototype.getMembersText = function() {
 		if (mem.type.indexOf('[]') != -1) {
 			s = s.replace('<atype>', mem.type);
 		} else {
-			comm = '/**\n\
+			comm = '\n    /**\n\
      * @var <atype>\n\
      */\n    ';
-			s = s.replace(comm, '');
+			s = s.replace(comm, '    ');
 		}
 
 		o.membersList.push(s);

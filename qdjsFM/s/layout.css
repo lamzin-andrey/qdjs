@@ -1,0 +1,47 @@
+@font-face {
+  font-family: 'arial';
+  src: url('../fonts/arial.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'arialbd';
+  src: url('../fonts/arialbd.ttf') format('truetype');
+}
+
+body {
+	padding:0px;
+	margin:0px;
+	overflow-y:hidden;
+	font-family:arial;
+}
+table.layout {
+	height:100%;
+	width:100%;
+}
+table.layout td {
+	vertical-align:top;
+}
+.sidebar {
+	width:218px;
+	/*background-color:#AABEF8;*/
+	overflow-y:scroll;
+	color:white;
+	font-weight:bold;
+	border-right: 0.5px solid #b6b6b3;
+}
+.sidebar a{
+	color:white;
+}
+.content {
+	/*float:left;*/
+	/*width:75%;*/
+	/*background-color:#FFFFFF;*/
+	overflow:scroll;
+	padding-left: 4px;
+}
+.tc {
+	text-align:center;
+}
+.cf {
+	clear:both;
+}
