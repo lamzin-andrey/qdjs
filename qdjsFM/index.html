@@ -26,7 +26,7 @@
     <link href="./s/sidebar.css" type="text/css" rel="stylesheet"></link>
     <link href="./s/content.css" type="text/css" rel="stylesheet"></link>
 </head>
-<body class="template--">
+<body class="template">
 <table cellpadding="0" cellspacing="0" class="layout">
 <tr>
     <td class="sidebar"  width="300">
@@ -55,29 +55,154 @@
     <div id="contentArea">
 		
 		<div class="addressContainer">
-			<div id="addlerssLine" class="addlerssLine"></div>
-			<div id="addlerssButtonPlacer" class="addlerssButtonPlacer">
-				<div class="addlerssButton addlerssButtonLeft">
-					<img class="addlerssButtonLeftIcon" src="./i/addressButtonLeft.png">
+			<div id="addressLine" class="addressLine"></div>
+			<div id="addressButtonPlacer" class="addressButtonPlacer">
+				<div class="addressButton addressButtonLeft">
+					<img class="addressButtonLeftIcon" src="./i/addressButtonLeft.png">
 				</div>
-				<div class="addlerssButton  addlerssButtonWithIcon addlerssButtonActive ">
-					<img class="addlerssButtonIcon" src="./i/home32.png">
+				<div class="addressButton  addressButtonWithIcon addressButtonActive ">
+					<img class="addressButtonIcon" src="./i/home32.png">
 					<span>andrey</span>
 				</div>
-				<div class="addlerssButton">
+				<div class="addressButton">
 					<span>tmp</span>
 				</div>
 				
-				<div class="addlerssButton">
+				<div class="addressButton">
 					<span>00</span>
 				</div>
 				
-				<div class="addlerssButton">
+				<div class="addressButton">
 					<span>05</span>
+				</div>
+				
+				<div class="addressButton addressButtonLeft">
+					<img class="addressButtonRightIcon" src="./i/addressButtonRight.png">
 				</div>
 				
 				<div class="cf"></div>
 			</div>
+		</div> <!-- addressContainer -->
+		
+		
+		<div class="tabsContainer">
+			<div class="tabsNavLeft">
+				<img class="imgTabNavLeft" src="./i/addressButtonLeft.png">
+			</div>
+			<div class="tabsPlacer"> <!-- Width tabPlacer calculate dynamic px -->
+				<div class="tab">		<!-- Width tab calculate dynamic px. Quantity tabs calculate dynamic. Их должно быть ровно столько, чтобы могли поместиться. -->
+					<div class="tabName">05</div>
+					<div class="tabClose">
+						<img class="imgBtnTabClose" src="./i/tabClose.png">
+					</div>
+				</div>
+				
+				<div class="tab active">
+					<div class="tabName">andrey</div>
+					<div class="tabClose">
+						<img class="imgBtnTabClose" src="./i/tabClose.png">
+					</div>
+				</div>
+				
+				<div class="cf"></div>
+			</div>
+			<div class="tabsNavRight">
+				<img class="imgTabNavRight" src="./i/addressButtonRight.png">
+			</div>
+			<div class="cf"></div>
+		</div> <!-- tabsContainer -->
+		
+		
+		<div id="tabContent" class="tabContentMainContainer">
+			<div class="tabContentHeaders"> <!-- (calculate with as sum all child?) onscroll-x items: margin-Left:-Npx; (It true) -->
+				<div class="tabContentHeader tabContentHeaderFileName fl">
+					<div class="tabContentHeaderName fl">Название</div>
+					<div class="tabContentHeaderImg fl">
+						<img class="imgTabContentHeaderImg" src="./i/tabContentHeaderImgT.png">
+					</div>
+					<div class="cf"></div>
+				</div>
+				
+				<div class="tabContentHeader tabContentHeaderSize fl">
+					<div class="tabContentHeaderName fl">Размер</div>
+					<div class="tabContentHeaderImg fl">
+						<img class="imgTabContentHeaderImg d-none" src="./i/tabContentHeaderImgT.png">
+					</div>
+					<div class="cf"></div>
+				</div>
+				
+				<div class="tabContentHeader tabContentHeaderType fl">
+					<div class="tabContentHeaderName fl">Тип</div>
+					<div class="tabContentHeaderImg fl">
+						<img class="imgTabContentHeaderImg d-none" src="./i/tabContentHeaderImgT.png">
+					</div>
+					<div class="cf"></div>
+				</div>
+				
+				<div class="tabContentHeader tabContentHeaderDate fl">
+					<div class="tabContentHeaderName fl">Дата изменения</div>
+					<div class="tabContentHeaderImg fl">
+						<img class="imgTabContentHeaderImg d-none" src="./i/tabContentHeaderImgT.png">
+					</div>
+					<div class="cf"></div>
+				</div>
+				<div class="cf"></div>
+			</div><!-- / tabContentHeaders -->
+			
+			<div class="cf"></div>
+			
+			<!-- Width tabContentItem must be calculated dinamic. It eq sum(all headers width) -->
+			<div class="tabContentItems" id="tabItems">
+				<div class="tabContentItem">
+					<div class="tabContentItemNameMain fl">
+						<div class="tabContentItemIcon fl">
+							<img class="imgTabContentItemIcon" src="./i/folder32.png">
+						</div>
+						<div class="tabContentItemName fl">Новая папка</div>
+						<div class="cf"></div>
+					</div>
+					
+					<div class="tabContentItemSize fl">
+						<div class="tabContentItemName">4,1 Кб</div>
+					</div>
+					
+					<div class="tabContentItemType fl">
+						<div class="tabContentItemName">Файл настроек рабочего стола</div>
+					</div>
+					
+					<div class="tabContentItemDate fl">
+						<div class="tabContentItemDate">2022-06-16 21:30:37</div>
+					</div>
+					<div class="cf"></div>
+				</div> <!-- /tabContentItem -->
+				<div class="cf"></div>
+				
+				<div class="tabContentItem">
+					<div class="tabContentItemNameMain fl">
+						<div class="tabContentItemIcon fl">
+							<img class="imgTabContentItemIcon" src="./i/folder32.png">
+						</div>
+						<div class="tabContentItemName fl">Тоже что-то с чем-то</div>
+						<div class="cf"></div>
+					</div>
+					
+					<div class="tabContentItemSize fl">
+						<div class="tabContentItemName">4,1 Кб</div>
+					</div>
+					
+					<div class="tabContentItemType fl">
+						<div class="tabContentItemName">Папка</div>
+					</div>
+					
+					<div class="tabContentItemDate fl">
+						<div class="tabContentItemName">2022-06-16 21:30:37</div>
+					</div>
+					<div class="cf"></div>
+				</div> <!-- /tabContentItem -->
+				<div class="cf"></div>
+				
+				
+			</div><!-- / tabContentItems -->
 		</div>
 		
 		

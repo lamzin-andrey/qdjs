@@ -45,3 +45,9 @@ table.layout td {
 .cf {
 	clear:both;
 }
+.d-none {
+	display:none;
+}
+.fl {
+	float:left;
+}

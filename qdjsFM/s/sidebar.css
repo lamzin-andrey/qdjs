@@ -8,6 +8,8 @@ input[type=text] {
 	font-family: Geneva, Arial!important;
 	background-color: #e8e8e7;
 	color:black;
+	position: relative;
+	z-index: 2;
 }
 
 .section {
