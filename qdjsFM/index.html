@@ -26,7 +26,7 @@
     <link href="./s/sidebar.css" type="text/css" rel="stylesheet"></link>
     <link href="./s/content.css" type="text/css" rel="stylesheet"></link>
 </head>
-<body class="template">
+<body class="template-">
 <table cellpadding="0" cellspacing="0" class="layout">
 <tr>
     <td class="sidebar"  width="300">
@@ -49,6 +49,26 @@
 					
 				</div>
 			</div>
+			
+			<div class="section">
+				<div class="sectionTitle devText">Закладки</div>
+				<div class="sectionContent">
+					<div class="sectionItem ">
+						<img src="./i/home32.png" class="i24">
+						<span class="i24Text">andrey</span>
+					</div>
+					<div class="sectionItem ">
+						<img src="./i/folder32.png" class="i24">
+						<span class="i24Text">Изображения</span>
+					</div>
+					<div class="sectionItem selected">
+						<img src="./i/folder32.png" class="i24">
+						<span class="i24Text">Загрузки</span>
+					</div>
+					
+				</div>
+			</div>
+			
 		</div>
     </td>
     <td class="content" id="lastM">
@@ -153,57 +173,496 @@
 			
 			<!-- Width tabContentItem must be calculated dinamic. It eq sum(all headers width) -->
 			<div class="tabContentItems" id="tabItems">
-				<div class="tabContentItem">
-					<div class="tabContentItemNameMain fl">
-						<div class="tabContentItemIcon fl">
-							<img class="imgTabContentItemIcon" src="./i/folder32.png">
+				<div>
+					<div class="tabContentItem ">
+						<div class="tabContentItemNameMain fl">
+							<div class="tabContentItemIcon fl">
+								<img class="imgTabContentItemIcon" src="./i/folder32.png">
+							</div>
+							<div class="tabContentItemName fl">Новая папка</div>
+							<div class="cf"></div>
 						</div>
-						<div class="tabContentItemName fl">Новая папка</div>
+						
+						<div class="tabContentItemSize fl">
+							<div class="tabContentItemName">4,1 Кб</div>
+						</div>
+						
+						<div class="tabContentItemType fl">
+							<div class="tabContentItemName">Файл настроек рабочего стола</div>
+						</div>
+						
+						<div class="tabContentItemDate fl">
+							<div class="tabContentItemDate">2022-06-16 21:30:37</div>
+						</div>
 						<div class="cf"></div>
-					</div>
-					
-					<div class="tabContentItemSize fl">
-						<div class="tabContentItemName">4,1 Кб</div>
-					</div>
-					
-					<div class="tabContentItemType fl">
-						<div class="tabContentItemName">Файл настроек рабочего стола</div>
-					</div>
-					
-					<div class="tabContentItemDate fl">
-						<div class="tabContentItemDate">2022-06-16 21:30:37</div>
-					</div>
+					</div> <!-- /tabContentItem -->
 					<div class="cf"></div>
-				</div> <!-- /tabContentItem -->
-				<div class="cf"></div>
+				</div>
 				
-				<div class="tabContentItem">
-					<div class="tabContentItemNameMain fl">
-						<div class="tabContentItemIcon fl">
-							<img class="imgTabContentItemIcon" src="./i/folder32.png">
+				<div>
+					<div class="tabContentItem active">
+						<div class="tabContentItemNameMain fl">
+							<div class="tabContentItemIcon fl">
+								<img class="imgTabContentItemIcon" src="./i/folder32.png">
+							</div>
+							<div class="tabContentItemName fl">Тоже что-то с чем-то</div>
+							<div class="cf"></div>
 						</div>
-						<div class="tabContentItemName fl">Тоже что-то с чем-то</div>
+						
+						<div class="tabContentItemSize fl">
+							<div class="tabContentItemName">4,1 Кб</div>
+						</div>
+						
+						<div class="tabContentItemType fl">
+							<div class="tabContentItemName">Папка</div>
+						</div>
+						
+						<div class="tabContentItemDate fl">
+							<div class="tabContentItemName">2022-06-16 21:30:37</div>
+						</div>
 						<div class="cf"></div>
-					</div>
-					
-					<div class="tabContentItemSize fl">
-						<div class="tabContentItemName">4,1 Кб</div>
-					</div>
-					
-					<div class="tabContentItemType fl">
-						<div class="tabContentItemName">Папка</div>
-					</div>
-					
-					<div class="tabContentItemDate fl">
-						<div class="tabContentItemName">2022-06-16 21:30:37</div>
-					</div>
+					</div> <!-- /tabContentItem -->
 					<div class="cf"></div>
-				</div> <!-- /tabContentItem -->
-				<div class="cf"></div>
+				</div>
+				
+				<div>
+					<div class="tabContentItem active">
+						<div class="tabContentItemNameMain fl">
+							<div class="tabContentItemIcon fl">
+								<img class="imgTabContentItemIcon" src="./i/folder32.png">
+							</div>
+							<div class="tabContentItemName fl">Тоже что-то с чем-то</div>
+							<div class="cf"></div>
+						</div>
+						
+						<div class="tabContentItemSize fl">
+							<div class="tabContentItemName">4,1 Кб</div>
+						</div>
+						
+						<div class="tabContentItemType fl">
+							<div class="tabContentItemName">Папка</div>
+						</div>
+						
+						<div class="tabContentItemDate fl">
+							<div class="tabContentItemName">2022-06-16 21:30:37</div>
+						</div>
+						<div class="cf"></div>
+					</div> <!-- /tabContentItem -->
+					<div class="cf"></div>
+				</div>
+				
+				<div>
+					<div class="tabContentItem">
+						<div class="tabContentItemNameMain fl">
+							<div class="tabContentItemIcon fl">
+								<img class="imgTabContentItemIcon" src="./i/folder32.png">
+							</div>
+							<div class="tabContentItemName fl">Тоже что-то с чем-то</div>
+							<div class="cf"></div>
+						</div>
+						
+						<div class="tabContentItemSize fl">
+							<div class="tabContentItemName">4,1 Кб</div>
+						</div>
+						
+						<div class="tabContentItemType fl">
+							<div class="tabContentItemName">Папка</div>
+						</div>
+						
+						<div class="tabContentItemDate fl">
+							<div class="tabContentItemName">2022-06-16 21:30:37</div>
+						</div>
+						<div class="cf"></div>
+					</div> <!-- /tabContentItem -->
+					<div class="cf"></div>
+				</div>
+				
+				<div>
+					<div class="tabContentItem">
+						<div class="tabContentItemNameMain fl">
+							<div class="tabContentItemIcon fl">
+								<img class="imgTabContentItemIcon" src="./i/folder32.png">
+							</div>
+							<div class="tabContentItemName fl">Тоже что-то с чем-то</div>
+							<div class="cf"></div>
+						</div>
+						
+						<div class="tabContentItemSize fl">
+							<div class="tabContentItemName">4,1 Кб</div>
+						</div>
+						
+						<div class="tabContentItemType fl">
+							<div class="tabContentItemName">Папка</div>
+						</div>
+						
+						<div class="tabContentItemDate fl">
+							<div class="tabContentItemName">2022-06-16 21:30:37</div>
+						</div>
+						<div class="cf"></div>
+					</div> <!-- /tabContentItem -->
+					<div class="cf"></div>
+				</div>
+				
+				
+				<div>
+					<div class="tabContentItem">
+						<div class="tabContentItemNameMain fl">
+							<div class="tabContentItemIcon fl">
+								<img class="imgTabContentItemIcon" src="./i/folder32.png">
+							</div>
+							<div class="tabContentItemName fl">Тоже что-то с чем-то</div>
+							<div class="cf"></div>
+						</div>
+						
+						<div class="tabContentItemSize fl">
+							<div class="tabContentItemName">4,1 Кб</div>
+						</div>
+						
+						<div class="tabContentItemType fl">
+							<div class="tabContentItemName">Папка</div>
+						</div>
+						
+						<div class="tabContentItemDate fl">
+							<div class="tabContentItemName">2022-06-16 21:30:37</div>
+						</div>
+						<div class="cf"></div>
+					</div> <!-- /tabContentItem -->
+					<div class="cf"></div>
+				</div>
+				
+				
+				<div>
+					<div class="tabContentItem">
+						<div class="tabContentItemNameMain fl">
+							<div class="tabContentItemIcon fl">
+								<img class="imgTabContentItemIcon" src="./i/folder32.png">
+							</div>
+							<div class="tabContentItemName fl">Тоже что-то с чем-то</div>
+							<div class="cf"></div>
+						</div>
+						
+						<div class="tabContentItemSize fl">
+							<div class="tabContentItemName">4,1 Кб</div>
+						</div>
+						
+						<div class="tabContentItemType fl">
+							<div class="tabContentItemName">Папка</div>
+						</div>
+						
+						<div class="tabContentItemDate fl">
+							<div class="tabContentItemName">2022-06-16 21:30:37</div>
+						</div>
+						<div class="cf"></div>
+					</div> <!-- /tabContentItem -->
+					<div class="cf"></div>
+				</div>
+				
+				
+				<div>
+					<div class="tabContentItem">
+						<div class="tabContentItemNameMain fl">
+							<div class="tabContentItemIcon fl">
+								<img class="imgTabContentItemIcon" src="./i/folder32.png">
+							</div>
+							<div class="tabContentItemName fl">Тоже что-то с чем-то</div>
+							<div class="cf"></div>
+						</div>
+						
+						<div class="tabContentItemSize fl">
+							<div class="tabContentItemName">4,1 Кб</div>
+						</div>
+						
+						<div class="tabContentItemType fl">
+							<div class="tabContentItemName">Папка</div>
+						</div>
+						
+						<div class="tabContentItemDate fl">
+							<div class="tabContentItemName">2022-06-16 21:30:37</div>
+						</div>
+						<div class="cf"></div>
+					</div> <!-- /tabContentItem -->
+					<div class="cf"></div>
+				</div>
+				
+				
+				<div>
+					<div class="tabContentItem">
+						<div class="tabContentItemNameMain fl">
+							<div class="tabContentItemIcon fl">
+								<img class="imgTabContentItemIcon" src="./i/folder32.png">
+							</div>
+							<div class="tabContentItemName fl">Тоже что-то с чем-то</div>
+							<div class="cf"></div>
+						</div>
+						
+						<div class="tabContentItemSize fl">
+							<div class="tabContentItemName">4,1 Кб</div>
+						</div>
+						
+						<div class="tabContentItemType fl">
+							<div class="tabContentItemName">Папка</div>
+						</div>
+						
+						<div class="tabContentItemDate fl">
+							<div class="tabContentItemName">2022-06-16 21:30:37</div>
+						</div>
+						<div class="cf"></div>
+					</div> <!-- /tabContentItem -->
+					<div class="cf"></div>
+				</div>
+				
+				
+				<div>
+					<div class="tabContentItem">
+						<div class="tabContentItemNameMain fl">
+							<div class="tabContentItemIcon fl">
+								<img class="imgTabContentItemIcon" src="./i/folder32.png">
+							</div>
+							<div class="tabContentItemName fl">Тоже что-то с чем-то</div>
+							<div class="cf"></div>
+						</div>
+						
+						<div class="tabContentItemSize fl">
+							<div class="tabContentItemName">4,1 Кб</div>
+						</div>
+						
+						<div class="tabContentItemType fl">
+							<div class="tabContentItemName">Папка</div>
+						</div>
+						
+						<div class="tabContentItemDate fl">
+							<div class="tabContentItemName">2022-06-16 21:30:37</div>
+						</div>
+						<div class="cf"></div>
+					</div> <!-- /tabContentItem -->
+					<div class="cf"></div>
+				</div>
+				
+				
+				<div>
+					<div class="tabContentItem">
+						<div class="tabContentItemNameMain fl">
+							<div class="tabContentItemIcon fl">
+								<img class="imgTabContentItemIcon" src="./i/folder32.png">
+							</div>
+							<div class="tabContentItemName fl">Тоже что-то с чем-то</div>
+							<div class="cf"></div>
+						</div>
+						
+						<div class="tabContentItemSize fl">
+							<div class="tabContentItemName">4,1 Кб</div>
+						</div>
+						
+						<div class="tabContentItemType fl">
+							<div class="tabContentItemName">Папка</div>
+						</div>
+						
+						<div class="tabContentItemDate fl">
+							<div class="tabContentItemName">2022-06-16 21:30:37</div>
+						</div>
+						<div class="cf"></div>
+					</div> <!-- /tabContentItem -->
+					<div class="cf"></div>
+				</div>
+				
+				
+				<div>
+					<div class="tabContentItem">
+						<div class="tabContentItemNameMain fl">
+							<div class="tabContentItemIcon fl">
+								<img class="imgTabContentItemIcon" src="./i/folder32.png">
+							</div>
+							<div class="tabContentItemName fl">Тоже что-то с чем-то</div>
+							<div class="cf"></div>
+						</div>
+						
+						<div class="tabContentItemSize fl">
+							<div class="tabContentItemName">4,1 Кб</div>
+						</div>
+						
+						<div class="tabContentItemType fl">
+							<div class="tabContentItemName">Папка</div>
+						</div>
+						
+						<div class="tabContentItemDate fl">
+							<div class="tabContentItemName">2022-06-16 21:30:37</div>
+						</div>
+						<div class="cf"></div>
+					</div> <!-- /tabContentItem -->
+					<div class="cf"></div>
+				</div>
+				
+				
+				<div>
+					<div class="tabContentItem">
+						<div class="tabContentItemNameMain fl">
+							<div class="tabContentItemIcon fl">
+								<img class="imgTabContentItemIcon" src="./i/folder32.png">
+							</div>
+							<div class="tabContentItemName fl">Тоже что-то с чем-то</div>
+							<div class="cf"></div>
+						</div>
+						
+						<div class="tabContentItemSize fl">
+							<div class="tabContentItemName">4,1 Кб</div>
+						</div>
+						
+						<div class="tabContentItemType fl">
+							<div class="tabContentItemName">Папка</div>
+						</div>
+						
+						<div class="tabContentItemDate fl">
+							<div class="tabContentItemName">2022-06-16 21:30:37</div>
+						</div>
+						<div class="cf"></div>
+					</div> <!-- /tabContentItem -->
+					<div class="cf"></div>
+				</div>
+				
+				
+				<div>
+					<div class="tabContentItem">
+						<div class="tabContentItemNameMain fl">
+							<div class="tabContentItemIcon fl">
+								<img class="imgTabContentItemIcon" src="./i/folder32.png">
+							</div>
+							<div class="tabContentItemName fl">Тоже что-то с чем-то</div>
+							<div class="cf"></div>
+						</div>
+						
+						<div class="tabContentItemSize fl">
+							<div class="tabContentItemName">4,1 Кб</div>
+						</div>
+						
+						<div class="tabContentItemType fl">
+							<div class="tabContentItemName">Папка</div>
+						</div>
+						
+						<div class="tabContentItemDate fl">
+							<div class="tabContentItemName">2022-06-16 21:30:37</div>
+						</div>
+						<div class="cf"></div>
+					</div> <!-- /tabContentItem -->
+					<div class="cf"></div>
+				</div>
+				
+				
+				<div>
+					<div class="tabContentItem">
+						<div class="tabContentItemNameMain fl">
+							<div class="tabContentItemIcon fl">
+								<img class="imgTabContentItemIcon" src="./i/folder32.png">
+							</div>
+							<div class="tabContentItemName fl">Тоже что-то с чем-то</div>
+							<div class="cf"></div>
+						</div>
+						
+						<div class="tabContentItemSize fl">
+							<div class="tabContentItemName">4,1 Кб</div>
+						</div>
+						
+						<div class="tabContentItemType fl">
+							<div class="tabContentItemName">Папка</div>
+						</div>
+						
+						<div class="tabContentItemDate fl">
+							<div class="tabContentItemName">2022-06-16 21:30:37</div>
+						</div>
+						<div class="cf"></div>
+					</div> <!-- /tabContentItem -->
+					<div class="cf"></div>
+				</div>
+				
+				
+				<div>
+					<div class="tabContentItem">
+						<div class="tabContentItemNameMain fl">
+							<div class="tabContentItemIcon fl">
+								<img class="imgTabContentItemIcon" src="./i/folder32.png">
+							</div>
+							<div class="tabContentItemName fl">Тоже что-то с чем-то</div>
+							<div class="cf"></div>
+						</div>
+						
+						<div class="tabContentItemSize fl">
+							<div class="tabContentItemName">4,1 Кб</div>
+						</div>
+						
+						<div class="tabContentItemType fl">
+							<div class="tabContentItemName">Папка</div>
+						</div>
+						
+						<div class="tabContentItemDate fl">
+							<div class="tabContentItemName">2022-06-16 21:30:37</div>
+						</div>
+						<div class="cf"></div>
+					</div> <!-- /tabContentItem -->
+					<div class="cf"></div>
+				</div>
+				
+				
+				<div>
+					<div class="tabContentItem">
+						<div class="tabContentItemNameMain fl">
+							<div class="tabContentItemIcon fl">
+								<img class="imgTabContentItemIcon" src="./i/folder32.png">
+							</div>
+							<div class="tabContentItemName fl">Тоже что-то с чем-то</div>
+							<div class="cf"></div>
+						</div>
+						
+						<div class="tabContentItemSize fl">
+							<div class="tabContentItemName">4,1 Кб</div>
+						</div>
+						
+						<div class="tabContentItemType fl">
+							<div class="tabContentItemName">Папка</div>
+						</div>
+						
+						<div class="tabContentItemDate fl">
+							<div class="tabContentItemName">2022-06-16 21:30:37</div>
+						</div>
+						<div class="cf"></div>
+					</div> <!-- /tabContentItem -->
+					<div class="cf"></div>
+				</div>
+				
+				
+				<div>
+					<div class="tabContentItem">
+						<div class="tabContentItemNameMain fl">
+							<div class="tabContentItemIcon fl">
+								<img class="imgTabContentItemIcon" src="./i/folder32.png">
+							</div>
+							<div class="tabContentItemName fl">Тоже что-то с чем-то</div>
+							<div class="cf"></div>
+						</div>
+						
+						<div class="tabContentItemSize fl">
+							<div class="tabContentItemName">4,1 Кб</div>
+						</div>
+						
+						<div class="tabContentItemType fl">
+							<div class="tabContentItemName">Папка</div>
+						</div>
+						
+						<div class="tabContentItemDate fl">
+							<div class="tabContentItemName">2022-06-16 21:30:37</div>
+						</div>
+						<div class="cf"></div>
+					</div> <!-- /tabContentItem -->
+					<div class="cf"></div>
+				</div>
 				
 				
 			</div><!-- / tabContentItems -->
-		</div>
+			
+			<div class="tabContentStatus">
+				<div class="tabContentStatusText">12 объектов, свободно 119 ГБ</div>
+			</div>
+				
+		</div> <!-- /#tabContent -->
+		
 		
 		
 	</div><!-- /contentArea -->

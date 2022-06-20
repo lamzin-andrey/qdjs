@@ -24,7 +24,7 @@ table.layout td {
 .sidebar {
 	width:218px;
 	/*background-color:#AABEF8;*/
-	overflow-y:scroll;
+	/*overflow-y:scroll;*/
 	color:white;
 	font-weight:bold;
 	border-right: 0.5px solid #b6b6b3;
@@ -33,11 +33,9 @@ table.layout td {
 	color:white;
 }
 .content {
-	/*float:left;*/
-	/*width:75%;*/
-	/*background-color:#FFFFFF;*/
-	overflow:scroll;
+	/*overflow:scroll;*/
 	padding-left: 4px;
+	background-color: #e8e8e7;
 }
 .tc {
 	text-align:center;
