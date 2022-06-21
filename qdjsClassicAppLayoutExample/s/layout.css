@@ -1,0 +1,58 @@
+@font-face {
+  font-family: 'arial';
+  src: url('../fonts/arial.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'arialbd';
+  src: url('../fonts/arialbd.ttf') format('truetype');
+}
+
+body {
+	padding:0px;
+	margin:0px;
+	overflow-y:hidden;
+	font-family:arial;
+	cursor: default;
+	background-color: #e8e8e7;
+	-webkit-user-select: none;
+}
+table.layout {
+	height:100%;
+	width:100%;
+}
+table.layout td {
+	vertical-align:top;
+}
+.sidebar {
+	width:218px;
+	/*background-color:#AABEF8;*/
+	/*overflow-y:scroll;*/
+	color:white;
+	font-weight:bold;
+	border-right: 0.5px solid #b6b6b3;
+}
+.sidebar a{
+	color:white;
+}
+.content {
+	/*overflow:scroll;*/
+	padding-left: 4px;
+	background-color: #e8e8e7;
+}
+.tc {
+	text-align:center;
+}
+.cf {
+	clear:both;
+}
+.d-none {
+	display:none;
+}
+.fl {
+	float:left;
+}
+
+.pointer {
+	cursor:url('../i/pointer.png'), auto;
+}

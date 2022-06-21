@@ -1,3 +1,4 @@
+window.SCROLL_LINE_HEIGHT = 18
 function main() {
 	try {
 		var lang = Settings.get('curretLang');
@@ -8,8 +9,9 @@ function main() {
 		alert(err);
 	}
 	Qt.setWindowIconImage(Qt.appDir() + '/i/folder32.png');
-	Qt.moveTo(0, 31);
-	Qt.resizeTo((screen.width), (screen.height - 92));
+	//Qt.moveTo(0, 31);
+	//Qt.resizeTo((screen.width), (screen.height - 92));
+	Qt.maximize();
 	
 	window.onresize = onResize;
 	window.onkeyup = onKeyUp;
@@ -18,21 +20,41 @@ function main() {
 	
 }
 function onResize() {
+	var contentTopAreaH, 
+		vp = getViewport(),
+		vpH = vp.h,
+		vpW = vp.w;
 	// for table
-	e('contentArea').style.height = (getViewport().h - 0) + 'px';
-	e('contentArea').style.maxHeight = (getViewport().h - 32) + 'px';
+	e('contentArea').style.height = (vpH - 0) + 'px';
+	e('contentArea').style.maxHeight = (vpH - 32) + 'px';
 	
-	e('sidebarWrapper').style.height = (getViewport().h - 0) + 'px';
-	e('sidebarWrapper').style.maxHeight = (getViewport().h - 32) + 'px';
+	e('sidebarWrapper').style.height = (vpH - 0) + 'px';
+	e('sidebarWrapper').style.maxHeight = (vpH - 32) + 'px';
 	
 	setTimeout(function() {
-		e('contentArea').style.height = (getViewport().h - 0) + 'px';
-		e('contentArea').style['max-height'] = (getViewport().h - 32) + 'px';
+		e('contentArea').style.height = (vpH - 0) + 'px';
+		e('contentArea').style['max-height'] = (vpH - 32) + 'px';
 		
-		e('sidebarWrapper').style.height = (getViewport().h - 0) + 'px';
-		e('sidebarWrapper').style.maxHeight = (getViewport().h - 32) + 'px';
+		e('sidebarWrapper').style.height = (vpH - 0) + 'px';
+		e('sidebarWrapper').style.maxHeight = (vpH - 32) + 'px';
 	}, 1000);
 	
+	// for items
+	contentTopAreaH = e('tabsContainer').offsetHeight + e('addressContainer').offsetHeight;
+	e('tabItems').style.height = (vpH - contentTopAreaH - 64) + 'px';
+	e('tabItems').style.width = (vpW - e('sidebarWrapper').offsetWidth - SCROLL_LINE_HEIGHT) + 'px';
+	
+	// items headers
+	//e('tabContentHeaders').style.width = (vpW - e('sidebarWrapper').offsetWidth - SCROLL_LINE_HEIGHT) + 'px';
+	
+	e('tabContentHeadersWr').style.width = (vpW - e('sidebarWrapper').offsetWidth - SCROLL_LINE_HEIGHT) + 'px';
+	
+	e('tabContentHeaders').style.minWidth = (
+		e('tabContentHeaderDate').offsetWidth
+		+ e('tabContentHeaderType').offsetWidth
+		+ e('tabContentHeaderSize').offsetWidth
+		+ e('tabContentHeaderFileName').offsetWidth
+	) + 'px';
 	
 }
 

@@ -4,6 +4,11 @@
     <title>QT5 WEB VIEW File Explorer</title>
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
     <meta name="windowButtons" content="1110" width="1020" height="600">
+    <menubar style="display:none">
+		<menu title="Action">
+			<item onselect="onClickExitMenu()">Quit Ctrl+Q</item>
+		</menu>
+	</menubar>
     
     <!-- dev tool -->
     <script src="./j/dev/qt.js"></script>
@@ -31,6 +36,12 @@
 <tr>
     <td class="sidebar"  width="300">
 		<div id="sidebarWrapper">
+			<div class="homeButtonsWrapper">
+				<img class="pointer imgHomeP imgHomeLeft" src="./i/leftArrow32d.png">
+				<img class="pointer imgHomeP imgHomeRight" src="./i/rightArrow32.png">
+				<img class="pointer imgHomeP imgHomeUp" src="./i/upArrow32d.png">
+				<img class="pointer imgHomeP imgHome" src="./i/home32.png">
+			</div>
 			<div class="section">
 				<div class="sectionTitle devText">Устройства</div>
 				<div class="sectionContent">
@@ -74,7 +85,7 @@
     <td class="content" id="lastM">
     <div id="contentArea">
 		
-		<div class="addressContainer">
+		<div id="addressContainer" class="addressContainer">
 			<div id="addressLine" class="addressLine"></div>
 			<div id="addressButtonPlacer" class="addressButtonPlacer">
 				<div class="addressButton addressButtonLeft">
@@ -105,7 +116,7 @@
 		</div> <!-- addressContainer -->
 		
 		
-		<div class="tabsContainer">
+		<div id="tabsContainer" class="tabsContainer">
 			<div class="tabsNavLeft">
 				<img class="imgTabNavLeft" src="./i/addressButtonLeft.png">
 			</div>
@@ -113,14 +124,14 @@
 				<div class="tab">		<!-- Width tab calculate dynamic px. Quantity tabs calculate dynamic. Их должно быть ровно столько, чтобы могли поместиться. -->
 					<div class="tabName">05</div>
 					<div class="tabClose">
-						<img class="imgBtnTabClose" src="./i/tabClose.png">
+						<img class="pointer imgBtnTabClose" src="./i/tabClose.png">
 					</div>
 				</div>
 				
 				<div class="tab active">
 					<div class="tabName">andrey</div>
 					<div class="tabClose">
-						<img class="imgBtnTabClose" src="./i/tabClose.png">
+						<img class="pointer imgBtnTabClose" src="./i/tabClose.png">
 					</div>
 				</div>
 				
@@ -134,40 +145,42 @@
 		
 		
 		<div id="tabContent" class="tabContentMainContainer">
-			<div class="tabContentHeaders"> <!-- (calculate with as sum all child?) onscroll-x items: margin-Left:-Npx; (It true) -->
-				<div class="tabContentHeader tabContentHeaderFileName fl">
-					<div class="tabContentHeaderName fl">Название</div>
-					<div class="tabContentHeaderImg fl">
-						<img class="imgTabContentHeaderImg" src="./i/tabContentHeaderImgT.png">
+			<div id="tabContentHeadersWr" style="overflow-x:hidden" class="tabContentHeadersWr">
+				<div id="tabContentHeaders" class="pointer tabContentHeaders"> <!-- (calculate with as sum all child?) onscroll-x items: margin-Left:-Npx; (It true) -->
+					<div id="tabContentHeaderFileName" class="tabContentHeader tabContentHeaderFileName fl">
+						<div class="tabContentHeaderName fl">Название</div>
+						<div class="tabContentHeaderImg fl">
+							<img class="imgTabContentHeaderImg" src="./i/tabContentHeaderImgT.png">
+						</div>
+						<div class="cf"></div>
+					</div>
+					
+					<div id="tabContentHeaderSize" class="tabContentHeader tabContentHeaderSize fl">
+						<div class="tabContentHeaderName fl">Размер</div>
+						<div class="tabContentHeaderImg fl">
+							<img class="imgTabContentHeaderImg d-none" src="./i/tabContentHeaderImgT.png">
+						</div>
+						<div class="cf"></div>
+					</div>
+					
+					<div id="tabContentHeaderType" class="tabContentHeader tabContentHeaderType fl">
+						<div class="tabContentHeaderName fl">Тип</div>
+						<div class="tabContentHeaderImg fl">
+							<img class="imgTabContentHeaderImg d-none" src="./i/tabContentHeaderImgT.png">
+						</div>
+						<div class="cf"></div>
+					</div>
+					
+					<div id="tabContentHeaderDate" class="tabContentHeader tabContentHeaderDate fl">
+						<div class="tabContentHeaderName fl">Дата изменения</div>
+						<div class="tabContentHeaderImg fl">
+							<img class="imgTabContentHeaderImg d-none" src="./i/tabContentHeaderImgT.png">
+						</div>
+						<div class="cf"></div>
 					</div>
 					<div class="cf"></div>
-				</div>
-				
-				<div class="tabContentHeader tabContentHeaderSize fl">
-					<div class="tabContentHeaderName fl">Размер</div>
-					<div class="tabContentHeaderImg fl">
-						<img class="imgTabContentHeaderImg d-none" src="./i/tabContentHeaderImgT.png">
-					</div>
-					<div class="cf"></div>
-				</div>
-				
-				<div class="tabContentHeader tabContentHeaderType fl">
-					<div class="tabContentHeaderName fl">Тип</div>
-					<div class="tabContentHeaderImg fl">
-						<img class="imgTabContentHeaderImg d-none" src="./i/tabContentHeaderImgT.png">
-					</div>
-					<div class="cf"></div>
-				</div>
-				
-				<div class="tabContentHeader tabContentHeaderDate fl">
-					<div class="tabContentHeaderName fl">Дата изменения</div>
-					<div class="tabContentHeaderImg fl">
-						<img class="imgTabContentHeaderImg d-none" src="./i/tabContentHeaderImgT.png">
-					</div>
-					<div class="cf"></div>
-				</div>
-				<div class="cf"></div>
-			</div><!-- / tabContentHeaders -->
+				</div><!-- / tabContentHeaders -->
+			</div>
 			
 			<div class="cf"></div>
 			
@@ -226,12 +239,12 @@
 				</div>
 				
 				<div>
-					<div class="tabContentItem active">
+					<div class="tabContentItem active" title="Тоже что-то с чем-то и нереально длинное название каталога которое точно пререйдёт на новую строку">
 						<div class="tabContentItemNameMain fl">
 							<div class="tabContentItemIcon fl">
 								<img class="imgTabContentItemIcon" src="./i/folder32.png">
 							</div>
-							<div class="tabContentItemName fl">Тоже что-то с чем-то</div>
+							<div class="tabContentItemName fl" unselectable="on">Тоже что-то с чем-то и нереально длинное название каталога которое точно пререйдёт на новую строку</div>
 							<div class="cf"></div>
 						</div>
 						

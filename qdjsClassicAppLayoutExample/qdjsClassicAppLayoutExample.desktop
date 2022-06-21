@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=QdjsFM
+Comment=Example Classic App (as KPaint, FileBrowser, Adobe Flash CS3, Code Editor) Layout Example
+Exec=/home/andrey/hdata/programs/my/qdjs/qdjsClassicAppLayoutExample/qdjsClassicAppLayoutExample.sh
+Icon=/home/andrey/hdata/programs/my/qdjs/qdjsClassicAppLayoutExample/i/folder32.png
+Path=/home/andrey/hdata/programs/my/qdjs/qdjsClassicAppLayoutExample
+Categories=Tools;
+Terminal=false
+StartupNotify=false
+Name[ru]=QDJS Classic App Layout Example
+Name[en]=QDJS Classic App Layout Example
+Category=Tools;

@@ -13,6 +13,9 @@ body {
 	margin:0px;
 	overflow-y:hidden;
 	font-family:arial;
+	cursor: default;
+	background-color: #e8e8e7;
+	-webkit-user-select: none;
 }
 table.layout {
 	height:100%;
@@ -48,4 +51,8 @@ table.layout td {
 }
 .fl {
 	float:left;
+}
+
+.pointer {
+	cursor:url('../i/pointer.png'), auto;
 }
