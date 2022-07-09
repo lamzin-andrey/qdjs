@@ -10,9 +10,11 @@ AbstractList.prototype.init = function(id, title) {
 
 AbstractList.prototype.render = function() {
 	console.log(this.list);
+	var i, SZ = sz(this.list), s, item, o = this;
+	
 	this.contentBlock.innerHTML = '';
 	this.titleBlock.innerHTML = this.title;
-	var i, SZ = sz(this.list), s, item, o = this;
+	
 	for (i = 0; i < SZ; i++) {
 		s = this.tpl();
 		s = s.replace('{img}', this.list[i].icon);

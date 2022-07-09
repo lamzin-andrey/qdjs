@@ -3,6 +3,10 @@ function Devices() {
 	this.itemIdPrefix = 'dc';
 	this.list = [];
 	this.is_run = false;
+	this.removableDevices = Settings.get('rds');
+	if (!this.removableDevices) {
+		this.removableDevices = {};
+	}
 }
 extend(AbstractList, Devices);
 
@@ -10,8 +14,13 @@ Devices.prototype.run = function() {
 	console.log('Devices is run');
 	this.init('devicesBlock', L('Devices'));
 	this.createList();
-	this.render();
+	// this.render();
 	this.is_run = true;
+	
+	var o = this;
+	setInterval(function() {
+		o.createList();
+	}, 3 * 1000);
 }
 
 Devices.prototype.setUser = function(s) {
@@ -46,6 +55,9 @@ Devices.prototype.onClick = function(event) {
 	var trg = ctrg(event),
 		n = str_replace(this.itemIdPrefix, '', trg.id);
 	app.setActivePath(this.list[n].path, 'devicesManager');
+	if (this.list[n].xdxN) {
+		alert('Wil try monnt ' + this.list[n].xdxN);
+	}
 }
 
 
@@ -83,9 +95,12 @@ Devices.prototype.onMountList = function(stdout, stderr) {
 	
 }
 Devices.prototype.onDiskData = function(stdout, stderr) {
-	// alert('onMountList:' + stdout);
-	var i, path, skip = In('/', '/home');
 	this.listDisks = this.parseDfhOut(stdout);
+	this.buildList();
+}
+
+Devices.prototype.buildList = function() {
+	var i, path, skip = In('/', '/home'), sPrev, sCurrent;
 	// Исключить из списка 2 все sdxN присутствующие в списке 1
 	this.excludeAllLabelsFromUuidList();
 	
@@ -100,16 +115,31 @@ Devices.prototype.onDiskData = function(stdout, stderr) {
 	// Добавить в this.list элементы из listByLabel с учетом монтированости (есть в listMount значит монтирован)
 	
 	for (i in this.listByLabel) {
-		this.addItem(this.listByLabel[i], this.listMount[i]);
+		this.addItem(this.listByLabel[i], this.listMount[i], i);
 	}
 	
 	// Добавить в this.list элементы из listByUuid с учетом монтированости (есть в listMount значит монтирован)
-	console.log('skip', skip);
 	for (i in this.listByUuid) {
 		if (!skip[this.listMount[i]]) {
-			this.addItem(this.listByUuid[i], this.listMount[i]);
+			this.addItem(this.listByUuid[i], this.listMount[i], i);
 		}
 	}
+	
+	
+	try {
+		if (this.prevList && this.list) {
+			sPrev = JSON.stringify(this.prevList);
+			sCurrent = JSON.stringify(this.list);
+			if (sPrev == sCurrent) {
+				return;
+			}
+		}
+	} catch (err) {
+		alert(err);
+	}
+	
+	this.prevList = JSON.stringify(this.list);
+	this.prevList = JSON.parse(this.prevList);
 	this.render();
 }
 
@@ -256,18 +286,37 @@ Devices.prototype.getSdxFromLsOut = function(rawSdxN) {
 	return a[sz(a) - 1];
 }
 
-Devices.prototype.addItem = function(name, path) {
+Devices.prototype.addItem = function(name, path, xdxN) {
 	var item = {
 			displayName : '',
 			icon: App.dir() + '/i/hdd_mount32.png',
-			path: ''
-		};
+			path: '',
+			xdxN: xdxN
+		}, i, foundInPrev = 1, SZ;
 	
 	item.displayName = name;
 	item.path = path;
 	if (!path) {
 		item.icon = App.dir() + '/i/disk32.png';
 	}
+	
+	if (this.prevList) {
+		SZ = sz(this.prevList);
+		foundInPrev = 0;
+		for (i = 0; i < SZ; i++) {
+			if (this.prevList[i].displayName == name) {
+				foundInPrev = 1;
+				break;
+			}
+		}
+	}
+	
+	if (!foundInPrev || this.removableDevices[name]) {
+		item.icon = App.dir() + '/i/usb32.png';
+		this.removableDevices[name] = 1;
+		Settings.set('rds', this.removableDevices);
+	}
+	
 	this.list.push(item);
 	
 }
