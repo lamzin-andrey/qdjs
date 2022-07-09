@@ -9,7 +9,6 @@ AbstractList.prototype.init = function(id, title) {
 }
 
 AbstractList.prototype.render = function() {
-	console.log(this.list);
 	var i, SZ = sz(this.list), s, item, o = this;
 	
 	this.contentBlock.innerHTML = '';

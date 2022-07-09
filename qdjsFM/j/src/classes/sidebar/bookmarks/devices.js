@@ -11,7 +11,6 @@ function Devices() {
 extend(AbstractList, Devices);
 
 Devices.prototype.run = function() {
-	console.log('Devices is run');
 	this.init('devicesBlock', L('Devices'));
 	this.createList();
 	// this.render();
@@ -30,26 +29,6 @@ Devices.prototype.setUser = function(s) {
 Devices.prototype.isRun = function() {
 	return this.is_run;
 }
-/*Devices.prototype.run = function() {
-	// console.log('Bookmarks run');
-	var user = this.username,
-		locale, title;
-	if (!user && window.USER) {
-		user = window.USER;
-	}
-	
-	if (!user) {
-		return;
-	}
-	this.init('bookmarksBlock', L('Bookmarks'));
-	
-	locale = this.getLocale(user);
-	title = L('Bookmarks');
-	this.createList(locale, user);
-	
-	this.render();
-	this.is_run = true;
-}*/
 
 Devices.prototype.onClick = function(event) {
 	var trg = ctrg(event),
@@ -192,8 +171,6 @@ Devices.prototype.parseDfhOut = function(duhout) {
 		list[key] = val;
 	}
 	
-	console.log('parseDfhOut: ', list);
-	
 	return list;
 }
 
@@ -213,16 +190,13 @@ Devices.prototype.getUnknownVolume = function(uuid, oFound) {
 
 
 Devices.prototype.pluralizeSize = function(sz) {
-	console.log(sz);
 	var m = '';
 	sz = String(sz);
 	if (sz.indexOf('G') != -1) {
 		m = L('GB');
-		console.log('Set GB!');
 	}
 	if (sz.indexOf('M') != -1) {
 		m = L('MB');
-		console.log('Set MB!');
 	}
 	
 	sz = sz.split(',')[0];
