@@ -13,7 +13,7 @@ Bookmarks.prototype.isRun = function() {
 	return this.is_run;
 }
 Bookmarks.prototype.run = function() {
-	console.log('Bookmarks run');
+	// console.log('Bookmarks run');
 	var user = this.username,
 		locale, title;
 	if (!user && window.USER) {
@@ -36,11 +36,12 @@ Bookmarks.prototype.run = function() {
 Bookmarks.prototype.onClick = function(event) {
 	var trg = ctrg(event),
 		n = str_replace(this.itemIdPrefix, '', trg.id);
-	app.setActivePath(this.list[n].path);
+	app.setActivePath(this.list[n].path, 'bookmarksManager');
 }
 
 
 Bookmarks.prototype.createList = function(locale, user) {
+	this.list = [];
 	this.addItem(user, '', locale);
 	this.addItem(user, 'Downloads', locale);
 	this.addItem(user, 'Desktop', locale);
@@ -128,5 +129,4 @@ Bookmarks.prototype.getLocale = function(user) {
 	
 	return 'en';
 }
-
 

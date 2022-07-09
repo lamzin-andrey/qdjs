@@ -17,6 +17,11 @@ AbstractList.prototype.render = function() {
 		s = this.tpl();
 		s = s.replace('{img}', this.list[i].icon);
 		s = s.replace('{name}', this.list[i].displayName);
+		if (this.list[i].path) {
+			s = s.replace('{opacity}', '');
+		} else {
+			s = s.replace('{opacity}', 'op05');
+		}
 		item = appendChild(this.contentBlock, 'div', s, {
 			title: this.list[i].displayName, 
 			id: this.itemIdPrefix + String(i),
@@ -38,7 +43,20 @@ AbstractList.prototype.setActiveView = function(evt)  {
 	addClass(ctrg(evt), sel);
 }
 
+AbstractList.prototype.setPath = function(path)  {
+	var ls = cs(this.contentBlock, 'sectionItem'), i, SZ = sz(ls), sel = 'selected', targetItem;
+	for (i = 0; i < SZ; i++) {
+		removeClass(ls[i], sel);
+		if (this.list[i] && this.list[i].path == path) {
+			targetItem = ls[i];
+		}
+	}
+	if (targetItem) {
+		addClass(targetItem, sel);
+	}
+}
+
 AbstractList.prototype.tpl = function()  {
-	return '<img src="{img}" class="i24">\
+	return '<img src="{img}" class="i24 {opacity}">\
 						<span class="i24Text">{name}</span>';
 }

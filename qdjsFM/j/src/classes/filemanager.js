@@ -12,15 +12,28 @@ function FileManager() {
 	
 }
 
-FileManager.prototype.setActivePath = function(path) {
-	this.navbarPanelManager.setPath(path);
-	this.tab.setPath(path);// тут возможны варианты
+/**
+ * @param {String} path
+ * @param {Array} aExcludes - идентификатор(ы) элементов управления, для которых не надо применять setPath
+*/
+FileManager.prototype.setActivePath = function(path, aExcludes) {
+	var emitter = aExcludes[0];
+	if (emitter != 'navbarPanelManager') {
+		this.navbarPanelManager.setPath(path);
+	}
+	if (emitter != 'tab') {
+		this.tab.setPath(path);
+	}
+	if (emitter != 'bookmarksManager') {
+		this.bookmarksManager.setPath(path);
+	}
+	if (emitter != 'devicesManager') {
+		this.devicesManager.setPath(path);
+	}
 }
 
 FileManager.prototype.initActiveTab = function() {
-	console.log('Run initActiveTab');
 	this.tab = this.tabPanel.getActiveTab();
-	console.log(this.tab);
 }
 
 /**

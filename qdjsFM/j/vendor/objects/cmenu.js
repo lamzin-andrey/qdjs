@@ -42,7 +42,7 @@ window.ContextMenuManager = {
 	id: 'qdjsfmcm',
 	
 	hide: function() {
-		e(this.id).style.display = 'none';
+		stl(this.id, 'display', 'none');
 	},
 	
 	getTpl:function(event) {

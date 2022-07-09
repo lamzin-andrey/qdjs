@@ -70,3 +70,7 @@ input[type=text] {
 .imgHomeUp {}
 .imgHomeP {width: 24px;height: 24px;}
 .imgHome {}
+
+.op05 {
+	opacity: 0.5;
+}

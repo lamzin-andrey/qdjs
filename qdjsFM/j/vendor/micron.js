@@ -105,6 +105,7 @@ function attr(o, name, val) {
 }
 function stl(o, s, v) {
 	o = e(o);
+	if (!o) return;
 	o.style[s] = v;
 }
 function show(o, v) {

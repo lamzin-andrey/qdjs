@@ -9,3 +9,8 @@ Tab.prototype.setPath = function(path) {
 Tab.prototype.setUser = function(s) {
 	this.username = s;
 }
+
+Tab.prototype.getUser = function(s) {
+	return this.username;
+}
+

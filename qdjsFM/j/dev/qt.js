@@ -11,7 +11,7 @@ window.QtShadow = {
 	setTitle(s){console.log(`Qt set title ${s}`);},
 	quit(){console.log(`Qt quit`);},
 	exec(cmd, onFin, onStdout){console.log(`Qt run ${cmd}`);},
-	appDir(){console.log(`Qt run app dir`); return '.';},
+	appDir(){ return '.';},
 	getArgs(){console.log(`Qt run getArgs`);},
 	getLastKeyChar(evt){console.log(`Qt getLastKeyChar`); return 'Z';},
 	openFileDialog(caption, directory, filter){console.log(`Qt openFileDialog(${caption}, ${directory}, ${filter})`);},
