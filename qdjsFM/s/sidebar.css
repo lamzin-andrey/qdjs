@@ -36,7 +36,7 @@ input[type=text] {
 
 .sectionItem {
 	height: 32px;
-	cursor: pointer;
+	/*cursor: pointer;*/
 	line-height: 32px;
 	padding-left: 14px;
 }

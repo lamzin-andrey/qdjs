@@ -1,0 +1,42 @@
+Структура j
+main.js - всё, что относится к фиксам верстки в том числе при ресайзе окна,
+	обработке хоткеев главного меню и запуск window.app = new FileManager();
+	
+dev - должно работать только в firefox. Заглушки для Qt api функций.
+vendor - мои библиотеки
+src - код собственно приложения FM
+src/classes/filemanager.js код главного класса приложения
+src/classes/sidebar/navbarpanel.js код 
+
+src/classes/sidebar/bookmarks/abstractlist.js общий код для логики панелей Устройства и Закладки. Выделение, отправка события при этом.
+src/classes/sidebar/bookmarks/bookmarks.js код конкретного класса. Получение списка закладок, установка значений.
+src/classes/sidebar/bookmarks/devices.js код конкретного класса. Получение списка устройств, установка значений.
+
+src/classes/sidebar/contentarea/addrespanel/buttonaddress.js код для отображения кнопок вместо строки адреса. Ресайз, нажатия и всё такое.
+src/classes/sidebar/contentarea/addrespanel/textaddress.js код для отображения  строки адреса
+src/classes/sidebar/contentarea/addrespanel/addressswitcher.js код управляющий отображением одного из двух вариантов. С учетом Ctrl+L
+src/classes/sidebar/contentarea/addrespanel/addresspanel.js код управляющий тремя классами выше
+
+src/classes/contentarea/tabpanel.js код для отрисовки и отображения панели вкладок браузера файлов
+src/classes/contentarea/tab.js управляет
+	navbarpanel
+	addresspanel
+	fileheader (?)
+	list
+	То есть хранит состояние каждого из табов. 
+	Для слабого ПК кажется имеет смысл ограничиться одним классом, который сохраняет / подгружает в хранилище.
+	 Состояние:
+	  текущий каталог.
+	  История, как до него добрались для navbarpanel
+	  выбранный файл.
+	
+
+src/classes/contentarea/filelist/fileheader.js код для отрисовки и отображения строки заголовка. Показ стрелки сортировки при клике. Смена направления при втором клике. Отправка событий этих действий. Обработка события прокрутки горизонтального скролла списка файлов.
+src/classes/contentarea/filelist/list.js код для отрисовки и отображения области списка файлов. Отправляет событие горизонтальной прокрутки. 
+	- render(ListItem[] list);
+	Управление выделением тоже здесь, а это непросто.
+
+
+Сообщаются они между собой через window.app;
+
+src/classes/sidebar/contentarea/.js код 

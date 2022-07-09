@@ -9,15 +9,18 @@ function main() {
 		alert(err);
 	}
 	Qt.setWindowIconImage(Qt.appDir() + '/i/folder32.png');
-	//Qt.moveTo(0, 31);
-	//Qt.resizeTo((screen.width), (screen.height - 92));
 	Qt.maximize();
+	
+	//try {
+		window.app = new FileManager();
+	/*} catch(err) {
+		alert(err);
+	}*/
 	
 	window.onresize = onResize;
 	window.onkeyup = onKeyUp;
+	
 	onResize();
-	
-	
 }
 function onResize() {
 	var contentTopAreaH, 
@@ -55,6 +58,8 @@ function onResize() {
 		+ e('tabContentHeaderSize').offsetWidth
 		+ e('tabContentHeaderFileName').offsetWidth
 	) + 'px';
+	
+	app.onResize();
 	
 }
 

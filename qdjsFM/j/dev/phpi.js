@@ -12,7 +12,10 @@ window.PHPShadow = {
 		localStorage.setItem(file, data); 
 		return String(data).length;
 	},
-	file_exists(file){null !== localStorage.getItem(file);},
+	file_exists(file){
+		var k = localStorage.getItem(file);
+		return null !== k;
+	},
 	unlink(file){localStorage.removeItem(file);},
 	is_dir(file){return false;},
 	scandir(file){return [
@@ -37,5 +40,6 @@ window.PHPShadow = {
 	saveJpeg(file, data, q) {
 		this.file_put_contents(file, data);
 	},
+	getSysId(){return 1;},
 	exec(cmd, onFin, onStdout){console.log(`PHP run ${cmd}`);}
 };

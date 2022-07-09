@@ -9,15 +9,15 @@ function main() {
 		alert(err);
 	}
 	Qt.setWindowIconImage(Qt.appDir() + '/i/folder32.png');
-	//Qt.moveTo(0, 31);
-	//Qt.resizeTo((screen.width), (screen.height - 92));
 	Qt.maximize();
+	
+	// TODO 
+	// window.app = new FileManager();
 	
 	window.onresize = onResize;
 	window.onkeyup = onKeyUp;
-	onResize();
 	
-	
+	onResize();// TODO + app.onResize();
 }
 function onResize() {
 	var contentTopAreaH, 

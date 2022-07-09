@@ -1,3 +1,4 @@
+// 20220707
 var D = document,
 W = window, S = String;
 function e(i) {
@@ -287,4 +288,13 @@ function wsStorage(table, id, onData, data) {
 		});
 		
 	}//end if db
+}
+
+function body() {
+	return ee(D, 'body')[0];
+}
+
+
+function ctrg(evt) {
+	return evt.currentTarget;
 }
