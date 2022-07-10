@@ -6,10 +6,6 @@ function FileManager() {
 	this.devicesManager.run();
 	
 	
-	this.navbarPanelManager = new NavbarPanel();
-	
-	this.addressPanel = new AddressPanel();
-	
 }
 
 /**
@@ -19,7 +15,7 @@ function FileManager() {
 FileManager.prototype.setActivePath = function(path, aExcludes) {
 	var emitter = aExcludes[0];
 	if (emitter != 'navbarPanelManager') {
-		this.navbarPanelManager.setPath(path);
+		this.tab.navbarPanelManager.setPath(path);
 	}
 	if (emitter != 'tab') {
 		this.tab.setPath(path);

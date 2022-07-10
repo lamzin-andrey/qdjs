@@ -1,0 +1,1 @@
+ls -alh --full-time "/home/andrey/Видео"

@@ -11,11 +11,11 @@ function main() {
 	Qt.setWindowIconImage(Qt.appDir() + '/i/folder32.png');
 	Qt.maximize();
 	
-	try {
+	//try {
 		window.app = new FileManager();
-	} catch(err) {
+	/*} catch(err) {
 		alert(err);
-	}
+	}/**/
 	
 	window.onresize = onResize;
 	window.onkeyup = onKeyUp;
