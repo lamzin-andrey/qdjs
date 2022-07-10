@@ -1,1 +1,2 @@
-ls -alh --full-time "/home/andrey/Видео"
+#! /bin/bash
+ls -alh --full-time "/home/andrey"

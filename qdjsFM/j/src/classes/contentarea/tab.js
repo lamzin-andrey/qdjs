@@ -8,7 +8,6 @@ function Tab() {
 }
 
 Tab.prototype.setPath = function(path) {
-	alert('Tab get path ' + path);
 	this.currentPath = path;
 	this.list = [];
 	this.hideList = [];
@@ -22,12 +21,11 @@ Tab.prototype.setPath = function(path) {
 	
 	jexec(slot, [this, this.onFileList], DevNull, DevNull);
 	
-	cmd = 'ls -alh --full-time "' + path + '"';
+	cmd = '#! /bin/bash\nls -alh --full-time "' + path + '"';
 	FS.writefile(slot2, cmd);
 	jexec(slot2, [this, this.onHideFileList], DevNull, DevNull);
 }
 Tab.prototype.onFileList = function(stdout, stderr) {
-	
 	this.list = this.buildList(stdout);
 	this.listComplete = true;
 	this.renderByMode();
@@ -39,50 +37,38 @@ Tab.prototype.onHideFileList = function(stdout, stderr) {
 }
 
 Tab.prototype.buildList = function(lsout) {
-	var lines = lsout.split('\n'), i, buf, SZ = sz(lines), result = [], item;
-	for (i = 0;i < SZ; i++) {
+	var lines = lsout.split('\n'), i, buf, SZ = sz(lines), dirs = [], files = [], item;
+	for (i = 0; i < SZ; i++) {
 		item = this.createItem(lines[i]);
 		if (item) {
-			result.push(item);
+			if (item.type != L('Catalog')) {
+				files.push(item);
+			} else {
+				dirs.push(item);
+			}
 		}
 	}
+	SZ = sz(files);
+	for (i = 0; i < SZ; i++) {
+		dirs.push(files[i]);
+	}
 	
-	return result;
+	return dirs;
 }
 
-Tab.prototype.tpl = function() {
-	return '<div class="tabContentItem" title="{name}">\
-						<div class="tabContentItemNameMain fl">\
-							<div class="tabContentItemIcon fl">\
-								<img class="imgTabContentItemIcon" src="{img}">\
-							</div>\
-							<div class="tabContentItemName fl">{name}</div>\
-							<div class="cf"></div>\
-						</div>\
-						\
-						<div class="tabContentItemSize fl">\
-							<div class="tabContentItemName">{sz}</div>\
-						</div>\
-						\
-						<div class="tabContentItemType fl" title="{type}">\
-							<div class="tabContentItemName" >{type}</div>\
-						</div>\
-						\
-						<div class="tabContentItemDate fl">\
-							<div class="tabContentItemDate">{mt}</div>\
-						</div>\
-						<div class="cf"></div>\
-					</div> <!-- /tabContentItem -->\
-					<div class="cf"></div>';
+Tab.prototype.getClickedItem = function(id) {
+	// TODO посмотреть, что выводим, скрытые или нет
+	var i, SZ;
+	id = id.replace('f', '');
+	return this.list[id];
 }
 
 Tab.prototype.renderByMode = function() {
 	// TODO посмотреть, что выводим, скрытые или нет
 	
 	// Пока выводим не скрытые
-	var list = this.list, i, SZ = sz(list), item, s, block;
+	var o = this, list = o.list, i, SZ = sz(list), item, s, block;
 	this.contentBlock.innerHTML = '';
-	console.log(list);
 	for (i = 0; i < SZ; i++) {
 		item = list[i];
 		s = this.tpl();
@@ -97,11 +83,48 @@ Tab.prototype.renderByMode = function() {
 		s = s.replace('{mt}', item.mt);
 		block = appendChild(this.contentBlock, 'div', s, {
 			'data-cmid': "cmExample",
-			'data-id': "f" + i
+			'data-id': "f" + i,
+			id: 'f' + i
 		});
+		block.onclick = function(evt) {
+			o.onClickItem(evt);
+		}
 	}
 	
 }
+Tab.prototype.onClickItem = function(evt) {
+	var trg = ctrg(evt),
+		ct = new Date().getTime(),
+		item,
+		cname = 'tabContentItem',
+		path,
+		cmd,
+		slot,
+		ls = cs(this.contentBlock, cname),
+		i, SZ = sz(ls);
+	
+	for (i = 0; i < SZ; i++) {
+		removeClass(ls[i], 'active');
+	}
+	
+	addClass(cs(trg, cname)[0], 'active');
+	
+	if (ct - this.clicktime > 50 && ct - this.clicktime < 400 && trg.id == this.currentTargetId) {
+		item = this.getClickedItem(trg.id); // TODO
+		path = this.currentPath + '/' + item.name;
+		if (item.type == L('Catalog')) {
+			app.setActivePath(path, ['']);
+		} else {
+			cmd = '#!/bin/bash\nxdg-open \'' + path + '\'';
+			slot = App.dir() + '/sh/o.sh';
+			FS.writefile(slot, cmd);
+			jexec(slot, DevNull, DevNull, DevNull);
+		}
+	}
+	this.clicktime = ct;
+	this.currentTargetId = trg.id;
+}
+
 
 Tab.prototype.createItem = function(s) {
 	var item = {
@@ -150,3 +173,29 @@ Tab.prototype.getUser = function(s) {
 	return this.username;
 }
 
+
+Tab.prototype.tpl = function() {
+	return '<div class="tabContentItem" title="{name}">\
+						<div class="tabContentItemNameMain fl">\
+							<div class="tabContentItemIcon fl">\
+								<img class="imgTabContentItemIcon" src="{img}">\
+							</div>\
+							<div class="tabContentItemName fl">{name}</div>\
+							<div class="cf"></div>\
+						</div>\
+						\
+						<div class="tabContentItemSize fl">\
+							<div class="tabContentItemName">{sz}</div>\
+						</div>\
+						\
+						<div class="tabContentItemType fl" title="{type}">\
+							<div class="tabContentItemName" >{type}</div>\
+						</div>\
+						\
+						<div class="tabContentItemDate fl">\
+							<div class="tabContentItemDate">{mt}</div>\
+						</div>\
+						<div class="cf"></div>\
+					</div> <!-- /tabContentItem -->\
+					<div class="cf"></div>';
+}
