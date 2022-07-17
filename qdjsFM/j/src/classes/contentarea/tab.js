@@ -2,11 +2,12 @@ function Tab() {
 	this.username = '';
 	this.navbarPanelManager = new NavbarPanel();
 	this.addressPanel = new AddressPanel();
-	// this.unselectManager = new UnselectManager();
+	this.listRenderer = new ListRenderer();
 	this.list = [];
 	this.hideList = [];
 	this.contentBlock = e('tabItems');
 	this.statusBlock = e('statusText');
+	this.statusLdrPlacer = e('statusLdrPlacer');
 }
 
 Tab.prototype.setPath = function(path) {
@@ -74,7 +75,8 @@ Tab.prototype.renderByMode = function() {
 	
 	// Пока выводим не скрытые
 	var o = this, list = o.list, i, SZ = sz(list), item, s, block;
-	for (i = 0; i < SZ; i++) {
+	this.listRenderer.run(SZ, this, list);
+	/*for (i = 0; i < SZ; i++) {
 		item = list[i];
 		s = this.tpl();
 		// s = str_replace('{name}', item.name, s);
@@ -96,6 +98,7 @@ Tab.prototype.renderByMode = function() {
 		}
 	}
 	this.setStatus(SZ + ' ' + TextTransform.pluralize(SZ, L('Objects'), L('Objects-voice1'), L('Objects-voice2')));
+	*/
 }
 Tab.prototype.onClickItem = function(evt) {
 	var trg = ctrg(evt),
@@ -105,12 +108,7 @@ Tab.prototype.onClickItem = function(evt) {
 		path,
 		cmd,
 		slot,
-		// ls = cs(this.contentBlock, cname),
 		i;
-	// this.unselectManager.run(SZ, this, cs(trg, cname)[0], ls);
-	/*for (i = 0; i < SZ; i++) {
-		removeClass(ls[i], 'active');
-	}*/
 	if (this.activeItem) {
 		removeClass(this.activeItem, 'active');
 	}
@@ -186,7 +184,8 @@ Tab.prototype.setStatus = function(s, showLoader) {
 	if (showLoader) {
 		ldr = '<img src="' + App.dir() + '/i/ld/s.gif">';
 	}
-	this.statusBlock.innerHTML = ldr + ' ' + s;
+	this.statusLdrPlacer.innerHTML = ldr;
+	this.statusBlock.innerHTML = s;
 }
 
 Tab.prototype.tpl = function() {

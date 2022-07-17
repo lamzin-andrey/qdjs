@@ -1,2 +1,2 @@
 #!/bin/bash
-xdg-open '/home/andrey/hdata/Audio/2019-unprocess/0state.txt'
+xdg-open '/home/andrey/tmp/00/index.html'

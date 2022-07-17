@@ -289,7 +289,7 @@ Devices.prototype.addItem = function(name, path, xdxN) {
 		SZ = sz(this.prevList);
 		foundInPrev = 0;
 		for (i = 0; i < SZ; i++) {
-			if (this.prevList[i].displayName == name) {
+			if (this.prevList[i].displayName == name || name.indexOf(L('Volume')) != -1) {
 				foundInPrev = 1;
 				break;
 			}

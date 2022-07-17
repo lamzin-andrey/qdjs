@@ -107,6 +107,8 @@
 	background-color: #4a90d9;
 	color:white;
 }
-.tabContentStatusText img {
+.tabContentStatusText span img {
 	vertical-align: top;
+	line-height: 19px;
+	margin-top: 1px;
 }
