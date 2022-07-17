@@ -2,9 +2,11 @@ function Tab() {
 	this.username = '';
 	this.navbarPanelManager = new NavbarPanel();
 	this.addressPanel = new AddressPanel();
+	// this.unselectManager = new UnselectManager();
 	this.list = [];
 	this.hideList = [];
 	this.contentBlock = e('tabItems');
+	this.statusBlock = e('statusText');
 }
 
 Tab.prototype.setPath = function(path) {
@@ -13,6 +15,8 @@ Tab.prototype.setPath = function(path) {
 	this.hideList = [];
 	this.listComplete = false;
 	this.hideListComplete = false;
+	this.contentBlock.innerHTML = '';
+	this.setStatus(L('Load catalog data') + '. ' + L('Request') + '.', 1);
 	
 	var cmd = '#! /bin/bash\nls -lh --full-time "' + path + '"',
 		slot = App.dir()  + '/sh/ls.sh',
@@ -26,14 +30,16 @@ Tab.prototype.setPath = function(path) {
 	jexec(slot2, [this, this.onHideFileList], DevNull, DevNull);
 }
 Tab.prototype.onFileList = function(stdout, stderr) {
+	this.setStatus(L('Load catalog data') + '. ' + L('Start build list') + '.', 1);
 	this.list = this.buildList(stdout);
 	this.listComplete = true;
+	this.setStatus(L('Load catalog data') + '. ' + L('Рендерим') + '.', 1);
 	this.renderByMode();
 }
 Tab.prototype.onHideFileList = function(stdout, stderr) {
 	this.hideList = this.buildList(stdout);
 	this.hideListComplete = true;
-	this.renderByMode();// TODO
+	// this.renderByMode();// TODO
 }
 
 Tab.prototype.buildList = function(lsout) {
@@ -68,7 +74,6 @@ Tab.prototype.renderByMode = function() {
 	
 	// Пока выводим не скрытые
 	var o = this, list = o.list, i, SZ = sz(list), item, s, block;
-	this.contentBlock.innerHTML = '';
 	for (i = 0; i < SZ; i++) {
 		item = list[i];
 		s = this.tpl();
@@ -90,7 +95,7 @@ Tab.prototype.renderByMode = function() {
 			o.onClickItem(evt);
 		}
 	}
-	
+	this.setStatus(SZ + ' ' + TextTransform.pluralize(SZ, L('Objects'), L('Objects-voice1'), L('Objects-voice2')));
 }
 Tab.prototype.onClickItem = function(evt) {
 	var trg = ctrg(evt),
@@ -100,14 +105,17 @@ Tab.prototype.onClickItem = function(evt) {
 		path,
 		cmd,
 		slot,
-		ls = cs(this.contentBlock, cname),
-		i, SZ = sz(ls);
-	
-	for (i = 0; i < SZ; i++) {
+		// ls = cs(this.contentBlock, cname),
+		i;
+	// this.unselectManager.run(SZ, this, cs(trg, cname)[0], ls);
+	/*for (i = 0; i < SZ; i++) {
 		removeClass(ls[i], 'active');
+	}*/
+	if (this.activeItem) {
+		removeClass(this.activeItem, 'active');
 	}
-	
-	addClass(cs(trg, cname)[0], 'active');
+	this.activeItem = cs(trg, cname)[0];
+	addClass(this.activeItem, 'active');
 	
 	if (ct - this.clicktime > 50 && ct - this.clicktime < 400 && trg.id == this.currentTargetId) {
 		item = this.getClickedItem(trg.id); // TODO
@@ -173,6 +181,13 @@ Tab.prototype.getUser = function(s) {
 	return this.username;
 }
 
+Tab.prototype.setStatus = function(s, showLoader) {
+	var ldr = '';
+	if (showLoader) {
+		ldr = '<img src="' + App.dir() + '/i/ld/s.gif">';
+	}
+	this.statusBlock.innerHTML = ldr + ' ' + s;
+}
 
 Tab.prototype.tpl = function() {
 	return '<div class="tabContentItem" title="{name}">\

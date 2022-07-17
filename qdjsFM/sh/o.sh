@@ -1,2 +1,2 @@
 #!/bin/bash
-xdg-open '/home/andrey/Видео/2022-05-31-09-41-16.mp4'
+xdg-open '/home/andrey/hdata/Audio/2019-unprocess/0state.txt'

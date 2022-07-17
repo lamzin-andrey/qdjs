@@ -26,25 +26,26 @@ function onResize() {
 	var contentTopAreaH, 
 		vp = getViewport(),
 		vpH = vp.h,
-		vpW = vp.w;
+		vpW = vp.w,
+		dY = 48;
 	// for table
 	e('contentArea').style.height = (vpH - 0) + 'px';
-	e('contentArea').style.maxHeight = (vpH - 32) + 'px';
+	e('contentArea').style.maxHeight = (vpH - dY) + 'px';
 	
 	e('sidebarWrapper').style.height = (vpH - 0) + 'px';
-	e('sidebarWrapper').style.maxHeight = (vpH - 32) + 'px';
+	e('sidebarWrapper').style.maxHeight = (vpH - dY - 1) + 'px';
 	
 	setTimeout(function() {
 		e('contentArea').style.height = (vpH - 0) + 'px';
-		e('contentArea').style['max-height'] = (vpH - 32) + 'px';
+		e('contentArea').style['max-height'] = (vpH - dY) + 'px';
 		
 		e('sidebarWrapper').style.height = (vpH - 0) + 'px';
-		e('sidebarWrapper').style.maxHeight = (vpH - 32) + 'px';
+		e('sidebarWrapper').style.maxHeight = (vpH - dY) + 'px';
 	}, 1000);
 	
 	// for items
 	contentTopAreaH = e('tabsContainer').offsetHeight + e('addressContainer').offsetHeight;
-	e('tabItems').style.height = (vpH - contentTopAreaH - 64) + 'px';
+	e('tabItems').style.height = (vpH - contentTopAreaH - 1.7*dY) + 'px';
 	e('tabItems').style.width = (vpW - e('sidebarWrapper').offsetWidth - SCROLL_LINE_HEIGHT) + 'px';
 	
 	// items headers
