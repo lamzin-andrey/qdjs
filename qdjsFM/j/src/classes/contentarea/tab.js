@@ -30,6 +30,7 @@ Tab.prototype.setPath = function(path) {
 	FS.writefile(slot2, cmd);
 	jexec(slot2, [this, this.onHideFileList], DevNull, DevNull);
 }
+
 Tab.prototype.onFileList = function(stdout, stderr) {
 	this.setStatus(L('Load catalog data') + '. ' + L('Start build list') + '.', 1);
 	this.list = this.buildList(stdout);
@@ -108,7 +109,7 @@ Tab.prototype.onClickItem = function(evt) {
 		path,
 		cmd,
 		slot,
-		i;
+		i, targetModel;
 	if (this.activeItem) {
 		removeClass(this.activeItem, 'active');
 	}
@@ -116,15 +117,11 @@ Tab.prototype.onClickItem = function(evt) {
 	addClass(this.activeItem, 'active');
 	
 	if (ct - this.clicktime > 50 && ct - this.clicktime < 400 && trg.id == this.currentTargetId) {
-		item = this.getClickedItem(trg.id); // TODO
-		path = this.currentPath + '/' + item.name;
-		if (item.type == L('Catalog')) {
-			app.setActivePath(path, ['']);
-		} else {
-			cmd = '#!/bin/bash\nxdg-open \'' + path + '\'';
-			slot = App.dir() + '/sh/o.sh';
-			FS.writefile(slot, cmd);
-			jexec(slot, DevNull, DevNull, DevNull);
+		this.openAction(trg.id);
+	} else {
+		targetModel = this.getClickedItem(trg.id);
+		if (targetModel) {
+			this.setStatus('«' + targetModel.name + '» (' + targetModel.sz + ') ' + targetModel.type);
 		}
 	}
 	this.clicktime = ct;
@@ -154,10 +151,12 @@ Tab.prototype.createItem = function(s) {
 	if (a[0][0] == 'd') {
 		item.type = L('Catalog');
 		item.i = App.dir() + '/i/folder32.png';
+		item.cmId = 'cmCatalog';
 	} else {
 		typeData = Types.get(this.currentPath + '/' + item.name);
 		item.type = typeData.t;
 		item.i = typeData.i;
+		item.cmId = typeData.c;
 	}
 	
 	item.sz = app.devicesManager.pluralizeSize(a[4], 1);
@@ -171,12 +170,43 @@ Tab.prototype.createItem = function(s) {
 	return item;
 }
 
+Tab.prototype.onContextMenu = function(targetId, event) {
+	var activeItem = e(targetId);
+	if (activeItem) {
+		activeItem = cs(activeItem, 'tabContentItem')[0];
+		if (activeItem) {
+			if (this.activeItem) {
+				removeClass(this.activeItem, 'active');
+			}
+			this.activeItem = activeItem;
+			addClass(this.activeItem, 'active');
+		}
+	}
+}
+
 Tab.prototype.setUser = function(s) {
 	this.username = s;
 }
 
 Tab.prototype.getUser = function(s) {
 	return this.username;
+}
+
+Tab.prototype.openAction = function(id) {
+	var item, path, cmd, slot;
+	item = this.getClickedItem(id);
+	path = this.currentPath + '/' + item.name;
+	if (item.type == L('Catalog')) {
+		app.setActivePath(path, ['']);
+	} else {
+		cmd = '#!/bin/bash\nxdg-open \'' + path + '\'';
+		slot = App.dir() + '/sh/o.sh';
+		FS.writefile(slot, cmd);
+		jexec(slot, DevNull, DevNull, DevNull);
+	}
+}
+Tab.prototype.onClickOpen = function() {
+	this.openAction(window.currentCmTargetId);
 }
 
 Tab.prototype.setStatus = function(s, showLoader) {

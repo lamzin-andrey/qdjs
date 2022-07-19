@@ -154,6 +154,39 @@ Devices.prototype.setMountedInUuidList = function() {
 	}
 }
 
+Devices.prototype.findDiskPartByPath = function(path) {
+	var i, SZ = sz(this.listDisks), mx = 0, j, len = 0, target;
+	for (i in this.listDisks) {
+		j = this.listDisks[i];
+		if (path.indexOf(j.d) === 0) {
+			if (sz(j.d) > len) {
+				len = sz(j.d);
+				target = j;
+			}
+		}
+	}
+	
+	return target;
+}
+
+Devices.prototype.getPluralFreeSpaceOfDiskPartByPath = function(path) {
+	var s = this.getFreeSpaceOfDiskPartByPath(path);
+	if (!s) {
+		return '';
+	}
+	
+	return L('free') + ' ' + s;
+}
+
+Devices.prototype.getFreeSpaceOfDiskPartByPath = function(path) {
+	var target = this.findDiskPartByPath(path);
+	if (!target) {
+		return '';
+	}
+	
+	return this.pluralizeSize(target.f, 1);
+}
+
 Devices.prototype.parseDfhOut = function(duhout) {
 	var lines = duhout.split('\n'), i, list = {}, buf = [], s, SZ = sz(lines), key, val;
 	for (i = 0; i < SZ; i++) {
@@ -165,13 +198,23 @@ Devices.prototype.parseDfhOut = function(duhout) {
 		val = {
 			sz: String(buf[1]).trim(),
 			u: String(buf[2]).trim(),
-			f: String(buf[3]).trim()
+			f: String(buf[3]).trim(),
+			d: this.parseMountPoint(buf)
 		};
 		
 		list[key] = val;
 	}
 	
 	return list;
+}
+
+Devices.prototype.parseMountPoint = function(aLine) {
+	var aR = [], i, SZ = sz(aLine);
+	for (i = 5; i < SZ; i++) {
+		aR.push(aLine[i])
+	}
+	
+	return aR.join(' ').trim();
 }
 
 Devices.prototype.getUnknownVolume = function(uuid, oFound) {

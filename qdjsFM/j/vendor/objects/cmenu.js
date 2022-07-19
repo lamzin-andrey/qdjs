@@ -52,11 +52,20 @@ window.ContextMenuManager = {
 			return '';
 		}
 		var cmId = attr(htmlElement, 'data-cmid'),
-			targetId = attr(htmlElement, 'data-id');
+			targetId = attr(htmlElement, 'data-id'),
+			targetHandler = attr(htmlElement, 'data-handler'),
+			targetHandlerContext = attr(htmlElement, 'data-handler-context');
 		if (!cmId && !targetId) {
+			this.hide();
 			return '';
 		}
 		window.currentCmTargetId = targetId;
+		if (targetHandlerContext && (window[targetHandlerContext] instanceof Object) && (window[targetHandlerContext][targetHandler] instanceof Function)) {
+			window[targetHandlerContext][targetHandler].call(window[targetHandlerContext], targetId, event)
+		}
+		if (!e(cmId)) {
+			this.hide();
+		}
 		return e(cmId).innerHTML;
 	},
 	

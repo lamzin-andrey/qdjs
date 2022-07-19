@@ -300,6 +300,22 @@ function htmlspecialchars($s) {
 	//return encodeURIComponent($s);
 	return $s;
 }
+
+function implode(glue, arr) {
+	var i, a = [];
+	if (arr instanceof Array) {
+		return arr.join(glue);
+	}
+	
+	if (arr instanceof Object) {
+		for (i in arr) {
+			a.push(arr[i]);
+		}
+	}
+	
+	return a.join(glue);
+}
+
 function in_array(needle, subject, strict) {
 	var i, j, r;
 	if (typeof(subject) == 'array') {

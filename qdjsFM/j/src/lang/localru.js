@@ -16,6 +16,7 @@ var langRu = {
 	'GB' : 'ГБ',
 	'MB' : 'МБ',
 	'KB' : 'КБ',
+	'b' : '',
 	'Desktop file' : 'Файл настроек рабочего стола',
 	'Shockwave Flash Application' : 'Приложение Shockwave Flash',
 	'Bytes' : 'Байт',
@@ -27,9 +28,11 @@ var langRu = {
 	'Objects' : 'объект',
 	'Objects-voice1' : 'объекта',
 	'Objects-voice2' : 'объектов',
-	'' : '',
-	'' : '',
-	'' : '',
+	'free' : 'свободно',
+	'K' : 'К',
+	'M' : 'М',
+	'G' : 'Г',
+	'T' : 'Т',
 	'' : '',
 	'' : ''
 };

@@ -1,2 +1,2 @@
 #!/bin/bash
-xdg-open '/home/andrey/tmp/00/index.html'
+xdg-open '/home/andrey/hdata/programs/my/qdjs/qdjsFM/i/exec32.png'

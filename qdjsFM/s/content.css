@@ -102,7 +102,7 @@
 .tabContentItemType {min-width: 202px;/*! max-width: 5px; */}
 .tabContentItemDate {}
 .tabContentStatus     {/*! border-bottom: 1px solid #b6b6b3; */padding-top: 5px;/*! min-height: 21px; */margin-top: 5px;}
-.tabContentStatusText {font-size: 16px;padding-left: 4px;line-height: 19px;height: 21px;vertical-align: middle;-webkit-user-select: text;}
+.tabContentStatusText {font-size: 14px;padding-left: 4px;line-height: 19px;height: 21px;vertical-align: middle;-webkit-user-select: text;}
 .tabContentItem.active {
 	background-color: #4a90d9;
 	color:white;

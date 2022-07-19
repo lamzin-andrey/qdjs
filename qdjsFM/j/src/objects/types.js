@@ -5,6 +5,7 @@ window.Types = {
 			r = {
 				t: L('File'),
 				i: App.dir() + '/i/mi/unknown32.png',
+				c: 'cmDefault'
 			},
 			targetIcon,
 			images = In('png', 'jpg', 'jpe', 'jpeg', 'jfif', 'gif', 'bmp'),
@@ -19,27 +20,35 @@ window.Types = {
 		if (images[ext]) {
 			r.t = L('Image') + ' ' + ext.toUpperCase();
 			r.i = path;
+			r.c = 'cmImage';
 		} else if (texts[ext]) {
 			r.t = L('Text file');
 			r.i = App.dir() + '/i/mi/txt32.png';
+			r.c = 'cmText';
 		} else if (docs[ext]) {
 			r.t = L('Document') + ' ' + ext.toUpperCase();
 			r.i = App.dir() + '/i/mi/document32.png';
+			r.c = 'cmDocument';
 		} else if (audio[ext]) {
 			r.t = L('Audio') + ' ' + ext.toUpperCase();
 			r.i = App.dir() + '/i/mi/sound32.png';
+			r.c = 'cmAudio';
 		} else if (video[ext]) {
 			r.t = L('Video') + ' ' + ext.toUpperCase();
 			r.i = App.dir() + '/i/mi/video32.png';
+			r.c = 'cmVideo';
 		} else if (arch[ext]) {
 			r.t = L('Archive') + ' ' + ext.toUpperCase();
 			r.i = App.dir() + '/i/mi/tar32.png';
+			r.c = 'cmArch';
 		} else if (web[ext]) {
 			r.t = L('Web page') + ' ' + ext.toUpperCase();
 			r.i = App.dir() + '/i/mi/html32.png';
+			r.c = 'cmWeb';
 		} else if (ext == 'desktop') {
 			r.t = L('Desktop file');
 			r.i = App.dir() + '/i/exec32.png';
+			r.c = 'cmDesktop';
 		} else if (ext == 'swf') {
 			r.t = L('Shockwave Flash Application');
 		}
