@@ -1,2 +1,2 @@
 #!/bin/bash
-xdg-open '//var/user/EXEDVD0305.iso'
+xdg-open '/home/andrey/myapps/simpleTextEditor/js/simpleTextEditor.js'
