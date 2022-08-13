@@ -1,7 +1,7 @@
 window.SCROLL_LINE_HEIGHT = 18
 function main() {
 	try {
-		var lang = Settings.get('curretLang');
+		var lang = Settings.get('currentLang');
 		if (lang == 'ru' || lang == 'en') {
 			onClickChangeLang(lang);
 		}
@@ -150,7 +150,7 @@ function onClickChangeLang(lang) {
 	s = s.replace(/<html lang="[a-z]{2}">/, '<html lang="' + lang +'">');
 	FS.writefile(indexFile, s);
 	
-	Settings.set('curretLang', lang);
+	Settings.set('currentLang', lang);
 }
 
 window.onload = main;

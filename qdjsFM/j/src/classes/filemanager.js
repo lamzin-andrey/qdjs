@@ -2,6 +2,7 @@ function FileManager() {
 	this.addContextMenuHtml();
 	this.bookmarksManager = new Bookmarks();
 	this.tabPanel = new TabPanel();
+	this.procManager = new ProcManager();
 	AppEnv.init([this, this.onGetActualEnv], [this, this.onGetSavedEnv]);
 	this.devicesManager = new Devices();
 	this.devicesManager.run();
@@ -45,6 +46,7 @@ FileManager.prototype.onGetActualEnv = function() {
 			this.tab.setUser(USER);
 		}
 	}
+	this.procManager.run();
 }
 
 
