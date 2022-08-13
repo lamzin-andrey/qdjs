@@ -1,2 +1,2 @@
 #!/bin/bash
-xdg-open '/media/andrey/D/hobby/hobby5/wav/Документ Microsoft Word.doc'
+xdg-open '//var/user/EXEDVD0305.iso'

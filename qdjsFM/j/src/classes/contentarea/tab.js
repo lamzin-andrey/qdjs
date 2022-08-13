@@ -14,7 +14,10 @@ function Tab() {
 }
 
 Tab.prototype.setPath = function(path) {
-	var o = this;
+	var o = this,
+		cmd = '#! /bin/bash\nls -lh --full-time "' + path + '"',
+		slot = App.dir()  + '/sh/ls.sh',
+		slot2 = App.dir()  + '/sh/lsh.sh';
 	this.currentPath = path;
 	this.list = [];
 	this.hideList = [];
@@ -26,14 +29,12 @@ Tab.prototype.setPath = function(path) {
 	this.contentBlock.innerHTML = '';
 	this.setStatus(L('Load catalog data') + '. ' + L('Request') + '.', 1);
 	
-	/*var cmd = '#! /bin/bash\nls -lh --full-time "' + path + '"',
-		slot = App.dir()  + '/sh/ls.sh',
-		slot2 = App.dir()  + '/sh/lsh.sh';
 	FS.writefile(slot, cmd);
-	jexec(slot, [this, this.onFileList], DevNull, DevNull);*/
+	jexec(slot, [this, this.onFileList], DevNull, DevNull);
 	
 	
-	if (this.getListIval) {
+	// No effective on old machine
+	/*if (this.getListIval) {
 		clearInterval(this.getListIval);
 	}
 	window.app.listProc.write(path); // TODO
@@ -44,13 +45,13 @@ Tab.prototype.setPath = function(path) {
 			clearInterval(o.getListIval);
 			o.getListIval = 0;
 		}
-	}, 100);
+	}, 100);*/
 	
-	/*cmd = '#! /bin/bash\nls -alh --full-time "' + path + '"';
+	cmd = '#! /bin/bash\nls -alh --full-time "' + path + '"';
 	FS.writefile(slot2, cmd);
-	jexec(slot2, [this, this.onHideFileList], DevNull, DevNull);*/
+	jexec(slot2, [this, this.onHideFileList], DevNull, DevNull);
 	
-	if (this.getHiddenListIval) {
+	/*if (this.getHiddenListIval) {
 		clearInterval(this.getHiddenListIval);
 	}
 	window.app.hiddenListProc.write(path);
@@ -61,7 +62,7 @@ Tab.prototype.setPath = function(path) {
 			clearInterval(o.getHiddenListIval);
 			o.getHiddenListIval = 0;
 		}
-	}, 100);
+	}, 100);*/
 }
 
 Tab.prototype.onFileList = function(stdout, stderr) {
