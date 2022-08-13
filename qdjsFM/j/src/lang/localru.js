@@ -33,6 +33,9 @@ var langRu = {
 	'M' : 'М',
 	'G' : 'Г',
 	'T' : 'Т',
+	'Show hidden files Ctrl+H' : 'Показать скрытые файлы Ctrl+H',
+	'Hide hidden files Ctrl+H' : 'Скрыть скрытые файлы Ctrl+H',
+	'' : '',
 	'' : '',
 	'' : ''
 };

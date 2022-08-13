@@ -5,6 +5,7 @@ function FileManager() {
 	AppEnv.init([this, this.onGetActualEnv], [this, this.onGetSavedEnv]);
 	this.devicesManager = new Devices();
 	this.devicesManager.run();
+	this.setMainMenu();
 }
 
 /**
@@ -64,6 +65,19 @@ FileManager.prototype.onGetSavedEnv = function() {
 FileManager.prototype.onResize = function() {
 	
 }
+/**
+ * Set unconstant main menu items
+*/
+FileManager.prototype.setMainMenu = function() {
+	var mode = intval(Settings.get('hMode')), text;
+	if (1 === mode) {
+		text = L('Hide hidden files Ctrl+H');
+	} else {
+		text = L('Show hidden files Ctrl+H');
+	}
+	Qt.renameMenuItem(1, 0, text);
+}
+
 
 FileManager.prototype.addContextMenuHtml = function() {
 	var html = '<!-- context menu example -->\

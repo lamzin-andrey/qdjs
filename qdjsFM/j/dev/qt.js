@@ -17,6 +17,7 @@ window.QtShadow = {
 	openFileDialog(caption, directory, filter){console.log(`Qt openFileDialog(${caption}, ${directory}, ${filter})`);},
 	openDirectoryDialog(caption, directory, filter){console.log(`Qt openDirectoryDialog(${caption}, ${directory}, ${filter})`);},
 	saveFileDialog(caption, directory, filter){console.log(`Qt saveFileDialog(${caption}, ${directory}, ${filter})`);},
-	openFilesDialog(caption, directory, filter){console.log(`Qt openFilesDialog(${caption}, ${directory}, ${filter})`);}
+	openFilesDialog(caption, directory, filter){console.log(`Qt openFilesDialog(${caption}, ${directory}, ${filter})`);},
+	renameMenuItem(x, y, text){console.log(`Qt renameMenuItem(${x}, ${y}, ${text})`);}
 };
 

@@ -74,15 +74,34 @@ function onKeyUp(evt) {
 		onClickExitMenu();
 		break;
 	}
+	
+	if (72 == MW.getLastKeyCode() || 1056 == MW.getLastKeyCode()) {
+		onClickChangeHideMode();
+	}
 	    
     }
-	if (evt.keyCode == 27 && window.mainMenuIsHide) {
-		Qt.showMainMenu();
-	}
+	
 }
 
 function onClickExitMenu() {
 	Qt.quit();
+}
+
+function onClickChangeHideMode() {
+	var mode = intval(Settings.get('hMode')), text;
+	if (1 === mode) {
+		mode = 0;
+		text = L('Show hidden files Ctrl+H');
+	} else {
+		mode = 1;
+		text = L('Hide hidden files Ctrl+H');
+	}
+	Settings.set('hMode', mode);
+	
+	if (app && app.tab) {
+		app.tab.setPath(app.tab.currentPath);
+		Qt.renameMenuItem(1, 0, text);
+	}
 }
 
 function onClickAbout() {

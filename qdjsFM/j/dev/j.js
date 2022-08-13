@@ -239,7 +239,7 @@ tmpfs            3,0G          68K  3,0G            1% /run/user/1000
 	}
 	
 	
-	if (command.indexOf('ls.sh') != -1) {
+	if (command.indexOf('ls.sh') != -1 || command.indexOf('lsh.sh') != -1) {
 		onFinish[1].call(onFinish[0], `итого 1,1G
 -rw-rw-r--  1 andrey andrey  90K 2021-11-16 09:05:02.030072406 +0300  0000.png
 -rw-rw-r--  1 andrey andrey  70K 2022-06-10 19:05:50.302340682 +0300  0000-ЛАН-10.06-1942.pdf
@@ -632,6 +632,9 @@ window.MW = {
 	},
 	close: function() {
 		Qt.quit();
+	},
+	renameMenuItem: function(x, y, text) {
+		Qt.renameMenuItem(x, y, text);
 	}
 };
 }

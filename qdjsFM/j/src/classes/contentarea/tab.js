@@ -5,15 +5,21 @@ function Tab() {
 	this.listRenderer = new ListRenderer();
 	this.list = [];
 	this.hideList = [];
+	this.showList = [];
 	this.contentBlock = e('tabItems');
 	this.statusBlock = e('statusText');
 	this.statusLdrPlacer = e('statusLdrPlacer');
+	this.listCount = 0;
+	this.selectionItems = [];
 }
 
 Tab.prototype.setPath = function(path) {
 	this.currentPath = path;
 	this.list = [];
 	this.hideList = [];
+	this.showList = [];
+	this.selectionItems = [];
+	this.listCount = 0;
 	this.listComplete = false;
 	this.hideListComplete = false;
 	this.contentBlock.innerHTML = '';
@@ -36,12 +42,14 @@ Tab.prototype.onFileList = function(stdout, stderr) {
 	this.list = this.buildList(stdout);
 	this.listComplete = true;
 	this.setStatus(L('Load catalog data') + '. ' + L('Рендерим') + '.', 1);
+	this.listCount++;
 	this.renderByMode();
 }
 Tab.prototype.onHideFileList = function(stdout, stderr) {
 	this.hideList = this.buildList(stdout);
 	this.hideListComplete = true;
-	// this.renderByMode();// TODO
+	this.listCount++;
+	this.renderByMode();
 }
 
 Tab.prototype.buildList = function(lsout) {
@@ -49,6 +57,9 @@ Tab.prototype.buildList = function(lsout) {
 	for (i = 0; i < SZ; i++) {
 		item = this.createItem(lines[i]);
 		if (item) {
+			if (item.name == '.' || item.name == '..') {
+				continue;
+			}
 			if (item.type != L('Catalog')) {
 				files.push(item);
 			} else {
@@ -76,6 +87,18 @@ Tab.prototype.renderByMode = function() {
 	
 	// Пока выводим не скрытые
 	var o = this, list = o.list, i, SZ = sz(list), item, s, block;
+	
+	if (o.listCount != 2) {
+		return;
+	}
+	
+	if (1 === intval(Settings.get('hMode'))) {
+		o.showList = JSON.parse(JSON.stringify(o.list));
+		o.list = JSON.parse(JSON.stringify(o.hideList));
+		list = o.list;
+		SZ = sz(list)
+	}
+	
 	this.listRenderer.run(SZ, this, list);
 	/*for (i = 0; i < SZ; i++) {
 		item = list[i];
@@ -105,16 +128,12 @@ Tab.prototype.onClickItem = function(evt) {
 	var trg = ctrg(evt),
 		ct = new Date().getTime(),
 		item,
-		cname = 'tabContentItem',
 		path,
 		cmd,
 		slot,
 		i, targetModel;
-	if (this.activeItem) {
-		removeClass(this.activeItem, 'active');
-	}
-	this.activeItem = cs(trg, cname)[0];
-	addClass(this.activeItem, 'active');
+	
+	this.setSelection(evt);
 	
 	if (ct - this.clicktime > 50 && ct - this.clicktime < 400 && trg.id == this.currentTargetId) {
 		this.openAction(trg.id);
@@ -242,4 +261,83 @@ Tab.prototype.tpl = function() {
 						<div class="cf"></div>\
 					</div> <!-- /tabContentItem -->\
 					<div class="cf"></div>';
+}
+
+Tab.prototype.setSelection = function(evt) {
+	var i, trg = ctrg(evt), cname = 'tabContentItem', lastId, nextId, obj, buf;
+	if (!evt.ctrlKey && !evt.shiftKey) {
+		for (i = 0; i < sz(this.selectionItems); i++) {
+			removeClass(this.selectionItems[i], 'active');
+		}
+		this.activeItem = cs(trg, cname)[0];
+		this.selectionItems.length = 0;
+		this.selectionItems.push(this.activeItem);
+		addClass(this.activeItem, 'active');
+	} else if (evt.ctrlKey) {
+		this.activeItem = cs(trg, cname)[0];
+		if (hasClass(this.activeItem, 'active')) {
+			removeClass(this.activeItem, 'active');
+			for (i = 0; i < sz(this.selectionItems); i++) {
+				obj = this.selectionItems[i];
+				if (obj && obj.parentNode.id == this.activeItem.parentNode.id) {
+					this.selectionItems.splice(i, 1);
+					break;
+				}
+			}
+			this.activeItem = null;
+		} else {
+			addClass(this.activeItem, 'active');
+			this.selectionItems.push(this.activeItem);
+		}
+		
+	} else if (evt.shiftKey) {
+		lastId = -1;
+		if (this.activeItem) {
+			lastId = this.toI(this.activeItem.parentNode.id);
+			for (i = 0; i < sz(this.selectionItems); i++) {
+				buf = parseInt(this.toI(this.selectionItems[i].parentNode.id));
+				if (buf < parseInt(lastId)) {
+					lastId = buf;
+				}
+			}
+		}
+		this.activeItem = cs(trg, cname)[0];
+		nextId = -1;
+		if (this.activeItem) {
+			nextId = this.toI(this.activeItem.parentNode.id);
+		}
+		for (i = 0; i < sz(this.selectionItems); i++) {
+			removeClass(this.selectionItems[i], 'active');
+		}
+		if (nextId <= lastId) {
+			buf = lastId;
+			lastId = nextId;
+			nextId = buf;
+			for (i = 0; i < sz(this.selectionItems); i++) {
+				buf = parseInt(this.toI(this.selectionItems[i].parentNode.id));
+				if (buf > parseInt(nextId)) {
+					nextId = buf;
+				}
+			}
+		}
+		this.selectionItems.length = 0;
+		if (lastId == -1 || nextId == -1) {
+			this.selectionItems.push(this.activeItem);
+			addClass(this.activeItem, 'active');
+		} else if (lastId < nextId) {
+			for (i = lastId; i <= nextId; i++) {
+				obj = e('f' + i);
+				if (obj) {
+					obj = cs(obj, cname)[0];
+					if (obj) {
+						this.selectionItems.push(obj);
+						addClass(obj, 'active');
+					}
+				}
+			}
+		}
+	}
+}
+Tab.prototype.toI = function(s) {
+	return String(s).replace(/\D/mig, '');
 }
