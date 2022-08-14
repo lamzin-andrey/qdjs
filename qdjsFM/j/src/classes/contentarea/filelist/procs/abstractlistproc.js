@@ -35,7 +35,7 @@ AbstractListProc.prototype.onDataForCheckRun = function() {
 		FS.writefile(this.workDir + '/' + procName + '.inp', this.sourceCurrentDirContent);
 	}
 	if (line != 'BOF ' + this.testDir) {
-		// alert('Will run!');
+		alert('Will run! ex = ' + this.testDir + ', got ' + line);
 		// run daemon
 		tpl = FS.readfile(App.dir() + '/sh/' + procName + '/' + procName + '.sh.tpl');
 		s = tpl.replace('{daemonDir}', App.dir() + '/sh/' + procName);
@@ -46,27 +46,33 @@ AbstractListProc.prototype.onDataForCheckRun = function() {
 }
 
 AbstractListProc.prototype.write = function(path) {
+	if (!this.isRun) {
+		return;
+	}
 	var procName = this.getProcName();
 	FS.writefile(this.workDir + '/' + procName + '.inp', path);
 }
 
 AbstractListProc.prototype.read = function(path, dbg) {
+	if (!this.isRun) {
+		return '';
+	}
 	var procName = this.getProcName(),
 		ls, first, last;
 	ls = FS.readfile(this.workDir + '/' + procName + '.out').split('\n');
 	first = ls[0].trim();
 	last = ls[sz(ls) - 2].trim();
-	/*if (dbg){
+	if (dbg){
 		alert(first);
 		alert(last);
-	}*/
+	}
 	if (first == ('BOF ' + path) && last == ('EOF ' + path)) {
 		ls.splice(0, 1);
 		ls.splice(sz(ls) - 2, 1);
 		last = ls.join('\n');
-		/*if (dbg){
+		if (dbg){
 			alert(last);
-		}*/
+		}
 		return last;
 	}
 	

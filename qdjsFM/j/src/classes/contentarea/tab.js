@@ -3,6 +3,7 @@ function Tab() {
 	this.navbarPanelManager = new NavbarPanel();
 	this.addressPanel = new AddressPanel();
 	this.listRenderer = new ListRenderer();
+	this.listUpdater = new ListUpdater(this);
 	this.list = [];
 	this.hideList = [];
 	this.showList = [];
@@ -18,6 +19,7 @@ Tab.prototype.setPath = function(path) {
 		cmd = '#! /bin/bash\nls -lh --full-time "' + path + '"',
 		slot = App.dir()  + '/sh/ls.sh',
 		slot2 = App.dir()  + '/sh/lsh.sh';
+	this.listUpdater.stop();
 	this.currentPath = path;
 	this.list = [];
 	this.hideList = [];
@@ -37,9 +39,9 @@ Tab.prototype.setPath = function(path) {
 	/*if (this.getListIval) {
 		clearInterval(this.getListIval);
 	}
-	window.app.listProc.write(path); // TODO
+	window.app.listProc.write(path);
 	this.getListIval = setInterval(function(){
-		var data = window.app.listProc.read(path); // TODO
+		var data = window.app.listProc.read(path);
 		if (data) {
 			o.onFileList(data, '');
 			clearInterval(o.getListIval);
@@ -104,16 +106,12 @@ Tab.prototype.buildList = function(lsout) {
 }
 
 Tab.prototype.getClickedItem = function(id) {
-	// TODO посмотреть, что выводим, скрытые или нет
 	var i, SZ;
 	id = id.replace('f', '');
 	return this.list[id];
 }
 
 Tab.prototype.renderByMode = function() {
-	// TODO посмотреть, что выводим, скрытые или нет
-	
-	// Пока выводим не скрытые
 	var o = this, list = o.list, i, SZ = sz(list), item, s, block;
 	
 	if (o.listCount != 2) {
@@ -126,31 +124,7 @@ Tab.prototype.renderByMode = function() {
 		list = o.list;
 		SZ = sz(list)
 	}
-	
 	this.listRenderer.run(SZ, this, list);
-	/*for (i = 0; i < SZ; i++) {
-		item = list[i];
-		s = this.tpl();
-		// s = str_replace('{name}', item.name, s);
-		s = s.replace('{name}', item.name);
-		s = s.replace('{name}', item.name);
-		s = s.replace('{img}', item.i);
-		s = s.replace('{sz}', item.sz);
-		// s = str_replace('{type}', item.type, s);
-		s = s.replace('{type}', item.type);
-		s = s.replace('{type}', item.type);
-		s = s.replace('{mt}', item.mt);
-		block = appendChild(this.contentBlock, 'div', s, {
-			'data-cmid': "cmExample",
-			'data-id': "f" + i,
-			id: 'f' + i
-		});
-		block.onclick = function(evt) {
-			o.onClickItem(evt);
-		}
-	}
-	this.setStatus(SZ + ' ' + TextTransform.pluralize(SZ, L('Objects'), L('Objects-voice1'), L('Objects-voice2')));
-	*/
 }
 Tab.prototype.onClickItem = function(evt) {
 	var trg = ctrg(evt),
@@ -185,7 +159,8 @@ Tab.prototype.createItem = function(s) {
 			g:'',
 			mt:'',
 			nSubdirs: 0,
-			i:''
+			i:'',
+			src: s
 		},
 		i, buf, a, typeData;
 	buf = s.split('->');
@@ -260,8 +235,15 @@ Tab.prototype.setStatus = function(s, showLoader) {
 	var ldr = '';
 	if (showLoader) {
 		ldr = '<img src="' + App.dir() + '/i/ld/s.gif">';
+		if (this.lastLoader != ldr) {
+			this.statusLdrPlacer.innerHTML = ldr;
+			this.lastLoader == ldr;
+		}
+	} else {
+		this.statusLdrPlacer.innerHTML = ldr;
+		this.lastLoader == ldr;
 	}
-	this.statusLdrPlacer.innerHTML = ldr;
+	
 	this.statusBlock.innerHTML = s;
 }
 
@@ -284,7 +266,7 @@ Tab.prototype.tpl = function() {
 						</div>\
 						\
 						<div class="tabContentItemDate fl">\
-							<div class="tabContentItemDate">{mt}</div>\
+							<div class="tabContentItemName">{mt}</div>\
 						</div>\
 						<div class="cf"></div>\
 					</div> <!-- /tabContentItem -->\

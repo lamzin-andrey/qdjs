@@ -24,13 +24,11 @@ ListRenderer.prototype.renderPart = function(){
 	o = this.context;
 	for (i = start; i < end; i++) {
 		item = this.ls[i];
-		s = this.context.tpl.call(this.context);
-		// s = str_replace('{name}', item.name, s);
+		/*s = this.context.tpl.call(this.context);
 		s = s.replace('{name}', item.name);
 		s = s.replace('{name}', item.name);
 		s = s.replace('{img}', item.i);
 		s = s.replace('{sz}', item.sz);
-		// s = str_replace('{type}', item.type, s);
 		s = s.replace('{type}', item.type);
 		s = s.replace('{type}', item.type);
 		s = s.replace('{mt}', item.mt);
@@ -40,12 +38,12 @@ ListRenderer.prototype.renderPart = function(){
 			'data-handler': "onContextMenu",
 			'data-handler-context': "tab",
 			id: 'f' + i
-		});
+		});*/
 		
-		block.onclick = function(evt) {
-			// o.onClickItem(evt);
-			o.onClickItem.call(o, evt);
-		}
+		/*block = this.createElement(item, i);
+		this.setListeners(block);*/
+		this.appendNew(i, item);
+		
 		this.iterator++;
 		this.incSize(item.sz);
 	}
@@ -62,6 +60,7 @@ ListRenderer.prototype.renderPart = function(){
 						+ ' (' + this.getHumanFilesize(intval(this.filesSize), 2, 3, false) + ')'
 						+ freeSpaceText;
 		this.context.setStatus.call(this.context, statusText);
+		this.context.listUpdater.run.call(this.context.listUpdater);
 	}
 }
 
@@ -103,8 +102,9 @@ ListRenderer.prototype.incSize = function(sz){
 	} else if (sz.indexOf(L('T')) != -1) {
 		fSz *= m * m * m * m;
 	}
-	
 	this.filesSize += fSz;
+	
+	return fSz;
 }
 
 
@@ -185,4 +185,87 @@ ListRenderer.prototype.getHumanValue = function($n, $units, $divider, $percision
 }
 
 
+ListRenderer.prototype.createElement = function(item, i) {
+	var s;
+	s = this.context.tpl.call(this.context);
+	s = s.replace('{name}', item.name);
+	s = s.replace('{name}', item.name);
+	s = s.replace('{img}', item.i);
+	s = s.replace('{sz}', item.sz);
+	s = s.replace('{type}', item.type);
+	s = s.replace('{type}', item.type);
+	s = s.replace('{mt}', item.mt);
+	block = appendChild(this.context.contentBlock, 'div', s, {
+		'data-cmid': item.cmId,
+		'data-id': "f" + i,
+		'data-handler': "onContextMenu",
+		'data-handler-context': "tab",
+		id: 'f' + i
+	});
+	
+	return block;
+}
 
+ListRenderer.prototype.updateItem = function(i, newItem) {
+	var el = e('f' + i), child;
+	if (!el) {
+		return;
+	}
+	attr(el, 'data-cmid', newItem.cmId);
+	attr(el, 'data-id', 'f' + i);
+	attr(el, 'id', 'f' + i);
+	this.renderItemName(i, newItem.name);
+	this.renderItemIcon(i, newItem.i);
+	this.renderItemSize(i, newItem.sz);
+	this.renderItemType(i, newItem.type);
+	this.renderItemModifyDate(i, newItem.mt);
+}
+ListRenderer.prototype.renderItemModifyDate = function(i, mt) {
+	this.setSubValue(e('f' + i), 'tabContentItemDate', mt);
+}
+ListRenderer.prototype.setSubValue = function(el, className, val) {
+	var child = cs(el, className)[0];
+	if (child) {
+		child = cs(child, 'tabContentItemName')[0];
+		if (child) {
+			child.innerHTML = val;
+		}
+	}
+}
+ListRenderer.prototype.renderItemType = function(i, t) {
+	var el = e('f' + i), 
+		child = cs(el, 'tabContentItemType')[0];
+	if (child) {
+		attr(child, 'title' , t);
+		child = cs(child, 'tabContentItemName')[0];
+		if (child) {
+			child.innerHTML = t;
+		}
+	}
+}
+ListRenderer.prototype.renderItemSize = function(i, size) {
+	this.setSubValue(e('f' + i), 'tabContentItemSize', size);
+}
+ListRenderer.prototype.renderItemIcon = function(i, src) {
+	var child = cs(('f' + i), 'imgTabContentItemIcon')[0];
+	if (child) {
+		attr(child, 'src', src);
+	}
+}
+ListRenderer.prototype.renderItemName = function(i, name) {	
+	var child = cs(e('f' + i), 'tabContentItem')[0];
+	if (child) {
+		attr(child, 'title', name);
+		this.setSubValue(child, 'tabContentItemNameMain', name);
+	}
+}
+ListRenderer.prototype.setListeners = function(block) {
+	var o = this.context;
+	block.onclick = function(evt) {
+		o.onClickItem.call(o, evt);
+	}
+}
+ListRenderer.prototype.appendNew = function(i, item) {
+	var block = this.createElement(item, i);
+	this.setListeners(block);	
+}

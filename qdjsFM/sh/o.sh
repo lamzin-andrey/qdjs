@@ -1,2 +1,2 @@
 #!/bin/bash
-xdg-open '/home/andrey/myapps/simpleTextEditor/js/simpleTextEditor.js'
+xdg-open '/home/andrey/tmp/FunnelType.js'

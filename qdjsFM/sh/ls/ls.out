@@ -1,2 +1,52 @@
-BOF /media/andrey/D/hobby/hobby5/wav
-EOF /media/andrey/D/hobby/hobby5/wav
+BOF /home/andrey/tmp
+итого 152M
+drwxrwxrwx 14 andrey andrey 4,0K 2022-08-07 20:23:53.881731448 +0300 00
+-rw-rw-r--  1 andrey andrey 176K 2022-07-01 10:22:51.797801104 +0300 2e084d729b1c36c2e43a8ee02ad99fd7.pdf
+-rw-rw-r--  1 andrey andrey  40M 2022-05-20 11:52:46.504965087 +0300 64-qt-js-webview-offline-installer--u18.04-qt5.2.1-r05.tar.gz
+-rw-rw-r--  1 andrey andrey 324K 2022-06-30 18:58:42.136538945 +0300 bf12575794397dacffe4179628a7da1a.pdf
+-rw-rw-r--  1 andrey andrey 496K 2022-03-30 17:25:56.665739777 +0300 composer.lock
+-rw-rw-r--  1 andrey andrey  26K 2021-11-18 18:10:54.528898090 +0300 confirmation.vue
+-rwxrwxrwx  1 andrey andrey 277K 2020-01-16 18:45:25.054498000 +0300 cool-photo.jpeg
+-rw-rw-r--  1 andrey andrey 7,8K 2022-06-23 16:21:13.871189881 +0300 CreateMessagesFromCsvForRsaParserCommand.php
+-rw-rw-r--  1 andrey andrey 1,2K 2022-05-24 14:57:05.334097782 +0300 docker-compose.yml
+-rw-rw-r--  1 andrey andrey 1,2M 2022-05-04 21:04:36.791831155 +0300 e86f4856f48907b326044f2c550d967f.pdf
+-rw-rw-r--  1 andrey andrey 2,1K 2021-05-31 17:55:47.082780281 +0300 FunnelType.js
+-rw-rw-r--  1 andrey andrey 1,8M 2020-02-04 09:34:32.272258752 +0300 hello_world.zip
+-rw-rw-r--  1 andrey andrey 9,2M 2022-05-20 11:52:51.705027742 +0300 installQt4.6WebViewDesktopAPI-3.1.2.zip
+-rwxrwxrwx  1 andrey andrey 3,3K 2019-12-24 15:46:57.827134000 +0300 lio.psd
+drwxrwxrwx  5 andrey andrey 4,0K 2022-04-16 17:27:24.260055735 +0300 localbases_transit
+-rw-rw-r--  1 andrey andrey  32K 2022-01-10 09:18:03.862217949 +0300 main-proxies.csv
+-rw-rw-r--  1 andrey andrey  60K 2020-07-16 09:49:55.246778022 +0300 MehediDracula.php-namespace-resolver-1.1.8.vsix
+-rw-rw-r--  1 andrey andrey  23K 2022-05-26 13:08:25.949612840 +0300 messenger.yaml
+-rw-rw-r--  1 andrey andrey  17K 2022-07-24 08:08:33.794757021 +0300 MGF.docx
+-rwxrwxrwx  1 andrey andrey 3,3K 2019-12-24 15:46:57.827134000 +0300 mia.rosewater-yadph.7z.gpg
+drwxrwxrwx  2 andrey andrey 4,0K 2022-06-04 17:29:19.235029767 +0300 mia.yadph
+-rw-rw-r--  1 andrey andrey  17K 2022-07-27 15:02:22.457025205 +0300 MigratePolicyFilesCommand.php
+drwxrwxr-x  5 andrey andrey 4,0K 2022-06-30 13:12:14.449764740 +0300 my
+-rw-rw-r--  1 andrey andrey 4,8M 2022-06-23 12:54:20.816483644 +0300 npm-2022-03-21.tar.gz
+-rw-rw-r--  1 andrey andrey  53K 2021-11-18 18:10:58.357243623 +0300 offers.vue
+-rw-rw-r--  1 andrey andrey  726 2022-08-09 19:50:56.047400437 +0300 OsagoWidgetInfoService.php
+-rw-rw-r--  1 andrey andrey 1,2M 2022-04-26 18:17:46.121000510 +0300 policy_0235298499.pdf
+-rw-rw-r--  1 andrey andrey 354K 2022-05-03 21:08:35.877487558 +0300 policy_0237969746.pdf
+-rw-rw-r--  1 andrey andrey 193K 2022-05-03 19:45:17.930239268 +0300 policy_0238239676.pdf
+-rw-rw-r--  1 andrey andrey 193K 2022-08-11 09:44:45.334441307 +0300 policy_0242224778.pdf
+-rw-rw-r--  1 andrey andrey 5,5K 2021-10-09 12:13:06.539259153 +0300 policy-project.vue
+-rw-rw-r--  1 andrey andrey  37K 2022-05-23 10:10:56.374504266 +0300 proxy_list.csv
+-rw-rw-r--  1 andrey andrey 246K 2020-05-22 17:00:08.710535106 +0300 redis-5.2.2.tgz
+-rw-rw-r--  1 andrey andrey  18K 2022-07-27 14:56:45.544052949 +0300 RemigrateWrongPolicyFilesCommand.php
+-rw-rw-r--  1 andrey andrey 3,2K 2021-04-06 19:17:31.413932778 +0300 rosfines_messages.yaml
+-rw-rw-r--  1 andrey andrey  11K 2022-07-21 15:38:20.517610320 +0300 RsaParsedPolicyDataService.php
+-rw-rw-r--  1 andrey andrey  12K 2022-07-21 15:37:49.381331952 +0300 RsaParsedPolicyDataService.php.bak
+-rw-rw-r--  1 andrey andrey  21K 2022-06-30 13:14:05.103284162 +0300 services.yaml
+-rw-rw-r--  1 andrey andrey  30K 2021-06-03 00:20:39.472723392 +0300 Step2.vue
+-rw-rw-r--  1 andrey andrey  51K 2021-11-18 18:10:51.456620841 +0300 Step5.vue
+-rw-rw-r--  1 andrey andrey  24M 2022-05-17 09:13:32.968218571 +0300 sts-21-a10-release-trg29.apk
+-rwxrwxrwx  1 andrey andrey 8,2M 2017-05-01 00:19:56.000000000 +0300 test-1.psd
+-rw-rw-r--  1 andrey andrey   41 2022-02-09 10:41:13.423218061 +0300 test_return_email.html.twig
+-rw-rw-r--  1 andrey andrey 3,0K 2021-05-05 21:09:11.248555640 +0300 test.txt
+-rwxrwxrwx  1 andrey andrey 2,2M 2013-12-19 16:48:03.000000000 +0400 the-modernist.psd
+-rw-rw-r--  1 andrey andrey  55M 2022-05-17 09:19:30.278208654 +0300 tslovar23-05-2021-18-17-all.tar.gz
+-rw-rw-r--  1 andrey andrey 2,5K 2022-07-03 11:24:57.678095760 +0300 userIdList-test-group22.06.22.txt
+-rw-rw-r--  1 andrey andrey 679K 2020-05-11 14:01:05.596417059 +0300 на подпись.7z
+-rw-rw-r--  1 andrey andrey 3,8M 2022-07-19 15:10:38.038787315 +0300 Экстремальное программирование - разработка через тестирование (Кент Бек).djvu
+EOF /home/andrey/tmp

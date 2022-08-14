@@ -1,2 +1,2 @@
 #! /bin/bash
-ls -alh --full-time "/"
+ls -alh --full-time "/home/andrey"

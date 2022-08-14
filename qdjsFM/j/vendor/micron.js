@@ -1,4 +1,4 @@
-// 20220707
+// 20220814
 var D = document,
 W = window, S = String;
 function e(i) {
@@ -13,6 +13,9 @@ function ee(p, c) {
 W.micron$$ = ee;
 function cs(p, c) {
 	p = e(p);
+	if (!p) {
+		return [];
+	}
 	if (p.getElementsByClassName) {
 		return p.getElementsByClassName(c);
 	}
@@ -298,4 +301,10 @@ function body() {
 
 function ctrg(evt) {
 	return evt.currentTarget;
+}
+
+
+function insertBefore(existsElement, newElement) {
+	var parentElement = existsElement.parentNode;
+	return parentElement.insertBefore(newElement, existsElement);
 }

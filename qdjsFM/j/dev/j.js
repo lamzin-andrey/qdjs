@@ -239,7 +239,7 @@ tmpfs            3,0G          68K  3,0G            1% /run/user/1000
 	}
 	
 	
-	if (command.indexOf('ls.sh') != -1 || command.indexOf('lsh.sh') != -1) {
+	if (command.indexOf('/ls/') == -1 && command.indexOf('/lsh/') == -1 && (command.indexOf('ls.sh') != -1 || command.indexOf('lsh.sh') != -1) ) {
 		onFinish[1].call(onFinish[0], `итого 1,1G
 -rw-rw-r--  1 andrey andrey  90K 2021-11-16 09:05:02.030072406 +0300  0000.png
 -rw-rw-r--  1 andrey andrey  70K 2022-06-10 19:05:50.302340682 +0300  0000-ЛАН-10.06-1942.pdf
@@ -491,7 +491,10 @@ drwxr-xr-x  2 andrey andrey 4,0K 2021-07-24 11:12:58.952592400 +0300  Шабло
 -rw-rw-r--  1 andrey andrey  20K 2021-10-23 23:24:06.000000000 +0300 'Электронный полис ОСАГО.html'
 `
 		);
+		
+		
 	}
+	return [1, 1];
 }
 
 // end class jexec
