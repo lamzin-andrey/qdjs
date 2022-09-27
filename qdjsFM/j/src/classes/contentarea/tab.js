@@ -197,11 +197,7 @@ Tab.prototype.onContextMenu = function(targetId, event) {
 	if (activeItem) {
 		activeItem = cs(activeItem, 'tabContentItem')[0];
 		if (activeItem) {
-			if (this.activeItem) {
-				removeClass(this.activeItem, 'active');
-			}
-			this.activeItem = activeItem;
-			addClass(this.activeItem, 'active');
+			this.setSelection({currentTarget:activeItem.parentNode}, false);
 		}
 	}
 }
@@ -273,14 +269,28 @@ Tab.prototype.tpl = function() {
 					<div class="cf"></div>';
 }
 
-Tab.prototype.setSelection = function(evt) {
+Tab.prototype.setSelection = function(evt, needClearSelection) {
+	needClearSelection = String(needClearSelection) == 'undefined' ? true : false;
 	var i, trg = ctrg(evt), cname = 'tabContentItem', lastId, nextId, obj, buf;
+	
 	if (!evt.ctrlKey && !evt.shiftKey) {
-		for (i = 0; i < sz(this.selectionItems); i++) {
-			removeClass(this.selectionItems[i], 'active');
-		}
 		this.activeItem = cs(trg, cname)[0];
-		this.selectionItems.length = 0;
+		if (!needClearSelection) {
+			needClearSelection = true;
+			for (i = 0; i < sz(this.selectionItems); i++) {
+				if (this.activeItem.parentNode.id == this.selectionItems[i].parentNode.id) {
+					needClearSelection = false;
+					break;
+				}
+			}
+		}
+		if (needClearSelection) {
+			for (i = 0; i < sz(this.selectionItems); i++) {
+				removeClass(this.selectionItems[i], 'active');
+			}
+			this.selectionItems.length = 0;
+		}
+		
 		this.selectionItems.push(this.activeItem);
 		addClass(this.activeItem, 'active');
 	} else if (evt.ctrlKey) {

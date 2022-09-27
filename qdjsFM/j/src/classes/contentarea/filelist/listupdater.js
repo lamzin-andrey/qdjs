@@ -143,7 +143,9 @@ ListUpdater.prototype.renderPart = function(){
 						+ TextTransform.pluralize(this.sz, L('Objects'), L('Objects-voice1'), L('Objects-voice2'))
 						+ ' (' + this.tab.listRenderer.getHumanFilesize(intval(this.filesSize), 2, 3, false) + ')'
 						+ freeSpaceText;
-		this.tab.setStatus.call(this.tab, statusText);
+		if (0 == this.tab.selectionItems.length) {
+			this.tab.setStatus.call(this.tab, statusText);
+		}
 	}
 }
 
