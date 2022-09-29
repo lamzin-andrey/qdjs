@@ -30,6 +30,9 @@ window.oncontextmenu = function(event) {
 		if (y + h > vp.h) {
 			y = y - h;
 		}
+		if (y < 0) {
+			y = 0;
+		}
 		cmWrapper.style.left = x + 'px';
 		cmWrapper.style.top = y + 'px';
 		cmWrapper.style.opacity = 1.0;

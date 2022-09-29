@@ -38,6 +38,9 @@ ListUpdater.prototype.run = function(){
 ListUpdater.prototype.pause = function(){
 	this.isPause = true;
 }
+ListUpdater.prototype._continue = function() {
+	this.isPause = false;
+}
 ListUpdater.prototype.stop = function(){
 	this.isRun = false;
 	this.isPause = false;

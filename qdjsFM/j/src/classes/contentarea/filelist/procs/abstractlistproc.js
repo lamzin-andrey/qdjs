@@ -35,7 +35,7 @@ AbstractListProc.prototype.onDataForCheckRun = function() {
 		FS.writefile(this.workDir + '/' + procName + '.inp', this.sourceCurrentDirContent);
 	}
 	if (line != 'BOF ' + this.testDir) {
-		alert('Will run! ex = ' + this.testDir + ', got ' + line);
+		// alert('Will run! ex = ' + this.testDir + ', got ' + line);
 		// run daemon
 		tpl = FS.readfile(App.dir() + '/sh/' + procName + '/' + procName + '.sh.tpl');
 		s = tpl.replace('{daemonDir}', App.dir() + '/sh/' + procName);

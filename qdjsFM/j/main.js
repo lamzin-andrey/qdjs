@@ -66,18 +66,24 @@ function onResize() {
 
 function onKeyUp(evt) {
     if (evt.ctrlKey) {
-	switch(evt.keyCode) {
-	    case 79:	//O
-		// onClickChangeEnv();
-		break;
-	    case 81:	//Q
-		onClickExitMenu();
-		break;
-	}
-	
-	if (72 == MW.getLastKeyCode() || 1056 == MW.getLastKeyCode()) {
-		onClickChangeHideMode();
-	}
+		switch(evt.keyCode) {
+			case 79:	//O
+			// onClickChangeEnv();
+			break;
+			case 81:	//Q
+			onClickExitMenu();
+			break;
+		}
+		
+		if (72 == MW.getLastKeyCode() || 1056 == MW.getLastKeyCode()) {
+			onClickChangeHideMode();
+		}
+		if (67 == MW.getLastKeyCode() || 1057 == MW.getLastKeyCode()) {
+			onCopy();
+		}
+		if (86 == MW.getLastKeyCode() || 1052 == MW.getLastKeyCode()) {
+			onPaste();
+		}
 	    
     }
 	
@@ -102,6 +108,13 @@ function onClickChangeHideMode() {
 		app.tab.setPath(app.tab.currentPath);
 		Qt.renameMenuItem(1, 0, text);
 	}
+}
+
+function onCopy() {
+	app.tab.onClickCopy();
+}
+function onPaste() {
+	app.tab.onClickPaste();
 }
 
 function onClickAbout() {

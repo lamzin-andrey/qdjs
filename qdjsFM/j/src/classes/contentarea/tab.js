@@ -12,6 +12,7 @@ function Tab() {
 	this.statusLdrPlacer = e('statusLdrPlacer');
 	this.listCount = 0;
 	this.selectionItems = [];
+	this.copyPaste = new CopyPaste(this);
 }
 
 Tab.prototype.setPath = function(path) {
@@ -113,6 +114,7 @@ Tab.prototype.getClickedItem = function(id) {
 
 Tab.prototype.renderByMode = function() {
 	var o = this, list = o.list, i, SZ = sz(list), item, s, block;
+	o.selectionItems.length = 0;
 	
 	if (o.listCount != 2) {
 		return;
@@ -225,6 +227,15 @@ Tab.prototype.openAction = function(id) {
 }
 Tab.prototype.onClickOpen = function() {
 	this.openAction(window.currentCmTargetId);
+}
+
+Tab.prototype.onClickCopy = function() {
+	this.listUpdater.pause();
+	this.copyPaste.copyAction(window.currentCmTargetId);
+	this.listUpdater._continue();
+}
+Tab.prototype.onClickPaste = function() {
+	this.copyPaste.pasteAction();
 }
 
 Tab.prototype.setStatus = function(s, showLoader) {
@@ -357,7 +368,24 @@ Tab.prototype.setSelection = function(evt, needClearSelection) {
 			}
 		}
 	}
+	this.normalizeSelectionItems();
 }
 Tab.prototype.toI = function(s) {
 	return String(s).replace(/\D/mig, '');
+}
+
+Tab.prototype.normalizeSelectionItems = function() {
+	var i, map = {}, SZ = sz(this.selectionItems), id;
+	if (SZ) {
+		for (i = 0; i < SZ; i++) {
+			id = this.selectionItems[i].parentNode.id;
+			if (!map[id]) {
+				map[id] = this.selectionItems[i];
+			}
+		}
+		this.selectionItems.length = 0;
+		for (i in map) {
+			this.selectionItems.push(map[i]);
+		}
+	}
 }

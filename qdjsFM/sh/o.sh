@@ -1,2 +1,2 @@
 #!/bin/bash
-xdg-open '/home/andrey/tmp/FunnelType.js'
+xdg-open '/home/andrey/Рабочий стол/2GIS.desktop'
