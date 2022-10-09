@@ -9,9 +9,14 @@ SlotManager.prototype.run = function() {
 	}, 1000);
 }
 SlotManager.prototype.onTick = function() {
-	var slot = App.dir() + '/slot';
+	var slot = App.dir() + '/sh/slot';
 	if (FS.fileExists(slot)) {
-		this.taskManager.createNewTask(FS.readfile(slot));
+		// log('Slot: file exists. Will createtask from:' + FS.readfile(slot));
+		try {
+			this.taskManager.createNewTask(FS.readfile(slot));
+		} catch (err) {
+			alert('SlotMgr onTuck: ' + err);
+		}
 		FS.unlink(slot);
 	}
 }

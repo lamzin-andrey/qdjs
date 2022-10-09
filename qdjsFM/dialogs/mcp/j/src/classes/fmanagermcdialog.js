@@ -6,8 +6,10 @@ FManagerMCDialog.prototype.init = function() {
 	this.pongManager = new PongManager();
 	this.pongManager.run();
 	
-	this.taskManager = new TaskManager();	// TODO
+	this.uiManager = new McpUi();
+	this.taskManager = new TaskManager(this.uiManager);
 	
-	this.slotManager = new SlotManager(this.taskManager);	// TODO
-	this.slotManager.run();						// TODO
+	
+	this.slotManager = new SlotManager(this.taskManager);
+	this.slotManager.run();
 }

@@ -11,7 +11,11 @@ function main() {
 }
 
 function log(s) {
-	window.app.taskManager.log(s);
+	if (window.app) {
+	// if (isset(window, 'app', 'taskManager', 'log') {
+		window.app.taskManager.log(s);
+	}
+	
 }
 
 
@@ -38,6 +42,8 @@ function onKeyUp(evt) {
 function onClickExitMenu() {
 	Qt.quit();
 }
+
+function DevNull(){}
 
 window.onload = main;
 

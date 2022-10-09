@@ -90,14 +90,14 @@ function isset(v) {
 		if (dbg) {
 			//window.issetdbg = 0;
 		}
-		return !(String(v) === 'undefined');
+		return false;
 	}
 	for (var i = 1; i < arguments.length; i++) {
 		if (dbg) {
 			console.log('check key = ' + arguments[i]);
 		}
 		v = v[ arguments[i] ];
-		if (!isset(v)) {
+		if (String(v) === 'undefined') {
 			if (dbg) {
 				//window.issetdbg = 0;
 			}
@@ -262,6 +262,16 @@ function array_shift(arr) {
 	}
 	return arr;
 }
+
+function array_sum(a) {
+	var i, r = 0;
+	for (i = 0; i < a.length; i++) {
+		r += a[i];
+	}
+	
+	return r;
+}
+
 function array_unique(a){
 	if (!(a instanceof Array) && !!(a instanceof Object)) {
 		return a;
