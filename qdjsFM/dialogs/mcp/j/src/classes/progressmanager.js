@@ -79,7 +79,7 @@ ProgressManager.prototype.getBigFileSize = function() {
 }
 
 ProgressManager.prototype.stop = function() {
-	this.stopTimer();
+	// this.stopTimer();
 	this.ui.setSrcSize(0);
 	this.ui.setDestSize(0);
 }

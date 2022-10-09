@@ -34,10 +34,12 @@ TaskManager.prototype.createNewTask = function(sData) {
 	var i, a = sData.split('\n'), SZ = sz(a), targetDir, task;
 	this.cmd = a[0];
 	if (!(this.cmd in In(['cp', 'mv', 'rm']))) {
+		log('Invalid command fort target dir ' + targetDir + '\nsData = ' + sData);
 		return;
 	}
 	
 	if (SZ < 3) {
+		log('Invalid SZ fort target dir ' + targetDir + '\nsData = ' + sData);
 		return;
 	}
 	
@@ -49,6 +51,7 @@ TaskManager.prototype.createNewTask = function(sData) {
 	
 	
 	if (task.isValid()) {
+		log('Task valid and add');
 		this.tasks.push(task);
 		if (!this.isRun) {
 			this.isRun = true;
@@ -56,10 +59,10 @@ TaskManager.prototype.createNewTask = function(sData) {
 			setTimeout(function() {
 				MW.showNormal();
 			}, 100);
-	
-			this.nextIteration();
 		}
+		this.nextIteration();
 	} else {
+		log('Invalid task fort target dir ' + targetDir + '\nsData = ' + sData);
 		if (this.allTaskCompleted()) {
 			this.stop();
 			return;
@@ -69,13 +72,14 @@ TaskManager.prototype.createNewTask = function(sData) {
 
 TaskManager.prototype.nextIteration = function() {
 	var o = this;
-	
+
 	if (o.allTaskCompleted()) {
 		o.stop();
 		return;
 	}
-
+	
 	o.tasks[o.buildListIterator].makeAction();
+	
 
 	o.buildListIterator++;
 	if (o.buildListIterator > sz(o.tasks) - 1) {

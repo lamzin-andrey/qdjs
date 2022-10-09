@@ -100,6 +100,12 @@ Task.prototype.startCopy = function() {
 	jexec(this.lastCmdFile, [this, this.onFinishCopy], DevNull, [this, this.onErrCopy]);
 }
 
+Task.prototype.makeDir = function(dirName) {
+	var pathInfo = pathinfo(dirName);
+	dirName = pathInfo.basename;
+	FS.mkdir(this.targetDir + '/' + dirName);
+}
+
 Task.prototype.onErrCopy = function(stderr) {
 	this.taskManager.setFileErrorExpression(this.currentFile);
 	if (!this.taskManager.confirmAbort()) {
@@ -155,17 +161,21 @@ Task.prototype.buildOneDir = function(dirname) {
 		r = [],
 		SZ = sz(a),
 		sData = '',
+		pathInfo,
 		n = '\n';
 	for (i = 0; i < SZ; i++) {
 		if (a[i] != '.' && a[i] != '..') {
-			r.push(a[i]);
+			r.push(dirname + '/' + a[i]);
 		}
 	}
+	this.makeDir(dirname);
+	pathInfo = pathinfo(dirname);
 	
 	sData = this.cmd + n;
-	sData += dirname + n;
-	sData += r.join(n) + n;
+	sData += this.targetDir + '/' + pathInfo.basename + n;
+	sData += r.join(n);
 	this.taskManager.createNewTask(sData);
+	
 }
 
 Task.prototype.getCmd = function() {
