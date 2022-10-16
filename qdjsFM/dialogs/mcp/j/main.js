@@ -1,6 +1,6 @@
-//Qt.hide();
-//MW.minimize();
+Qt.hide();
 MW.setIconImage(App.dir() + '/i/folder32.png');
+
 function main() {
 	window.onresize = onResize;
 	window.onkeyup = onKeyUp;

@@ -2,6 +2,7 @@ function ProgressManager(taskManager, ui) {
 	this.taskManager = taskManager;
 	this.ui = ui;
 	this.aCurrentFiles = []; // [ [src, dest, ?sz ], ... ]
+	this.nCurrentFilesIterator = -1;
 }
 
 ProgressManager.DEFAULT_BIG_FILE_SZ = 1024 * 1024 * 1024;
@@ -22,9 +23,20 @@ ProgressManager.prototype.run = function() {
 }
 
 ProgressManager.prototype.tick = function() {
-	this.ui.setSrcSize( this.taskManager.getSrcSize() );
-	this.ui.setDestSize(this.getDestSize());
-	
+	/*if (this.inTickProc) {
+		return;
+	}*/
+	try {
+		this.inTickProc = 1;
+		this.ui.setSrcSize( this.taskManager.getSrcSize() );
+		
+		this.ui.setDestSize(this.getDestSize());
+		this.ui.setCurrentFileName(this.taskManager.currentFileName);
+		
+		this.inTickProc = 0;
+	} catch (err) {
+		log('tick ' + err + ',' + this.taskManager.currentFileName);
+	}
 }
 
 ProgressManager.prototype.getDestSize = function() {
@@ -32,6 +44,9 @@ ProgressManager.prototype.getDestSize = function() {
 		x = this.getCurrentFileSize();
 	if (x) {
 		n += this.getCurrentDestFileSize();
+	}
+	if (n > this.taskManager.getSrcSize()) {
+		n = this.taskManager.getSrcSize()
 	}
 	return n;
 }
@@ -57,6 +72,9 @@ ProgressManager.prototype.getCurrentDestFileSize = function() {
 }
 
 ProgressManager.prototype.getCurrentFileSize = function() {
+	if (!sz(this.aCurrentFiles)) {
+		return 0;
+	}
 	var idx = sz(this.aCurrentFiles) - 1,
 		item = this.aCurrentFiles[idx],
 		n;
@@ -80,6 +98,8 @@ ProgressManager.prototype.getBigFileSize = function() {
 
 ProgressManager.prototype.stop = function() {
 	// this.stopTimer();
+	this.aCurrentFiles = [];
+	this.nCurrentFilesIterator = -1;
 	this.ui.setSrcSize(0);
 	this.ui.setDestSize(0);
 }

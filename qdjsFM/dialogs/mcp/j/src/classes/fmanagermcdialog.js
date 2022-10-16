@@ -13,3 +13,6 @@ FManagerMCDialog.prototype.init = function() {
 	this.slotManager = new SlotManager(this.taskManager);
 	this.slotManager.run();
 }
+
+FManagerMCDialog.WND_WIDTH = 320;
+FManagerMCDialog.WND_HEIGHT = 200;

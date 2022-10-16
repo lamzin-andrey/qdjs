@@ -5,6 +5,8 @@ function TaskManager(ui) {
 	this.progressManager = new ProgressManager(this, ui);
 	this.progressManager.run();
 	this.init();
+	
+	window.pm = this.ui;
 }
 TaskManager.prototype.init = function() {
 	this.isRun = false;
@@ -15,6 +17,7 @@ TaskManager.prototype.init = function() {
 	this.buildListIterator = 0;
 	this.cmdIterator = 0;
 	this.cmd = '';
+	this.currentFileName = '';
 	
 	this.srcBytesTotal = 0;
 	this.srcFilesTotal = 0;
@@ -31,7 +34,7 @@ TaskManager.prototype.init = function() {
 	this.bAlreadyAbort   = false;
 }
 TaskManager.prototype.createNewTask = function(sData) {
-	var i, a = sData.split('\n'), SZ = sz(a), targetDir, task;
+	var i, a = sData.split('\n'), SZ = sz(a), targetDir, task, x, y;
 	this.cmd = a[0];
 	if (!(this.cmd in In(['cp', 'mv', 'rm']))) {
 		log('Invalid command fort target dir ' + targetDir + '\nsData = ' + sData);
@@ -51,18 +54,21 @@ TaskManager.prototype.createNewTask = function(sData) {
 	
 	
 	if (task.isValid()) {
-		log('Task valid and add');
+		// log('Task valid and add (' + targetDir + ')');
 		this.tasks.push(task);
 		if (!this.isRun) {
 			this.isRun = true;
-			MW.minimize();
-			setTimeout(function() {
-				MW.showNormal();
-			}, 100);
 		}
+		x = Math.round(screen.width / 2 - FManagerMCDialog.WND_WIDTH / 2);
+		y = Math.round(screen.height / 2 - FManagerMCDialog.WND_HEIGHT / 2);
+		MW.maximize();
+		MW.moveTo(x, y);
+		setTimeout(function() {
+			MW.moveTo(x, y);
+		}, 100);
 		this.nextIteration();
 	} else {
-		log('Invalid task fort target dir ' + targetDir + '\nsData = ' + sData);
+		log('Invalid task for target dir ' + targetDir + '\nsData = ' + sData);
 		if (this.allTaskCompleted()) {
 			this.stop();
 			return;
@@ -71,14 +77,27 @@ TaskManager.prototype.createNewTask = function(sData) {
 }
 
 TaskManager.prototype.nextIteration = function() {
-	var o = this;
+	var o = this, cf;
 
 	if (o.allTaskCompleted()) {
+		if (o.isCopyCmd()) {
+			o.stop();
+			return;
+		} else {
+			o.startPostCopyTriggers();
+		}
+	}
+	
+	if (o.allTaskPostCopyTriggerCompleted()) {
 		o.stop();
 		return;
 	}
 	
 	o.tasks[o.buildListIterator].makeAction();
+	cf = o.tasks[o.buildListIterator].currentFile
+	if (cf) {
+		o.currentFileName = cf;
+	}
 	
 
 	o.buildListIterator++;
@@ -104,6 +123,34 @@ TaskManager.prototype.allTaskCompleted = function() {
 	return true;
 }
 
+TaskManager.prototype.allTaskPostCopyTriggerCompleted = function() {
+	var i, SZ = sz(this.tasks);
+	for (i = 0; i < SZ; i++) {
+		if (!this.tasks[i].isPostTriggerCompleted()) { // TODO
+			return false;
+		}
+	}
+	return true;
+}
+
+TaskManager.prototype.startPostCopyTriggers = function() {
+	var i, SZ = sz(this.tasks);
+	for (i = 0; i < SZ; i++) {
+		this.tasks[i].state = Task.STATE_POST_COPY_TRIGGERS;
+	}
+}
+
+TaskManager.prototype.getCmd = function() {
+	return this.cmd; // for windows cp -> copy etc
+}
+
+TaskManager.prototype.isCopyCmd = function() {
+	if (this.getCmd() == 'cp') { // for windows cp -> copy etc
+		return true;
+	}
+	return false;
+}
+
 TaskManager.prototype.stop = function() {
 	var i, SZ = sz(this.tasks);
 	for (i = 0; i < SZ; i++) {
@@ -111,8 +158,8 @@ TaskManager.prototype.stop = function() {
 	}
 	this.init();
 	this.progressManager.stop();
-	// TODO uncomment me! Qt.hide(); // TODO j.js MW+
-	MW.minimize(); // TODO remove me
+	Qt.hide(); // TODO j.js MW+
+	// MW.minimize(); // TODO remove me
 }
 TaskManager.prototype.incSrcData = function(n) {
 	n = parseInt(n, 10);
@@ -120,6 +167,7 @@ TaskManager.prototype.incSrcData = function(n) {
 		return;
 	}
 	this.aSrcFilesSz.push(n);
+	this.progressManager.tick();
 }
 TaskManager.prototype.incDestData = function(n) {
 	n = parseInt(n, 10);
@@ -127,6 +175,7 @@ TaskManager.prototype.incDestData = function(n) {
 		return;
 	}
 	this.aDestFilesSz.push(n);
+	this.progressManager.tick();
 }
 
 TaskManager.prototype.setFileExistsExpression = function(s) {
@@ -174,10 +223,18 @@ TaskManager.prototype.confirmRetry = function() {
 }
 
 TaskManager.prototype.getSrcSize = function() {
+	// return sz(this.aSrcFilesSz);
+	if (!this.aSrcFilesSz) {
+		return 0;
+	}
 	return array_sum(this.aSrcFilesSz);
 }
 
 TaskManager.prototype.getDestSize = function() {
+	// return sz(this.aDestFilesSz);
+	if (!this.aDestFilesSz) {
+		return 0;
+	}
 	return array_sum(this.aDestFilesSz);
 }
 

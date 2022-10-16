@@ -35,6 +35,8 @@ var langRu = {
 	'T' : 'Т',
 	'Show hidden files Ctrl+H' : 'Показать скрытые файлы Ctrl+H',
 	'Hide hidden files Ctrl+H' : 'Скрыть скрытые файлы Ctrl+H',
+	"Are you sure you want to permanently delete files" : "Вы уверены, что хотите удалить файлы без возможности восстановления",
+	"Are you sure you want to permanently delete file" : "Вы уверены, что хотите удалить без возможности восстановления файл",
 	'' : '',
 	'' : '',
 	'' : ''

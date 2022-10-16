@@ -1,2 +1,2 @@
 #!/bin/bash
-xdg-open '/home/andrey/Рабочий стол/2GIS.desktop'
+xdg-open '/home/andrey/tmp/00/04/cannibball/faced-on-alone.mp4'

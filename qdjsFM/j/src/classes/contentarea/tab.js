@@ -12,7 +12,11 @@ function Tab() {
 	this.statusLdrPlacer = e('statusLdrPlacer');
 	this.listCount = 0;
 	this.selectionItems = [];
+	this.cutItems = [];
 	this.copyPaste = new CopyPaste(this);
+	/**
+	 * @property {Array} selectionItems; Get item id: selectionItems[i].parentNode.id
+	*/
 }
 
 Tab.prototype.setPath = function(path) {
@@ -26,6 +30,7 @@ Tab.prototype.setPath = function(path) {
 	this.hideList = [];
 	this.showList = [];
 	this.selectionItems = [];
+	this.cutItems = [];
 	this.listCount = 0;
 	this.listComplete = false;
 	this.hideListComplete = false;
@@ -151,7 +156,19 @@ Tab.prototype.onClickItem = function(evt) {
 	this.currentTargetId = trg.id;
 }
 
-
+Tab.prototype.selectAll = function() {
+	var i, SZ = sz(this.list), itemId, tabContentItem;
+	this.selectionItems.length = 0;
+	for (i = 0; i < SZ; i++) {
+		itemId = 'f' + i;
+		tabContentItem = cs(itemId, 'tabContentItem')[0];
+		if (tabContentItem) {
+			addClass(tabContentItem, 'active');
+			this.selectionItems.push(tabContentItem);
+		}
+	}
+	
+}
 Tab.prototype.createItem = function(s) {
 	var item = {
 			name: '',
@@ -234,8 +251,71 @@ Tab.prototype.onClickCopy = function() {
 	this.copyPaste.copyAction(window.currentCmTargetId);
 	this.listUpdater._continue();
 }
+Tab.prototype.onClickCut = function() {
+	this.listUpdater.pause();
+	this.copyPaste.cutAction(window.currentCmTargetId);
+	this.listUpdater._continue();
+}
 Tab.prototype.onClickPaste = function() {
 	this.copyPaste.pasteAction();
+}
+
+// TODO сделать через диалог
+Tab.prototype.onClickRemove = function() {
+	var id,
+		path,
+		msg,
+		sp = " ",
+		o = this,
+		ival,
+		path,
+		i, SZ = sz(this.selectionItems);
+		
+	if (sz(this.selectionItems) > 1) {
+		msg = L("Are you sure you want to permanently delete files") + "?";
+	} else if (sz(this.selectionItems) == 1) {
+		id = this.selectionItems[0].parentNode.id.replace('f', '');
+		msg = L("Are you sure you want to permanently delete file") + sp + '"' + this.list[id].name + sp + "\"?";
+	} else {
+		return;
+	}
+ 		
+	if (confirm(msg)) {
+		i = 0;
+		ival = setInterval(function(){
+			var id;
+			if (i >= SZ) {
+				clearInterval(ival);
+				return;
+			}
+			id = o.selectionItems[i].parentNode.id.replace('f', '');
+			try {
+				path = o.currentPath + "/" + o.list[id].name;
+				o.removeOneItem(path);
+			} catch(err) {
+				alert(err);
+			}
+			i++;
+		}, 100);
+	}
+}
+Tab.prototype.removeOneItem = function(path) {
+	var arg = 'f',
+		cmd,
+		sh = App.dir() + "/sh/o.sh",
+		o = this;
+	if (FS.isDir(path)) {
+		arg = "rf";
+	}
+	cmd = "#!/bin/bash\nrm -" + arg + " \"" + path + "\"\n";
+	FS.writefile(sh, cmd);
+	jexec(sh, [o, o.onFinishRemove], DevNull, [o.onErrorRemove]);
+}
+Tab.prototype.onFinishRemove = function(stdout, stderr) {
+	// this.setPath(this.currentPath);
+}
+Tab.prototype.onErrorRemove = function(stdout, stderr) {
+	alert(L("Error remove file"));
 }
 
 Tab.prototype.setStatus = function(s, showLoader) {

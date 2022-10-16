@@ -263,10 +263,10 @@ function array_shift(arr) {
 	return arr;
 }
 
-function array_sum(a) {
+function array_sum(ak) {
 	var i, r = 0;
-	for (i = 0; i < a.length; i++) {
-		r += a[i];
+	for (i = 0; i < ak.length; i++) {
+		r += ak[i];
 	}
 	
 	return r;

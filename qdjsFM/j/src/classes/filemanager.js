@@ -44,6 +44,7 @@ FileManager.prototype.onGetActualEnv = function() {
 		if (this.tab.getUser() != USER && USER != 'root') {
 			this.bookmarksManager.setUser(USER);
 			this.tab.setUser(USER);
+			this.tab.setPath('/home/' + USER);
 		}
 	}
 	this.procManager.run();
@@ -813,6 +814,34 @@ FileManager.prototype.addContextMenuHtml = function() {
 						<img src="./i/cm/pencil16.png">\
 					</div>\
 					<div class="contextMenuItemText">Свойства</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+			</div>\
+		</div>\
+		<div id="cmEmptyCatalogArea" style="display:none">\
+			<div class="contextMenu">\
+				<div class="contextMenuItem" onclick="app.tab.onClickCut()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/cut16.png">\
+					</div>\
+					<div class="contextMenuItemText">Вырезать</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickCopy()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/copy16.png">\
+					</div>\
+					<div class="contextMenuItemText">Копировать</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickPaste()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/pst16.png">\
+					</div>\
+					<div class="contextMenuItemText">Вставить</div>\
 					<div class="cf"></div>\
 				</div>\
 				\

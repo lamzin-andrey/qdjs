@@ -60,6 +60,8 @@ function onResize() {
 		+ e('tabContentHeaderFileName').offsetWidth
 	) + 'px';
 	
+	e('tabItems').style.height = (e('contentArea').offsetHeight - contentTopAreaH - 0.7*dY) + 'px';
+	
 	app.onResize();
 	
 }
@@ -75,17 +77,26 @@ function onKeyUp(evt) {
 			break;
 		}
 		
-		if (72 == MW.getLastKeyCode() || 1056 == MW.getLastKeyCode()) {
+		if (72 == evt.keyCode || 1056 == MW.getLastKeyCode()) {
 			onClickChangeHideMode();
 		}
-		if (67 == MW.getLastKeyCode() || 1057 == MW.getLastKeyCode()) {
+		if (67 == evt.keyCode || 1057 == MW.getLastKeyCode()) {
 			onCopy();
 		}
-		if (86 == MW.getLastKeyCode() || 1052 == MW.getLastKeyCode()) {
+		if (86 == evt.keyCode || 1052 == MW.getLastKeyCode()) {
 			onPaste();
 		}
-	    
+		if (65 == evt.keyCode || 1060 == MW.getLastKeyCode()) {
+			app.tab.selectAll();
+		}
+		if (88 == evt.keyCode || 1063 == MW.getLastKeyCode()) {
+			app.tab.onClickCut();
+		}
     }
+    // After press Enter in Confirm dialog '||' not work
+    if (46 == evt.keyCode && 16777223 == MW.getLastKeyCode()) {
+		onDelete();
+	}
 	
 }
 
@@ -115,6 +126,13 @@ function onCopy() {
 }
 function onPaste() {
 	app.tab.onClickPaste();
+}
+function onDelete() {
+	try {
+		app.tab.onClickRemove();
+	} catch(err) {
+		alert('main.js onDelete: ' + err);
+	}
 }
 
 function onClickAbout() {
