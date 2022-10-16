@@ -18,7 +18,7 @@ function main() {
 	}/**/
 	
 	window.onresize = onResize;
-	window.onkeyup = onKeyUp;
+	window.onkeydown = onKeyUp;
 	
 	onResize();
 }
@@ -98,6 +98,10 @@ function onKeyUp(evt) {
 		onDelete();
 	}
 	
+	if (113 == evt.keyCode) {
+		app.tab.onClickRename();
+	}
+	
 }
 
 function onClickExitMenu() {
@@ -137,6 +141,14 @@ function onDelete() {
 
 function onClickAbout() {
 	alert('Version 3.1.1 pre-release');
+}
+
+function onClickCreateFileMenu() {
+	app.tab.newFileAction();
+}
+
+function onClickCreateFolderMenu() {
+	app.tab.newFolderAction();
 }
 
 function onClickSelectEn() {

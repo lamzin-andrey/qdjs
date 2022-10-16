@@ -45,6 +45,7 @@ Bookmarks.prototype.createList = function(locale, user) {
 	this.addItem(user, '', locale);
 	this.addItem(user, 'tmp/00/05', locale);
 	this.addItem(user, 'tmp/00/04/cannibball', locale);
+	this.addItem(user, 'hdata/programs/my/qdjs/qdjsFM', locale);
 	this.addItem(user, 'Downloads', locale);
 	this.addItem(user, 'Desktop', locale);
 	this.addItem(user, 'Documents', locale);

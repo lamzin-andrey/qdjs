@@ -821,19 +821,26 @@ FileManager.prototype.addContextMenuHtml = function() {
 		</div>\
 		<div id="cmEmptyCatalogArea" style="display:none">\
 			<div class="contextMenu">\
-				<div class="contextMenuItem" onclick="app.tab.onClickCut()">\
+				<div class="contextMenuItem" onclick="app.tab.onClickOpenTerm(1)">\
 					<div class="contextMenuItemIcon">\
-						<img src="./i/cm/cut16.png">\
+						<img src="./i/cm/sh16.png">\
 					</div>\
-					<div class="contextMenuItemText">Вырезать</div>\
+					<div class="contextMenuItemText">Открыть терминал</div>\
+					<div class="cf"></div>\
+				</div>\
+				<div class="contextMenuItem" onclick="app.tab.onClickNewFolder()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/folder_new16.png">\
+					</div>\
+					<div class="contextMenuItemText">' + L("Create catalog") + '</div>\
 					<div class="cf"></div>\
 				</div>\
 				\
-				<div class="contextMenuItem" onclick="app.tab.onClickCopy()">\
+				<div class="contextMenuItem" onclick="app.tab.onClickNewFile()">\
 					<div class="contextMenuItemIcon">\
-						<img src="./i/cm/copy16.png">\
+						<img src="./i/cm/filenew16.png">\
 					</div>\
-					<div class="contextMenuItemText">Копировать</div>\
+					<div class="contextMenuItemText">' + L("Create file") + '</div>\
 					<div class="cf"></div>\
 				</div>\
 				\

@@ -246,6 +246,45 @@ Tab.prototype.onClickOpen = function() {
 	this.openAction(window.currentCmTargetId);
 }
 
+Tab.prototype.onClickNewFolder = function() {
+	try {
+		this.newFolderAction();
+	} catch(err) {
+		alert(err);
+	}
+}
+
+Tab.prototype.onClickNewFile = function() {
+	this.newFileAction();
+}
+
+Tab.prototype.newFolderAction = function() {
+	var newName = this.getNewName(L("New catalog")), slot, cmd;
+	cmd = "#!/bin/bash\nmkdir \"" + newName + '"';
+	slot = App.dir() + '/sh/o.sh';
+	FS.writefile(slot, cmd);
+	jexec(slot, DevNull, DevNull, DevNull);
+}
+
+Tab.prototype.newFileAction = function() {
+	var newName = this.getNewName(L("New file")), slot, cmd;
+	cmd = "#!/bin/bash\necho '' >  \"" + newName + '"';
+	slot = App.dir() + '/sh/o.sh';
+	FS.writefile(slot, cmd);
+	jexec(slot, DevNull, DevNull, DevNull);
+}
+
+Tab.prototype.getNewName = function(newName) {
+	var n = 0, next = this.currentPath + '/' + newName;
+	
+	while (FS.fileExists(next)) {
+		n++;
+		next = this.currentPath + '/' + newName + " (" + n + ')';
+	}
+	
+	return next;
+}
+
 Tab.prototype.onClickCopy = function() {
 	this.listUpdater.pause();
 	this.copyPaste.copyAction(window.currentCmTargetId);
@@ -258,6 +297,72 @@ Tab.prototype.onClickCut = function() {
 }
 Tab.prototype.onClickPaste = function() {
 	this.copyPaste.pasteAction();
+}
+
+Tab.prototype.onClickRename = function() {
+	var 
+		currentCmTargetId,
+		idx,
+		srcName,
+		pathInfo,
+		shortName,
+		newName,
+		cmd,
+		sh = App.dir() + "/sh/o.sh",
+		newPath,
+		cmId,
+		item;
+
+	if (!currentCmTargetId) {
+		currentCmTargetId = this.activeItem.parentNode.id;
+	}
+	if (!currentCmTargetId) {
+		currentCmTargetId = this.selectionItems[0].parentNode.id;
+	}
+	
+	if (!currentCmTargetId) {
+		currentCmTargetId = window.currentCmTargetId;
+	}
+	if (!currentCmTargetId) {
+		return;
+	}
+	idx = currentCmTargetId.replace('f', '');
+	srcName = this.currentPath + '/' + this.list[idx].name;
+	pathInfo = pathinfo(srcName);
+	shortName = pathInfo.basename;
+	newName = prompt(L("Enter new name"), shortName)
+	
+	if (newName) {
+		newPath = this.currentPath + '/' + newName;
+		if (FS.fileExists(newPath)) {
+			alert(L("File or folder already exists"));
+			return;
+		}
+		cmd = "#!/bin/bash\nmv \"" + srcName + "\" \"" + newPath + '"';
+		FS.writefile(sh, cmd);
+		jexec(sh, DevNull, DevNull, DevNull);
+		cmId = attr(currentCmTargetId, 'data-cmid');
+		if (cmId) {
+			item = this.list[idx];
+			item.name = newName
+			this.listRenderer.updateItem(idx, item);
+		}
+	}
+}
+
+Tab.prototype.onClickOpenTerm = function(inCurrentFolder) {
+	var cmd,
+		sh = App.dir() + "/sh/o.sh",
+		idx
+		;
+	if (inCurrentFolder) {
+		cmd = "#!/bin/bash\nxfce4-terminal --working-directory=\"" + this.currentPath + '"';
+	} else {
+		idx = this.activeItem.parentNode.id.replace('f', '');
+		cmd = "#!/bin/bash\nxfce4-terminal --working-directory=\"" + this.currentPath + '/' + this.list[idx].name + '"';
+	}
+	FS.writefile(sh, cmd);
+	jexec(sh, DevNull, DevNull, DevNull);
 }
 
 // TODO сделать через диалог

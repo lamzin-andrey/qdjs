@@ -37,8 +37,12 @@ var langRu = {
 	'Hide hidden files Ctrl+H' : 'Скрыть скрытые файлы Ctrl+H',
 	"Are you sure you want to permanently delete files" : "Вы уверены, что хотите удалить файлы без возможности восстановления",
 	"Are you sure you want to permanently delete file" : "Вы уверены, что хотите удалить без возможности восстановления файл",
-	'' : '',
-	'' : '',
+	"Create catalog" : "Создать каталог",
+	"Create file" : "Создать файл",
+	"New catalog" : "Новый каталог",
+	"New file" : "Новый файл",
+	"File or folder already exists" : "Файл или кталог уже существуют",
+	"Enter new name" : "Введите новое имя",
 	'' : ''
 };
 
