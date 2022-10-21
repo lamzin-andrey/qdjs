@@ -66,8 +66,125 @@ FileManager.prototype.onGetSavedEnv = function() {
  * TODO Изменяет размеры табов
 */
 FileManager.prototype.onResize = function() {
+	this.setTabWidths();
+}
+FileManager.prototype.setTabWidths = function() {
+	e('tabContentHeaderDate').style.width = null;
+	e('tabContentHeaderDate').style.minWidth = null;
+	
+	e('tabContentHeaderFileName').style.width = null;
+	e('tabContentHeaderFileName').style.minWidth = null;
+	var o = this;
+	this.setColWidth(null, null);
+	//setTimeout(function(){
+		o.corectTabWidth();
+	//}, 10);
 	
 }
+
+FileManager.prototype.corectTabWidth = function() {
+	var minDateTabW = 126, correct = 23, s, delta,
+		dateColWidth,
+		nameColWidth;
+	if (
+		intval(e('tabContentHeaders').style.minWidth) > intval(e('tabContentHeadersWr').style.width)
+	) {
+		var x = intval(e('tabContentHeaders').style.minWidth) - intval(e('tabContentHeadersWr').style.width);
+		
+		// надо выбрать из даты как можно больше, но чтобы оно стало не меньше чем необходимо для полного отображения даты.
+		// 116, но возможно добавим.
+		
+		if (intval(e('tabContentHeaderDate').offsetWidth) - x > 116) {
+			dateColWidth = (intval(e('tabContentHeaderDate').offsetWidth) - x);
+			e('tabContentHeaderDate').style.width = dateColWidth + 'px';
+			e('tabContentHeaderDate').style.minWidth = dateColWidth + 'px';
+			this.setColWidth(nameColWidth, dateColWidth);
+			return;
+		}
+		s = intval(e('tabContentHeaderDate').offsetWidth) - x;
+		delta = minDateTabW - s;
+		dateColWidth = minDateTabW;
+		e('tabContentHeaderDate').style.width = minDateTabW + 'px';
+		e('tabContentHeaderDate').style.minWidth = minDateTabW + 'px';
+		x = delta + correct;
+		
+		// Остальное выбираем из таба с именем
+		x = e('tabContentHeaderFileName').offsetWidth - x;
+		nameColWidth = x;
+		if (nameColWidth < 100) {
+			nameColWidth = 100;
+		}
+		e('tabContentHeaderFileName').style.width = x + 'px';
+		e('tabContentHeaderFileName').style.minWidth = x + 'px';
+		this.setColWidth(nameColWidth, dateColWidth);
+	} else {
+		if (screen.width == 1024) {
+			nameColWidth = 355;
+			dateColWidth = 126;
+			e('tabContentHeaderDate').style.width = dateColWidth + 'px';
+			e('tabContentHeaderDate').style.minWidth = dateColWidth + 'px';
+		
+			e('tabContentHeaderFileName').style.width = nameColWidth + 'px';
+			e('tabContentHeaderFileName').style.minWidth = nameColWidth + 'px';
+			this.setColWidth(nameColWidth, dateColWidth);
+		}
+	}
+}
+
+FileManager.prototype.setColWidth = function(nameColWidth, dateColWidth) {
+	try {
+		this.setColNameWidth(nameColWidth);
+		this.setColDateWidth(dateColWidth);
+	} catch(err) {
+		alert(err);
+	}
+}
+
+FileManager.prototype.setColNameWidth = function(nameColWidth) {
+	var stl = '.tabContentItemNameMain {\
+  width: {n}px!important;\
+  max-width: {n}px!important;\
+  min-width: {n}px!important;\
+}',
+	head, tagStyle;
+	head = ee(document, 'head')[0];
+	rm('styleNameCol');
+	if (intval(nameColWidth) == 0) {
+		return;
+	}
+	
+	stl = stl.replace('{n}', nameColWidth);
+	stl = stl.replace('{n}', nameColWidth);
+	stl = stl.replace('{n}', nameColWidth);
+   
+    
+    tagStyle = appendChild(head, 'style', stl, {
+		"id": "styleNameCol"
+	}, {});
+}
+
+
+FileManager.prototype.setColDateWidth = function(dateColWidth) {
+	var stl = '.tabContentItemDate {\
+	  width: {n}px!important;\
+	  max-width: {n}px!important;\
+	}',
+	head, tagStyle;
+	head = ee(document, 'head')[0];
+	rm('styleDateCol');
+	if (intval(dateColWidth) == 0) {
+		return;
+	}
+	
+	stl = stl.replace('{n}', dateColWidth);
+	stl = stl.replace('{n}', dateColWidth);
+   
+    
+    tagStyle = appendChild(head, 'style', stl, {
+		"id": "styleDateCol"
+	}, {});
+}
+
 /**
  * Set unconstant main menu items
 */

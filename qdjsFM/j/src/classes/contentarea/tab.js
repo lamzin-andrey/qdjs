@@ -200,7 +200,7 @@ Tab.prototype.createItem = function(s) {
 		item.cmId = typeData.c;
 	}
 	
-	item.sz = app.devicesManager.pluralizeSize(a[4], 1);
+	item.sz = (app.devicesManager ? app.devicesManager.pluralizeSize(a[4], 1) : '0');
 	item.o = a[2];
 	item.g = a[3];
 	

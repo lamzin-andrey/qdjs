@@ -1,5 +1,6 @@
 window.SCROLL_LINE_HEIGHT = 18
 function main() {
+	window.AppStartTime = time();
 	try {
 		var lang = Settings.get('currentLang');
 		if (lang == 'ru' || lang == 'en') {
@@ -41,6 +42,7 @@ function onResize() {
 		
 		e('sidebarWrapper').style.height = (vpH - 0) + 'px';
 		e('sidebarWrapper').style.maxHeight = (vpH - dY) + 'px';
+		app.onResize();
 	}, 1000);
 	
 	// for items
