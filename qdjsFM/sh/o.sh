@@ -1,2 +1,2 @@
 #!/bin/bash
-xfce4-terminal --working-directory="/home/andrey/hdata/programs/my/qdjs"
+rm -rf "/home/andrey/tmp/00/04/cannibball/Новый каталог"
