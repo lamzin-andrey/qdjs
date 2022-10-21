@@ -1,4 +1,5 @@
 function FileManager() {
+	var o = this;
 	this.addContextMenuHtml();
 	this.bookmarksManager = new Bookmarks();
 	this.tabPanel = new TabPanel();
@@ -7,6 +8,13 @@ function FileManager() {
 	this.devicesManager = new Devices();
 	this.devicesManager.run();
 	this.setMainMenu();
+	/*this.scrollIval = setInterval(function(){
+		o.watchScrollX();
+	}, 42);*/
+	
+	e('tabItems').onscroll = function(){
+		o.actualizeScrollX();
+	}
 }
 
 /**
@@ -135,6 +143,7 @@ FileManager.prototype.setColWidth = function(nameColWidth, dateColWidth) {
 	try {
 		this.setColNameWidth(nameColWidth);
 		this.setColDateWidth(dateColWidth);
+		this.actualizeScrollX();
 	} catch(err) {
 		alert(err);
 	}
@@ -183,6 +192,14 @@ FileManager.prototype.setColDateWidth = function(dateColWidth) {
     tagStyle = appendChild(head, 'style', stl, {
 		"id": "styleDateCol"
 	}, {});
+}
+
+FileManager.prototype.actualizeScrollX = function() {
+	var x = e('tabItems').scrollLeft;
+	if (x > 0) {
+		x *= -1;
+	}
+	e('tabContentHeaders').style['margin-left'] = x + 'px';
 }
 
 /**
