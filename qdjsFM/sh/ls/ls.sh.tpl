@@ -8,7 +8,7 @@ currentList=''
 while true
 do
 	trg=`cat $inp`
-	newList='BOF '$trg$NL`ls -lh --full-time $trg`$NL'EOF '$trg
+	newList='BOF '$trg$NL`ls -lh --full-time "$trg"`$NL'EOF '$trg
 	if [[ "$currentList" != "$newList" ]]; then
 		echo 'BOF '$trg > $out
 		ls -lh --full-time "$trg" >> $out

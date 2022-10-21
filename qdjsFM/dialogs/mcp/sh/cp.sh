@@ -1,2 +1,2 @@
 #!/bin/bash
-cp "/home/andrey/tmp/00/05/php2js/j/landlib/net/httpquerystring.es5.js" "/home/andrey/tmp/00/04/cannibball/php2js/j/landlib/net"
+cp "/media/andrey/D/DISTPro/DistPRo/delphi/Delphi6/CRACK/read_me.txt" "/home/andrey/hdata/vdis/bridge/isya/xp-wall/2/Delphi6/CRACK"

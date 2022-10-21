@@ -83,7 +83,7 @@ ListUpdater.prototype.onListTick = function(){
 			try {
 				o.renderPart();
 			} catch (err) {
-				alert('Err: ' + err);
+				alert('ListUpdater.onListTick: ' + err);
 			}
 		}, 200);
 	}
@@ -179,7 +179,6 @@ ListUpdater.prototype.cutTail = function() {
 		// TODO remove me!
 		cBreak++;
 		if (cBreak > 500) {
-			alert('cBreak > 500');
 			break;
 		}
 		SZ = sz(this.tab.list);

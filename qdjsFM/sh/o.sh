@@ -1,2 +1,2 @@
 #!/bin/bash
-xdg-open '/media/andrey/SP/soft/wxp-hello.png'
+xfce4-terminal --working-directory="/home/andrey/hdata/programs/my/qdjs"

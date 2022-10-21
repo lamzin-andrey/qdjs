@@ -259,19 +259,27 @@ Tab.prototype.onClickNewFile = function() {
 }
 
 Tab.prototype.newFolderAction = function() {
-	var newName = this.getNewName(L("New catalog")), slot, cmd;
-	cmd = "#!/bin/bash\nmkdir \"" + newName + '"';
-	slot = App.dir() + '/sh/o.sh';
-	FS.writefile(slot, cmd);
-	jexec(slot, DevNull, DevNull, DevNull);
+	this.newItemAction(L("New catalog"), L("Enter catalog name"), "mkdir");
 }
-
 Tab.prototype.newFileAction = function() {
-	var newName = this.getNewName(L("New file")), slot, cmd;
-	cmd = "#!/bin/bash\necho '' >  \"" + newName + '"';
-	slot = App.dir() + '/sh/o.sh';
-	FS.writefile(slot, cmd);
-	jexec(slot, DevNull, DevNull, DevNull);
+	this.newItemAction(L("New file"), L("Enter file name"), "echo '' >");
+}
+Tab.prototype.newItemAction = function(newName, label, command) {
+	var slot, cmd;
+	newName = prompt(label, newName);
+	if (newName) {
+		if (FS.fileExists(this.currentPath + '/' + newName)) {
+			alert(L("File or folder already exists"));
+			return;
+		}
+		newName = this.currentPath + '/' + newName;
+		cmd = "#!/bin/bash\n" + command + " \"" + newName + '"';
+		slot = App.dir() + '/sh/o.sh';
+		FS.writefile(slot, cmd);
+		jexec(slot, DevNull, DevNull, DevNull);
+	} else {
+		alert("What the mix?");
+	}
 }
 
 Tab.prototype.getNewName = function(newName) {

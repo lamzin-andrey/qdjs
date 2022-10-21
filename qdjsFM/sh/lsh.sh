@@ -1,2 +1,2 @@
 #! /bin/bash
-ls -alh --full-time "/media/andrey/SP/soft"
+ls -alh --full-time "/home/andrey/hdata/programs/my"

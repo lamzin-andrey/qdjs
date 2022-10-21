@@ -61,6 +61,7 @@ ListRenderer.prototype.renderPart = function(){
 						+ freeSpaceText;
 		this.context.setStatus.call(this.context, statusText);
 		this.context.listUpdater.run.call(this.context.listUpdater);
+		
 	}
 }
 

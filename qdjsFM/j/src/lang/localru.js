@@ -43,6 +43,8 @@ var langRu = {
 	"New file" : "Новый файл",
 	"File or folder already exists" : "Файл или кталог уже существуют",
 	"Enter new name" : "Введите новое имя",
+	"Enter catalog name" : "Введите имя каталога",
+	"Enter file name" : "Введите имя файла",
 	'' : ''
 };
 
