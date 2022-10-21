@@ -788,6 +788,9 @@ function file_get_contents($file) {
 	}
 	return '';
 }
+function floatval(v){
+	return parseFloat(v);
+}
 function json_encode(d) {
 	return JSON.stringify(d);
 }

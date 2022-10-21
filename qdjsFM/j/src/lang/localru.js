@@ -45,6 +45,7 @@ var langRu = {
 	"Enter new name" : "Введите новое имя",
 	"Enter catalog name" : "Введите имя каталога",
 	"Enter file name" : "Введите имя файла",
+	"MS Windows application" : "Программа MS Windows",
 	'' : ''
 };
 

@@ -4,6 +4,7 @@ function Tab() {
 	this.addressPanel = new AddressPanel();
 	this.listRenderer = new ListRenderer();
 	this.listUpdater = new ListUpdater(this);
+	this.sort = window.app.sort;
 	this.list = [];
 	this.hideList = [];
 	this.showList = [];
@@ -103,6 +104,8 @@ Tab.prototype.buildList = function(lsout) {
 			}
 		}
 	}
+	this.sort.apply(files); // TODO
+	this.sort.apply(dirs);
 	SZ = sz(files);
 	for (i = 0; i < SZ; i++) {
 		dirs.push(files[i]);
@@ -173,6 +176,7 @@ Tab.prototype.createItem = function(s) {
 	var item = {
 			name: '',
 			sz:'',
+			rsz:0,
 			type:'',
 			o:'',
 			g:'',
@@ -201,6 +205,7 @@ Tab.prototype.createItem = function(s) {
 	}
 	
 	item.sz = (app.devicesManager ? app.devicesManager.pluralizeSize(a[4], 1) : '0');
+	item.rsz = a[4];
 	item.o = a[2];
 	item.g = a[3];
 	

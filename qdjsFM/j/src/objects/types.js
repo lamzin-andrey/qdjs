@@ -9,7 +9,7 @@ window.Types = {
 			},
 			targetIcon,
 			images = In('png', 'jpg', 'jpe', 'jpeg', 'jfif', 'gif', 'bmp'),
-			texts  = In('txt', 'cpp', 'c', 'py', 'pas', 'json', 'rb', 'cs', 'pl', 'ini', 'conf'),
+			texts  = In('txt', 'cpp', 'c', 'py', 'pas', 'json', 'rb', 'cs', 'pl', 'ini', 'conf', 'php'),
 			docs   = In('doc', 'docx', 'odf', 'xlsx', 'xls', 'csv', 'pdf', 'ppt'),
 			audio  = In('mp3', 'wav', 'ogg', 'flac', ''),
 			video  = In('mp4', 'avi', 'wma', 'mov', 'vob'),
@@ -51,6 +51,8 @@ window.Types = {
 			r.c = 'cmDesktop';
 		} else if (ext == 'swf') {
 			r.t = L('Shockwave Flash Application');
+		} else if (ext == 'exe') {
+			r.t = L("MS Windows application");
 		}
 		
 		targetIcon = App.dir() + '/i/mi/' + ext + '32.png';
