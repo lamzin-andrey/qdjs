@@ -283,8 +283,6 @@ Tab.prototype.newItemAction = function(newName, label, command) {
 		slot = App.dir() + '/sh/o.sh';
 		FS.writefile(slot, cmd);
 		jexec(slot, DevNull, DevNull, DevNull);
-	} else {
-		alert("What the mix?");
 	}
 }
 
@@ -611,6 +609,18 @@ Tab.prototype.onKeyDown = function(evt) {
 	if (evt.keyCode == 13) {
 		this.openAction(this.getActiveItemId());
 	}
+	if (MW.getLastKeyChar() != '' 
+		&& !this.isFilterBoxShown()
+		&& evt.keyCode != 27 
+		&& evt.keyCode != 13
+		&& evt.keyCode != 9
+		&& evt.keyCode != 8
+		&& !evt.ctrlKey
+	) {
+		
+		this.showFilterBox(MW.getLastKeyChar());
+		this.processFilterBoxInput();
+	}
 }
 Tab.prototype.onPushArrowDown = function(evt) {
 	evt.preventDefault();
@@ -658,7 +668,9 @@ Tab.prototype.onPushArrowUp = function(evt) {
 		currentTarget: e(id),
 		shiftKey: evt.shiftKey
 	}, !evt.shiftKey);
-	this.scrollToItem(id);
+	if (!evt.shiftKey) {
+		this.scrollToItem(id);
+	}
 	
 }
 Tab.prototype.getActiveItemId = function() {
@@ -689,6 +701,7 @@ Tab.prototype.getPrevId = function(id) {
 	
 	return '';
 }
+
 Tab.prototype.scrollToItem = function(id) {
 	var line = e(id), nId = this.toI(id),
 		tabItems = e('tabItems');
@@ -696,3 +709,76 @@ Tab.prototype.scrollToItem = function(id) {
 		tabItems.scrollTop = nId * line.offsetHeight - tabItems.offsetHeight + (2 * line.offsetHeight);
 	}
 }
+
+Tab.prototype.isFilterBoxShown = function() {
+	if (e('hFilterBox')) {
+		return true;
+	}
+	return false;
+}
+
+Tab.prototype.showFilterBox = function(ch) {
+	var o = this, filterBox, input;
+	filterBox = appendChild(body(), 'div', o.getFilterBoxHtml(ch), {"id": "hFilterBox", "style" : o.getFilterBoxStyle()});
+	input = e('hFilterBoxInput');
+	input.onkeydown = function(evt) {
+		if (evt.keyCode == 27) {
+			evt.preventDefault();
+			rm("hFilterBoxInput");
+			rm("hFilterBox");
+			return;
+		}
+		app.filterBoxDeadTime = time() + 5;
+		setTimeout(function(){
+			o.processFilterBoxInput();
+		}, 100);
+	}
+	input.focus();
+	app.filterBoxDeadTime = time() + 5;
+	this.filterBoxInterval = setInterval(function(){
+		if (time() > app.filterBoxDeadTime) {
+			rm('hFilterBoxInput');
+			rm('hFilterBox');
+			clearInterval(o.filterBoxInterval);
+		}
+	}, 1000);
+}
+
+Tab.prototype.getFilterBoxHtml = function(ch) {
+	var s = '<input style="height:32px; border: 2px solid #8ba8df; font-size:13px; border-radius:2px;" value="' + ch + '" id="hFilterBoxInput">';
+	return s;
+}
+
+Tab.prototype.getFilterBoxStyle = function() {
+	var s = 'position:fixed; right:2px; bottom:4px;';
+	return s;
+}
+
+Tab.prototype.processFilterBoxInput = function() {
+	var input = input = e('hFilterBoxInput'), s, i, SZ = sz(this.list), item, id;
+	if (!input) {
+		console.log('Exit with !inp');
+		return;
+	}
+	s = input.value;
+	if (!s) {
+		console.log('Exit with !s');
+		return;
+	}
+	s = input.value;
+	for (i = 0; i < SZ; i++) {
+		item = this.list[i];
+		console.log(item.name);
+		if (item.name.indexOf(s) == 0) {
+			id = 'f' + i;
+			if (e(id)) {
+				this.setSelection({
+					currentTarget: e(id)
+				}, true);
+				this.scrollToItem(id);
+			}
+			break;
+		}
+	}
+}
+
