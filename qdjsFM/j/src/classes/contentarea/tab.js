@@ -31,6 +31,7 @@ Tab.prototype.setPath = function(path) {
 	this.hideList = [];
 	this.showList = [];
 	this.selectionItems = [];
+	this.activeItem = null;
 	this.cutItems = [];
 	this.listCount = 0;
 	this.listComplete = false;
@@ -479,7 +480,7 @@ Tab.prototype.tpl = function() {
 }
 
 Tab.prototype.setSelection = function(evt, needClearSelection) {
-	needClearSelection = String(needClearSelection) == 'undefined' ? true : false;
+	needClearSelection = String(needClearSelection) == 'undefined' || needClearSelection === true  ? true : false;
 	var i, trg = ctrg(evt), cname = 'tabContentItem', lastId, nextId, obj, buf;
 	
 	if (!evt.ctrlKey && !evt.shiftKey) {
@@ -585,5 +586,113 @@ Tab.prototype.normalizeSelectionItems = function() {
 		for (i in map) {
 			this.selectionItems.push(map[i]);
 		}
+	}
+}
+
+Tab.prototype.onKeyDown = function(evt) {
+	var pathInfo;
+	if (evt.keyCode == 40) {
+		this.onPushArrowDown(evt);
+	}
+	if (evt.keyCode == 38) {
+		if (evt.altKey) {
+			pathInfo = pathinfo(this.currentPath);
+			if (pathInfo.dirname) {
+				app.setActivePath(pathInfo.dirname, ['']);
+			} else {
+				app.setActivePath('/', ['']);
+			}
+			return;
+		} else {
+			this.onPushArrowUp(evt);
+		}
+		
+	}
+	if (evt.keyCode == 13) {
+		this.openAction(this.getActiveItemId());
+	}
+}
+Tab.prototype.onPushArrowDown = function(evt) {
+	evt.preventDefault();
+	var id;
+	id = this.getActiveItemId();
+	if (!id) {
+		id = 'f0';
+		this.setSelection({
+			currentTarget: e(id),
+			shiftKey: evt.shiftKey
+		}, !evt.shiftKey);
+	
+		this.scrollToItem(id);
+		return;
+	}
+	id = this.getNextId(id);
+	if (!id) {
+		return;
+	}
+	this.setSelection({
+		currentTarget: e(id),
+		shiftKey: evt.shiftKey
+	}, !evt.shiftKey);
+	
+	this.scrollToItem(id);
+}
+Tab.prototype.onPushArrowUp = function(evt) {
+	evt.preventDefault();
+	var id;
+	id = this.getActiveItemId();
+	if (!id) {
+		id = 'f0';
+		this.setSelection({
+			currentTarget: e(id),
+			shiftKey: evt.shiftKey
+		}, !evt.shiftKey);
+		this.scrollToItem(id);
+		return;
+	}
+	id = this.getPrevId(id);
+	if (!id) {
+		return;
+	}
+	this.setSelection({
+		currentTarget: e(id),
+		shiftKey: evt.shiftKey
+	}, !evt.shiftKey);
+	this.scrollToItem(id);
+	
+}
+Tab.prototype.getActiveItemId = function() {
+	if(!this.activeItem) {
+		return '';
+	}
+	return this.toI(this.activeItem.parentNode.id);
+}
+
+Tab.prototype.getNextId = function(id) {
+	id = this.toI(id);
+	id++;
+	id = 'f' + id;
+	if (e(id)) {
+		return id;
+	}
+	
+	return '';
+}
+
+Tab.prototype.getPrevId = function(id) {
+	id = this.toI(id);
+	id--;
+	id = 'f' + id;
+	if (e(id)) {
+		return id;
+	}
+	
+	return '';
+}
+Tab.prototype.scrollToItem = function(id) {
+	var line = e(id), nId = this.toI(id),
+		tabItems = e('tabItems');
+	if (line.offsetTop > tabItems.offsetHeight) {
+		tabItems.scrollTop = nId * line.offsetHeight - tabItems.offsetHeight + (2 * line.offsetHeight);
 	}
 }

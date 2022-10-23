@@ -104,6 +104,8 @@ function onKeyUp(evt) {
 		app.tab.onClickRename();
 	}
 	
+	app.kbListener.onKeyDown(evt);
+	
 }
 
 function onClickExitMenu() {

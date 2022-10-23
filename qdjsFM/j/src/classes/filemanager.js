@@ -18,6 +18,7 @@ function FileManager() {
 	e('tabItems').onscroll = function(){
 		o.actualizeScrollX();
 	}
+	this.kbListener = new KBListener();
 }
 
 /**
