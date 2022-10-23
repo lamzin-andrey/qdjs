@@ -27,7 +27,10 @@ AbstractList.prototype.render = function() {
 			title: this.list[i].displayName, 
 			id: this.itemIdPrefix + String(i),
 			"class": 'pointer sectionItem'
-		}, {});
+		}, {
+			"cmid": this.list[i].cmId,
+			"id": i
+		});
 		item.onclick = function(evt) {
 			o.setActiveView(evt);
 			o.onClick(evt);

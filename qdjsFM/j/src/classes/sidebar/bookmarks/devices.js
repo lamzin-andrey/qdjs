@@ -32,11 +32,34 @@ Devices.prototype.isRun = function() {
 
 Devices.prototype.onClick = function(event) {
 	var trg = ctrg(event),
-		n = str_replace(this.itemIdPrefix, '', trg.id);
-	app.setActivePath(this.list[n].path, 'devicesManager');
-	if (this.list[n].xdxN) {
-		alert('Wil try monnt ' + this.list[n].xdxN);
+		n = str_replace(this.itemIdPrefix, '', trg.id),
+		isMounted = false,
+		o = this,
+		cmd = "#!/bin/bash\nudisksctl mount -b /dev/",
+		sh = App.dir() + "/sh/o.sh",
+		path;
+	if (FS.fileExists(this.list[n].path) && FS.isDir(this.list[n].path)) {
+		FS.writefile(this.list[n].path + "/.qdjsfm", "Hello");
+		if (FS.fileExists(this.list[n].path + "/.qdjsfm")) {
+			isMounted = true;
+		}
+		FS.unlink(this.list[n].path + "/.qdjsfm");
 	}
+	if (isMounted) {
+		app.setActivePath(this.list[n].path, 'devicesManager');
+	} else if (this.list[n].xdxN) {
+		cmd += this.list[n].xdxN;
+		FS.writefile(sh, cmd);
+		jexec(sh, function(stdout, stderr){
+			path = stdout.split(" at ");
+			path = path[sz(path) - 1].replace(/[.]{1}/, '').trim();
+			app.setActivePath(path, 'devicesManager');
+		}, DevNull, [this, this.onErrMount]);
+	}
+}
+
+Devices.prototype.onErrMount = function(stderr) {
+	alert("Error mount device\n" + stderr);
 }
 
 
@@ -324,6 +347,7 @@ Devices.prototype.addItem = function(name, path, xdxN) {
 	
 	item.displayName = name;
 	item.path = path;
+	item.cmId = "cmDiskMenu";
 	if (!path) {
 		item.icon = App.dir() + '/i/disk32.png';
 	}
@@ -341,6 +365,7 @@ Devices.prototype.addItem = function(name, path, xdxN) {
 	
 	if (!foundInPrev || this.removableDevices[name]) {
 		item.icon = App.dir() + '/i/usb32.png';
+		item.cmId = "cmUsbMenu";
 		this.removableDevices[name] = 1;
 		Settings.set('rds', this.removableDevices);
 	}
@@ -360,5 +385,75 @@ Devices.prototype.getLocale = function(user) {
 	}
 	
 	return 'en';
+}
+
+Devices.prototype.onClickOpen = function() {
+	this.onClick({currentTarget: e(this.itemIdPrefix + window.currentCmTargetId)});
+}
+
+Devices.prototype.onClickMount = function() {
+	var n = window.currentCmTargetId,
+		isMounted = false,
+		cmd = "#!/bin/bash\nudisksctl mount -b /dev/",
+		sh = App.dir() + "/sh/o.sh",
+		path;
+	if (FS.fileExists(this.list[n].path) && FS.isDir(this.list[n].path)) {
+		FS.writefile(this.list[n].path + "/.qdjsfm", "Hello");
+		if (FS.fileExists(this.list[n].path + "/.qdjsfm")) {
+			isMounted = true;
+		}
+		FS.unlink(this.list[n].path + "/.qdjsfm");
+	}
+	if (!isMounted && this.list[n].xdxN) {
+		cmd += this.list[n].xdxN;
+		FS.writefile(sh, cmd);
+		jexec(sh, DevNull, DevNull, [this, this.onErrMount]);
+	}
+}
+
+Devices.prototype.onClickUnmount = function() {
+	var n = window.currentCmTargetId,
+		isMounted = false,
+		cmd = "#!/bin/bash\nudisksctl unmount -b /dev/",
+		sh = App.dir() + "/sh/o.sh";
+	if (!isMounted && this.list[n].xdxN) {
+		cmd += this.list[n].xdxN;
+		FS.writefile(sh, cmd);
+		jexec(sh, function(){
+			app.setActivePath('/home/' + USER, 'devicesManager');
+		}, DevNull, [this, this.onErrMount]);
+	}
+}
+
+Devices.prototype.onClickEject = function() {
+	var n = window.currentCmTargetId,
+		isMounted = false,
+		o = this,
+		cmd = "#!/bin/bash\nudisksctl unmount -b /dev/",
+		sh = App.dir() + "/sh/o.sh",
+		path;
+	if (FS.fileExists(this.list[n].path) && FS.isDir(this.list[n].path)) {
+		FS.writefile(this.list[n].path + "/.qdjsfm", "Hello");
+		if (FS.fileExists(this.list[n].path + "/.qdjsfm")) {
+			isMounted = true;
+		}
+		FS.unlink(this.list[n].path + "/.qdjsfm");
+	}
+	if (isMounted && this.list[n].xdxN) {
+		cmd += this.list[n].xdxN;
+		FS.writefile(sh, cmd);
+		jexec(sh, function(){
+			app.setActivePath('/home/' + USER, 'devicesManager');
+			cmd = "#!/bin/bash\nudisksctl power-off -b /dev/" + o.list[n].xdxN;
+			sh = App.dir() + "/sh/o.sh";
+			FS.writefile(sh, cmd);
+			jexec(sh, DevNull, DevNull, [this, this.onErrMount]);
+		}, DevNull, [this, this.onErrMount]);
+	} else if (this.list[n].xdxN){
+		cmd = "#!/bin/bash\nudisksctl power-off -b /dev/" + this.list[n].xdxN;
+		sh = App.dir() + "/sh/o.sh";
+		FS.writefile(sh, cmd);
+		jexec(sh, DevNull, DevNull, [this, this.onErrMount]);
+	}
 }
 

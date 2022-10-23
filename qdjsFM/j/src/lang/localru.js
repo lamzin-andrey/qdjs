@@ -46,6 +46,10 @@ var langRu = {
 	"Enter catalog name" : "Введите имя каталога",
 	"Enter file name" : "Введите имя файла",
 	"MS Windows application" : "Программа MS Windows",
+	"Open": "Открыть"
+	"Mount device": "Монтировать устройство",
+	"Unmount device": "Отмонтировать устройство",
+	"Eject device": "Извлечь устройство",
 	'' : ''
 };
 
