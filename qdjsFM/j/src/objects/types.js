@@ -53,6 +53,8 @@ window.Types = {
 			r.t = L('Shockwave Flash Application');
 		} else if (ext == 'exe') {
 			r.t = L("MS Windows application");
+		} else if (ext == 'jar') {
+			r.t = L("Executable Jar File");
 		}
 		
 		targetIcon = App.dir() + '/i/mi/' + ext + '32.png';

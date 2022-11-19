@@ -94,6 +94,10 @@ function onKeyUp(evt) {
 		if (88 == evt.keyCode || 1063 == MW.getLastKeyCode()) {
 			app.tab.onClickCut();
 		}
+		if (76 == evt.keyCode || 1044 == MW.getLastKeyCode()) {
+			onClickDisplayPath();
+		}
+		
     }
     // After press Enter in Confirm dialog '||' not work
     if (46 == evt.keyCode && 16777223 == MW.getLastKeyCode()) {
@@ -127,6 +131,30 @@ function onClickChangeHideMode() {
 		app.tab.setPath(app.tab.currentPath);
 		Qt.renameMenuItem(1, 0, text);
 	}
+}
+function onClickChangeAddressMode() {
+	var mode = intval(Settings.get('addressLineMode')), text;
+	if (1 === mode) {
+		mode = 0;
+		text = L('Display address line');
+	} else {
+		mode = 1;
+		text = L('Display address as row buttons');
+	}
+	Settings.set('addressLineMode', mode);
+	
+	if (app && app.addressPanel) {
+		if (1 === mode) {
+			app.addressPanel.showTextAddress();
+		} else {
+			app.addressPanel.showButtonAddress();
+		}
+		Qt.renameMenuItem(1, 1, text);
+	}
+}
+
+function onClickDisplayPath(){
+	app.addressPanel.showTextAddressShort();
 }
 
 function onCopy() {
@@ -198,6 +226,12 @@ function onClickChangeLang(lang) {
 	FS.writefile(indexFile, s);
 	
 	Settings.set('currentLang', lang);
+}
+
+function log(s) {
+	var c = FS.readfile(App.dir() + '/log.log');
+	c += date('H:i:s') + ' ' + s + "\n";
+	FS.writefile(App.dir() + '/log.log', c)
 }
 
 window.onload = main;

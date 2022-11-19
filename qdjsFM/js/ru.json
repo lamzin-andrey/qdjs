@@ -2,10 +2,13 @@
 	"Action":"Действия", 
 	"Exit Ctrl+Q": "Выход Ctrl+Q",
 	"Language": "Язык",
+	"View": "Вид",
 	"Change lang": "Сменить",
 	"Show / hide hidden files Ctrl+H": "Показать / скрыть скрытые файлы",
 	"Hide hidden files Ctrl+H": "Скрыть скрытые файлы",
 	"Show hidden files Ctrl+H": "Показать скрытые файлы",
 	"Create catalog" : "Создать каталог",
 	"Create file" : "Создать файл",
+	"Display address line" : "Показать строку адреса",
+	"Show address line Ctrl+L" : "Показать строку адреса Ctrl+L"
 }

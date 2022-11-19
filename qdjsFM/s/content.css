@@ -1,8 +1,44 @@
 .addressContainer {}
-.addressLine {}
-.addressButtonPlacer{margin-top: 7px;max-height: 31px;overflow-x: hidden;}
+.addressLine {
+	background-color:white;
+	padding-left:6px;
+	border:solid #b6b6b3 1px;
+	height: 28px;
+	display: inline-block;
+	border-radius: 5px;
+}
+.iAddressLine {
+	border:none;
+	margin-top: 2px;
+	line-height:24px;
+	vertical-align:middle;
+}
+.addressLineIcon {
+	width: 20px;
+	line-height: 28px;
+	vertical-align: middle;
+}
+.iAddressLine:focus {
+	outline-style:none;
+}
+/*.iAddressLine:focus-visible {
+	outline-style:none;
+}
+.iAddressLine:focus-within {
+	outline-style:none;
+}*/
+
+
+.addressButtonPlacer{
+	margin-top: 7px;
+	max-height: 31px;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	display:none;
+ }
 .addressButton{}
 .addressButtonLeft {margin-left: 0px !important;width: 24px;height: 27px;margin-right: 0px !important;padding: 0 !important;}
+.addressButtonRight {width: 24px;height: 27px;margin-right: 0px !important;padding: 0 !important;}
 .addressButtonActive {background: #d9d9d7 !important;border-color: #b7b7b4 !important;font-family: arialbd;}
 .addressButton {float: left;border: #b6b6b3 solid 1px;border-radius: 5px;background-color: #e6e6e5;margin: 0px 0px 0px 4.5px;background: linear-gradient(to bottom, #FFFFF9, #E5E5E4, #E5E5E4, #E5E5E4, #cfcfcd, #cfcfcd);height: 29px;font-size: 13px;line-height: 29px;padding-left: 6px;border-bottom-color: #93938e;padding-right: 9px;cursor: default;background-image: url('../i/gradient.png');}
 .addressButtonWithIcon {padding-right: 5px !important;padding-left: 3px !important;}

@@ -308,3 +308,7 @@ function insertBefore(existsElement, newElement) {
 	var parentElement = existsElement.parentNode;
 	return parentElement.insertBefore(newElement, existsElement);
 }
+
+function mclone(o) {
+	return JSON.parse( JSON.stringify(o) );
+}

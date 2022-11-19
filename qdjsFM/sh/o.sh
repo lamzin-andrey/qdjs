@@ -1,2 +1,2 @@
 #!/bin/bash
-udisksctl unmount -b /dev/sdb4
+xfce4-terminal --working-directory="/home/andrey/hdata/programs/my/qdjs"

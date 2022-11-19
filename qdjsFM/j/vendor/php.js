@@ -292,6 +292,24 @@ function array_unique(a){
 	}
 	return a;
 }
+
+function array_unshift(a) {
+	var i, j, sz = a.length;
+	for (i = 1; i < arguments.length; i++) {
+		a[sz + i - 1] = 0;
+	}
+	
+	sz = arguments.length - 1;
+	for (i = a.length - 1; i > 0; i--) {
+		a[i] = a[i - sz];
+	}
+	
+	for (i = 1, j = 0; i < arguments.length; i++, j++) {
+		a[j] = arguments[i];
+	}
+	return a.length;
+}
+
 function array_fill_keys(arr, value) {
 	var i, res = {};
 	for (i = 0; i < arr.length; i++) {

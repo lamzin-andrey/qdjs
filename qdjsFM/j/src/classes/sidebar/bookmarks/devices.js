@@ -38,7 +38,9 @@ Devices.prototype.onClick = function(event) {
 		cmd = "#!/bin/bash\nudisksctl mount -b /dev/",
 		sh = App.dir() + "/sh/o.sh",
 		path;
-	if (FS.fileExists(this.list[n].path) && FS.isDir(this.list[n].path)) {
+	if (this.list[n].path == '/') {
+		isMounted = true;
+	} else if (FS.fileExists(this.list[n].path) && FS.isDir(this.list[n].path)) {
 		FS.writefile(this.list[n].path + "/.qdjsfm", "Hello");
 		if (FS.fileExists(this.list[n].path + "/.qdjsfm")) {
 			isMounted = true;

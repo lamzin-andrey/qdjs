@@ -1,3 +1,4 @@
+MW.setIconImage(App.dir() + '/i/icons/48.png');
 window.addEventListener('load', onWindowLoad);
 
 

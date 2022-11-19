@@ -12,6 +12,8 @@
 		</menu>
 		<menu title="View">
 			<item onselect="onClickChangeHideMode()">Show / hide hidden files Ctrl+H</item>
+			<item onselect="onClickChangeAddressMode()">Display address line</item>
+			<item onselect="onClickDisplayPath()">Show address line Ctrl+L</item>
 		</menu>
 	</menubar>
     
@@ -137,7 +139,11 @@
     <div id="contentArea">
 		
 		<div id="addressContainer" class="addressContainer">
-			<div id="addressLine" class="addressLine"></div>
+			<div id="addressLine" class="addressLine">
+				<img src="./i/folder32.png" id="addressLineIcon" class="addressLineIcon">
+				<input id="iAddressLine" class="iAddressLine">
+				<img src="./i/reload32.png" id="addressLineReloadIcon" class="addressLineIcon">
+			</div>
 			<div id="addressButtonPlacer" class="addressButtonPlacer">
 				<div class="addressButton addressButtonLeft">
 					<img class="addressButtonLeftIcon" src="./i/addressButtonLeft.png">
@@ -158,7 +164,7 @@
 					<span>05</span>
 				</div>
 				
-				<div class="addressButton addressButtonLeft">
+				<div class="addressButton addressButtonRight">
 					<img class="addressButtonRightIcon" src="./i/addressButtonRight.png">
 				</div>
 				

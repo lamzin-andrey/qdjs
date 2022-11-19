@@ -50,6 +50,10 @@ var langRu = {
 	"Mount device": "Монтировать устройство",
 	"Unmount device": "Отмонтировать устройство",
 	"Eject device": "Извлечь устройство",
+	"Executable Jar File": "Программа Java машины",
+	'Display address line' : 'Адрес как строка адреса',
+	'Display address as row buttons' : 'Адрес как ряд кнопок',
+	'Show address line Ctrl+L' : 'Показать строку адреса Ctrl+L',
 	'' : ''
 };
 
