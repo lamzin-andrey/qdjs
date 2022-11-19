@@ -43,6 +43,9 @@ FileManager.prototype.setActivePath = function(path, aExcludes) {
 	if (emitter != 'addresspanel') {
 		this.addressPanel.setPath(path);
 	}
+	if (emitter != 'tabpanel') {
+		this.tabPanel.setPath(path);
+	}
 }
 
 FileManager.prototype.initActiveTab = function() {

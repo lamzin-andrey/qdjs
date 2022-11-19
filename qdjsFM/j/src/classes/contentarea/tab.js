@@ -782,3 +782,7 @@ Tab.prototype.processFilterBoxInput = function() {
 	}
 }
 
+
+Tab.prototype.setTabItem = function(tabItem) {
+	this.tabItem = tabItem;
+}
