@@ -61,7 +61,7 @@ AbstractList.prototype.setPath = function(path)  {
 }
 
 AbstractList.prototype.getHeight = function()  {
-	var h = cs(this.contentBlock, 'sectionItem')[0].offsetHeight;
+	var el = cs(this.contentBlock, 'sectionItem')[0], h = el ? el.offsetHeight : 0;
 	return sz(this.list) * h;
 }
 

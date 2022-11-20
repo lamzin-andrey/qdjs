@@ -362,16 +362,39 @@ Tab.prototype.onClickRename = function() {
 	}
 }
 
+Tab.prototype.onClickAddBookmark = function() {
+	var idx, srcName, pathInfo, shortName;
+	/*if (!currentCmTargetId) {
+		currentCmTargetId = this.activeItem.parentNode.id;
+	}
+	if (!currentCmTargetId) {
+		currentCmTargetId = this.selectionItems[0].parentNode.id;
+	}
+	
+	if (!currentCmTargetId) {
+		currentCmTargetId = window.currentCmTargetId;
+	}
+	if (!currentCmTargetId) {
+		return;
+	}*/
+	idx = currentCmTargetId.replace('f', '');
+	srcName = this.currentPath + '/' + this.list[idx].name;
+	pathInfo = pathinfo(srcName);
+	shortName = pathInfo.basename;
+	app.bookmarksManager.addNewBm(srcName, shortName);
+}
+
 Tab.prototype.onClickOpenTerm = function(inCurrentFolder) {
 	var cmd,
 		sh = App.dir() + "/sh/o.sh",
 		idx
 		;
 	if (inCurrentFolder) {
-		cmd = "#!/bin/bash\nxfce4-terminal --working-directory=\"" + this.currentPath + '"';
+		cmd = this.createOpenTermCommand(this.currentPath);
 	} else {
 		idx = this.activeItem.parentNode.id.replace('f', '');
-		cmd = "#!/bin/bash\nxfce4-terminal --working-directory=\"" + this.currentPath + '/' + this.list[idx].name + '"';
+		// cmd = "#!/bin/bash\nxfce4-terminal --working-directory=\"" + this.currentPath + '/' + this.list[idx].name + '"';
+		cmd = this.createOpenTermCommand(this.currentPath + '/' + this.list[idx].name);
 	}
 	FS.writefile(sh, cmd);
 	jexec(sh, DevNull, DevNull, DevNull);
@@ -782,7 +805,10 @@ Tab.prototype.processFilterBoxInput = function() {
 	}
 }
 
-
 Tab.prototype.setTabItem = function(tabItem) {
 	this.tabItem = tabItem;
+}
+
+Tab.prototype.createOpenTermCommand = function(s) {
+	return "#!/bin/bash\nxfce4-terminal --working-directory=\"" + s + '"';
 }

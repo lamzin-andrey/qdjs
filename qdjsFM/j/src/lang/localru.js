@@ -46,7 +46,8 @@ var langRu = {
 	"Enter catalog name" : "Введите имя каталога",
 	"Enter file name" : "Введите имя файла",
 	"MS Windows application" : "Программа MS Windows",
-	"Open": "Открыть"
+	"Open": "Открыть",
+	"Open terminal": "Открыть в терминале",
 	"Mount device": "Монтировать устройство",
 	"Unmount device": "Отмонтировать устройство",
 	"Eject device": "Извлечь устройство",
@@ -54,7 +55,13 @@ var langRu = {
 	'Display address line' : 'Адрес как строка адреса',
 	'Display address as row buttons' : 'Адрес как ряд кнопок',
 	'Show address line Ctrl+L' : 'Показать строку адреса Ctrl+L',
-	'' : ''
+	"Add bookmark" : "Добавить закладку",
+	"Remove bookmark" : "Удалить закладку",
+	"Rename bookmark" : "Переименовать закладку",
+	"Move up" : "Переместить вверх",
+	"Move down" : "Переместить вниз",
+	"Are you sure remove bookmark" : "Вы уверены, что хотите удалить закладку",
+	"" : ""
 };
 
 var jaqedLang = langRu; // TODO потом в зависимости от настроек

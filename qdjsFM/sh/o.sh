@@ -1,2 +1,2 @@
 #!/bin/bash
-udisksctl mount -b /dev/sdb4
+xfce4-terminal --working-directory="/home/andrey/hdata/programs/my/qdjs/qdjsFM"

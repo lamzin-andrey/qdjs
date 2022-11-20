@@ -63,6 +63,7 @@ FileManager.prototype.onGetActualEnv = function() {
 	} else {
 		if (this.tab.getUser() != USER && USER != 'root') {
 			this.bookmarksManager.setUser(USER);
+			this.bookmarksManager.run();
 			this.tab.setUser(USER);
 			try {
 				window.app.setActivePath('/home/' + USER, ['']);
@@ -272,119 +273,13 @@ FileManager.prototype.setSidebarScrollbar = function() {
 	}
 }
 
+FileManager.prototype.getCurrentLocale = function() {
+	return "ru";
+}
 
 FileManager.prototype.addContextMenuHtml = function() {
-	var html = '<!-- context menu example -->\
-		<div id="cmCatalog" style="display:none">\
-			<div class="contextMenu">\
-				<div class="contextMenuItem" onclick="app.tab.onClickOpen()">\
-					<div class="contextMenuItemIcon">\
-						<img src="./i/cm/open16.png">\
-					</div>\
-					<div class="contextMenuItemText">Открыть</div>\
-					<div class="cf"></div>\
-				</div>\
-				\
-				<div class="contextMenuItem" onclick="app.tab.onClickOpenNewTab()">\
-					<div class="contextMenuItemIcon">\
-						&nbsp;\
-					</div>\
-					<div class="contextMenuItemText">Открыть в новой вкладке</div>\
-					<div class="cf"></div>\
-				</div>\
-				\
-				<div class="contextMenuItem" onclick="app.tab.onClickOpenNewWnd()">\
-					<div class="contextMenuItemIcon">\
-						&nbsp;\
-					</div>\
-					<div class="contextMenuItemText">Открыть в новом окне</div>\
-					<div class="cf"></div>\
-				</div>\
-				\
-				<div class="contextMenuItem" onclick="app.tab.onClickSendDesktop()">\
-					<div class="contextMenuItemIcon">\
-						<img src="./i/cm/desktop16.png">\
-					</div>\
-					<div class="contextMenuItemText">Отправить на рабочий стол ссылку</div>\
-					<div class="cf"></div>\
-				</div>\
-				\
-				<div class="contextMenuItem" onclick="app.tab.onClickCut()">\
-					<div class="contextMenuItemIcon">\
-						<img src="./i/cm/cut16.png">\
-					</div>\
-					<div class="contextMenuItemText">Вырезать</div>\
-					<div class="cf"></div>\
-				</div>\
-				\
-				<div class="contextMenuItem" onclick="app.tab.onClickCopy()">\
-					<div class="contextMenuItemIcon">\
-						<img src="./i/cm/copy16.png">\
-					</div>\
-					<div class="contextMenuItemText">Копировать</div>\
-					<div class="cf"></div>\
-				</div>\
-				\
-				<div class="contextMenuItem" onclick="app.tab.onClickPaste()">\
-					<div class="contextMenuItemIcon">\
-						<img src="./i/cm/pst16.png">\
-					</div>\
-					<div class="contextMenuItemText">Вставить</div>\
-					<div class="cf"></div>\
-				</div>\
-				\
-				<div class="contextMenuItem" onclick="app.tab.onClickRemove()">\
-					<div class="contextMenuItemIcon">\
-						<img src="./i/cm/cross16.png">\
-					</div>\
-					<div class="contextMenuItemText">Удалить</div>\
-					<div class="cf"></div>\
-				</div>\
-				\
-				<div class="contextMenuItem" onclick="app.tab.onClickRename()">\
-					<div class="contextMenuItemIcon">\
-						&nbsp;\
-					</div>\
-					<div class="contextMenuItemText">Переименовать</div>\
-					<div class="cf"></div>\
-				</div>\
-				\
-				<div class="contextMenuItem" onclick="app.tab.onClickOpenTerm()">\
-					<div class="contextMenuItemIcon">\
-						<img src="./i/cm/sh16.png">\
-					</div>\
-					<div class="contextMenuItemText">Открыть терминал</div>\
-					<div class="cf"></div>\
-				</div>\
-				\
-				<div class="contextMenuItem" onclick="app.tab.onClickSearch()">\
-					<div class="contextMenuItemIcon">\
-						<img src="./i/cm/search16.png">\
-					</div>\
-					<div class="contextMenuItemText">Найти в этом каталоге</div>\
-					<div class="cf"></div>\
-				</div>\
-				\
-				<div class="contextMenuItem" onclick="app.tab.onClickCreateArch()">\
-					<div class="contextMenuItemIcon">\
-						<img src="./i/cm/arch+16.png">\
-					</div>\
-					<div class="contextMenuItemText">Создать архив</div>\
-					<div class="cf"></div>\
-				</div>\
-				\
-				<div class="contextMenuItem" onclick="app.tab.onClickProps()">\
-					<div class="contextMenuItemIcon">\
-						<img src="./i/cm/pencil16.png">\
-					</div>\
-					<div class="contextMenuItemText">Свойства</div>\
-					<div class="cf"></div>\
-				</div>\
-				\
-			</div>\
-		</div>\
-		<!-- /context menu example -->\
-		\
+	this.contextMenuContent = new ContextMenuContent();
+	var html = this.contextMenuContent.getCatalogMenuHtml() + '\
 		<div id="cmImage" style="display:none">\
 			<div class="contextMenu">\
 				<div class="contextMenuItem" onclick="app.tab.onClickOpen()">\
@@ -1045,6 +940,7 @@ FileManager.prototype.addContextMenuHtml = function() {
 				\
 			</div>\
 		</div>\
+		' + this.contextMenuContent.getBookmarkItemMenuHtml() + '\
 		<!-- Devices menu -->\
 		<div id="cmDiskMenu" style="display:none">\
 			<div class="contextMenu">\
