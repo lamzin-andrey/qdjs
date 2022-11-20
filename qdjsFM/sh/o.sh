@@ -1,2 +1,2 @@
 #!/bin/bash
-xfce4-terminal --working-directory="/home/andrey/hdata/programs/my/qdjs"
+xdg-open '/home/andrey/Downloads/9717005827_08112022.pdf'

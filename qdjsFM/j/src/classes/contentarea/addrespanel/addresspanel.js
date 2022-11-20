@@ -24,6 +24,7 @@ AddressPanel.prototype.showButtonAddress = function() {
 	this.buttonAddress.show();
 }
 AddressPanel.prototype.showTextAddressShort = function() {
+	this.buttonAddress.hide();
 	this.textAddress.setShortDisplayMode();
 	this.textAddress.show();
 	this.textAddress.focus();

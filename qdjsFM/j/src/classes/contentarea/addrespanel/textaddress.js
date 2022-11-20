@@ -66,7 +66,11 @@ TextAddress.prototype.onKeyDown = function(evt) {
 	}
 	if (evt.keyCode == 27 && this.mode == TextAddress.MODE_SHORT) {
 		this.mode = TextAddress.MODE_DEFAULT;
-		app.addressPanel.showButtonAddress();
+		if (1 != intval(Settings.get('addressLineMode'))) {
+			app.addressPanel.showButtonAddress();
+		} else {
+			evt.preventDefault();
+		}
 	}
 }
 
