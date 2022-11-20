@@ -1,2 +1,2 @@
 #!/bin/bash
-xfce4-terminal --working-directory="/home/andrey/hdata/programs/my/qdjs/qdjsFM"
+udisksctl power-off -b /dev/sdc1
