@@ -1,6 +1,23 @@
 function TabPanel() {
+	var o = this;
 	this.tabs = [];
 	this.activeIndex = -1;
+	
+	e('tabsNavRight').onclick = function(evt) {
+		try {
+			return o.onClickRightButton(evt);
+		} catch (err) {
+			alert(err);
+		}
+	}
+	
+	e('tabsNavLeft').onclick = function(evt) {
+		try {
+			return o.onClickLeftButton(evt);
+		} catch (err) {
+			alert(err);
+		}
+	}
 }
 
 TabPanel.prototype.getActiveTab = function() {
@@ -19,10 +36,18 @@ TabPanel.prototype.setPath = function(s) {
 	if (!this.tabsData) {
 		this.render();
 	}
-	var tabItem = this.tabs[this.activeIndex];
+	var tabItem = this.tabs[this.activeIndex], i, SZ = sz(this.dataForRender);
 	
 	tabItem.setPath(s);
 	tabItem.render();
+	for (i = 0; i < SZ; i++) {
+		if (this.dataForRender[i].idx == this.activeIndex) {
+			this.dataForRender[i].name = tabItem.getName();
+			this.dataForRender[i].path = s;
+			break;
+		}
+	}
+	this.render(mclone(this.dataForRender));
 }
 
 TabPanel.prototype.addTabItem = function(s) {
@@ -42,20 +67,32 @@ TabPanel.prototype.addTabItem = function(s) {
 	// tabItem.render(); ?
 }
 
-TabPanel.prototype.render = function() {
+TabPanel.prototype.render = function(altDataForRender) {
 	var tabsWidth, placeWidth, n = 0;
 	this.initTabsData();
 	placeWidth = this.setPlacerWidth();
-	this.dataForRender = mclone(this.tabsData);
+	if (!altDataForRender) {
+		this.dataForRender = mclone(this.tabsData);
+	} else {
+		this.dataForRender = mclone(altDataForRender);
+	}
 	tabsWidth = this.renderTabs();
 	while (tabsWidth > placeWidth && sz(this.dataForRender) > 3) {
 		n++;
-		this.dataForRender = mclone(this.tabsData);
+		if (!altDataForRender) {
+			this.dataForRender = mclone(this.tabsData);
+		} else {
+			this.dataForRender = mclone(altDataForRender);
+		}
 		this.trimLeft(this.dataForRender, n);
 		tabsWidth = this.renderTabs();
 	}
-	this.nDisplayedTabs = sz(this.tabsData) - n;
-	this.nRightTab = sz(this.tabsData);
+	if (!altDataForRender) {
+		this.nDisplayedTabs = sz(this.tabsData) - n;
+		this.nRightTab = sz(this.tabsData);
+	} else {
+		this.nDisplayedTabs = sz(altDataForRender) - n;
+	}
 	this.renderTabs(true);
 }
 
@@ -158,4 +195,51 @@ TabPanel.prototype.onClickCloseButton = function(evt){
 	} else {
 	}
 	this.render();
+}
+
+
+TabPanel.prototype.onClickLeftButton = function(evt) {
+	var i, start, end;
+	
+	this.dataForRender = [];
+	if (this.nRightTab < this.nDisplayedTabs) {
+		this.nRightTab = this.nDisplayedTabs;
+	}
+	start = this.nRightTab - this.nDisplayedTabs;
+	start = start < 0 ? 0 : start;
+	end = start + this.nDisplayedTabs;
+	// alert(start + ', ' + end);
+	for (i = start; i < end; i++) {
+		if (this.tabsData[i].path == app.tab.currentPath) {
+			this.tabsData[i].addClass = 'active';
+		} else {
+			this.tabsData[i].addClass = '';
+		}
+		this.dataForRender.push(this.tabsData[i]);
+	}
+	this.nRightTab--;
+	// this.renderTabs(true);
+	this.render(mclone(this.dataForRender));
+}
+
+TabPanel.prototype.onClickRightButton = function(evt) {
+	var i, start, end;
+	this.nRightTab++;
+	this.dataForRender = [];
+	if (this.nRightTab >= sz(this.tabsData)) {
+		this.nRightTab = sz(this.tabsData) - 1;
+	}
+	start = this.nRightTab - this.nDisplayedTabs + 1;
+	end = start + this.nDisplayedTabs;
+	// alert(start + ', ' + end);
+	for (i = start; i < end; i++) {
+		if (this.tabsData[i].path == app.tab.currentPath) {
+			this.tabsData[i].addClass = 'active';
+		} else {
+			this.tabsData[i].addClass = '';
+		}
+		this.dataForRender.push(this.tabsData[i]);
+	}
+	// this.renderTabs(true);
+	this.render(mclone(this.dataForRender));
 }
