@@ -1,4 +1,5 @@
-window.SCROLL_LINE_HEIGHT = 18
+window.SCROLL_LINE_HEIGHT = 18;
+window.VERTICAL_SCROLL_COUNT = 1;
 function main() {
 	window.AppStartTime = time();
 	try {
@@ -48,19 +49,8 @@ function onResize() {
 	// for items
 	contentTopAreaH = e('tabsContainer').offsetHeight + e('addressContainer').offsetHeight;
 	e('tabItems').style.height = (vpH - contentTopAreaH - 1.7*dY) + 'px';
-	e('tabItems').style.width = (vpW - e('sidebarWrapper').offsetWidth - SCROLL_LINE_HEIGHT) + 'px';
 	
-	// items headers
-	//e('tabContentHeaders').style.width = (vpW - e('sidebarWrapper').offsetWidth - SCROLL_LINE_HEIGHT) + 'px';
-	
-	e('tabContentHeadersWr').style.width = (vpW - e('sidebarWrapper').offsetWidth - SCROLL_LINE_HEIGHT) + 'px';
-	
-	e('tabContentHeaders').style.minWidth = (
-		e('tabContentHeaderDate').offsetWidth
-		+ e('tabContentHeaderType').offsetWidth
-		+ e('tabContentHeaderSize').offsetWidth
-		+ e('tabContentHeaderFileName').offsetWidth
-	) + 'px';
+	// resizeTabItemsWidth();
 	
 	e('tabItems').style.height = (e('contentArea').offsetHeight - contentTopAreaH - 0.7*dY) + 'px';
 	
@@ -229,6 +219,25 @@ function onClickChangeLang(lang) {
 	FS.writefile(indexFile, s);
 	
 	Settings.set('currentLang', lang);
+}
+
+function getScrollLineHeight() {
+	return SCROLL_LINE_HEIGHT * VERTICAL_SCROLL_COUNT;
+}
+
+function resizetabItemsWidth() {
+	var vpW = getViewport().w;
+	e('tabItems').style.width = (vpW - e('sidebarWrapper').offsetWidth - getScrollLineHeight()) + 'px';
+	// items headers
+	//e('tabContentHeaders').style.width = (vpW - e('sidebarWrapper').offsetWidth - getScrollLineHeight()) + 'px';
+	e('tabContentHeadersWr').style.width = (vpW - e('sidebarWrapper').offsetWidth - getScrollLineHeight()) + 'px';
+	
+	e('tabContentHeaders').style.minWidth = (
+		e('tabContentHeaderDate').offsetWidth
+		+ e('tabContentHeaderType').offsetWidth
+		+ e('tabContentHeaderSize').offsetWidth
+		+ e('tabContentHeaderFileName').offsetWidth
+	) + 'px';
 }
 
 function log(s) {

@@ -60,6 +60,11 @@ AbstractList.prototype.setPath = function(path)  {
 	}
 }
 
+AbstractList.prototype.getHeight = function()  {
+	var h = cs(this.contentBlock, 'sectionItem')[0].offsetHeight;
+	return sz(this.list) * h;
+}
+
 AbstractList.prototype.tpl = function()  {
 	return '<img src="{img}" class="i24 {opacity}">\
 						<span class="i24Text">{name}</span>';

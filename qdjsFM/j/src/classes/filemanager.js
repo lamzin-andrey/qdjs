@@ -93,6 +93,7 @@ FileManager.prototype.onGetSavedEnv = function() {
 FileManager.prototype.onResize = function() {
 	this.setTabWidths();
 	this.setAddressLineWidth();
+	this.setSidebarScrollbar();
 }
 FileManager.prototype.setTabWidths = function() {
 	e('tabContentHeaderDate').style.width = null;
@@ -254,6 +255,21 @@ FileManager.prototype.setMainMenu = function() {
 		
 	}, 100);
 	
+}
+
+
+FileManager.prototype.setSidebarScrollbar = function() {
+	var maxHeight = intval(e('sidebarWrapper').style.maxHeight) - 36, // 36 - height navbar
+		devicesHeight = this.devicesManager.getHeight(),
+		bookmarksHeight = this.bookmarksManager.getHeight();
+	if (devicesHeight + bookmarksHeight + (15 + 7 + 7) > maxHeight) {
+		e('sbScroller').style.maxHeight = maxHeight + 'px';
+		e('sbScroller').style.overflowY = 'scroll';
+		resizetabItemsWidth();
+	} else {
+		e('sbScroller').style.overflowY = null;
+		VERTICAL_SCROLL_COUNT = 1;
+	}
 }
 
 

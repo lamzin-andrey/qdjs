@@ -40,7 +40,7 @@ TextAddress.prototype.setPath = function(s){
 TextAddress.prototype.resize = function() {
 	var 
 		vpW = getViewport().w,
-		w = (vpW - e('sidebarWrapper').offsetWidth - SCROLL_LINE_HEIGHT);//this.container.offsetWidth;
+		w = (vpW - e('sidebarWrapper').offsetWidth - getScrollLineHeight());//this.container.offsetWidth;
 	this.placer.style.width = (w - 10) + 'px';
 	this.input.style.width = (w - 24 - this.icon.offsetWidth - this.bReload.offsetWidth) + 'px';
 }
