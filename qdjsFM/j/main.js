@@ -97,6 +97,9 @@ function onKeyUp(evt) {
 		if (76 == evt.keyCode || 1044 == MW.getLastKeyCode()) {
 			onClickDisplayPath();
 		}
+		if (84 == evt.keyCode || 1045 == MW.getLastKeyCode()) {
+			app.tabPanel.addTabItem( app.tab.currentPath );
+		}
 		
     }
     // After press Enter in Confirm dialog '||' not work

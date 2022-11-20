@@ -20,6 +20,7 @@ TabPanel.prototype.setPath = function(s) {
 		this.render();
 	}
 	var tabItem = this.tabs[this.activeIndex];
+	
 	tabItem.setPath(s);
 	tabItem.render();
 }
@@ -29,6 +30,13 @@ TabPanel.prototype.addTabItem = function(s) {
 	this.getActiveTab();
 	tabItem = new TabPanelItem(s);
 	this.tabs.splice(this.activeIndex, 0, tabItem);
+	
+	try {
+		this.tabs[this.activeIndex].copyHistory();
+		app.tab.navbarPanelManager.clearHistory(s);
+	} catch (err) {
+		alert(err);
+	} 
 	this.activeIndex++;
 	this.render();
 	// tabItem.render(); ?
@@ -44,7 +52,7 @@ TabPanel.prototype.render = function() {
 		n++;
 		this.dataForRender = mclone(this.tabsData);
 		this.trimLeft(this.dataForRender, n);
-		tabWidth = this.renderTabs();
+		tabsWidth = this.renderTabs();
 	}
 	this.nDisplayedTabs = sz(this.tabsData) - n;
 	this.nRightTab = sz(this.tabsData);
@@ -56,7 +64,7 @@ TabPanel.prototype.renderTabs = function(noAll){
 	var a = this.dataForRender, i, SZ = sz(a), j,
 		tpl = '<div class="tabName">{name}</div>\
 					<div class="tabClose">\
-						<img id="tabc{id}" class="pointer imgBtnTabClose" src="' + App.dir() + '/i/tabClose.png">\
+						<img id="tabc{id}" data-idx="{idx}" class="pointer imgBtnTabClose" src="' + App.dir() + '/i/tabClose.png">\
 					</div>', s,
 		parent = e('tabsPlacer'),
 		btn, w = 0, o = this, closeBtn;
@@ -64,26 +72,28 @@ TabPanel.prototype.renderTabs = function(noAll){
 	for (i = 0, j = this.nRightTab - this.nDisplayedTabs; i < SZ; i++, j++) {
 		s = tpl.replace("{name}", a[i].name);
 		s = str_replace('{id}', j, s);
+		s = str_replace('{idx}', a[i].idx, s);
 		if (!noAll) {
 			parent.innerHTML = "";
 		}
 		
 		btn = appendChild(parent, "div", s, {
-			"class": "tab" + (i == this.activeIndex ? ' active' : ''),
+			"class": "tab" + (a[i].idx == this.activeIndex ? ' active' : ''),
 			"id": ("tab" + j),
+			"data-idx": a[i].idx,
 			"title" : (a[i].path ? a[i].path : '')
 		});
 		
 		btn.onclick = function(evt){
-			return o.onClickButton(evt); // TODO
+			return o.onClickButton(evt);
 		}
 		
 		closeBtn = e('tabc' + j);
 		closeBtn.onclick = function(evt){
-			return o.onClickCloseButton(evt); // TODO
+			return o.onClickCloseButton(evt);
 		}
 		
-		this.tabs[i].setView(btn, closeBtn);
+		this.tabs[a[i].idx].setView(btn, closeBtn);
 		
 		w += btn.offsetWidth;
 	}
@@ -101,7 +111,8 @@ TabPanel.prototype.initTabsData = function() {
 	for (i = 0; i < SZ; i++) {
 		item = {
 			path: this.tabs[i].path,
-			name: this.tabs[i].getName()
+			name: this.tabs[i].getName(),
+			idx: i
 		};
 		this.tabsData.push(item);
 	}
@@ -109,4 +120,42 @@ TabPanel.prototype.initTabsData = function() {
 
 TabPanel.prototype.trimLeft = function(a, n){
 	app.addressPanel.buttonAddress.trimLeft(a, n);
+}
+
+TabPanel.prototype.onClickButton = function(evt){
+	var trg = ctrg(evt), id = trg.id, idx = attr(trg, 'data-idx'), 
+		i,
+		ls = cs('tabsPlacer', 'tab'),
+		SZ = sz(ls);
+	// alert('idx = ' + idx + ' id = ' + id);
+	this.tabs[this.activeIndex].copyHistory();
+	if (hasClass(evt.target, 'imgBtnTabClose')) {
+		return true;
+	}
+	for (i = 0; i < SZ; i++) {
+		if (hasClass(ls[i], 'active')) {
+			removeClass(ls[i], 'active');
+		}
+	}
+	addClass(id, 'active');
+	app.setActivePath(this.tabs[idx].path, ["tabpanel"]);
+	this.activeIndex = idx;
+	this.tabs[idx].restoreHistory();
+	return true;
+}
+
+TabPanel.prototype.onClickCloseButton = function(evt){
+	evt.preventDefault();
+	var trg = ctrg(evt), id = trg.id, idx = attr(trg, 'data-idx'), SZ = sz(this.tabs);
+	if (SZ - 1 == 0) {
+		MW.close();
+		return;
+	}
+	rm(id);
+	this.tabs.splice(idx, 1);
+	if (idx <= this.activeIndex) {
+		this.activeIndex--;
+	} else {
+	}
+	this.render();
 }

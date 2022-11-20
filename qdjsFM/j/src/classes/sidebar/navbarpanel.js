@@ -143,3 +143,40 @@ NavbarPanel.prototype.onClickHome = function(evt) {
 	
 	app.setActivePath(path, ['']);
 }
+
+NavbarPanel.prototype.clearHistory = function(s) {
+	var o = this;
+	this.actualizeView(s);
+	
+	o.history = [];
+	o.history.push(s);
+	o.historyIterator = 0;
+}
+
+NavbarPanel.prototype.actualizeView = function(s) {
+	var o = this;
+	if (this.historyIterator == -1) {
+		return;
+	}
+	if (!s) {
+		s = this.history[this.historyIterator];
+	}
+	o.setDisabled(this.btnUp);
+	o.setDisabled(this.btnBack);
+	o.setDisabled(this.btnFwd);
+	o.setDisabled(this.btnHome);
+	
+	if (s != '/home/' + USER) {
+		o.setEnabled(this.btnHome);
+	}
+	if (s != '/') {
+		o.setEnabled(this.btnUp);
+	}
+	
+	if (this.historyIterator < sz(this.history) - 1) {
+		o.setEnabled(this.btnFwd);
+	}
+	if (this.historyIterator > 0) {
+		o.setEnabled(this.btnBack);
+	}
+}

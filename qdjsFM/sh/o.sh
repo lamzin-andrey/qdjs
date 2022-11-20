@@ -1,2 +1,2 @@
 #!/bin/bash
-xdg-open '/home/andrey/voenniy/01.pdf'
+xfce4-terminal --working-directory="/home/andrey/hdata/programs/my/qdjs"

@@ -1,6 +1,12 @@
 function TabPanelItem(path) {
 	this.history = [];
 	this.path = path;
+	if (path) {
+		if (sz(this.history) == 0) {
+			this.history.push(path);
+			this.historyIterator = 0;
+		}
+	}
 	this.type = 1;
 }
 TabPanelItem.TYPE_CATALOG = 1;
@@ -8,10 +14,15 @@ TabPanelItem.TYPE_CATALOG = 1;
 
 TabPanelItem.prototype.setPath = function(s) {
 	this.path = s;
+	if (sz(this.history) == 0) {
+		this.history.push(s);
+		this.historyIterator = 0;
+	}
 }
 
 TabPanelItem.prototype.render = function() {
 	var name = this.getName(), namePlace;
+	
 	if (name && this.btn) {
 		namePlace = cs(this.btn, 'tabName')[0];
 		if (namePlace) {
@@ -30,4 +41,16 @@ TabPanelItem.prototype.getName = function() {
 TabPanelItem.prototype.setView = function(btn, closeBtn) {
 	this.btn = btn;
 	this.closeBtn = closeBtn;
+}
+
+TabPanelItem.prototype.copyHistory = function() {
+	this.history = mclone(app.tab.navbarPanelManager.history);
+	this.historyIterator = app.tab.navbarPanelManager.historyIterator;
+	// alert('copy History: ' + JSON.stringify(this.history));
+}
+TabPanelItem.prototype.restoreHistory = function() {
+	// alert(JSON.stringify(this.history));
+	app.tab.navbarPanelManager.history = mclone(this.history);
+	app.tab.navbarPanelManager.historyIterator = this.historyIterator;
+	app.tab.navbarPanelManager.actualizeView();
 }
