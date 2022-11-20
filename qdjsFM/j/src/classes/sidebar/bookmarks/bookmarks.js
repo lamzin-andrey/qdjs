@@ -46,16 +46,13 @@ Bookmarks.prototype.onClick = function(event) {
 Bookmarks.prototype.createList = function(locale, user) {
 	var userBookmarks = [], i, SZ = 0;
 	this.list = [];
-	this.addItem(user, '', locale);
-	// this.addItem(user, 'tmp/00/05', locale);
-	// this.addItem(user, 'tmp/00/04/cannibball', locale);
-	// this.addItem(user, 'hdata/programs/my/qdjs/qdjsFM', locale);
-	this.addItem(user, 'Downloads', locale);
-	this.addItem(user, 'Desktop', locale);
-	this.addItem(user, 'Documents', locale);
-	this.addItem(user, 'Music', locale);
-	this.addItem(user, 'Images', locale);
-	this.addItem(user, 'Videos', locale);
+	this.addItem(user, '', locale, '', '', 'cmBmSysMenu');
+	this.addItem(user, 'Downloads', locale, '', '', 'cmBmSysMenu');
+	this.addItem(user, 'Desktop', locale, '', '', 'cmBmSysMenu');
+	this.addItem(user, 'Documents', locale, '', '', 'cmBmSysMenu');
+	this.addItem(user, 'Music', locale, '', '', 'cmBmSysMenu');
+	this.addItem(user, 'Images', locale, '', '', 'cmBmSysMenu');
+	this.addItem(user, 'Videos', locale, '', '', 'cmBmSysMenu');
 	
 	userBookmarks = this.readUserBookmarks();
 	// alert(JSON.stringify(userBookmarks));
@@ -80,6 +77,9 @@ Bookmarks.prototype.addItem = function(user, name, locale, displayName, userCmId
 		item.displayName = user;
 		item.icon = App.dir() + '/i/home32.png';
 		item.path = '/home/' + user;
+		if (sysCmId) {
+			item.cmId = sysCmId;
+		}
 	} else {
 		name = this.getLocaleFolderName(name, locale);
 		item.displayName = name;
@@ -92,6 +92,8 @@ Bookmarks.prototype.addItem = function(user, name, locale, displayName, userCmId
 			if (userCmId) {
 				item.cmId = userCmId;
 			}
+		} else if (sysCmId) {
+			item.cmId = sysCmId;
 		}
 		if (!FS.fileExists(item.path)) {
 			item.path = '';
@@ -102,7 +104,9 @@ Bookmarks.prototype.addItem = function(user, name, locale, displayName, userCmId
 	}
 	
 	if (item.path != '') {
-		item.icon = this.getIconByName(srcName);
+		if (name) {
+			item.icon = this.getIconByName(srcName);
+		}
 		this.list.push(item);
 	}
 }
@@ -302,14 +306,7 @@ Bookmarks.prototype.onClickOpen = function() {
 	if (!e(id) || !data) {
 		return;
 	}
-	ls = this.readUserBookmarks();
-	SZ = sz(ls);
-	for (i = 0; i < SZ; i++) {
-		if (ls[i].displayName == data.displayName && ls[i].path == data.path) {
-			app.setActivePath(data.path, ['']);
-			break;
-		}
-	}
+	app.setActivePath(data.path, ['']);
 }
 
 Bookmarks.prototype.onClickOpenInTerm = function() {
@@ -319,14 +316,7 @@ Bookmarks.prototype.onClickOpenInTerm = function() {
 	if (!e(id) || !data) {
 		return;
 	}
-	ls = this.readUserBookmarks();
-	SZ = sz(ls);
-	for (i = 0; i < SZ; i++) {
-		if (ls[i].displayName == data.displayName && ls[i].path == data.path) {
-			cmd = app.tab.createOpenTermCommand(data.path);
-			FS.writefile(sh, cmd);
-			jexec(sh, DevNull, DevNull, DevNull);
-			break;
-		}
-	}
+	cmd = app.tab.createOpenTermCommand(data.path);
+	FS.writefile(sh, cmd);
+	jexec(sh, DevNull, DevNull, DevNull);
 }

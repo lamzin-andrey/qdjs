@@ -362,6 +362,72 @@ Tab.prototype.onClickRename = function() {
 	}
 }
 
+
+Tab.prototype.onClickCreateArch = function() {
+	var 
+		currentCmTargetId,
+		idx,
+		srcName,
+		pathInfo,
+		shortName,
+		newName,
+		cmd,
+		sh = App.dir() + "/sh/o.sh",
+		newPath,
+		cmId,
+		item,
+		aSelectionItems = [],
+		i,
+		SZ;
+
+	if (!currentCmTargetId) {
+		currentCmTargetId = this.activeItem.parentNode.id;
+	}
+	if (!currentCmTargetId) {
+		currentCmTargetId = this.selectionItems[0].parentNode.id;
+	}
+	
+	if (!currentCmTargetId) {
+		currentCmTargetId = window.currentCmTargetId;
+	}
+	if (!currentCmTargetId) {
+		return;
+	}
+	
+	SZ = sz(this.selectionItems);
+	for (i = 0; i < SZ; i++) {
+		idx = String(this.selectionItems[i].parentNode.id).replace('f', '');
+		srcName = this.list[idx].name;
+		/*aSelectionItems.push({
+			id: this.selectionItems[i].parentNode.id,
+			path: srcName
+		});*/
+		aSelectionItems.push('"' + srcName + '"');
+	}
+	
+	
+	idx = currentCmTargetId.replace('f', '');
+	srcName = this.currentPath + '/' + this.list[idx].name;
+	pathInfo = pathinfo(srcName);
+	shortName = pathInfo.basename;
+	newName = prompt(L("Enter new name"), shortName + '.tar.gz');
+	
+	if (newName) {
+		newPath = this.currentPath + '/' + newName;
+		if (FS.fileExists(newPath)) {
+			alert(L("File or folder already exists"));
+			return;
+		}
+		newName = newName.replace(/\.tar\.gz$/, '');
+		newPath = this.currentPath + '/' + newName;
+		cmd = "#!/bin/bash\ncd \"" + this.currentPath + "\"\ntar -cf  \"" + newPath + ".tar\" " + aSelectionItems.join(' ') + "\n" + 
+				"gzip \"" + newPath + ".tar\"\n";
+		FS.writefile(sh, cmd);
+		jexec(sh, DevNull, DevNull, DevNull);
+		
+	}
+}
+
 Tab.prototype.onClickAddBookmark = function() {
 	var idx, srcName, pathInfo, shortName;
 	/*if (!currentCmTargetId) {

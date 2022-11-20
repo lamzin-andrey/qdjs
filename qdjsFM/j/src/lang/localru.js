@@ -61,6 +61,7 @@ var langRu = {
 	"Move up" : "Переместить вверх",
 	"Move down" : "Переместить вниз",
 	"Are you sure remove bookmark" : "Вы уверены, что хотите удалить закладку",
+	"Create tar.gz" : "Создать архив",
 	"" : ""
 };
 

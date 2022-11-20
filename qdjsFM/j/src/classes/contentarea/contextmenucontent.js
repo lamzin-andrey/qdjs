@@ -4,7 +4,7 @@ function ContextMenuContent() {
 
 ContextMenuContent.prototype.getBookmarkItemMenuHtml = function() {
 	var html = '\
-		<!-- Bookmark menu -->\
+		<!-- User Bookmark menu -->\
 		<div id="cmBmMenu" style="display:none">\
 			<div class="contextMenu">\
 				<div class="contextMenuItem" onclick="app.bookmarksManager.onClickOpen()">\
@@ -47,6 +47,25 @@ ContextMenuContent.prototype.getBookmarkItemMenuHtml = function() {
 						<img src="./i/cm/down22.png">\
 					</div>\
 					<div class="contextMenuItemText">' + L("Move down") + '</div>\
+					<div class="cf"></div>\
+				</div>\
+			</div>\
+		</div>\
+		<!-- System Bookmark menu -->\
+		<div id="cmBmSysMenu" style="display:none">\
+			<div class="contextMenu">\
+				<div class="contextMenuItem" onclick="app.bookmarksManager.onClickOpen()">\
+					<div class="contextMenuItemIcon">\
+						<!--img src="./i/cm/sh16.png"-->\
+					</div>\
+					<div class="contextMenuItemText">' + L("Open") + '</div>\
+					<div class="cf"></div>\
+				</div>\
+				<div class="contextMenuItem" onclick="app.bookmarksManager.onClickOpenInTerm()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/sh16.png">\
+					</div>\
+					<div class="contextMenuItemText">' + L("Open terminal") + '</div>\
 					<div class="cf"></div>\
 				</div>\
 			</div>\
@@ -159,7 +178,7 @@ ContextMenuContent.prototype.getCatalogMenuHtml = function() {
 					<div class="contextMenuItemIcon">\
 						<img src="./i/cm/arch+16.png">\
 					</div>\
-					<div class="contextMenuItemText">Создать архив</div>\
+					<div class="contextMenuItemText">' + L("Create tar.gz") + '</div>\
 					<div class="cf"></div>\
 				</div>\
 				\
