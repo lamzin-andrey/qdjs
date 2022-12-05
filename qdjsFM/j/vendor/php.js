@@ -561,7 +561,6 @@ function sprintf() {
 				format = format.replace(buf, ch);
 			}
 			else {
-				console.log('buf = ' + buf);
 				format = format.replace(buf, 'nAn');
 				throw new Error("sprintf: unable process |" + format + '|');
 			}
@@ -608,7 +607,7 @@ function array_values(v) {
 }
 
 function array_keys(arr){
-	var r = [];
+	var r = [], v = arr;
 	if (v instanceof Array) {
 		for (var i = 0; i < v.length; i++) {
 			if (v[i]) {

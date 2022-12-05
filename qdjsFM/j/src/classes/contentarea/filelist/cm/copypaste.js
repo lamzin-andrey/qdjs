@@ -10,13 +10,16 @@ CopyPaste.prototype.cutAction = function(targetId) {
 }
 
 CopyPaste.prototype.copycutAction = function(cmd) {
-	var i, items = this.tab.selectionItems, SZ = sz(items), r = [], id;
-	for (i = 0; i < SZ; i++) {
-		id = items[i].parentNode.id.replace('f', '');
+	var i, items = this.tab.oSelectionItems,  r = [], id, el;
+	for (i in items) {
+		id = i.replace('f', '');
 		r.push(this.tab.currentPath + '/' + this.tab.list[id].name);
 		if (cmd == "mv") {
-			stl(items[i], "opacity", 0.5);
-			this.tab.cutItems.push(items[i]);
+			el = e(i);
+			if (el) {
+				stl(el, "opacity", 0.5);
+				this.tab.cutItems.push(el);
+			}
 		}
 	}
 	

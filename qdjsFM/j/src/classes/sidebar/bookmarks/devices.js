@@ -41,11 +41,12 @@ Devices.prototype.onClick = function(event) {
 	if (this.list[n].path == '/') {
 		isMounted = true;
 	} else if (FS.fileExists(this.list[n].path) && FS.isDir(this.list[n].path)) {
-		FS.writefile(this.list[n].path + "/.qdjsfm", "Hello");
-		if (FS.fileExists(this.list[n].path + "/.qdjsfm")) {
+		//alert(this.list[n].path + "/.qdjsfm");
+		//FS.writefile(this.list[n].path + "/.qdjsfm", "Hello");
+		//if (FS.fileExists(this.list[n].path + "/.qdjsfm")) {
 			isMounted = true;
-		}
-		FS.unlink(this.list[n].path + "/.qdjsfm");
+		//}
+		//FS.unlink(this.list[n].path + "/.qdjsfm");
 	}
 	if (isMounted) {
 		app.setActivePath(this.list[n].path, 'devicesManager');
@@ -400,11 +401,11 @@ Devices.prototype.onClickMount = function() {
 		sh = App.dir() + "/sh/o.sh",
 		path;
 	if (FS.fileExists(this.list[n].path) && FS.isDir(this.list[n].path)) {
-		FS.writefile(this.list[n].path + "/.qdjsfm", "Hello");
-		if (FS.fileExists(this.list[n].path + "/.qdjsfm")) {
+		// FS.writefile(this.list[n].path + "/.qdjsfm", "Hello");
+		// if (FS.fileExists(this.list[n].path + "/.qdjsfm")) {
 			isMounted = true;
-		}
-		FS.unlink(this.list[n].path + "/.qdjsfm");
+		// }
+		// FS.unlink(this.list[n].path + "/.qdjsfm");
 	}
 	if (!isMounted && this.list[n].xdxN) {
 		cmd += this.list[n].xdxN;

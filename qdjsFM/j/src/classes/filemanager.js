@@ -22,6 +22,8 @@ function FileManager() {
 	this.kbListener = new KBListener();
 }
 
+FileManager.PRODUCT_LABEL = 'QT5 WEB VIEW File Explorer';
+
 /**
  * @param {String} path
  * @param {Array} aExcludes - идентификатор(ы) элементов управления, для которых не надо применять setPath
@@ -591,86 +593,7 @@ FileManager.prototype.addContextMenuHtml = function() {
 				\
 			</div>\
 		</div>\
-		\
-		<div id="cmWeb" style="display:none">\
-			<div class="contextMenu">\
-				<div class="contextMenuItem" onclick="app.tab.onClickOpen()">\
-					<div class="contextMenuItemIcon">\
-						<img src="./i/cm/exec16.png">\
-					</div>\
-					<div class="contextMenuItemText">Открыть</div>\
-					<div class="cf"></div>\
-				</div>\
-				\
-				<div class="contextMenuItem" onclick="app.tab.onClickSendDesktop()">\
-					<div class="contextMenuItemIcon">\
-						<img src="./i/cm/desktop16.png">\
-					</div>\
-					<div class="contextMenuItemText">Отправить на рабочий стол ссылку</div>\
-					<div class="cf"></div>\
-				</div>\
-				\
-				<div class="contextMenuItem" onclick="app.tab.onClickCut()">\
-					<div class="contextMenuItemIcon">\
-						<img src="./i/cm/cut16.png">\
-					</div>\
-					<div class="contextMenuItemText">Вырезать</div>\
-					<div class="cf"></div>\
-				</div>\
-				\
-				<div class="contextMenuItem" onclick="app.tab.onClickCopy()">\
-					<div class="contextMenuItemIcon">\
-						<img src="./i/cm/copy16.png">\
-					</div>\
-					<div class="contextMenuItemText">Копировать</div>\
-					<div class="cf"></div>\
-				</div>\
-				\
-				<div class="contextMenuItem" onclick="app.tab.onClickPaste()">\
-					<div class="contextMenuItemIcon">\
-						<img src="./i/cm/pst16.png">\
-					</div>\
-					<div class="contextMenuItemText">Вставить</div>\
-					<div class="cf"></div>\
-				</div>\
-				\
-				<div class="contextMenuItem" onclick="app.tab.onClickRemove()">\
-					<div class="contextMenuItemIcon">\
-						<img src="./i/cm/cross16.png">\
-					</div>\
-					<div class="contextMenuItemText">Удалить</div>\
-					<div class="cf"></div>\
-				</div>\
-				\
-				<div class="contextMenuItem" onclick="app.tab.onClickRename()">\
-					<div class="contextMenuItemIcon">\
-						&nbsp;\
-					</div>\
-					<div class="contextMenuItemText">Переименовать</div>\
-					<div class="cf"></div>\
-				</div>\
-				\
-				\
-				<div class="contextMenuItem" onclick="app.tab.onClickCreateArch()">\
-					<div class="contextMenuItemIcon">\
-						<img src="./i/cm/arch+16.png">\
-					</div>\
-					<div class="contextMenuItemText">Создать архив</div>\
-					<div class="cf"></div>\
-				</div>\
-				\
-				<div class="contextMenuItem" onclick="app.tab.onClickProps()">\
-					<div class="contextMenuItemIcon">\
-						<img src="./i/cm/pencil16.png">\
-					</div>\
-					<div class="contextMenuItemText">Свойства</div>\
-					<div class="cf"></div>\
-				</div>\
-				\
-			</div>\
-		</div>\
-		\
-		\
+		' + this.contextMenuContent.getWebItemMenuHtml() + '\
 		<div id="cmVideo" style="display:none">\
 			<div class="contextMenu">\
 				<div class="contextMenuItem" onclick="app.tab.onClickOpen()">\
@@ -998,6 +921,7 @@ FileManager.prototype.addContextMenuHtml = function() {
 					<div class="cf"></div>\
 				</div>\
 			</div>\
+			' + this.contextMenuContent.getHtmlTabMenuHtml()  + '\
 		</div>';
 	ee(document, 'body')[0].innerHTML += html;
 }

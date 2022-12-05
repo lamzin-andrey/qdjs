@@ -63,6 +63,13 @@ var langRu = {
 	"Are you sure remove bookmark" : "Вы уверены, что хотите удалить закладку",
 	"Create tar.gz" : "Создать архив",
 	"created" : "создан",
+	"Open in new tab" : "Открыть в новой вкладке",
+	"Filesystem" : "Файловая система",
+	"Encoding" : "Кодировка",
+	"Other" : "Другая",
+	"Enter encoding" : "Введите кодировку",
+	"Open in new tab" : "Открыть в новой вкладке",
+	"Send link to desktop" : "Отправить на рабочий стол ссылку",
 	"" : ""
 };
 

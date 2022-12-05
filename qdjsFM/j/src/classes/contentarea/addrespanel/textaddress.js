@@ -61,6 +61,9 @@ TextAddress.prototype.onKeyDown = function(evt) {
 				app.setActivePath(s, ['']);
 				app.kbListener.activeArea = KBListener.AREA_TAB;
 				o.input.blur();
+			} else if (s.indexOf("http") == 0){
+				app.tabPanel.addTabItem(s, TabPanelItem.TYPE_HTML);
+				app.tab.setPath(s);
 			}
 		}, 10);
 	}

@@ -1,4 +1,4 @@
-.addressContainer {}
+.addressContainer {min-height: 31px;}
 .addressLine {
 	background-color:white;
 	padding-left:6px;
@@ -122,7 +122,7 @@
 .imgTabContentHeaderImg {}
 .tabContentItems {
 	overflow-x: scroll;
-	overflow-y: scroll;
+	overflow-y: hidden;
 	height: 333px;
 	background-color: white;
 	border-bottom: solid 1px #b6b6b3;

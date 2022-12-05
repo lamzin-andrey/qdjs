@@ -32,6 +32,9 @@ window.AppEnv = {
 		xfceThemeSection = String(buf[1].split('xfceThemeName')[1]);
 		qdjsSection = String(buf[1].split('qdjsVersion')[1]);
 		window.USER = userSection.trim();
+		if (!FS.fileExists('/home/' + USER) && FS.fileExists('/home/' + USER + 'user') && FS.isDir('/home/' + USER + 'user')) {
+			window.USER += 'user';
+		}
 		window.IS_KDE = window.IS_XFCE = window.IS_UNITY = window.IS_MINT = false;
 		// Активная тема оформления xfce
 		window.XFCE_ICON_THEME = '';

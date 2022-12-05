@@ -1,4 +1,4 @@
-function TabPanelItem(path) {
+function TabPanelItem(path, nType) {
 	this.history = [];
 	this.path = path;
 	if (path) {
@@ -8,8 +8,13 @@ function TabPanelItem(path) {
 		}
 	}
 	this.type = 1;
+	if (nType) {
+		this.type = nType;
+	}
+	
 }
 TabPanelItem.TYPE_CATALOG = 1;
+TabPanelItem.TYPE_HTML = 2;
 
 
 TabPanelItem.prototype.setPath = function(s) {
@@ -33,6 +38,9 @@ TabPanelItem.prototype.render = function() {
 
 TabPanelItem.prototype.getName = function() {
 	if (this.path) {
+		if (this.path == '/') {
+			return L("Filesystem");
+		}
 		return pathinfo(this.path).basename;
 	}
 	return '';

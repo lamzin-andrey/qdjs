@@ -2,55 +2,56 @@ function ListRenderer(){
 	this.iterator = 0;
 	this.context = null;
 	this.sz = 0;
-	this.part = 100;
+	this.part = 0;
 	this.ls = [];
 	this.processing = false;
 	this.filesSize = 0;
 }
 
+ListRenderer.ONE_ITEM_HEIGHT = 30;
+
 ListRenderer.prototype.renderPart = function(){
 	var start = this.iterator,
-		end = this.iterator + this.part, i,
+		end = intval(this.iterator) + this.part, i,
 		item, block, s,
-		done = false,
+		done = true,
 		o, self = this,
 		statusText, freeSpaceText = '', sizeText = '',
-		cmId;
+		cmId,
+		createdItemFound = -1, el;
 	if (end >= this.sz) {
-		done = true;
 		end = this.sz;
 	}
 	this.context.setStatus.call(this.context, this.iterator + ' / ' + this.sz, 1);
 	o = this.context;
 	for (i = start; i < end; i++) {
 		item = this.ls[i];
-		/*s = this.context.tpl.call(this.context);
-		s = s.replace('{name}', item.name);
-		s = s.replace('{name}', item.name);
-		s = s.replace('{img}', item.i);
-		s = s.replace('{sz}', item.sz);
-		s = s.replace('{type}', item.type);
-		s = s.replace('{type}', item.type);
-		s = s.replace('{mt}', item.mt);
-		block = appendChild(this.context.contentBlock, 'div', s, {
-			'data-cmid': item.cmId,
-			'data-id': "f" + i,
-			'data-handler': "onContextMenu",
-			'data-handler-context': "tab",
-			id: 'f' + i
-		});*/
-		
-		/*block = this.createElement(item, i);
-		this.setListeners(block);*/
-		this.appendNew(i, item);
+		el = this.appendNew(i, item);
+		if (i == start) {
+			this.firstRenderedEl = el;
+		}
+		if (i == end - 1) {
+			this.lastRenderedEl = el;
+		}
+		if (item.name == app.tab.createdItemName) {
+			createdItemFound = i;
+		}
 		
 		this.iterator++;
-		this.incSize(item.sz);
-	}
+	}	
 	// this.setStatus();
+	if (createdItemFound > -1) {
+		app.tab.selectItemByIdx(createdItemFound);
+	}
+	
 	if (done) {
 		this.processing = false;
-		clearInterval(this.iVal);
+		if (!this.skipCalcSize) {
+			for (i = 0; i < this.sz; i++) {
+				item = this.ls[i];
+				this.incSize(item.sz);
+			}
+		}
 		freeSpaceText = app.devicesManager.getPluralFreeSpaceOfDiskPartByPath(app.tab.currentPath);
 		if (freeSpaceText) {
 			freeSpaceText = ', ' + freeSpaceText;
@@ -60,30 +61,32 @@ ListRenderer.prototype.renderPart = function(){
 						+ ' (' + this.getHumanFilesize(intval(this.filesSize), 2, 3, false) + ')'
 						+ freeSpaceText;
 		this.context.setStatus.call(this.context, statusText);
-		this.context.listUpdater.run.call(this.context.listUpdater);
+		if (!this.skipRunUpdater) {
+			this.context.listUpdater.run.call(this.context.listUpdater);
+		} else {
+			this.skipRunUpdater = false;
+		}
 		
 	}
 }
 
-ListRenderer.prototype.run = function(sz, context, ls){
-	if (this.processing) {
+ListRenderer.prototype.run = function(sz, context, ls, firstItemIdx, skipCalcSize){
+	/*if (this.processing) {
 		return false;
-	}
-	this.iterator = 0;
+	}*/
+	context.contentBlock.innerHTML = '';
+	this.iterator = firstItemIdx;
 	this.context = context;
 	this.sz = sz;
 	this.ls = ls;
-	this.filesSize = 0;
+	if (!skipCalcSize) {
+		this.filesSize = 0;
+	}
+	this.skipCalcSize = skipCalcSize;
 	
 	var o = this;
-	this.iVal = setInterval(function() {
-		try {
-			o.renderPart();
-		} catch(err) {
-			alert(err);
-		}
-	}, 1*10);
 	this.processing = true;
+	this.calculatePart();
 	o.renderPart();
 	
 	return true;
@@ -124,7 +127,13 @@ ListRenderer.prototype.getHumanFilesize = function($n, $percision, $maxOrder, $p
 
 
 ListRenderer.prototype.createElement = function(item, i) {
-	var s;
+	var s, active = 'active';
+	if (e('f' + i)) {
+		return e('f' + i);
+	}
+	if (!this.context.oSelectionItems['f' + i]) {
+		active = ''
+	}
 	s = this.context.tpl.call(this.context);
 	s = s.replace('{name}', item.name);
 	s = s.replace('{name}', item.name);
@@ -133,6 +142,7 @@ ListRenderer.prototype.createElement = function(item, i) {
 	s = s.replace('{type}', item.type);
 	s = s.replace('{type}', item.type);
 	s = s.replace('{mt}', item.mt);
+	s = s.replace('{active}', active);
 	block = appendChild(this.context.contentBlock, 'div', s, {
 		'data-cmid': item.cmId,
 		'data-id': "f" + i,
@@ -205,5 +215,40 @@ ListRenderer.prototype.setListeners = function(block) {
 }
 ListRenderer.prototype.appendNew = function(i, item) {
 	var block = this.createElement(item, i);
-	this.setListeners(block);	
+	this.setListeners(block);
+	return block;
+}
+
+ListRenderer.prototype.calculatePart = function() {
+	this.part = Math.ceil(this.context.contentBlock.offsetHeight / ListRenderer.ONE_ITEM_HEIGHT) - 1;
+	
+}
+
+ListRenderer.prototype.shiftDown = function(itemData, nId) {
+	var firstItem, ls, el;
+	el = this.appendNew(nId, itemData);
+	this.lastRenderedEl = el;
+	ls = cs(this.context.contentBlock, 'tabContentItem');
+	firstItem = ls[0];
+	if (firstItem) {
+		this.firstRenderedEl = ls[1].parentNode;
+		rm(firstItem.parentNode);
+	}
+}
+
+ListRenderer.prototype.shiftUp = function(itemData, nId) {
+	var ls = cs(this.context.contentBlock, 'tabContentItem'),
+		firstItem = ls[0],
+		lastItem = ls[sz(ls) - 1],
+		newItem;
+	if (lastItem) {
+		this.lastRenderedEl = ls[sz(ls) - 2].parentNode;
+		rm(lastItem.parentNode);
+	}
+	if (firstItem) {
+		newItem = this.createElement(itemData, nId);
+		insertBefore(firstItem.parentNode, newItem);
+		this.setListeners(newItem);
+		this.firstRenderedEl = newItem;
+	}
 }

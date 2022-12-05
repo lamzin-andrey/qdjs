@@ -2,6 +2,130 @@ function ContextMenuContent() {
 	this.name = "ContxtMenuContent";
 }
 
+ContextMenuContent.prototype.getHtmlTabMenuHtml = function() {
+	var html = '\
+		<div id="cmTabHtml" style="display:none">\
+			<div class="contextMenu">\
+				<div class="contextMenuItem" onclick="app.tabPanel.onClickUtf8()">\
+					<div class="contextMenuItemIcon">\
+					</div>\
+					<div class="contextMenuItemText">' + L("Encoding")  + " UTF-8" + '</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tabPanel.onClickWindows1251()">\
+					<div class="contextMenuItemIcon">\
+					</div>\
+					<div class="contextMenuItemText">' + L("Encoding")  + " Windows-1251" + '</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tabPanel.onClickKOI8R()">\
+					<div class="contextMenuItemIcon">\
+					</div>\
+					<div class="contextMenuItemText">' + L("Encoding")  + " KOI8-R" + '</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tabPanel.onClickOther()">\
+					<div class="contextMenuItemIcon">\
+					</div>\
+					<div class="contextMenuItemText">' + L("Other")   + '</div>\
+					<div class="cf"></div>\
+				</div>\
+		</div>';
+		return html;
+}
+
+ContextMenuContent.prototype.getWebItemMenuHtml = function() {
+	var html = '\
+		<div id="cmWeb" style="display:none">\
+			<div class="contextMenu">\
+				<div class="contextMenuItem" onclick="app.tab.onClickOpen()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/exec16.png">\
+					</div>\
+					<div class="contextMenuItemText">Открыть</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickOpenWebNewTab()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/web22.png">\
+					</div>\
+					<div class="contextMenuItemText">' + L("Open in new tab") + '</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickSendDesktop()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/desktop16.png">\
+					</div>\
+					<div class="contextMenuItemText">Отправить на рабочий стол ссылку</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickCut()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/cut16.png">\
+					</div>\
+					<div class="contextMenuItemText">Вырезать</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickCopy()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/copy16.png">\
+					</div>\
+					<div class="contextMenuItemText">Копировать</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickPaste()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/pst16.png">\
+					</div>\
+					<div class="contextMenuItemText">Вставить</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickRemove()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/cross16.png">\
+					</div>\
+					<div class="contextMenuItemText">Удалить</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickRename()">\
+					<div class="contextMenuItemIcon">\
+						&nbsp;\
+					</div>\
+					<div class="contextMenuItemText">Переименовать</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickCreateArch()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/arch+16.png">\
+					</div>\
+					<div class="contextMenuItemText">Создать архив</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickProps()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/pencil16.png">\
+					</div>\
+					<div class="contextMenuItemText">Свойства</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+			</div>\
+		</div>';
+		return html;
+}
 ContextMenuContent.prototype.getBookmarkItemMenuHtml = function() {
 	var html = '\
 		<!-- User Bookmark menu -->\
@@ -90,7 +214,7 @@ ContextMenuContent.prototype.getCatalogMenuHtml = function() {
 					<div class="contextMenuItemIcon">\
 						&nbsp;\
 					</div>\
-					<div class="contextMenuItemText">Открыть в новой вкладке</div>\
+					<div class="contextMenuItemText">' + L("Open in new tab") + '</div>\
 					<div class="cf"></div>\
 				</div>\
 				\
@@ -106,7 +230,7 @@ ContextMenuContent.prototype.getCatalogMenuHtml = function() {
 					<div class="contextMenuItemIcon">\
 						<img src="./i/cm/desktop16.png">\
 					</div>\
-					<div class="contextMenuItemText">Отправить на рабочий стол ссылку</div>\
+					<div class="contextMenuItemText">' + L("Send link to desktop") + '</div>\
 					<div class="cf"></div>\
 				</div>\
 				\

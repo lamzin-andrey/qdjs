@@ -33,6 +33,9 @@ function hasClass(obj, css) {
 }
 function removeClass(obj, css) {
 	obj = e(obj);
+	if (!obj) {
+		return;
+	}
 	var c = obj.className, re = /[0-9a-zA-Z\-_]+/gm,
 	arr = c.match(re),
 	i, result = [];
@@ -311,4 +314,15 @@ function insertBefore(existsElement, newElement) {
 
 function mclone(o) {
 	return JSON.parse( JSON.stringify(o) );
+}
+
+function firstKey(o) {
+	var i;
+	if (o instanceof Object) {
+		for (i in o) {
+			return i;
+		}
+	}
+	
+	return 0;
 }

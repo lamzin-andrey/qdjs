@@ -25,7 +25,11 @@ ListUpdater.prototype.run = function(){
 	}
 	this.isRenderProcess = false;
 	
-	window.app.listProc.write(this.tab.currentPath);
+	try {
+		window.app.listProc.write(this.tab.currentPath);
+	} catch(err) {
+		;
+	}
 	this.getListIval = setInterval(function(){
 		if (o.isPause || !o.isRun || o.isRenderProcess) {
 			return;
@@ -96,7 +100,7 @@ ListUpdater.prototype.renderPart = function(){
 		done = false,
 		o, self = this,
 		statusText, freeSpaceText = '', sizeText = '',
-		cmId;
+		cmId, createdItemFound = -1, newFoundedActiveItem;
 	if (end >= this.sz) {
 		done = true;
 		end = this.sz;
@@ -117,6 +121,9 @@ ListUpdater.prototype.renderPart = function(){
 		// Иначе (если не существует)
 		// Создать свойство и добавить его в конец.
 		this.filesSize += this.tab.listRenderer.incSize(newItem.sz);
+		if (newItem.name == app.tab.createdItemName) {
+			createdItemFound = i;
+		}
 		if (oldItem) {
 			if (oldItem.src == newItem.src) {
 				this.iterator++;
@@ -132,6 +139,10 @@ ListUpdater.prototype.renderPart = function(){
 		this.iterator++;
 		
 	}
+	
+	if (createdItemFound > -1) {
+		app.tab.selectItemByIdx(createdItemFound);
+	}
 	if (done) {
 		this.isRenderProcess = false;
 		clearInterval(this.renderProcessIval);
@@ -146,7 +157,7 @@ ListUpdater.prototype.renderPart = function(){
 						+ TextTransform.pluralize(this.sz, L('Objects'), L('Objects-voice1'), L('Objects-voice2'))
 						+ ' (' + this.tab.listRenderer.getHumanFilesize(intval(this.filesSize), 2, 3, false) + ')'
 						+ freeSpaceText;
-		if (0 == this.tab.selectionItems.length) {
+		if (0 == count(this.tab.oSelectionItems)) {
 			this.tab.setStatus.call(this.tab, statusText);
 		}
 	}
@@ -163,13 +174,25 @@ ListUpdater.prototype.updateItem = function(i, newItem) {
 }
 
 ListUpdater.prototype.appendNew = function(i, newItem) {
-	this.tab.listRenderer.appendNew(i, newItem);
+	// this.tab.listRenderer.appendNew(i, newItem);
+	var needAppend = 0, oldSz = sz(this.tab.list);
+	if (i > oldSz - 1) {
+		needAppend = 1;
+	}
 	this.tab.list.push(newItem);
 	if (1 === intval(Settings.get('hMode'))) {
 		this.tab.hideList.push(newItem);
 	} else {
 		this.tab.showList.push(newItem);
 	}
+	
+	this.tab.listRenderer.calculatePart();
+	if (oldSz == 0 || i < this.tab.listRenderer.part) {
+		this.tab.listRenderer.appendNew(i, newItem);
+	} else if ((i - 1) == intval(this.tab.getLastItemId().replace('f', ''))) {
+		this.tab.listRenderer.shiftDown(newItem, i);
+	}
+	
 }
 ListUpdater.prototype.cutTail = function() {
 	var SZ = sz(this.tab.list), cBreak = 0;

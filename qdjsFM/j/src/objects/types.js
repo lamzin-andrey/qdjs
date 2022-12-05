@@ -55,6 +55,9 @@ window.Types = {
 			r.t = L("MS Windows application");
 		} else if (ext == 'jar') {
 			r.t = L("Executable Jar File");
+		} else if (ext == 'mts') {
+			r.t = L('Top Box video record');
+			r.i = App.dir() + '/i/cm/vlc32.png';
 		}
 		
 		targetIcon = App.dir() + '/i/mi/' + ext + '32.png';

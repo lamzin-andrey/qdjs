@@ -29,4 +29,11 @@ AddressPanel.prototype.showTextAddressShort = function() {
 	this.textAddress.show();
 	this.textAddress.focus();
 }
+AddressPanel.prototype.show = function() {
+	if (1 == intval(Settings.get('addressLineMode'))) {
+		this.textAddress.show();
+	} else {
+		this.buttonAddress.show();
+	}
+}
 
