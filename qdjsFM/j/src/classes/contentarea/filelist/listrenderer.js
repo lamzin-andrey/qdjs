@@ -143,6 +143,7 @@ ListRenderer.prototype.createElement = function(item, i) {
 	s = s.replace('{type}', item.type);
 	s = s.replace('{mt}', item.mt);
 	s = s.replace('{active}', active);
+	s = s.replace('{id}', i);
 	block = appendChild(this.context.contentBlock, 'div', s, {
 		'data-cmid': item.cmId,
 		'data-id': "f" + i,
@@ -203,7 +204,7 @@ ListRenderer.prototype.renderItemIcon = function(i, src) {
 ListRenderer.prototype.renderItemName = function(i, name) {	
 	var child = cs(e('f' + i), 'tabContentItem')[0];
 	if (child) {
-		attr(child, 'title', name);
+		attr(child, 'title', name + ' id = f' + i);
 		this.setSubValue(child, 'tabContentItemNameMain', name);
 	}
 }

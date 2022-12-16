@@ -76,7 +76,7 @@ ListUpdater.prototype.onListTick = function(){
 		return;
 	}
 	this.sz = 0;
-	lsout = window.app.listProc.read(this.tab.currentPath);
+	lsout = window.app.listProc ? window.app.listProc.read(this.tab.currentPath) : 0;
 	if (lsout) {
 		o.isRenderProcess = true;
 		this.newList = this.tab.buildList(lsout);
@@ -134,8 +134,6 @@ ListUpdater.prototype.renderPart = function(){
 			this.appendNew(i, newItem);
 		}
 		
-		
-		
 		this.iterator++;
 		
 	}
@@ -164,6 +162,9 @@ ListUpdater.prototype.renderPart = function(){
 }
 
 ListUpdater.prototype.updateItem = function(i, newItem) {
+	/*if (this.nameExists(newItem, sz(this.tab.list))) {
+		return;
+	}*/
 	this.tab.listRenderer.updateItem(i, newItem);
 	this.tab.list[i] = newItem;
 	if (1 === intval(Settings.get('hMode'))) {
@@ -175,20 +176,26 @@ ListUpdater.prototype.updateItem = function(i, newItem) {
 
 ListUpdater.prototype.appendNew = function(i, newItem) {
 	// this.tab.listRenderer.appendNew(i, newItem);
-	var needAppend = 0, oldSz = sz(this.tab.list);
-	if (i > oldSz - 1) {
-		needAppend = 1;
+	var needAppend = 0, oldSz = sz(this.tab.list),
+		isNameExists = this.nameExists(newItem, oldSz);
+	if (isNameExists) {
+		return;
 	}
-	this.tab.list.push(newItem);
-	if (1 === intval(Settings.get('hMode'))) {
-		this.tab.hideList.push(newItem);
-	} else {
-		this.tab.showList.push(newItem);
+	if (!isNameExists) {
+		needAppend = 1;
+		this.tab.list.push(newItem);
+		if (1 === intval(Settings.get('hMode'))) {
+			this.tab.hideList.push(newItem);
+		} else {
+			this.tab.showList.push(newItem);
+		}
 	}
 	
 	this.tab.listRenderer.calculatePart();
-	if (oldSz == 0 || i < this.tab.listRenderer.part) {
-		this.tab.listRenderer.appendNew(i, newItem);
+	if ((oldSz == 0 || i < this.tab.listRenderer.part)) {
+		if (needAppend) {
+			this.tab.listRenderer.appendNew(i, newItem);
+		}
 	} else if ((i - 1) == intval(this.tab.getLastItemId().replace('f', ''))) {
 		this.tab.listRenderer.shiftDown(newItem, i);
 	}
@@ -205,5 +212,15 @@ ListUpdater.prototype.cutTail = function() {
 			break;
 		}
 		SZ = sz(this.tab.list);
+	}
+}
+
+ListUpdater.prototype.nameExists = function(newItem, _sz) {
+	var i;
+	for (i = 0; i < _sz; i++) {
+		if (this.tab.list[i] && newItem.name == this.tab.list[i].name) {
+			
+			return true;
+		}
 	}
 }

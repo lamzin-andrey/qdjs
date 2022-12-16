@@ -1,2 +1,2 @@
 #!/bin/bash
-mv "/home/andrey/hdata/programs/my/qdjs/qdjsFM.tar.gz" "/media/andrey/SP"
+cp "/home/andrey/tmp/00/05/ForwardedMessage.eml.txt" "/home/andrey/tmp/00/05/ForwardedMessage.eml (2).txt"

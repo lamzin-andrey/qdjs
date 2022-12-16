@@ -79,6 +79,7 @@ FileHeader.prototype.onClickTab = function(tab, key){
 	this.sort.field = this.activeTabKey;
 	Settings.set('tabSortKey', this.activeTabKey);
 	Settings.set('tabSortDirect', this.direct);
+	app.tab.redraw();
 }
 FileHeader.prototype.onClickTabSize = function(){
 	this.onClickTab(this.tabSize, 'rsz');

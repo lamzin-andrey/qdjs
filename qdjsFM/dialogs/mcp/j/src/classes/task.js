@@ -6,6 +6,7 @@ function Task(taskManager, cmd, targetDir, aSources) {
 	this.aSources = aSources;	
 	this.state = Task.STATE_BUILD_NO_START;
 	this.copyIterator = -1;
+	this.duplicates = {};
 }
 Task.ACTION_TYPE_BUILD = 1;
 Task.ACTION_TYPE_COPY  = 2;
@@ -38,17 +39,21 @@ Task.prototype.makeAction = function() {
 //	  (Например, выбрали три каталога, скопировали, вошли в один из них и выбрали Вставить)
 // В этом случае invalid только если после исключения список сорсов пуст.
 Task.prototype.isValid = function() {
-	// не вставляем ли в тот же каталог, в котором скопировали только что?
+	
 	var i, SZ = sz(this.aSources), pathInfo, newSources = [];
 	for (i = 0; i < SZ; i++) {
-		pathInfo = pathinfo(this.aSources[i]);
-		if (pathInfo.dirname == this.targetDir) {
-			return false;
-		}
-		
 		// Например, выбрали три каталога, скопировали, вошли в один из них и выбрали Вставить)
 		if (this.targetDir.indexOf(this.aSources[i]) != 0) {
 			newSources.push(this.aSources[i]);
+		}
+	}
+	
+	// не вставляем ли в тот же каталог, в котором скопировали только что?
+	for (i = 0; i < SZ; i++) {
+		pathInfo = pathinfo(this.aSources[i]);
+		if (pathInfo.dirname == this.targetDir) {
+			// return false;
+			this.calculateCopyName(newSources, i, pathInfo);
 		}
 	}
 	
@@ -84,10 +89,10 @@ Task.prototype.startCopy = function() {
 		doWhile,
 		cmd;
 	this.copyIterator++;
-	doWhile = FS.isDir(this.aSources[this.copyIterator]) && this.copyIterator < SZ;
+	doWhile = FS.isDir(this.aSources[this.copyIterator] && !this.duplicates[this.aSources[this.copyIterator]]) && this.copyIterator < SZ;
 	while (doWhile) {
 		this.copyIterator++;
-		doWhile = FS.isDir(this.aSources[this.copyIterator]) && this.copyIterator < SZ;
+		doWhile = FS.isDir(this.aSources[this.copyIterator]) && !this.duplicates[this.aSources[this.copyIterator]] && this.copyIterator < SZ;
 	}
 	
 	if (this.copyIterator >= SZ) {
@@ -97,8 +102,8 @@ Task.prototype.startCopy = function() {
 		return;
 	}
 	this.currentFile = this.aSources[this.copyIterator];
-	if (this.destFileExists(this.aSources[this.copyIterator])) {
-		this.taskManager.setFileExistsExpression(this.getExistsFileName(this.aSources[this.copyIterator]));
+	if (this.destFileExists(this.currentFile) && !this.duplicates[this.currentFile]) {
+		this.taskManager.setFileExistsExpression(this.getExistsFileName(this.currentFile));
 		if (!this.taskManager.confirmReplace()) {
 			this.state = Task.STATE_BUILD_COMPLETE;
 			this.taskManager.cpState = 0;
@@ -110,6 +115,13 @@ Task.prototype.startCopy = function() {
 	
 	this.taskManager.progressManager.setCurrentFile(this.aSources[this.copyIterator], this.getExistsFileName(this.aSources[this.copyIterator]));
 	cmd = '#!/bin/bash\n' + this.getCmd() + ' "' + this.aSources[this.copyIterator] + '" "' + this.targetDir + '"';
+	if (this.duplicates[this.currentFile]) {
+		
+		cmd = '#!/bin/bash\n' + this.getCmd() + ' "' + this.aSources[this.copyIterator] + '" "' + this.duplicates[this.currentFile] + '"';
+		if (FS.isDir(this.currentFile)) {
+			cmd = '#!/bin/bash\n' + this.getCmd() + ' -r "' + this.aSources[this.copyIterator] + '" "' + this.duplicates[this.currentFile] + '"';
+		}
+	}
 	// log(cmd);
 	this.lastCmdFile = App.dir() + '/sh/cp.sh';
 	
@@ -128,7 +140,6 @@ Task.prototype.makeDir = function(dirName) {
 }
 
 Task.prototype.onErrCopy = function(stderr) {
-	log('Task::onErrCopy ' + stderr);
 	/*if (!this.isCopyCmd()) {
 		this.taskManager.incDestData(1024);
 	}*/
@@ -145,7 +156,6 @@ Task.prototype.onErrCopy = function(stderr) {
 
 Task.prototype.onStdOutCopy = function(stdout) {
 	log('Task::onStdOutCopy ' + stdout);
-	
 }
 
 Task.prototype.onFinishCopy = function(stdout, stderr) {
@@ -191,7 +201,9 @@ Task.prototype.startBuildSubdirs = function() {
 		try {
 			fileName = this.aSources[i];
 			if (FS.isDir(fileName)) {
-				this.buildOneDir(fileName);
+				if (fileName.indexOf(this.targetDir) != 0) {
+					this.buildOneDir(fileName);
+				}
 			} else {
 				this.taskManager.incSrcData(FS.filesize(fileName));
 			}
@@ -275,4 +287,61 @@ Task.prototype.startPostCopyTriggers = function() {
 	if (notDeleted == 0) {
 		this.state = Task.STATE_COPY_ALL_TRIGGERS_COMPLETE;
 	}
+}
+
+
+Task.prototype.calculateCopyName = function(newSources, i, pathInfo) {
+	var path = newSources[i],
+		dirname = pathInfo.dirname,
+		srcPath = newSources[i],
+		n = 1,
+		SZ = sz(newSources[i]),
+		oVal = {base: '', n:1};
+	while (FS.fileExists(path)) {
+		if (this.isCopyname(path, oVal) ) {
+			if (pathInfo.basename == pathInfo.filename) {
+				path = dirname + '/' + oVal.base + ' (' + (intval(oVal.n)) + ')';
+			} else {
+				path = dirname + '/' + oVal.base + ' (' + (intval(oVal.n)) + ').' + pathInfo.extension;
+			}
+		} else {
+			if (pathInfo.basename == pathInfo.filename) {
+				path = dirname + '/' + pathInfo.filename + ' (' + (n + 1) + ')';
+			} else {
+				path = dirname + '/' + pathInfo.filename + ' (' + (n + 1) + ').' + pathInfo.extension;
+				n++;
+			}
+		}
+	}
+	this.duplicates[srcPath] = path;
+}
+
+/**
+ * @param oVal {base: '', n: 1}
+ * */
+Task.prototype.isCopyname = function(s, oVal) {
+	var i, SZ, base = '', n = [], ch, isNum = 0, pathInfo;
+	s = strval(s);
+	pathInfo = pathinfo(s);
+	s = pathInfo.filename;
+	SZ = sz(s);
+	if (s.charAt(SZ - 1) != ')') {
+		return 0;
+	}
+	for (i = SZ - 2; i > -1; i--) {
+		ch = s.charAt(i);
+		isNum = is_numeric(ch);
+		if (!isNum && ch != '(') {
+			return 0;
+		}
+		if (ch == '(') {
+			n.reverse();
+			oVal.n = intval(n.join('')) + 1;
+			oVal.base = s.substring(0, i).trim();
+			return 1;
+		}
+		n.push(ch);
+	}
+	
+	return 0;
 }

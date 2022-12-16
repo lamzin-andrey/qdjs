@@ -96,6 +96,34 @@ Tab.prototype.onHideFileList = function(stdout, stderr) {
 	this.renderByMode();
 }
 
+Tab.prototype.redraw = function() {
+	this.rebuildList('list');
+	this.rebuildList('hideList');
+	
+	this.renderByMode();
+}
+Tab.prototype.rebuildList = function(key) {
+	var SZ , i, files = [], dirs = [],
+		list = this[key];
+	
+	SZ = sz(list);
+	console.log(list);
+	for (i = 0; i < SZ; i++) {
+		if (list[i].type == L("Catalog")) {
+			dirs.push(mclone(list[i]));
+		} else {
+			files.push(mclone(list[i]));
+		}
+	} 
+	this.sort.apply(files);
+	this.sort.apply(dirs);
+	SZ = sz(files);
+	for (i = 0; i < SZ; i++) {
+		dirs.push(files[i]);
+	}
+	this[key] = dirs;
+}
+
 Tab.prototype.onFileListPart = function(stdout) {
 	if (this.partListListen == 0) {
 		return;
@@ -136,7 +164,7 @@ Tab.prototype.buildList = function(lsout) {
 			}
 		}
 	}
-	this.sort.apply(files); // TODO
+	this.sort.apply(files);
 	this.sort.apply(dirs);
 	SZ = sz(files);
 	for (i = 0; i < SZ; i++) {
@@ -164,7 +192,7 @@ Tab.prototype.renderByMode = function(skipCheckCount) {
 		o.showList = JSON.parse(JSON.stringify(o.list));
 		o.list = JSON.parse(JSON.stringify(o.hideList));
 		list = o.list;
-		SZ = sz(list)
+		SZ = sz(list);
 	}
 	if (skipCheckCount) {
 		this.listRenderer.skipRunUpdater = true;
@@ -255,7 +283,7 @@ Tab.prototype.onContextMenu = function(targetId, event) {
 	if (activeItem) {
 		activeItem = cs(activeItem, 'tabContentItem')[0];
 		if (activeItem) {
-			this.setSelection({currentTarget:activeItem.parentNode}, false);
+			this.setSelection({currentTarget:activeItem.parentNode, isRight:true}, false);
 		}
 	}
 }
@@ -555,7 +583,7 @@ Tab.prototype.onClickRemove = function() {
 		o = this,
 		ival,
 		path,
-		i, SZ, keys, parentNode;
+		i, SZ, keys, parentNode, deletedKeys = [];
 		
 	if (count(this.oSelectionItems) > 1) {
 		msg = L("Are you sure you want to permanently delete files") + "?";
@@ -571,16 +599,23 @@ Tab.prototype.onClickRemove = function() {
 		keys = array_keys(this.oSelectionItems);
 		
 		SZ = sz(keys);
+		this.listUpdater.run();
 		ival = setInterval(function(){
-			var id;
+			var id, j;
 			if (i >= SZ) {
 				clearInterval(ival);
+				SZ = sz(deletedKeys);
+				for (j = SZ - 1; j > -1; j--) {
+					o.list.splice(o.toI(deletedKeys[j]), 1);
+				}
+				o.listRenderer.run(sz(o.list), o, o.list, o.toI(o.listRenderer.firstRenderedEl.id));
 				return;
 			}
 			id = keys[i].replace('f', '');
 			try {
 				path = o.currentPath + "/" + o.list[id].name;
 				o.removeOneItem(path, e(keys[i]));
+				deletedKeys.push(keys[i]);
 			} catch(err) {
 				alert(err);
 			}
@@ -605,7 +640,7 @@ Tab.prototype.removeOneItem = function(path, node) {
 	}
 }
 Tab.prototype.onFinishRemove = function(stdout, stderr) {
-	// this.setPath(this.currentPath);
+	
 }
 Tab.prototype.onErrorRemove = function(stdout, stderr) {
 	alert(L("Error remove file"));
@@ -628,7 +663,7 @@ Tab.prototype.setStatus = function(s, showLoader) {
 }
 
 Tab.prototype.tpl = function() {
-	return '<div class="tabContentItem {active}" title="{name}">\
+	return '<div class="tabContentItem {active}" title="{name} id=f{id}">\
 						<div class="tabContentItemNameMain fl">\
 							<div class="tabContentItemIcon fl">\
 								<img class="imgTabContentItemIcon" src="{img}">\
@@ -660,8 +695,8 @@ Tab.prototype.setSelection = function(evt, needClearSelection) {
 	if (!evt.ctrlKey && !evt.shiftKey) {
 		this.activeItem = cs(trg, cname)[0];
 		if (!needClearSelection) {
-			needClearSelection = true;
-			if (this.oSelectionItems[trg.id]) {
+			needClearSelection = false;
+			if (this.oSelectionItems[trg.id] && !evt.isRight) {
 				needClearSelection = true;
 			}
 		}

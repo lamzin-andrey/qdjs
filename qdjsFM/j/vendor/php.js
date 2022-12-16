@@ -387,6 +387,9 @@ function is_array(s) {
 	}
 	return false;
 }
+function is_numeric(s) {
+	return !isNaN( parseFloat(s) ) || !isNaN( parseInt(s, 10) ) || !isNaN( parseInt(s, 16) ) || !isNaN( parseInt(s, 8) );
+}
 function is_string(s) {
 	if (s instanceof String) {
 		return true;
@@ -583,6 +586,10 @@ function pathinfo(path) {
 	filename = a.join('.');
 	r.filename = filename;
 	r.extension = ext;
+	if (!r.filename) {
+		r.filename = r.basename;
+		r.extension = '';
+	}
 	return r;
 }
 function array_reverse(a) {

@@ -17,10 +17,22 @@ Devices.prototype.run = function() {
 	this.is_run = true;
 	
 	var o = this;
-	setInterval(function() {
+	/*setInterval(function() {
 		o.createList();
-	}, 3 * 1000);
+	}, 3 * 1000);*/
+	jexec('udisksctl monitor', DevNull, [o, o.onStdout], DevNull /*[o, o.onStderr]*/);
 }
+
+Devices.prototype.onStdout = function(s) {
+	var o = this;
+	if (~s.indexOf('Added /org/freedesktop/UDisks2/jobs/')) {
+		this.createList();
+		setTimeout(function() {
+			o.createList();
+		}, 3 * 1000);
+	}
+}
+
 
 Devices.prototype.setUser = function(s) {
 	this.username = s;
