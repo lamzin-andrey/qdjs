@@ -79,7 +79,7 @@ ListUpdater.prototype.onListTick = function(){
 	lsout = window.app.listProc ? window.app.listProc.read(this.tab.currentPath) : 0;
 	if (lsout) {
 		o.isRenderProcess = true;
-		this.newList = this.tab.buildList(lsout);
+		this.newList = this.tab.buildList(lsout, true);
 		this.iterator = 0;
 		this.sz = sz(this.newList);
 		this.filesSize = 0;
@@ -165,6 +165,20 @@ ListUpdater.prototype.updateItem = function(i, newItem) {
 	/*if (this.nameExists(newItem, sz(this.tab.list))) {
 		return;
 	}*/
+	
+	var t;
+	
+	if (newItem.type == L('Catalog')) {
+		newItem.rsz = this.calculateSubdirSz(newItem.name, newItem.rsz);
+		newItem.sz = this.tab.listRenderer.getHumanFilesize(newItem.rsz, 1, 3, false);
+		t = newItem.rsz;
+		if (newItem.sz == 'NaN Байт') {
+			newItem.sz = t;
+		} else {
+			// newItem.rsz = newItem.sz;
+		}
+	}
+	
 	this.tab.listRenderer.updateItem(i, newItem);
 	this.tab.list[i] = newItem;
 	if (1 === intval(Settings.get('hMode'))) {
@@ -180,6 +194,10 @@ ListUpdater.prototype.appendNew = function(i, newItem) {
 		isNameExists = this.nameExists(newItem, oldSz);
 	if (isNameExists) {
 		return;
+	}
+	if (newItem.type == L('Catalog')) {
+		newItem.rsz = this.calculateSubdirSz(newItem.name, newItem.rsz);
+		newItem.sz = this.tab.listRenderer.getHumanFilesize(newItem.rsz, 1, 3, false);
 	}
 	if (!isNameExists) {
 		needAppend = 1;
@@ -201,6 +219,46 @@ ListUpdater.prototype.appendNew = function(i, newItem) {
 	}
 	
 }
+
+
+ListUpdater.prototype.calculateSubdirSz = function(shortName, defaultSize) {
+	if (shortName == '.' || shortName == '..') {
+		return defaultSize;
+	}
+	var file = this.tab.currentPath + '/' + shortName + '/.qdjssz', o = this;
+	if (FS.fileExists(file)) {
+		return intval(FS.readfile(file));
+	}
+	setTimeout(function(){
+		o.calculateSize(o.tab.currentPath + '/' + shortName);
+	}, 10);
+	return defaultSize;
+}
+
+ListUpdater.prototype.calculateSize = function(path) {
+	var ls = FS.scandir(path), i, SZ = sz(ls), sum = 0, file;
+	
+	for (i = 0; i < SZ; i++) {
+		if (ls[i] == '.' || ls[i] == '..') {
+			continue;
+		}
+		file = path + '/' + ls[i];
+	
+		if (!FS.isDir(file)) {
+			sum += FS.filesize(file);
+		} else {
+			if (FS.fileExists(file + '/.qdjssz')) {
+				sum += intval(FS.readfile(file + '/.qdjssz'));
+			}
+		}
+	}
+	
+	
+	FS.writefile(path + '/.qdjssz', sum);
+	//  alert('SAve in "' + path + '/.qdjssz' + "' sum = " + sum);
+}
+
+
 ListUpdater.prototype.cutTail = function() {
 	var SZ = sz(this.tab.list), cBreak = 0;
 	while (SZ > this.sz) {

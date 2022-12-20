@@ -116,7 +116,7 @@ ListRenderer.prototype.incSize = function(sz){
 ListRenderer.prototype.getHumanFilesize = function($n, $percision, $maxOrder, $pack) {
     var fileSize = new FileSize();
     return fileSize.getHumanValue($n,
-		['b', 'KB', 'MB', 'GB', 'TB'],
+		['Bytes', 'KB', 'MB', 'GB', 'TB'],
 		1024,
 		$percision,
 		$maxOrder,

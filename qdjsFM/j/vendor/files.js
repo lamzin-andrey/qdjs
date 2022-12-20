@@ -11,7 +11,7 @@ FileSize.prototype.getHumanFilesize = function($n, $percision, $maxOrder, $pack)
     $n = __php2js_clone_argument__($n);
     
     return this.getHumanValue($n,
-		['b', 'KB', 'MB', 'GB', 'TB'],
+		['Bytes', 'KB', 'MB', 'GB', 'TB'],
 		1024,
 		$percision,
 		$maxOrder,

@@ -72,10 +72,8 @@ FileManager.prototype.onGetActualEnv = function() {
 			} catch (err) {
 				alert(err);
 			}
-			
 		}
 	}
-	
 }
 
 

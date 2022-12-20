@@ -71,6 +71,7 @@ TextAddress.prototype.onKeyDown = function(evt) {
 		this.mode = TextAddress.MODE_DEFAULT;
 		if (1 != intval(Settings.get('addressLineMode'))) {
 			app.addressPanel.showButtonAddress();
+			app.kbListener.activeArea = KBListener.AREA_TAB;
 		} else {
 			evt.preventDefault();
 		}

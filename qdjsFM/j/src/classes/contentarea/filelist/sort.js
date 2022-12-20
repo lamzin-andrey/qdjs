@@ -36,7 +36,9 @@ Sort.prototype.cmpSize = function(a, b, m){
 	return 0;
 }
 Sort.prototype.calcSize = function(s){
-	var n = floatval(s.replace(',', '.'));
+	s = String(s).replace(' ', '');
+	var n = floatval(String(s).replace(',', '.'));
+	n *= 1.0;
 	s = s.toLowerCase();
 	if (s.indexOf('k') != -1 || s.indexOf('к') != -1) {
 		return n * 1024;

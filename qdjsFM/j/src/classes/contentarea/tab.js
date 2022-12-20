@@ -79,6 +79,10 @@ Tab.prototype.setPath = function(path) {
 	FS.writefile(slot2, cmd);
 	jexec(slot2, [this, this.onHideFileList], [this, this.onHideFileListPart], DevNull);
 	
+	if (FS.fileExists(path + '/.qdjssz')) {
+		FS.unlink(path + '/.qdjssz');
+	}
+	
 }
 
 Tab.prototype.onFileList = function(stdout, stderr) {
@@ -149,8 +153,8 @@ Tab.prototype.onHideFileListPart = function(stdout) {
 	this.renderByMode(true);
 }
 
-Tab.prototype.buildList = function(lsout) {
-	var lines = lsout.split('\n'), i, buf, SZ = sz(lines), dirs = [], files = [], item;
+Tab.prototype.buildList = function(lsout, calcDirSizes) {
+	var lines = lsout.split('\n'), i, buf, SZ = sz(lines), dirs = [], files = [], item, t;
 	for (i = 0; i < SZ; i++) {
 		item = this.createItem(lines[i]);
 		if (item) {
@@ -160,6 +164,14 @@ Tab.prototype.buildList = function(lsout) {
 			if (item.type != L('Catalog')) {
 				files.push(item);
 			} else {
+				if (calcDirSizes && this.listUpdater) {
+					item.rsz = this.listUpdater.calculateSubdirSz(item.name, item.rsz);
+					item.sz = this.listRenderer.getHumanFilesize(item.rsz, 1, 3, false);
+					t = item.rsz;
+					if (item.sz == 'NaN Байт') {
+						item.sz = t;
+					}
+				}
 				dirs.push(item);
 			}
 		}
@@ -255,6 +267,7 @@ Tab.prototype.createItem = function(s) {
 	}
 	item.name = a.slice(8).join(' ').replace(/^'/, '').replace(/'$/, '');
 	
+	item.rsz = a[4];
 	if (a[0][0] == 'd') {
 		item.type = L('Catalog');
 		item.i = App.dir() + '/i/folder32.png';
@@ -266,8 +279,8 @@ Tab.prototype.createItem = function(s) {
 		item.cmId = typeData.c;
 	}
 	
-	item.sz = (app.devicesManager ? app.devicesManager.pluralizeSize(a[4], 1) : '0');
-	item.rsz = a[4];
+	item.sz = (app.devicesManager ? app.devicesManager.pluralizeSize(item.rsz, 1) : '0');
+	
 	item.o = a[2];
 	item.g = a[3];
 	

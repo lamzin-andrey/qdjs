@@ -1,2 +1,2 @@
 #!/bin/bash
-mv "/home/andrey/tmp/00/05/done/Screenrecorder-2022-12-12-16-54-37-323.mp4.tar.gz" "/home/andrey/tmp/00/05/done/basis"
+cp "/media/andrey/D/KMS/KMSAuto_Net_2021_(пароль_1111)/KMSAuto v1.5.0/KMSAutoLite.ini" "/media/andrey/D/01"
