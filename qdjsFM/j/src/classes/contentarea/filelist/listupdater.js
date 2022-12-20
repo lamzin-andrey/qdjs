@@ -125,7 +125,7 @@ ListUpdater.prototype.renderPart = function(){
 			createdItemFound = i;
 		}
 		if (oldItem) {
-			if (oldItem.src == newItem.src) {
+			if (oldItem.src == newItem.src && oldItem.sz == newItem.sz) {
 				this.iterator++;
 				continue;
 			}
