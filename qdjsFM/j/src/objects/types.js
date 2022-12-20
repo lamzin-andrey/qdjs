@@ -59,6 +59,10 @@ window.Types = {
 			r.t = L('Top Box video record');
 			r.i = App.dir() + '/i/cm/vlc32.png';
 		}
+		if (ext == 'mov') {
+			r.t = L('Quick Time video');
+			r.i = App.dir() + '/i/cm/vlc32.png';
+		}
 		
 		targetIcon = App.dir() + '/i/mi/' + ext + '32.png';
 		if (FS.fileExists(targetIcon)) {

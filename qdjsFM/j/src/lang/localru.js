@@ -70,6 +70,8 @@ var langRu = {
 	"Enter encoding" : "Введите кодировку",
 	"Open in new tab" : "Открыть в новой вкладке",
 	"Send link to desktop" : "Отправить на рабочий стол ссылку",
+	"Extract files" : "Извлечь файлы",
+	"extracted" : "распакован",
 	"" : ""
 };
 

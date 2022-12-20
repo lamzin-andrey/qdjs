@@ -89,10 +89,10 @@ Task.prototype.startCopy = function() {
 		doWhile,
 		cmd;
 	this.copyIterator++;
-	doWhile = FS.isDir(this.aSources[this.copyIterator] && !this.duplicates[this.aSources[this.copyIterator]]) && this.copyIterator < SZ;
+	doWhile = FS.isDir(this.aSources[this.copyIterator] /*&& !this.duplicates[this.aSources[this.copyIterator]]*/ ) && this.copyIterator < SZ;
 	while (doWhile) {
 		this.copyIterator++;
-		doWhile = FS.isDir(this.aSources[this.copyIterator]) && !this.duplicates[this.aSources[this.copyIterator]] && this.copyIterator < SZ;
+		doWhile = FS.isDir(this.aSources[this.copyIterator]) /*&& !this.duplicates[this.aSources[this.copyIterator]]*/ && this.copyIterator < SZ;
 	}
 	
 	if (this.copyIterator >= SZ) {
@@ -119,7 +119,9 @@ Task.prototype.startCopy = function() {
 		
 		cmd = '#!/bin/bash\n' + this.getCmd() + ' "' + this.aSources[this.copyIterator] + '" "' + this.duplicates[this.currentFile] + '"';
 		if (FS.isDir(this.currentFile)) {
-			cmd = '#!/bin/bash\n' + this.getCmd() + ' -r "' + this.aSources[this.copyIterator] + '" "' + this.duplicates[this.currentFile] + '"';
+			// cmd = '#!/bin/bash\n' + this.getCmd() + ' -r "' + this.aSources[this.copyIterator] + '" "' + this.duplicates[this.currentFile] + '"';
+			log('It no need, but it was! directory in list files for cp! ');
+			return;
 		}
 	}
 	// log(cmd);
@@ -134,9 +136,16 @@ Task.prototype.startCopy = function() {
 }
 
 Task.prototype.makeDir = function(dirName) {
-	var pathInfo = pathinfo(dirName);
+	var pathInfo = pathinfo(dirName), newDir;
 	dirName = pathInfo.basename;
-	FS.mkdir(this.targetDir + '/' + dirName);
+	if (!FS.fileExists(this.targetDir + '/' + dirName)) {
+		FS.mkdir(this.targetDir + '/' + dirName);
+		return this.targetDir + '/' + dirName;
+	} else {
+		newDir = this.calculateCopyDirName(this.targetDir + '/' + dirName);
+		FS.mkdir(newDir);
+		return newDir;
+	}
 }
 
 Task.prototype.onErrCopy = function(stderr) {
@@ -195,15 +204,17 @@ Task.prototype.getExistsFileName = function(sourceFile) {
 }
 
 Task.prototype.startBuildSubdirs = function() {
-	var i, SZ = sz(this.aSources), fileName;
+	var i, SZ = sz(this.aSources), fileName, pathInfo;
 	this.state = Task.STATE_BUILD_IN_PROCESS;
 	for (i = 0; i < SZ; i++) {
 		try {
 			fileName = this.aSources[i];
 			if (FS.isDir(fileName)) {
-				if (fileName.indexOf(this.targetDir) != 0) {
+				// иначе при копировании вложенного каталога в тот же каталог происходит копирование вложенных в нго файлов в сам себя.
+				// но нам это не надо pathInfo = pathinfo(fileName);
+				// if (pathInfo.dirname != this.targetDir) {
 					this.buildOneDir(fileName);
-				}
+				// }
 			} else {
 				this.taskManager.incSrcData(FS.filesize(fileName));
 			}
@@ -228,7 +239,8 @@ Task.prototype.buildOneDir = function(dirname) {
 			r.push(dirname + '/' + a[i]);
 		}
 	}
-	this.makeDir(dirname);
+	
+	dirname = this.makeDir(dirname);
 	pathInfo = pathinfo(dirname);
 	
 	sData = this.cmd + n;
@@ -297,6 +309,11 @@ Task.prototype.calculateCopyName = function(newSources, i, pathInfo) {
 		n = 1,
 		SZ = sz(newSources[i]),
 		oVal = {base: '', n:1};
+
+	if (FS.isDir(path)) {
+		return;
+	}
+
 	while (FS.fileExists(path)) {
 		if (this.isCopyname(path, oVal) ) {
 			if (pathInfo.basename == pathInfo.filename) {
@@ -314,6 +331,29 @@ Task.prototype.calculateCopyName = function(newSources, i, pathInfo) {
 		}
 	}
 	this.duplicates[srcPath] = path;
+}
+
+Task.prototype.calculateCopyDirName = function(dirname) {
+	var path = dirname, // newSources[i],
+		pathInfo,
+		// dirname = pathInfo.dirname,
+		// srcPath = newSources[i],
+		n = 1,
+		oVal = {base: '', n:1};
+	pathInfo = pathinfo(dirname);
+	while (FS.fileExists(path)) {
+		if (this.isCopyname(path, oVal) ) {
+			if (pathInfo.basename == pathInfo.filename) {
+				path = pathInfo.dirname + '/' + oVal.base + ' (' + (intval(oVal.n)) + ')';
+			}
+		} else {
+			if (pathInfo.basename == pathInfo.filename) {
+				path = pathInfo.dirname + '/' + pathInfo.filename + ' (' + (n + 1) + ')';
+				n++;
+			}
+		}
+	}
+	return path;
 }
 
 /**

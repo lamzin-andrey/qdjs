@@ -306,12 +306,15 @@ Tab.prototype.openAction = function(id) {
 	if (item.type == L('Catalog')) {
 		app.setActivePath(path, ['']);
 	} else {
-		if (pathInfo.extension == 'mts') {
-			// runner = 'vlc &;\n sleep 1;\n vlc --started-from-file';
-			runner = 'killall vlc\nvlc&\nsleep 1\nvlc';
-		}
 		path = str_replace('//', '/', path);
 		cmd = '#!/bin/bash\n' + runner + ' \'' + path + '\'';
+		if (pathInfo.extension == 'mts' || pathInfo.extension == 'mov') {
+			// runner = 'vlc &;\n sleep 1;\n vlc --started-from-file';
+			runner = 'vlc --started-from-file';
+			cmd = '#!/bin/bash\n' + runner + ' "' + path + '"';
+		}
+		
+		// cmd = '#!/bin/bash\n' + runner + ' \'' + path + '\'';
 		slot = App.dir() + '/sh/o.sh';
 		FS.writefile(slot, cmd);
 		jexec(slot, DevNull, DevNull, DevNull);
@@ -546,6 +549,63 @@ Tab.prototype.onClickCreateArch = function() {
 		}, DevNull, DevNull);
 		
 	}
+}
+
+
+Tab.prototype.onClickExtractArch = function() {
+	var 
+		currentCmTargetId,
+		idx,
+		srcName,
+		pathInfo,
+		shortName,
+		newName,
+		cmd,
+		sh = App.dir() + "/sh/o.sh",
+		newPath,
+		cmId,
+		item,
+		aSelectionItems = [],
+		i,
+		SZ;
+
+	if (!currentCmTargetId) {
+		currentCmTargetId = this.activeItem.parentNode.id;
+	}
+	if (!currentCmTargetId) {
+		var firstId = firstKey(this.oSelectionItems);
+		if (firstId) {
+			currentCmTargetId = firstId;
+		}
+	}
+	
+	if (!currentCmTargetId) {
+		currentCmTargetId = window.currentCmTargetId;
+	}
+	if (!currentCmTargetId) {
+		return;
+	}
+	
+	
+	idx = currentCmTargetId.replace('f', '');
+	srcName = this.currentPath + '/' + this.list[idx].name;
+	pathInfo = pathinfo(srcName);
+	shortName = pathInfo.basename;// ??
+	// ?? newName = prompt(L("Enter new name"), shortName + '.tar.gz');
+	
+	// if (newName) {
+		/*newPath = this.currentPath + '/' + newName;
+		if (FS.fileExists(newPath)) {
+			alert(L("File or folder already exists"));
+			return;
+		}*/
+		cmd = "#!/bin/bash\ncd \"" + this.currentPath + "\"\ntar -xvzf  \"" + srcName + "\"";
+		FS.writefile(sh, cmd);
+		jexec(sh, function() {
+			alert(shortName + ".tar.gz " + L("extracted"));
+		}, DevNull, DevNull);
+		
+	// }
 }
 
 Tab.prototype.onClickAddBookmark = function() {

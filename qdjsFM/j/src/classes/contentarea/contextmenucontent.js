@@ -124,7 +124,8 @@ ContextMenuContent.prototype.getWebItemMenuHtml = function() {
 				\
 			</div>\
 		</div>';
-		return html;
+		
+	return html;
 }
 ContextMenuContent.prototype.getBookmarkItemMenuHtml = function() {
 	var html = '\
@@ -318,5 +319,87 @@ ContextMenuContent.prototype.getCatalogMenuHtml = function() {
 		</div>\
 		<!-- /context menu example -->\
 		';
+		return html;
+}
+
+ContextMenuContent.prototype.getArjItemMenuHtml = function() {
+	var html = '<div id="cmArch" style="display:none">\
+			<div class="contextMenu">\
+				<div class="contextMenuItem" onclick="app.tab.onClickOpen()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/exec16.png">\
+					</div>\
+					<div class="contextMenuItemText">Открыть</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickSendDesktop()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/desktop16.png">\
+					</div>\
+					<div class="contextMenuItemText">Отправить на рабочий стол ссылку</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickCut()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/cut16.png">\
+					</div>\
+					<div class="contextMenuItemText">Вырезать</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickCopy()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/copy16.png">\
+					</div>\
+					<div class="contextMenuItemText">Копировать</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickPaste()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/pst16.png">\
+					</div>\
+					<div class="contextMenuItemText">Вставить</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickRemove()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/cross16.png">\
+					</div>\
+					<div class="contextMenuItemText">Удалить</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickRename()">\
+					<div class="contextMenuItemIcon">\
+						&nbsp;\
+					</div>\
+					<div class="contextMenuItemText">Переименовать</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickExtractArch()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/arch+16.png">\
+					</div>\
+					<div class="contextMenuItemText">' + L("Extract files") + '</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickProps()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/pencil16.png">\
+					</div>\
+					<div class="contextMenuItemText">Свойства</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+			</div>\
+		</div>';
+		
 		return html;
 }
