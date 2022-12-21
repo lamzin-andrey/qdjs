@@ -1,0 +1,30 @@
+#hSyslemValue {
+  max-width:149px;
+}
+
+#hSyslemLabel {
+  margin-top:14px;
+}
+
+#hUserLabel {
+  margin-top:44px;
+}
+
+#hPcLabel {
+  margin-top:34px;
+  max-width:100px;
+}
+
+
+.monitor {
+  min-width: 193px;
+}
+
+.data {
+		max-width:150px;
+}
+
+.imageicon {
+  margin-left:46px;
+  margin-top:51px;
+}

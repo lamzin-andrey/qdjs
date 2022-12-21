@@ -1,0 +1,8 @@
+CPU
+lscpu
+Имя модели:
+or Model name:
+
+User
+ls -l
+and het user and group

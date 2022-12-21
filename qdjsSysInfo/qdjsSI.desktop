@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=QdjsSystemInfo
+Comment=Short System Information
+Exec=/home/andrey/hdata/programs/my/qdjs/qdjsSysInfo/qdjsSI.sh
+Icon=/home/andrey/hdata/programs/my/qdjs/qdjsSysInfo/i/exec32.png
+Path=/home/andrey/hdata/programs/my/qdjs/qdjsSysInfo
+Categories=Tools;
+Terminal=false
+StartupNotify=false
+Name[ru]=QDJS System Information
+Name[en]=QDJS System Information
+Category=Tools;

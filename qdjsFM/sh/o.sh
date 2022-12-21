@@ -1,2 +1,2 @@
 #!/bin/bash
-xfce4-terminal --working-directory="/home/andrey/hdata/programs/my/qdjs"
+rm -f "/home/andrey/hdata/programs/my/qdjs/qdjsSysInfo/env.json"
