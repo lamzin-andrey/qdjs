@@ -1,2 +1,2 @@
 #!/bin/bash
-rm -f "/home/andrey/hdata/programs/my/qdjs/qdjsSysInfo/env.json"
+rm -rf "/home/andrey/hdata/programs/my/qdjs/sh"

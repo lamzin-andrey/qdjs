@@ -19,7 +19,7 @@ window.Types = {
 			sh     = In('bat', 'sh');
 		if (images[ext]) {
 			r.t = L('Image') + ' ' + ext.toUpperCase();
-			r.i = path;
+			// r.i = path;
 			r.c = 'cmImage';
 		} else if (texts[ext]) {
 			r.t = L('Text file');

@@ -20,3 +20,10 @@ qdjsFM/sh/o.sh
 qdjsFM/config.json
 qdjsFM/dialogs/mcp/log.log
 qdjsFM/env.json
+.qdjssz
+env.json
+cpu.txt
+ls.txt
+v.txt
+mem.txt
+

@@ -144,6 +144,7 @@ ListRenderer.prototype.createElement = function(item, i) {
 	s = s.replace('{mt}', item.mt);
 	s = s.replace('{active}', active);
 	s = s.replace('{id}', i);
+	s = s.replace('{id}', i);
 	block = appendChild(this.context.contentBlock, 'div', s, {
 		'data-cmid': item.cmId,
 		'data-id': "f" + i,
@@ -196,6 +197,22 @@ ListRenderer.prototype.renderItemSize = function(i, size) {
 	this.setSubValue(e('f' + i), 'tabContentItemSize', size);
 }
 ListRenderer.prototype.renderItemIcon = function(i, src) {
+	var child = cs(('f' + i), 'imgTabContentItemIcon')[0];
+	if (child) {
+		attr(child, 'src', src);
+		/*child.onload = function() {
+			app.tab.onLoadPreview(i);
+		}*/
+	}
+}
+ListRenderer.prototype.getCurrentIcon = function(i) {
+	var child = cs(('f' + i), 'imgTabContentItemIcon')[0];
+	if (child) {
+		return attr(child, 'src');
+	}
+	return '';
+}
+ListRenderer.prototype.setCurrentIcon = function(i, src) {
 	var child = cs(('f' + i), 'imgTabContentItemIcon')[0];
 	if (child) {
 		attr(child, 'src', src);
