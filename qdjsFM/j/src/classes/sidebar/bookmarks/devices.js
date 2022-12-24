@@ -390,7 +390,6 @@ Devices.prototype.addItem = function(name, path, xdxN) {
 }
 
 
-
 /**
  * Поддерживаем только ru и en
 */
@@ -404,6 +403,68 @@ Devices.prototype.getLocale = function(user) {
 
 Devices.prototype.onClickOpen = function() {
 	this.onClick({currentTarget: e(this.itemIdPrefix + window.currentCmTargetId)});
+}
+
+Devices.prototype.onClickFixHibernated = function() {
+	var n = window.currentCmTargetId,
+		isMounted = false,
+		cmd = "#!/bin/bash\nudisksctl unmount -b /dev/",
+		sh = App.dir() + "/sh/o.sh",
+		self = this,
+		p, xdxN;
+	if (this.list[n].path == '/') {
+		return;
+	}
+	if (FS.fileExists(this.list[n].path) && FS.isDir(this.list[n].path)) {
+		// alert(this.list[n].xdxN + ', ' + this.list[n].path); // sda5
+		cmd += this.list[n].xdxN;
+		FS.writefile(sh, cmd);
+		p = this.list[n].path;
+		xdxN = this.list[n].xdxN;
+		jexec(sh, function(){
+			// alert('Bef call onUnmountForFixHibernation path = ' + String(p));
+			self.onUnmountForFixHibernation(xdxN, p);
+			app.setActivePath('/home/' + USER, 'devicesManager');
+		}, DevNull, DevNull);
+	}
+}
+
+Devices.prototype.onUnmountForFixHibernation = function(xdxN, path) {
+	// alert('Call onUnmountForFixHibernation, path = ' + path);
+	var tpl = FS.readfile(App.dir() + '/sh/fixH.tpl.sh'), s, slot = App.dir() + '/sh/o.sh', cmd, o = this;
+	cmd = '#!/bin/bash\npkexec ' + App.dir() + '/sh/fixH.sh\n';
+	s = str_replace('{sdx}', xdxN, tpl);
+	FS.writefile(App.dir() + '/sh/fixH.sh', s);
+	FS.writefile(slot, cmd);
+	jexec(slot, function(){
+		// alert('Will remount!');
+		o.onDoneTryFixHibernation(xdxN, path);
+	}, DevNull, DevNull);
+}
+
+
+
+Devices.prototype.onDoneTryFixHibernation = function(xdxN, path) {
+	var isMounted = false,
+		o = this,
+		cmd = "#!/bin/bash\nudisksctl mount -b /dev/",
+		sh = App.dir() + "/sh/o.sh";
+	// alert('Call onDoneTryFixHibernation');
+	if (FS.fileExists(path) && FS.isDir(path)) {		
+		isMounted = true;
+	}
+	if (isMounted) {
+		app.setActivePath(path, 'devicesManager');
+	} else if (xdxN) {
+		cmd += xdxN;
+		FS.writefile(sh, cmd);
+		jexec(sh, function(stdout, stderr){
+			// path = stdout.split(" at ");
+			// path = path[sz(path) - 1].replace(/[.]{1}/, '').trim();
+			// alert('Call onFin ' + path + '!');
+			app.setActivePath(path, 'devicesManager');
+		}, DevNull, DevNull);
+	}
 }
 
 Devices.prototype.onClickMount = function() {

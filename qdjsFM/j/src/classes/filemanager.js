@@ -786,33 +786,9 @@ FileManager.prototype.addContextMenuHtml = function() {
 				\
 			</div>\
 		</div>\
-		' + this.contextMenuContent.getBookmarkItemMenuHtml() + '\
-		<!-- Devices menu -->\
-		<div id="cmDiskMenu" style="display:none">\
-			<div class="contextMenu">\
-				<div class="contextMenuItem" onclick="app.devicesManager.onClickOpen()">\
-					<div class="contextMenuItemIcon">\
-						<!--img src="./i/cm/sh16.png"-->\
-					</div>\
-					<div class="contextMenuItemText">' + L("Open") + '</div>\
-					<div class="cf"></div>\
-				</div>\
-				<div class="contextMenuItem" onclick="app.devicesManager.onClickMount()">\
-					<div class="contextMenuItemIcon">\
-						<!--img src="./i/cm/folder_new16.png"-->\
-					</div>\
-					<div class="contextMenuItemText">' + L("Mount device") + '</div>\
-					<div class="cf"></div>\
-				</div>\
-				<div class="contextMenuItem" onclick="app.devicesManager.onClickUnmount()">\
-					<div class="contextMenuItemIcon">\
-						<!--img src="./i/cm/filenew16.png"-->\
-					</div>\
-					<div class="contextMenuItemText">' + L("Unmount device") + '</div>\
-					<div class="cf"></div>\
-				</div>\
-			</div>\
-		</div>\
+		' + this.contextMenuContent.getBookmarkItemMenuHtml() 
+		  + this.contextMenuContent.getDeviceItemMenuHtml() + 
+		'\
 		<div id="cmUsbMenu" style="display:none">\
 			<div class="contextMenu">\
 				<div class="contextMenuItem" onclick="app.devicesManager.onClickOpen()">\

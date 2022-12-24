@@ -1,2 +1,2 @@
 #! /bin/bash
-ls -lh --full-time  "/home/andrey/hdata/programs/my/qdjs"
+ls -lh --full-time  "/home/andrey/hdata/programs/my"
