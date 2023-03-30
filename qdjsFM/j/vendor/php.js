@@ -730,7 +730,7 @@ function method_exists(obj, foo) {
 }
 function md5(s){
 	//TODO
-	return s;
+	return FS.md5(s);
 }
 function min(arr) {
 	if (arr instanceof Array) {

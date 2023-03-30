@@ -10,5 +10,6 @@
 	"Create catalog" : "Создать каталог",
 	"Create file" : "Создать файл",
 	"Display address line" : "Показать строку адреса",
-	"Show address line Ctrl+L" : "Показать строку адреса Ctrl+L"
+	"Show address line Ctrl+L" : "Показать строку адреса Ctrl+L",
+	"New window" : "Новое окно"
 }

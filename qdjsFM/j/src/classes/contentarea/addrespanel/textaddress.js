@@ -61,6 +61,10 @@ TextAddress.prototype.onKeyDown = function(evt) {
 				app.setActivePath(s, ['']);
 				app.kbListener.activeArea = KBListener.AREA_TAB;
 				o.input.blur();
+				if (1 != intval(Settings.get('addressLineMode'))) {
+					app.addressPanel.showButtonAddress();
+					app.kbListener.activeArea = KBListener.AREA_TAB;
+				}
 			} else if (s.indexOf("http") == 0){
 				app.tabPanel.addTabItem(s, TabPanelItem.TYPE_HTML);
 				app.tab.setPath(s);
@@ -71,6 +75,16 @@ TextAddress.prototype.onKeyDown = function(evt) {
 		this.mode = TextAddress.MODE_DEFAULT;
 		if (1 != intval(Settings.get('addressLineMode'))) {
 			app.addressPanel.showButtonAddress();
+			app.kbListener.activeArea = KBListener.AREA_TAB;
+		} else {
+			evt.preventDefault();
+		}
+	}
+	
+	if (evt.ctrlKey && (86 == evt.keyCode || 1052 == MW.getLastKeyCode() ) ) {
+		this.mode = TextAddress.MODE_DEFAULT;
+		if (1 != intval(Settings.get('addressLineMode'))) {
+			// app.addressPanel.showButtonAddress();
 			app.kbListener.activeArea = KBListener.AREA_TAB;
 		} else {
 			evt.preventDefault();

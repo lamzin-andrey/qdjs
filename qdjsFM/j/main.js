@@ -176,6 +176,10 @@ function onClickCreateFolderMenu() {
 	app.tab.newFolderAction();
 }
 
+function onClickNewWindowMenu() {
+	app.openNewWindow();
+}
+
 function onClickSelectEn() {
 	onClickChangeLang('en');
 }

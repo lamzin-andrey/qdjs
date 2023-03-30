@@ -225,7 +225,10 @@ ListUpdater.prototype.calculateSubdirSz = function(shortName, defaultSize) {
 	if (shortName == '.' || shortName == '..') {
 		return defaultSize;
 	}
-	var file = this.tab.currentPath + '/' + shortName + '/.qdjssz', o = this;
+	var 
+		// file = this.tab.currentPath + '/' + shortName + '/.qdjssz', 
+		file = this.getDirParamPath(this.tab.currentPath + '/' + shortName) + "/sz", 
+		o = this;
 	if (FS.fileExists(file)) {
 		return intval(FS.readfile(file));
 	}
@@ -236,33 +239,38 @@ ListUpdater.prototype.calculateSubdirSz = function(shortName, defaultSize) {
 }
 
 ListUpdater.prototype.calculateSize = function(path) {
-	var ls = FS.scandir(path), i, SZ = sz(ls), sum = 0, file;
-	
-	for (i = 0; i < SZ; i++) {
-		if (ls[i] == '.' || ls[i] == '..') {
-			continue;
-		}
-		file = path + '/' + ls[i];
-	
-		if (!FS.isDir(file)) {
-			sum += FS.filesize(file);
-		} else {
-			if (FS.fileExists(file + '/.qdjssz')) {
-				sum += intval(FS.readfile(file + '/.qdjssz'));
-			}
-		}
+	var cmd = "#!/bin/bash\n", slot = App.dir() + "/sh/o.sh";
+	// cmd += "du -bs " + path + " > " + path + "/.qdjssz";
+	cmd += "du -bs " + path + " > " + this.getDirParamPath(path) + "/sz";
+	if (!FS.fileExists(this.getDirParamPath(path))) {
+		FS.mkdir(this.getDirParamPath(path));
 	}
-	
-	
-	FS.writefile(path + '/.qdjssz', sum);
-	//  alert('SAve in "' + path + '/.qdjssz' + "' sum = " + sum);
+	FS.writefile(slot, cmd);
+	jexec(slot, DevNull, DevNull, DevNull);
+}
+
+ListUpdater.prototype.removeSizeFile = function(dir) {
+	var sizeFile = this.getDirParamPath(dir) + "/sz";
+	if (FS.fileExists(sizeFile)) {
+		FS.unlink(sizeFile);
+	}
+}
+ListUpdater.prototype.getDirParamPath = function(dir) {
+	var h = FS.md5(dir),
+		sub = h.substring(0, 5);
+	return App.dir() + "/var/" + sub + "/" + h;
 }
 
 
 ListUpdater.prototype.cutTail = function() {
-	var SZ = sz(this.tab.list), cBreak = 0;
+	var SZ = sz(this.tab.list), cBreak = 0, node;
 	while (SZ > this.sz) {
 		rm('f' + (SZ - 1));
+		/*node = e('f' + (SZ - 1));
+		if (node) {
+			node.removeAttribute('id');
+			stl(node, 'display', 'none');
+		}*/
 		this.tab.list.splice(SZ - 1, 1);
 		// TODO remove me!
 		cBreak++;

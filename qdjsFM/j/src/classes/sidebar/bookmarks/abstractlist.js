@@ -35,6 +35,10 @@ AbstractList.prototype.render = function() {
 			o.setActiveView(evt);
 			o.onClick(evt);
 		}
+		item.oncontextmenu = function(evt) {
+			o.setActiveView(evt);
+			return true;
+		}
 	}
 }
 

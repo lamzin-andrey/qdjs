@@ -6,27 +6,36 @@ function ListRenderer(){
 	this.ls = [];
 	this.processing = false;
 	this.filesSize = 0;
+	this.dfProc = 0;
 }
 
 ListRenderer.ONE_ITEM_HEIGHT = 30;
 
 ListRenderer.prototype.renderPart = function(){
 	var start = this.iterator,
-		end = intval(this.iterator) + this.part, i,
+		end = intval(this.iterator) + this.part, i, j,
 		item, block, s,
 		done = true,
 		o, self = this,
 		statusText, freeSpaceText = '', sizeText = '',
 		cmId,
-		createdItemFound = -1, el;
+		createdItemFound = -1, el, domLs, domEl;
 	if (end >= this.sz) {
 		end = this.sz;
 	}
+	domLs = cs(this.context.contentBlock, this.context.cName);
 	this.context.setStatus.call(this.context, this.iterator + ' / ' + this.sz, 1);
 	o = this.context;
-	for (i = start; i < end; i++) {
+	for (i = start, j = 0; i < end; i++, j++) {
 		item = this.ls[i];
-		el = this.appendNew(i, item);
+		domEl = domLs[j];
+		// if (!domEl) {
+			el = this.appendNew(i, item);
+		/*} else {
+			this.updateItem(i, item, domEl);
+			el = domEl;
+		}*/
+		
 		if (i == start) {
 			this.firstRenderedEl = el;
 		}
@@ -38,7 +47,12 @@ ListRenderer.prototype.renderPart = function(){
 		}
 		
 		this.iterator++;
-	}	
+	}
+	/*while (j < sz(domLs)) {
+		domLs[j].removeAttribute('id');
+		stl(domLs[j], 'display', 'none');
+		j++;
+	}*/
 	// this.setStatus();
 	if (createdItemFound > -1) {
 		app.tab.selectItemByIdx(createdItemFound);
@@ -66,8 +80,21 @@ ListRenderer.prototype.renderPart = function(){
 		} else {
 			this.skipRunUpdater = false;
 		}
-		
+		if (!this.dfProc) {
+			this.dfProc = 1;
+			jexec('df -h', [this, this.onDiskData], DevNull, DevNull);
+		}
 	}
+}
+
+ListRenderer.prototype.onDiskData = function(stdout, stderr){
+	var listDisks = app.devicesManager.parseDfhOut(stdout), i;
+	for (i in listDisks) {
+		if (app.devicesManager.listDisks[i]) {
+			app.devicesManager.listDisks[i].f = listDisks[i].f;
+		}
+	}
+	this.dfProc = 0;
 }
 
 ListRenderer.prototype.run = function(sz, context, ls, firstItemIdx, skipCalcSize){
@@ -156,14 +183,18 @@ ListRenderer.prototype.createElement = function(item, i) {
 	return block;
 }
 
-ListRenderer.prototype.updateItem = function(i, newItem) {
+ListRenderer.prototype.updateItem = function(i, newItem, existsNode) {
 	var el = e('f' + i), child;
+	if (existsNode) {
+		el = existsNode;
+	}
 	if (!el) {
 		return;
 	}
 	attr(el, 'data-cmid', newItem.cmId);
 	attr(el, 'data-id', 'f' + i);
 	attr(el, 'id', 'f' + i);
+	stl(el, 'display', null);
 	this.renderItemName(i, newItem.name);
 	this.renderItemIcon(i, newItem.i);
 	this.renderItemSize(i, newItem.sz);
@@ -219,7 +250,7 @@ ListRenderer.prototype.setCurrentIcon = function(i, src) {
 	}
 }
 ListRenderer.prototype.renderItemName = function(i, name) {	
-	var child = cs(e('f' + i), 'tabContentItem')[0];
+	var child = cs(e('f' + i), this.context.cName)[0];
 	if (child) {
 		attr(child, 'title', name + ' id = f' + i);
 		this.setSubValue(child, 'tabContentItemNameMain', name);
@@ -246,16 +277,30 @@ ListRenderer.prototype.shiftDown = function(itemData, nId) {
 	var firstItem, ls, el;
 	el = this.appendNew(nId, itemData);
 	this.lastRenderedEl = el;
-	ls = cs(this.context.contentBlock, 'tabContentItem');
+	ls = cs(this.context.contentBlock, this.context.cName);
 	firstItem = ls[0];
 	if (firstItem) {
 		this.firstRenderedEl = ls[1].parentNode;
 		rm(firstItem.parentNode);
 	}
+	/*var firstItem, ls, el, start, i, j;
+	ls = cs(this.context.contentBlock, this.context.cName);
+	firstItem = ls[0];
+	// alert(this.context.toI(firstItem.parentNode.id));
+	start = intval(this.context.toI(firstItem.parentNode.id)) + 1;
+	for (i = start, j = 0; j < sz(ls); i++, j++) {
+		if (this.context.list[i] && ls[j]) {
+			this.updateItem(i, this.context.list[i], ls[j].parentNode);
+		} else if (!this.context.list[i] && ls[j]) {
+			ls[j].removeAttribute('id');
+			stl(ls[j], 'display', 'none');
+		}
+		
+	}*/
 }
 
 ListRenderer.prototype.shiftUp = function(itemData, nId) {
-	var ls = cs(this.context.contentBlock, 'tabContentItem'),
+	var ls = cs(this.context.contentBlock, this.context.cName),
 		firstItem = ls[0],
 		lastItem = ls[sz(ls) - 1],
 		newItem;
@@ -269,4 +314,18 @@ ListRenderer.prototype.shiftUp = function(itemData, nId) {
 		this.setListeners(newItem);
 		this.firstRenderedEl = newItem;
 	}
+	/*var firstItem, ls, el, start, i, j;
+	ls = cs(this.context.contentBlock, this.context.cName);
+	firstItem = ls[0];
+	// alert(this.context.toI(firstItem.parentNode.id));
+	start = intval(this.context.toI(firstItem.parentNode.id)) - 1;
+	for (i = start, j = 0; j < sz(ls); i++, j++) {
+		if (this.context.list[i] && ls[j]) {
+			this.updateItem(i, this.context.list[i], ls[j].parentNode);
+		} else if (!this.context.list[i] && ls[j]) {
+			ls[j].removeAttribute('id');
+			stl(ls[j], 'display', 'none');
+		}
+		
+	}*/
 }

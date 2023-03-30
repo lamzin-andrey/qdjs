@@ -50,6 +50,11 @@ FileManager.prototype.setActivePath = function(path, aExcludes) {
 	}
 }
 
+
+FileManager.prototype.openNewWindow = function() {
+	Qt.newWindow("/home/andrey/hdata/programs/my/qdjs/qdjsFM", []);
+}
+
 FileManager.prototype.initActiveTab = function() {
 	window.tab = this.tab = this.tabPanel.getActiveTab();
 }

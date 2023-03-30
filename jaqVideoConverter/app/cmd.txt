@@ -11,6 +11,7 @@ ffmpeg -i v_borbe_za_ukrainy.mp4 -c:v libx264 -pix_fmt yuv420p v_borbe_za_ukrain
 
 # с выводом в файл
 ffmpeg -i 01.mp4 -c:v libx264 -pix_fmt yuv420p zapekanka_s_tvorogom.avi 1>/home/andrey/log.log 2>&1
+ffmpeg -i /var/user/Lakrichnaya.picca.2021.WEB-DLRip.AVC.mkv -c:v libx264 -pix_fmt yuv420p /var/user/Lakrichnaya.picca.avi
 
 # zapekanka_s_tvorogom
 

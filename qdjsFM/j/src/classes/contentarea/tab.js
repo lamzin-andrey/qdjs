@@ -45,7 +45,7 @@ Tab.prototype.setPath = function(path) {
 	this.listCount = 0;
 	this.listComplete = false;
 	this.hideListComplete = false;
-	this.contentBlock.innerHTML = '';
+	// this.contentBlock.innerHTML = '';
 	this.setStatus(L('Load catalog data') + '. ' + L('Request') + '.', 1);
 	this.partListListen = 1;
 	
@@ -82,7 +82,7 @@ Tab.prototype.setPath = function(path) {
 	if (FS.fileExists(path + '/.qdjssz')) {
 		FS.unlink(path + '/.qdjssz');
 	}
-	
+	this.listUpdater.removeSizeFile(path);
 }
 
 Tab.prototype.onFileList = function(stdout, stderr) {
@@ -240,7 +240,7 @@ Tab.prototype.selectAll = function() {
 	for (i = 0; i < SZ; i++) {
 		itemId = 'f' + i;
 		this.oSelectionItems[itemId] = 1;
-		tabContentItem = cs(itemId, 'tabContentItem')[0];
+		tabContentItem = cs(itemId, this.cName)[0];
 		if (tabContentItem) {
 			addClass(tabContentItem, 'active');
 		}
@@ -294,7 +294,7 @@ Tab.prototype.createItem = function(s) {
 Tab.prototype.onContextMenu = function(targetId, event) {
 	var activeItem = e(targetId);
 	if (activeItem) {
-		activeItem = cs(activeItem, 'tabContentItem')[0];
+		activeItem = cs(activeItem, this.cName)[0];
 		if (activeItem) {
 			this.setSelection({currentTarget:activeItem.parentNode, isRight:true}, false);
 		}
@@ -323,7 +323,7 @@ Tab.prototype.openAction = function(id) {
 		cmd = '#!/bin/bash\n' + runner + ' \'' + path + '\'';
 		if (pathInfo.extension == 'mts' || pathInfo.extension == 'mov') {
 			// runner = 'vlc &;\n sleep 1;\n vlc --started-from-file';
-			runner = 'vlc --started-from-file';
+			runner = 'killall vlc; vlc --started-from-file';
 			cmd = '#!/bin/bash\n' + runner + ' "' + path + '"';
 		}
 		
@@ -686,9 +686,11 @@ Tab.prototype.onClickRemove = function() {
 			}
 			id = keys[i].replace('f', '');
 			try {
-				path = o.currentPath + "/" + o.list[id].name;
-				o.removeOneItem(path, e(keys[i]));
-				deletedKeys.push(keys[i]);
+				if (o.list[id]) {
+					path = o.currentPath + "/" + o.list[id].name;
+					o.removeOneItem(path, e(keys[i]));
+					deletedKeys.push(keys[i]);
+				}
 			} catch(err) {
 				alert(err);
 			}
@@ -710,6 +712,8 @@ Tab.prototype.removeOneItem = function(path, node) {
 	
 	if (node) {
 		rm(node);
+		/*node.removeAttribute('id');
+		stl(node, 'display', 'none');*/
 	}
 }
 Tab.prototype.onFinishRemove = function(stdout, stderr) {
@@ -930,7 +934,7 @@ Tab.prototype.onScrollDown = function() {
 	if (!lastItem) {
 		return;
 	}
-	this.activeItem = cs(lastItem, 'tabContentItem')[0];
+	this.activeItem = cs(lastItem, this.cName)[0];
 	id = lastItem.id;
 	
 	id = this.getNextId(id);
@@ -948,7 +952,7 @@ Tab.prototype.onScrollUp = function() {
 	}
 	
 	if (firstItem) {
-		this.activeItem = cs(firstItem, 'tabContentItem')[0];
+		this.activeItem = cs(firstItem, this.cName)[0];
 		id = firstItem.id;
 	}
 	// MW.setTitle('id = ' + id);
@@ -1176,7 +1180,7 @@ Tab.prototype.selectItemByIdx = function(createdItemFound) {
 	this.createdItemName = '';
 	this.scrollToItem('f' + createdItemFound);
 	window.currentCmTargetId = 'f' + createdItemFound;
-	newFoundedActiveItem = cs('f' + createdItemFound, 'tabContentItem')[0];
+	newFoundedActiveItem = cs('f' + createdItemFound, this.cName)[0];
 	if (newFoundedActiveItem) {
 		this.activeItem = newFoundedActiveItem;
 		this.setSelection({currentTarget:this.activeItem.parentNode}, false);
@@ -1188,7 +1192,7 @@ Tab.prototype.getScrollY = function() {
 	return intval(this.toI(this.getFirstItemId()));
 }
 Tab.prototype.getFirstItem = function() {
-	var o = cs(this.contentBlock, 'tabContentItem')[0];
+	var o = cs(this.contentBlock, this.cName)[0];
 	if (o) {
 		return o.parentNode;
 	}
@@ -1202,7 +1206,7 @@ Tab.prototype.getFirstItemId = function() {
 }
 
 Tab.prototype.getLastItem = function() {
-	var ls = cs(this.contentBlock, 'tabContentItem'),
+	var ls = cs(this.contentBlock, this.cName),
 		o = ls[sz(ls) - 1];
 	if (o) {
 		return o.parentNode;
