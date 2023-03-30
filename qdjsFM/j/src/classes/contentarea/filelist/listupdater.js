@@ -63,6 +63,27 @@ ListUpdater.prototype.stop = function(){
 	this.sz = 0;
 	this.filesSize = 0;
 }
+
+ListUpdater.prototype.processInotifyOutput = function(inout){
+	var i, SZ = sz(inout), s;
+	// create
+	// 0 Вставляем  с учетом текущей сортировки.
+	// 1 Ищем, где он создан. До или после первого отображённого
+	//   Если до, надо будет перерисовать от N-1 до szList где N это первый отображенный элемент
+	//   Если после первого и до последнего, рисуем от N до szList
+	//   Если после последнего, не рисуем
+	// Здесь 1 - это переменная, которой 
+	// deleted
+	// 0 Удаляем из списка, запоминаем позицию K
+	//   Если K < N надо будет перерисовать от N+1 до szList где N это первый отображенный элемент
+	//   Если K между первым и до последним, рисуем от N до szList
+	//   Если после последнего, не рисуем
+	// modify
+	// 0 Обновляем в списке
+	// Если fK найден, обновляем.
+	
+}
+
 ListUpdater.prototype.onListTick = function(){
 	var o = this, inout, displayedList, currPath;
 	if (
@@ -75,7 +96,7 @@ ListUpdater.prototype.onListTick = function(){
 	}
 	this.sz = 0;
 	inout = FS.getModifyListInDir();
-	if (inout) { // TODO process inout
+	if (sz(inout)) { // TODO process inout
 		this.processInotifyOutput(inout);// TODO
 	}
 	
