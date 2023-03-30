@@ -15,28 +15,26 @@ ListUpdater.prototype.run = function(){
 		clearInterval(this.getListIval);
 		this.getListIval = 0;
 	}
+	/* TODO getHiddenListIval*0
 	if (this.getHiddenListIval) {
 		clearInterval(this.getHiddenListIval);
 		this.getHiddenListIval = 0;
-	}
+	}*/
 	if (this.renderProcessIval) {
 		clearInterval(this.renderProcessIval);
 		this.renderProcessIval = 0;
 	}
 	this.isRenderProcess = false;
 	
-	try {
-		window.app.listProc.write(this.tab.currentPath);
-	} catch(err) {
-		;
-	}
+	
 	this.getListIval = setInterval(function(){
 		if (o.isPause || !o.isRun || o.isRenderProcess) {
 			return;
 		}
 		o.onListTick();
-		// TODO o.onHiddenListTick();
+		// TODO o.onHiddenListTick()*0;
 	}, 1 * 1000);
+	FS.startWatchDir();
 	this.isRun = true;
 }
 ListUpdater.prototype.pause = function(){
@@ -66,7 +64,7 @@ ListUpdater.prototype.stop = function(){
 	this.filesSize = 0;
 }
 ListUpdater.prototype.onListTick = function(){
-	var o = this, lsout;
+	var o = this, inout, displayedList, currPath;
 	if (
 			o.isPause 
 			|| !o.isRun 
@@ -76,21 +74,33 @@ ListUpdater.prototype.onListTick = function(){
 		return;
 	}
 	this.sz = 0;
-	lsout = window.app.listProc ? window.app.listProc.read(this.tab.currentPath) : 0;
-	if (lsout) {
-		o.isRenderProcess = true;
-		this.newList = this.tab.buildList(lsout, true);
-		this.iterator = 0;
-		this.sz = sz(this.newList);
-		this.filesSize = 0;
-		this.renderProcessIval = setInterval(function(){
-			try {
-				o.renderPart();
-			} catch (err) {
-				alert('ListUpdater.onListTick: ' + err);
-			}
-		}, 200);
+	inout = FS.getModifyListInDir();
+	if (inout) { // TODO process inout
+		this.processInotifyOutput(inout);// TODO
 	}
+	
+	// TODO process dispalayed
+	displayedList = this.getDisplayedList(); // TODO return HTML elements
+	for (i = 0; i < sz(displayedList); i++) {
+		currPath = this.getPathFromEl(displayedList[i]); // TODO
+		this.checkExists(currPath);// TODO если не найден, запускает процесс перерисовки листа
+		// TODO учесть filesSize
+		// TODO renderPart скорее всего в утиль
+	}
+	
+	// old перечитать ещё раз с целью понять, что забыто
+	/*o.isRenderProcess = true;
+	this.newList = this.tab.buildList(lsout, true);
+	this.iterator = 0;
+	this.sz = sz(this.newList);
+	this.filesSize = 0;
+	this.renderProcessIval = setInterval(function(){
+		try {
+			o.renderPart();
+		} catch (err) {
+			alert('ListUpdater.onListTick: ' + err);
+		}
+	}, 200);*/
 }
 
 ListUpdater.prototype.renderPart = function(){

@@ -93,6 +93,7 @@ Tab.prototype.onFileList = function(stdout, stderr) {
 	this.listCount++;
 	this.renderByMode();
 }
+
 Tab.prototype.onHideFileList = function(stdout, stderr) {
 	this.hideList = this.buildList(stdout);
 	this.hideListComplete = true;
