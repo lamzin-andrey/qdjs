@@ -107,8 +107,13 @@ Tab.prototype.redraw = function() {
 	
 	this.renderByMode();
 }
-Tab.prototype.rebuildList = function(key) {
-	var SZ , i, files = [], dirs = [],
+/**
+ * @param {String} searchName здесь просто для оптимизации, иногда бывает необходимым найти позицию строки в отсортированом списке.
+ *                            Ищет только в списке файлов.
+ * @return Number pos Позицию searchName в отсортированном списке
+*/
+Tab.prototype.rebuildList = function(key, searchName) {
+	var SZ , i, files = [], dirs = [], pos = -1, dirsCount = 0,
 		list = this[key];
 	
 	SZ = sz(list);
@@ -116,6 +121,7 @@ Tab.prototype.rebuildList = function(key) {
 	for (i = 0; i < SZ; i++) {
 		if (list[i].type == L("Catalog")) {
 			dirs.push(mclone(list[i]));
+			dirsCount++;
 		} else {
 			files.push(mclone(list[i]));
 		}
@@ -125,8 +131,13 @@ Tab.prototype.rebuildList = function(key) {
 	SZ = sz(files);
 	for (i = 0; i < SZ; i++) {
 		dirs.push(files[i]);
+		if (files[i].name == searchName) {
+			pos = dirsCount + i - 1;
+		}
 	}
 	this[key] = dirs;
+	
+	return pos;
 }
 
 Tab.prototype.onFileListPart = function(stdout) {
@@ -247,6 +258,15 @@ Tab.prototype.selectAll = function() {
 		}
 	}
 }
+
+Tab.prototype.createEmptyItemByName = function(name, type) {
+	if ('d' != type) {
+		type = '-';
+	}
+	var s = type + "rwxrwxr-x  2 " + window.USER + " " + window.USER + " 4,0K 2022-08-05 19:04:27.461784453 +0300 " + name;
+	return this.createItem(s);
+}
+
 Tab.prototype.createItem = function(s) {
 	var item = {
 			name: '',

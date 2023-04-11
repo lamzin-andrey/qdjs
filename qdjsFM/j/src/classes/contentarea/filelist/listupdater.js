@@ -65,23 +65,139 @@ ListUpdater.prototype.stop = function(){
 }
 
 ListUpdater.prototype.processInotifyOutput = function(inout){
-	var i, SZ = sz(inout), s;
-	// create
-	// 0 Вставляем  с учетом текущей сортировки.
-	// 1 Ищем, где он создан. До или после первого отображённого
-	//   Если до, надо будет перерисовать от N-1 до szList где N это первый отображенный элемент
-	//   Если после первого и до последнего, рисуем от N до szList
-	//   Если после последнего, не рисуем
-	// Здесь 1 - это переменная, которой 
-	// deleted
-	// 0 Удаляем из списка, запоминаем позицию K
-	//   Если K < N надо будет перерисовать от N+1 до szList где N это первый отображенный элемент
-	//   Если K между первым и до последним, рисуем от N до szList
-	//   Если после последнего, не рисуем
-	// modify
-	// 0 Обновляем в списке
-	// Если fK найден, обновляем.
+	var i, SZ = sz(inout), s,
+		createList = [],
+		deletedList = [],
+		modifyList = [],
+		firstRenderId;
+	for (i = 0; i < SZ; i++) {
+		s = ls[i];
+		if ('c' == s[0]) {
+			createList.push(s);
+		}
+		if ('d' == s[0]) {
+			deletedList.push(s.substring(2));
+		}
+		if ('m' == s[0]) {
+			modifyList.push(s.substring(2));
+		}
+	}
+	firstRenderId = this.inotifyProcessDelete();
+	createList = this.inotifyProcessCreate(createList, firstRenderId);
+	modifyList = this.inotifyProcessModify(modifyList, firstRenderId);
+	this.getFilesDataForRender(array_merge(createList, modifyList)); // TODO req -> resp -> render
+}
+/**
+ * Удаляет из list и вычисляет, с какого элемента теперь начинать рендеринг
+*/
+ListUpdater.prototype.inotifyProcessDelete = function(deletedList){
+	var startN = this.tab.getFirstItemId(), // TODO (2) late try use renderer lastEl firstEl 
+		N = this.tab.listRenderer.part,
+		i, SZ = sz(this.tab.list),
+		hash = In(deletedList),
+		rml = [];
+	// Если удаляются элементы, расположенные над startN это само по себе ни на что не влияет.
+	// Если после удаления элементов в списке становится меньше, чем startN + N,
+	// мы должны начать рендерить с sz() - N.
+	if (SZ - sz(deletedList) < startN + N) {
+		startN = ( SZ - sz(deletedList) ) - N;
+		if (startN < 0) {
+			startN = 0;
+		}
+	}
 	
+	for (i = 0; i < SZ; i++) {
+		if (hash[this.tab.list[i].name]) {
+			rml.push(i);
+		}
+	}
+	SZ = sz(rml);
+	for (i = SZ - 1; i > -1; i--) {
+		this.tab.list.splice(rml[i], 1);
+	}
+	
+	return startN;
+}
+
+ListUpdater.prototype.inotifyProcessModify = function(modifyList, firstRenderId) {
+	var i, SZ = sz(this.tab.list), s, 
+		vpList = {},
+		N = this.tab.listRenderer.part,
+		startN = this.tab.toI(firstRenderId), 
+		endN = firstRenderId + N,
+		hash = In(modifyList);
+	for (i = 0; i < SZ; i++) {
+		if (hash[this.tab.list[i].name]) {
+			if (i >= startN && i <= endN) {
+				vpList["f" + i] = s;
+			}
+		}
+	} // end for
+	
+	return vpList;
+}
+
+// firstRenderId support!
+ListUpdater.prototype.inotifyProcessCreate = function(createList, firstRenderId) {
+	var i, SZ = sz(createList), s, 
+		vpList = {},
+		N = this.tab.listRenderer.part,
+		startN = this.tab.toI(firstRenderId), 
+		endN = firstRenderId + N,
+		cI, type;
+	for (i = 0; i < SZ; i++) {
+		s = createList[i];
+		type = s[1];
+		s = s.substring(2);
+		// create
+		// 0 Вставляем  с учетом текущей сортировки.
+		cI = this.insertInListWithCurrentSort(s, type);
+		// 1 Ищем, где он создан. До или после первого отображённого
+		//   Если до, не рисуем. Кажется, это более удобно пользователю. -- надо будет перерисовать от N-1 до szList где N это первый отображенный элемент
+		//   Если после первого и до последнего, рисуем от N до szList
+		//   Если после последнего, не рисуем
+		// Здесь 1 - это переменная, которой
+		if (cI >= startN && cI <= endN) {
+			vpList["f" + cI] = s;
+		}
+	} // end for
+	return vpList;
+}
+
+// TODO ls req -> resp -> render
+/**
+ * @param {Object} list не только потому, что это результат array_merge но и потому, что надо сохранить реальные позиции
+*/
+ListUpdater.prototype.getFilesDataForRender = function(list){
+	var i;
+	if (count(list) == 0) {
+		return;
+	}
+	// индексы из list сохранить инвертировав ключи и имена
+	// Запросить переданные файлы  ls -lh --full-time
+    // Из результатов создать объекты, найдя по имени индекс, обновить его в Tab.list
+    
+}
+
+ListUpdater.prototype.insertInListWithCurrentSort = function(s, type){
+	var sort = this.tab.sort,
+		list = this.tab.list,
+		SZ = sz(list),
+		i,
+		item = this.tab.createEmptyItemByName(s, type),
+		pos;
+	// пока использую sort.apply, но возможно здесь есть пространство для оптимизации
+	this.tab.list.push(item);
+	pos = this.tab.rebuildList("list", s);
+	if (-1 == pos) {
+		for (i = 0; i < SZ; i++) {
+			if (this.tab.list[i].name == s) {
+				pos = i;
+			}
+		}
+	}
+	
+	return pos;
 }
 
 ListUpdater.prototype.onListTick = function(){
@@ -96,11 +212,25 @@ ListUpdater.prototype.onListTick = function(){
 	}
 	this.sz = 0;
 	inout = FS.getModifyListInDir();
-	if (sz(inout)) { // TODO process inout
+	if (sz(inout)) {
 		this.processInotifyOutput(inout);// TODO
 	}
+	// TODO всё, что ниже кажется должно вызываться после того, как перерендерен iNotify
+	// FALSE:  или даже перед ним, так как если ниже предполагается весь лист перерисовать,
+	// толку от iNotify мало. Это последнее TODO - неверное. Надо искать dList после обработки удаления iNotify! (в больших каталогах.)
 	
 	// TODO process dispalayed
+	
+	// Важняк: получать список файлов теперь будем так:
+	// ls -lh --full-time -i 00000.txt - 
+	// Тогда первым будет выводиться inode
+	
+	// Ну, а получить новое имя файла можно 
+	// cd tab.currentPath && find -inum 7477952
+	// > ./00000.txt
+	// правда по одному надо будет телепаться.
+	
+	
 	displayedList = this.getDisplayedList(); // TODO return HTML elements
 	for (i = 0; i < sz(displayedList); i++) {
 		currPath = this.getPathFromEl(displayedList[i]); // TODO
@@ -196,7 +326,6 @@ ListUpdater.prototype.updateItem = function(i, newItem) {
 	/*if (this.nameExists(newItem, sz(this.tab.list))) {
 		return;
 	}*/
-	
 	var t;
 	
 	if (newItem.type == L('Catalog')) {
