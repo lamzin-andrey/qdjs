@@ -11,6 +11,8 @@ function ListUpdater(tab) {
 }
 ListUpdater.prototype.run = function(){
 	var o = this;
+	
+	
 	if (this.getListIval) {
 		clearInterval(this.getListIval);
 		this.getListIval = 0;
@@ -29,12 +31,13 @@ ListUpdater.prototype.run = function(){
 	
 	this.getListIval = setInterval(function(){
 		if (o.isPause || !o.isRun || o.isRenderProcess) {
+			alert("R 34");
 			return;
 		}
 		o.onListTick();
 		// TODO o.onHiddenListTick()*0;
-	}, 1 * 1000);
-	FS.startWatchDir();
+	}, 5 * 1000);
+	FS.startWatchDir(this.tab.currentPath);
 	this.isRun = true;
 }
 ListUpdater.prototype.pause = function(){
@@ -65,7 +68,9 @@ ListUpdater.prototype.stop = function(){
 }
 
 ListUpdater.prototype.processInotifyOutput = function(inout){
-	var i, SZ = sz(inout), s,
+	var i, 
+		ls = String(inout).split("\n"),
+		SZ = sz(inout), s,
 		createList = [],
 		deletedList = [],
 		modifyList = [],
@@ -82,15 +87,19 @@ ListUpdater.prototype.processInotifyOutput = function(inout){
 			modifyList.push(s.substring(2));
 		}
 	}
-	firstRenderId = this.inotifyProcessDelete();
+	
+	firstRenderId = this.inotifyProcessDelete(deletedList);
+	alert("cl = " + JSON.stringify(createList));
 	createList = this.inotifyProcessCreate(createList, firstRenderId);
+	alert("cl2 = " + JSON.stringify(createList));
 	modifyList = this.inotifyProcessModify(modifyList, firstRenderId);
-	this.getFilesDataForRender(array_merge(createList, modifyList)); // TODO req -> resp -> render
+	this.getFilesDataForRender(array_merge(createList, modifyList));
 }
 /**
  * Удаляет из list и вычисляет, с какого элемента теперь начинать рендеринг
 */
 ListUpdater.prototype.inotifyProcessDelete = function(deletedList){
+	alert(JSON.stringify(deletedList));
 	var startN = this.tab.getFirstItemId(), // TODO (2) late try use renderer lastEl firstEl 
 		N = this.tab.listRenderer.part,
 		i, SZ = sz(this.tab.list),
@@ -145,6 +154,7 @@ ListUpdater.prototype.inotifyProcessCreate = function(createList, firstRenderId)
 		startN = this.tab.toI(firstRenderId), 
 		endN = firstRenderId + N,
 		cI, type;
+	// alert("startN = " + startN + ", endN = " + endN + ", firstRenderId = " + firstRenderId);
 	for (i = 0; i < SZ; i++) {
 		s = createList[i];
 		type = s[1];
@@ -163,26 +173,67 @@ ListUpdater.prototype.inotifyProcessCreate = function(createList, firstRenderId)
 	} // end for
 	return vpList;
 }
-
-// TODO ls req -> resp -> render
 /**
  * @param {Object} list не только потому, что это результат array_merge но и потому, что надо сохранить реальные позиции
 */
 ListUpdater.prototype.getFilesDataForRender = function(list){
-	var i;
-	if (count(list) == 0) {
+	var i, cmd, names = [];
+	alert("getFilesDataForRender list: " + JSON.stringify(list));
+	if (count(list) == 0 || this.fsReqIsSend) {
 		return;
 	}
+	this.fsReqIsSend = 1;
 	// индексы из list сохранить инвертировав ключи и имена
+	this.currentFSRequestData = {};
+	for (i in list) {
+		this.currentFSRequestData[ list[i] ] = this.tab.toI(i);
+		names.push("\"" + list[i] + "\"");
+	}
 	// Запросить переданные файлы  ls -lh --full-time
+	cmd = "cd " + this.tab.currentPath + ";ls -ldh --full-time " + names.join(" ");
     // Из результатов создать объекты, найдя по имени индекс, обновить его в Tab.list
-    
+    this.tab.exec(cmd, 0, 0, [this, this.onFilesForInotifyData], DevNull, [this, this.onFailInotifyData]);
 }
-
+/**
+ * Из результатов создать объекты, найдя по имени индекс, обновить его в Tab.list
+*/
+ListUpdater.prototype.onFailInotifyData = function(stdout){
+	this.fsReqIsSend = 0;
+}
+ListUpdater.prototype.onFilesForInotifyData = function(stdout, stderr){
+	var i, a = String(stdout).split("\n"), SZ = sz(a), s, item, cI, shortName;
+	alert("onData: " + stdout);
+	this.fsReqIsSend = 0;
+	for (i = 0; i < SZ; i++) {
+		s = a[i];
+		if (s == '.' || s == '..') {
+			continue;
+		}
+		item = this.tab.createItem(s);
+		if (item) {
+			shortName = item.name.replace(this.tab.currentPath + '/', '');
+			cI = parseInt(this.currentFSRequestData[shortName]);
+			alert("Item created, cI = " + cI);
+			alert(JSON.stringify(this.currentFSRequestData) + "\ni.name = `" + shortName + "`");
+			if (!isNaN(cI)) {
+				this.tab.list[cI] = item;
+				// this.appendNew(cI, item);
+				try {
+					this.tab.listRenderer.appendNew(cI, item);
+				} catch(err) {
+					alert("Err 223 " + err);
+				}
+				alert("Af!");
+			}
+		} else {
+			alert("Fail create item");
+		}
+	}
+}
 ListUpdater.prototype.insertInListWithCurrentSort = function(s, type){
 	var sort = this.tab.sort,
 		list = this.tab.list,
-		SZ = sz(list),
+		SZ,
 		i,
 		item = this.tab.createEmptyItemByName(s, type),
 		pos;
@@ -190,6 +241,7 @@ ListUpdater.prototype.insertInListWithCurrentSort = function(s, type){
 	this.tab.list.push(item);
 	pos = this.tab.rebuildList("list", s);
 	if (-1 == pos) {
+		SZ = sz(list);
 		for (i = 0; i < SZ; i++) {
 			if (this.tab.list[i].name == s) {
 				pos = i;
@@ -213,11 +265,16 @@ ListUpdater.prototype.onListTick = function(){
 	this.sz = 0;
 	inout = FS.getModifyListInDir();
 	if (sz(inout)) {
-		this.processInotifyOutput(inout);// TODO
+		alert("Bef call processInotifyOutput");
+		try {
+			this.processInotifyOutput(inout);
+		} catch(err) {
+			alert(err);
+		}
 	}
 	// TODO всё, что ниже кажется должно вызываться после того, как перерендерен iNotify
 	// FALSE:  или даже перед ним, так как если ниже предполагается весь лист перерисовать,
-	// толку от iNotify мало. Это последнее TODO - неверное. Надо искать dList после обработки удаления iNotify! (в больших каталогах.)
+	// толку от iNotify мало. Это последнее FALSE, бывшее TODO - неверное. Надо искать dList после обработки удаления iNotify! (в больших каталогах.)
 	
 	// TODO process dispalayed
 	
@@ -352,9 +409,9 @@ ListUpdater.prototype.appendNew = function(i, newItem) {
 	// this.tab.listRenderer.appendNew(i, newItem);
 	var needAppend = 0, oldSz = sz(this.tab.list),
 		isNameExists = this.nameExists(newItem, oldSz);
-	if (isNameExists) {
+	/*if (isNameExists) {
 		return;
-	}
+	}*/
 	if (newItem.type == L('Catalog')) {
 		newItem.rsz = this.calculateSubdirSz(newItem.name, newItem.rsz);
 		newItem.sz = this.tab.listRenderer.getHumanFilesize(newItem.rsz, 1, 3, false);
