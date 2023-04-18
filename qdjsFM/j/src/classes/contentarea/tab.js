@@ -132,7 +132,7 @@ Tab.prototype.rebuildList = function(key, searchName) {
 	for (i = 0; i < SZ; i++) {
 		dirs.push(files[i]);
 		if (files[i].name == searchName) {
-			pos = dirsCount + i - 1;
+			pos = dirsCount + i;
 		}
 	}
 	this[key] = dirs;

@@ -93,7 +93,7 @@ ListUpdater.prototype.processInotifyOutput = function(inout){
 	createList = this.inotifyProcessCreate(createList, firstRenderId);
 	alert("cl2 = " + JSON.stringify(createList));
 	modifyList = this.inotifyProcessModify(modifyList, firstRenderId);
-	this.getFilesDataForRender(array_merge(createList, modifyList));
+	this.getFilesDataForRender(array_merge(createList, modifyList), firstRenderId);
 }
 /**
  * Удаляет из list и вычисляет, с какого элемента теперь начинать рендеринг
@@ -152,7 +152,7 @@ ListUpdater.prototype.inotifyProcessCreate = function(createList, firstRenderId)
 		vpList = {},
 		N = this.tab.listRenderer.part,
 		startN = this.tab.toI(firstRenderId), 
-		endN = firstRenderId + N,
+		endN = intval(startN) + intval(N),
 		cI, type;
 	// alert("startN = " + startN + ", endN = " + endN + ", firstRenderId = " + firstRenderId);
 	for (i = 0; i < SZ; i++) {
@@ -162,6 +162,7 @@ ListUpdater.prototype.inotifyProcessCreate = function(createList, firstRenderId)
 		// create
 		// 0 Вставляем  с учетом текущей сортировки.
 		cI = this.insertInListWithCurrentSort(s, type);
+		alert("after insert new File cI = " + cI);
 		// 1 Ищем, где он создан. До или после первого отображённого
 		//   Если до, не рисуем. Кажется, это более удобно пользователю. -- надо будет перерисовать от N-1 до szList где N это первый отображенный элемент
 		//   Если после первого и до последнего, рисуем от N до szList
@@ -176,13 +177,14 @@ ListUpdater.prototype.inotifyProcessCreate = function(createList, firstRenderId)
 /**
  * @param {Object} list не только потому, что это результат array_merge но и потому, что надо сохранить реальные позиции
 */
-ListUpdater.prototype.getFilesDataForRender = function(list){
+ListUpdater.prototype.getFilesDataForRender = function(list, firstRenderId) {
 	var i, cmd, names = [];
 	alert("getFilesDataForRender list: " + JSON.stringify(list));
 	if (count(list) == 0 || this.fsReqIsSend) {
 		return;
 	}
 	this.fsReqIsSend = 1;
+	this.firstRenderId = this.tab.toI(firstRenderId);
 	// индексы из list сохранить инвертировав ключи и имена
 	this.currentFSRequestData = {};
 	for (i in list) {
@@ -212,23 +214,43 @@ ListUpdater.prototype.onFilesForInotifyData = function(stdout, stderr){
 		item = this.tab.createItem(s);
 		if (item) {
 			shortName = item.name.replace(this.tab.currentPath + '/', '');
-			cI = parseInt(this.currentFSRequestData[shortName]);
+			cI = parseInt(this.currentFSRequestData[shortName])
 			alert("Item created, cI = " + cI);
 			alert(JSON.stringify(this.currentFSRequestData) + "\ni.name = `" + shortName + "`");
 			if (!isNaN(cI)) {
 				this.tab.list[cI] = item;
-				// this.appendNew(cI, item);
-				try {
-					this.tab.listRenderer.appendNew(cI, item);
-				} catch(err) {
-					alert("Err 223 " + err);
-				}
-				alert("Af!");
 			}
 		} else {
 			alert("Fail create item");
 		}
 	}
+	try {
+		this.inotifyRerender();
+	} catch(err) {
+		alert("Err 223 " + err);
+	}
+}
+/**
+ * Должно вызываться только когда действительно изменились или появились отредактированные элементы.
+*/
+ListUpdater.prototype.inotifyRerender = function(){
+	var i, 
+		part = this.tab.listRenderer.part,
+		SZ = intval(this.firstRenderId) + intval(part), item;
+	alert('StartRerender');
+	for (i = this.firstRenderId; i < SZ; i++) {
+		item = this.tab.list[i];
+		if (!item) {
+			continue;
+		}
+		alert(JSON.stringify(item));
+		if (!e('f' + i)) {
+			this.tab.listRenderer.appendNew(i, item);
+		} else {
+			this.tab.listRenderer.updateItem(i, item);
+		}
+	}
+	
 }
 ListUpdater.prototype.insertInListWithCurrentSort = function(s, type){
 	var sort = this.tab.sort,
@@ -240,6 +262,7 @@ ListUpdater.prototype.insertInListWithCurrentSort = function(s, type){
 	// пока использую sort.apply, но возможно здесь есть пространство для оптимизации
 	this.tab.list.push(item);
 	pos = this.tab.rebuildList("list", s);
+	alert("insertInListWithCurrentSort: rebuildList return pos = " + pos + " for s = " + s);
 	if (-1 == pos) {
 		SZ = sz(list);
 		for (i = 0; i < SZ; i++) {
@@ -380,9 +403,9 @@ ListUpdater.prototype.renderPart = function(){
 }
 
 ListUpdater.prototype.updateItem = function(i, newItem) {
-	/*if (this.nameExists(newItem, sz(this.tab.list))) {
+	if (this.nameExists(newItem, sz(this.tab.list))) {
 		return;
-	}*/
+	}
 	var t;
 	
 	if (newItem.type == L('Catalog')) {
@@ -409,9 +432,9 @@ ListUpdater.prototype.appendNew = function(i, newItem) {
 	// this.tab.listRenderer.appendNew(i, newItem);
 	var needAppend = 0, oldSz = sz(this.tab.list),
 		isNameExists = this.nameExists(newItem, oldSz);
-	/*if (isNameExists) {
+	if (isNameExists) {
 		return;
-	}*/
+	}
 	if (newItem.type == L('Catalog')) {
 		newItem.rsz = this.calculateSubdirSz(newItem.name, newItem.rsz);
 		newItem.sz = this.tab.listRenderer.getHumanFilesize(newItem.rsz, 1, 3, false);
