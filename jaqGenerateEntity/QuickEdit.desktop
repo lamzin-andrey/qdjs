@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=phpstorm
+Exec=/home/andrey/hdata/soft/bash/gitmeld/gitmeldnocommfromconsole.sh
+Icon=k3b
+Terminal=false
+StartupNotify=false
+Name[ru_RU]=QuickEdit
+Path=/home/andrey/hdata/soft/bash/gitmeld/gitmeldnocommfromconsole.sh
+Name[ru]=quickedit
+Categories=Development;

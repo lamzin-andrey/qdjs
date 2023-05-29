@@ -9,11 +9,19 @@ html, body {
 .hConfigServerParamsBody  label {
     display:block;
 }
-.hConfigServerParamsBody  input[type=text],
+.w100,.hConfigServerParamsBody  input[type=text],
     .hConfigServerParamsBody  input[type=password],
     .hConfigServerParamsBody  input[type=number]
     {
     width: 100%;
+}
+
+.no-resize {
+	resize:none;
+}
+
+textarea.w100{
+	width: 99%;
 }
 
 .hConfigServerParamsBody {

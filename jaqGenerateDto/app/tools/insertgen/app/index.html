@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	    <meta charset="Utf-8">
+	    <title>Create insert code from SQL</title>
+	    <meta name="windowButtons" content="1110" width="1000" height="400" onlyTop>
+	    <link rel="stylesheet" type="text/css" href="../../../s/g.css" />
+	    <link rel="stylesheet" type="text/css" href="../../../s/0.css" />
+	    <link rel="stylesheet" type="text/css" href="../../../s/colors.css" />
+	    <link rel="stylesheet" type="text/css" href="../../../s/fonts.css" />
+    </head>
+    <body>
+	<div class="screen" id="hMainScreen">
+		<div class="wBorder">
+			<label for="entityFolder" id="hLabelSrvCatalog">Каталог ...</label>
+			<img src="./i/folder16.png" id="bSwitchEntityFolder" class="btn">
+			<input type="text" id="entityFolder" value="">
+			
+		</div>
+		
+		<div class="wBorder">
+			<input type="text" id="srvFileName" placeholder="Service filename">
+			<input type="text" id="srvMethodName" placeholder="Service method name">
+			<input type="text" id="defaultType" placeholder="Field default type" value="DateTime">
+		</div>
+		
+		<div class="wBorder">
+			<input type="text" id="tableName" placeholder="Table name">
+		</div>
+		
+		<div class="wBorder">
+			<div>
+				<label id="sqlFragmentLabel"></label>
+			</div>
+			<textarea id="sqlFragmentInput" class="w100 no-resize" placeholder="SQL fragment (o.last_name, t.id)" rows="8"></textarea>
+		</div>
+		
+		
+		<div class="text-right">
+			<input type="button" value="parse fields" id="bParse">
+		</div>
+		
+	</div>
+	<div class="screen" id="hMainScreen2">&nbsp;
+	</div>
+	
+	
+	
+    </body>
+    <!-- shared libs  -->
+    <script type="text/javascript" src="../../../js/vendor/micron.js" ></script>
+    <script type="text/javascript" src="../../../js/vendor/objects/recentdir.js" ></script>
+    <script type="text/javascript" src="../../../js/vendor/objects/settings.js" ></script>
+    <script type="text/javascript" src="../../../js/vendor/objects/texttransform.js" ></script>
+    <script type="text/javascript" src="../../../js/vendor/lang.js" ></script>
+    <!-- /shared libs  -->
+    
+    <!-- app libs  -->
+    <!-- app /libs  -->
+    
+    <script type="text/javascript" src="../../../js/src/objects/appRecentFolder.js" ></script>
+    <!--script type="text/javascript" src="../../../js/src/objects/autonullCheckbox.js" ></script>
+    <script type="text/javascript" src="../../../js/src/objects/jsonCheckbox.js" ></script>
+    <script type="text/javascript" src="./js/src/objects/classNameField.js" ></script-->
+    
+    <!--script type="text/javascript" src="./js/src/classes/fieldinputs.js" ></script>
+    <script type="text/javascript" src="./js/src/objects/fieldList.js" ></script-->
+    
+    <script type="text/javascript" src="./js/src/classes/cinsertcodegenerator.js" ></script>
+    
+    <!-- locale -->
+    <script type="text/javascript" src="../../../js/src/lang/local.js" ></script>
+    <script type="text/javascript" src="../../../js/src/lang/localru.js" ></script>
+    <!-- /locale -->
+
+    
+    <script type="text/javascript" src="./js/src/app.js" ></script>
+</html>

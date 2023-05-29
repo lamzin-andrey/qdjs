@@ -1,5 +1,7 @@
 {
 	"Action":"Действие", 
 	"Quit Ctrl+Q": "Выйти Ctrl+Q",
-	"Language": "Язык приложения"	
+	"Language": "Язык приложения",
+	"Tools": "Инструменты",
+	"Insert generator": "Генерация INSERT кода"
 }

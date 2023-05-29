@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
     <head>
 	    <meta charset="Utf-8">
 	    <title>DTO Generator</title>
@@ -11,6 +11,9 @@
 		    <menu title="Language">
 			    <item onselect="onClickSelectEn()" id="onClickSelectEn">English</item>
 			    <item onselect="onClickSelectRu()" id="onClickSelectRu">Russian</item>
+		    </menu>
+		    <menu title="Tools">
+			    <item onselect="onClickSelectInsertGenerator()" id="onClickSelectInsertGenerator">Insert generator</item>
 		    </menu>
 	    </menubar>
 	    <link rel="stylesheet" type="text/css" href="./s/g.css" />
@@ -36,6 +39,11 @@
 		<div class="wBorder">
 			<input type="checkbox" id="bJson" value="1">
 			<label for="bJson">implements JsonSerializable</label>
+		</div>
+		
+		<div class="wBorder">
+			<input type="checkbox" id="bInsert" value="1">
+			<label for="bInsert" id="hInsertCodeLegend">Generate INSERT code</label>
 		</div>
 		
 		<div class="wBorder">
@@ -100,6 +108,7 @@
     </body>
     <!-- shared libs  -->
     <script type="text/javascript" src="./js/vendor/micron.js" ></script>
+    <script type="text/javascript" src="./js/vendor/php.js" ></script>
     <script type="text/javascript" src="./js/vendor/pjs-popupwnd/popupwin.js" ></script>
     <script type="text/javascript" src="./js/vendor/objects/recentdir.js" ></script>
     <script type="text/javascript" src="./js/vendor/objects/settings.js" ></script>
@@ -111,14 +120,16 @@
     <!-- app /libs  -->
     
     <script type="text/javascript" src="./js/src/objects/appRecentFolder.js" ></script>
-    <script type="text/javascript" src="./js/src/objects/autonullCheckbox.js" ></script>
-    <script type="text/javascript" src="./js/src/objects/jsonCheckbox.js" ></script>
+    <script type="text/javascript" src="./js/src/classes/cstoredcheckbox.js" ></script>
+    <script type="text/javascript" src="./js/src/classes/jsonCheckbox.js" ></script>
+    <script type="text/javascript" src="./js/src/classes/autonullCheckbox.js" ></script>
     <script type="text/javascript" src="./js/src/objects/classNameField.js" ></script>
     
     <script type="text/javascript" src="./js/src/classes/fieldinputs.js" ></script>
     <script type="text/javascript" src="./js/src/objects/fieldList.js" ></script>
     
     <script type="text/javascript" src="./js/src/classes/cDtoCodeGenerator.js" ></script>
+    <script type="text/javascript" src="./js/src/classes/cinsertcodegenerator.js" ></script>
     <script type="text/javascript" src="./js/src/objects/DTOCodeGenerator.js" ></script>
     
     <!-- locale -->

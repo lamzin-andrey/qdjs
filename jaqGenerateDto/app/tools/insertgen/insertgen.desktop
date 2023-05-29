@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Insert Symphony Code Генератор
+Comment=
+Exec=/home/andrey/hdata/programs/my/qdjs/jaqGenerateDto/app/tools/insertgen/jaqGenerateCodeInsertSymphony.sh
+Icon=/home/andrey/hdata/programs/my/qdjs/jaqGenerateDto/app/i/icons/32.png
+Path=/home/andrey/hdata/programs/my/qdjs/jaqGenerateDto/app/tools/insertgen/
+Categories=Development;
+Terminal=false
+StartupNotify=false
+Name[ru]=Insert Symphony Code Генератор
+Name[en]=Insert Symphony Code Generator

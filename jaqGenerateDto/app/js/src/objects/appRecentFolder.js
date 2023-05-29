@@ -1,4 +1,5 @@
 var AppRecentFolder  = {
+	dialogTitle: L("Выберите каталог с сущностями"),
 	init:function() {
 		var o = this;
 		o.pathInput = e('entityFolder');
@@ -16,7 +17,7 @@ var AppRecentFolder  = {
 		return s;
 	},
 	onClickLastDirButton:function() {
-		var s = jqlOpenDirectoryDialog("Выберите каталог с сущностями", ''), o = this;
+		var o = this, s = jqlOpenDirectoryDialog(o.dialogTitle, '');
 		o.pathInput.value = o.getlastDirViewValue(s);
 	},
 	get:function() {
