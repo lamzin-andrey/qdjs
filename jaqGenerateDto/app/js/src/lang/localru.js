@@ -1,6 +1,7 @@
 var langRu = {
 	'Готово!' : 'Done!',
 	'hLabelCatalog' : 'Каталог с классами DTO',
+	'hLabelEntityCatalog' : 'Каталог с сущностями',
 	'hLabelSrvCatalog' : 'Каталог с классом сервиса',
 	'hAutonullLegend' : 'Включить автоматический префикс \'?\'',
 	'hInsertCodeLegend' : 'Генерировать INSERT код',

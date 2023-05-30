@@ -150,7 +150,7 @@ CEntityCodeGenerator.prototype.correctType = function(type) {
 CEntityCodeGenerator.prototype.generateAnnotationOptions = function(notNull, isUnsigned) {
 	var aOpts = [], o = this, i;
 	if (!notNull) {
-		aOpts.push('"default"="NULL"');
+		aOpts.push('"default"=NULL');
 	}
 	
 	if (isUnsigned) {

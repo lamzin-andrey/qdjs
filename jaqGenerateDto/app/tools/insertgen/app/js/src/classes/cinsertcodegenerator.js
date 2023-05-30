@@ -4,13 +4,22 @@
 
 function CStorageFieldsEditor() {
 	var o = this;
-	o.entityFolder = e('entityFolder');
-	o.srvFileName = e('srvFileName');
-	o.srvMethodName = e('srvMethodName');
-	o.defaultType = e('defaultType');
-	o.sqlFragmentInput = e('sqlFragmentInput');
-	o.tableNameInput = e('tableName');
+	o.entityFolder = e("entityFolder");
+	o.srvFileName = e("srvFileName");
+	o.srvMethodName = e("srvMethodName");
+	o.defaultType = e("defaultType");
+	o.sqlFragmentInput = e("sqlFragmentInput");
+	o.tableNameInput = e("tableName");
+	o.realEntityFolder = e("realEntityFolder");
+	// InputValueStorage.add("entityFolder");
+	InputValueStorage.add("srvFileName");
+	InputValueStorage.add("srvMethodName");
+	InputValueStorage.add("defaultType");
+	InputValueStorage.add("sqlFragmentInput");
+	InputValueStorage.add("tableName");
 	this.setListeners();
+	this.entityRecentFolder =  new CAppRecentFolder(L("hLabelEntityCatalog"), "realEntityFolder", "bSwitchRealEntityFolder");
+	this.entityRecentFolder.init();
 }
 /**
  * @return String
@@ -74,7 +83,27 @@ CStorageFieldsEditor.prototype.onClickParseBtn = function() {
 	fieldsData["sqlFragmentInput"] = this.sqlFragmentInput.value;
 	fieldsData["tableName"] = this.tableNameInput.value;
 	o.saveFieldsData(fieldsData);
-	o.saveEntityFieldsData(entityFieldsData);	
+	
+	entityFieldsData["tablePrefix"] = this.getTablePrefix();
+	entityFieldsData["tableSuffix"] = this.getTableBasename();
+	entityFieldsData["entityName"]  = this.getEntityName();
+	entityFieldsData["lastDir"]     = this.entityRecentFolder.get();
+	o.saveEntityFieldsData(entityFieldsData);
+	alert("Done!");	
+}
+
+CStorageFieldsEditor.prototype.getTablePrefix = function() {
+	return this.tableNameInput.value.split("_")[0];
+}
+
+CStorageFieldsEditor.prototype.getTableBasename = function() {
+	var prefix = this.getTablePrefix(), a = this.tableNameInput.value.split("_");
+	a.shift();
+	return a.join("_");
+}
+
+CStorageFieldsEditor.prototype.getEntityName = function() {
+	return TextTransform.capitalize(TextTransform.snakeToCamel(this.tableNameInput.value));
 }
 
 /**
