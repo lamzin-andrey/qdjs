@@ -73,7 +73,7 @@
 			_currentTabeditor : 0
 		};
 		//defined in unredo.js
-		initinitHistoryArray();
+		initHistoryArray();
 		if (!$(mid)[0]) {
 			return;
 		}
@@ -745,4 +745,8 @@ function getMethodList() {
 }
 
 //============ / Простой редактор кода==================================
-$(initSampleTextEditor);
+try {
+	$(initSampleTextEditor);
+} catch(err) {
+	alert(err);
+}

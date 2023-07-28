@@ -1,4 +1,5 @@
-//1.0.0
+//1.0.1-patch
+// Пропатчено на случай когда ffmpeg перестает завершаться нормально
 var W = window;
 /**
  *  @description 
@@ -26,7 +27,7 @@ FFMpeg.prototype.setMetadata = function(fileName, genre, title, numberOfTrack, a
 	var tpl = 'ffmpeg -i "{inputFile}" -c copy -metadata comment="{commentv1}"  -metadata genre="{genre}"\
 	 -metadata title="{title}" -metadata track="{track}" -metadata date="{year}" \
 	 -metadata artist="{artist}" -metadata album="{album}" {writeIdv3} "{outfile}"',
-		s, outFile, shell;
+		s, outFile, shell, o = this;
 	s = genre ? tpl.replace('{genre}', genre) : tpl.replace('{genre}', '');
 	s = title ? s.replace('{title}', title) : s.replace('{title}', '');
 	s = numberOfTrack ? s.replace('{track}', numberOfTrack) : s.replace('{track}', '');
@@ -53,7 +54,20 @@ FFMpeg.prototype.setMetadata = function(fileName, genre, title, numberOfTrack, a
 	PHP.file_put_contents(this.workdir + '/metadata.sh', s);
 	W.ffmpegSetMetadataProcessIsRun = true;
 	W.ffmpegSetMetadataCallback = oCallback;
-	PHP.exec(this.workdir + '/metadata.sh', 'onFFmpegExecuteSetMetadataCommand', 'onNull', 'onNull');
+	W.stdout = [];
+	W.stderr = [];
+	W.prevStdOutSz = 0;
+	W.prevStdErrSz = 0;
+	W.captureIval = setInterval(function(){
+		if (W.stdout.length != W.prevStdOutSz || W.stderr.length != W.prevStdErrSz) {
+			W.prevStdOutSz = W.stdout.length;
+			W.prevStdErrSz = W.stderr.length;
+			return;
+		}
+		clearInterval(W.captureIval);
+		W.onFFmpegExecuteSetMetadataCommand(W.stdout.join("\n"), W.stderr.join("\n"));
+	}, 1000);
+	PHP.exec(this.workdir + '/metadata.sh', 'onFFmpegExecuteSetMetadataCommand', 'onNull1', 'onNull2');
 }
 FFMpeg.prototype.clearMetadataFile = function() {
 	PHP.file_put_contents(this.workdir + '/metadata.sh', '');
@@ -65,6 +79,13 @@ FFMpeg.prototype.createOutfileName = function(fileName) {
 	this.shortname = s;
 	
 	return ls.join('/');
+}
+
+function onNull1(out){
+	window.stdout.push(out);
+}
+function onNull2(err){
+	window.stderr.push(err);
 }
 
 /**
