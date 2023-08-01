@@ -8,6 +8,8 @@
 */
 function CDtoCodeGenerator(fieldsData, setAutonull, setJson, entityName, path) {
 	var o = this;
+	o.TAB = '    ';
+	o.T = o.TAB;
 	o.fieldsData = fieldsData;
 	o.isAutonull = setAutonull;
 	o.setJSON = setJson;
@@ -283,11 +285,44 @@ CDtoCodeGenerator.prototype.setJson = function() {
 	if (o.setJSON) {
 		o.entityTpl = o.entityTpl.replace('<JSON>', 'use JsonSerializable;');
 		o.entityTpl = o.entityTpl.replace('<implJson>', ' implements JsonSerializable');
+		o.entityTpl = o.entityTpl.replace('<jsoninterface>', this.generateJsonSerialize());
+		o.entityTpl = o.entityTpl.replace('<jsoninterfacedtconst>', o.dateconstsTpl);
 	} else {
 		o.entityTpl = o.entityTpl.replace('<JSON>', '');
 		o.entityTpl = o.entityTpl.replace('<implJson>', '');
+		o.entityTpl = o.entityTpl.replace('<jsoninterface>', '');
+		o.entityTpl = o.entityTpl.replace('<jsoninterfacedtconst>', "");
 	}
 	
+}
+
+/**
+ * @param {Array} fieldsData
+ *  [{
+ * 		type: 'string',
+ *      name: 'patronymic',
+ * 		notNull: true
+ *  }]
+*/
+CDtoCodeGenerator.prototype.generateJsonSerialize = function() {
+	var o = this, tpl = o.jsonSerializeTpl, i, cf, dateLines = [], i,
+		SZ = sz(o.fieldsData), dtTpl, s;
+
+	for (i = 0; i < SZ; i++) {
+		cf = o.fieldsData[i];
+		if (cf.type == "DateTime") {
+			dtTpl = o.jsonSerializeDtTpl;
+			if (!cf.notNull) {
+				dtTpl = o.jsonSerializeDtNullTpl;
+			}
+			s = o.T + o.T + str_replace('<name>', cf.name, dtTpl).trim();
+			dateLines.push(s);
+		}
+	} // end for
+	
+	s = tpl.replace('<datetimes>', dateLines.join("\n"));
+	
+	return s;
 }
 
 CDtoCodeGenerator.prototype.loadTemplates = function() {
@@ -296,6 +331,10 @@ CDtoCodeGenerator.prototype.loadTemplates = function() {
 	o.memberTpl = PHP.file_get_contents(Qt.appDir() + '/data/member.tpl.php');
 	o.methodsTpl = PHP.file_get_contents(Qt.appDir() + '/data/getset.tpl.php');
 	o.constructTpl = PHP.file_get_contents(Qt.appDir() + '/data/construct.tpl.php');
+	o.jsonSerializeTpl = PHP.file_get_contents(Qt.appDir() + '/data/jsonserialize.tpl.php');
+	o.jsonSerializeDtTpl = PHP.file_get_contents(Qt.appDir() + '/data/jsonserializedatetime.tpl.php');
+	o.jsonSerializeDtNullTpl = PHP.file_get_contents(Qt.appDir() + '/data/jsonserializedatetimenull.tpl.php');
+	o.dateconstsTpl = PHP.file_get_contents(Qt.appDir() + '/data/dateconst.tpl.php');
 }
 
 

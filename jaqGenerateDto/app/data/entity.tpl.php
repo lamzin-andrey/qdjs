@@ -9,9 +9,12 @@ namespace <namespace>;
 
 class <className><implJson>
 {
+<jsoninterfacedtconst>
 <members>
 
-<construct>
+    <construct>
 
 <getset>
+
+<jsoninterface>
 }

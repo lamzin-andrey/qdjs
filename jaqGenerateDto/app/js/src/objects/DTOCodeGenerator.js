@@ -75,7 +75,6 @@ var DTOCodeGenerator = {
 			outputFile,
 			o.getOutputFilename()
 		);
-		alert("Hello 2! " + outputFile);
 		if (FS.fileExists(outputFile)) {
 			if (confirm('Are you sure overwrite file ' + outputFile)) {
 				FS.writefile(outputFile, code);
