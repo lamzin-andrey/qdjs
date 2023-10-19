@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=QDJS Application Template Creator
+Comment=
+Exec=/home/andrey/hdata/programs/my/qdjs/qdjsAppCreator/qdjsAppCreator.sh
+Icon=/home/andrey/hdata/programs/my/qdjs/qdjsAppCreator/app/i/icons/32.png
+Path=/home/andrey/hdata/programs/my/qdjs/qdjsAppCreator
+Categories=Development;
+Terminal=false
+StartupNotify=false
+Name[ru]=Создание нового приложения QDJS
+Name[en]=Create new QDJS application

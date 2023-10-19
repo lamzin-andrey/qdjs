@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name={{Name}}
+Comment=
+Exec=/opt/qt-desktop-js/apps/{{catalog}}/{{catalog}}.sh
+Icon=/opt/qt-desktop-js/apps/{{catalog}}/app/i/icons/32.png
+Path=/opt/qt-desktop-js/apps/{{catalog}}
+Categories={{category}};
+Terminal=false
+StartupNotify=false
+Name[ru]={{ruName}}
+Name[en]={{Name}}

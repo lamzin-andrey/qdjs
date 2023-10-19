@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+	    <meta charset="UTF-8">
+	    <title>QDJS Application Creator</title>
+	    <meta name="windowButtons" content="0000" width="503" height="360" fixed>
+	    <link rel="stylesheet" type="text/css" href="./s/g.css" />
+	    <link rel="stylesheet" type="text/css" href="./s/0.css" />
+	    <link rel="stylesheet" type="text/css" href="./s/colors.css" />
+	    <link rel="stylesheet" type="text/css" href="./s/fonts.css" />
+    </head>
+    <body>
+	<div class="wrk">
+		<div class="leftImage">&nbsp;</div>
+		<div class="workArea">
+<!---->		<div class="screen bg-wrk" id="hScreen1">
+				<h1 id="helloScrH1">Setup your QDJS Application</h1>
+				<div class="text">
+					<label id="hDirectoryName"></label>
+					<input id="hCatalogName" type="text">
+					<div id="catalogNameErr" class="err">&nbsp;</div>
+					
+					<div class="applicationSize">
+						<div>
+							<label id="hAppWindowSize"></label>
+							<input id="hWndWidth" type="number" min="10" value="1000"> <i>x</i> <input id="hWndHeight" type="number" min="10" value="600">
+						</div>
+						<div>
+							<input id="hWndFixed" type="checkbox">
+							<label id="hAppWindowFixed" for="hWndFixed"></label>
+						</div>
+						<div>
+							<input id="hWndTop" type="checkbox">
+							<label id="hAppWindowTop" for="hWndTop"></label>
+						</div>
+						<div>
+							<input id="hWndSplash" type="checkbox">
+							<label id="hAppWindowSplash" for="hWndSplash"></label>
+						</div>
+						<div id="appSizeErr" class="err">&nbsp;</div>
+					</div>
+					
+					<div class="windowBtns">
+						<label id="hAppWindowBtnsTitle" ></label>
+						<div>
+							<img src="./i/winButtonsRaw.png">
+						</div>
+						<input id="hWndMin" type="checkbox" checked>
+						<input id="hWndMax" type="checkbox" checked>
+						<input id="hWndCls" type="checkbox" checked>
+					</div>
+					
+					<p>
+						<label id="hClickNext">Click Next to continue</label>
+					</p>
+				</div>
+			</div>
+			
+<!--App Name-->
+			<div class="screen hide" id="hAppNameScreen">
+				<h1 id="appNameH1">Application Name And Main Class</h1>
+				<div class="text">
+					<label id="hApplicationNameRu"></label>
+					<input id="applicationNameRu" type="text">
+					<div id="applicationNameRuErr" class="err">&nbsp;</div>
+					
+					<label id="hApplicationNameEn"></label>
+					<input id="applicationNameEn" type="text">
+					<div id="applicationNameEnErr" class="err">&nbsp;</div>
+					
+					<label id="hApplicationClassName"></label>
+					<input id="applicationClassName" type="text">
+					<div id="applicationClassNameErr" class="err">&nbsp;</div>
+					
+					<label id="hApplicationCategory"></label>
+					<select id="AppCategory">
+						<option id="hDevelopment" value="Games">Development</option>
+						<option id="hAudioVideo" value="AudioVideo">Мультимедиа</option>
+						<option id="hGames" value="Games">Games</option>
+						<option id="hOther" value="Other" selected>Other</option>
+					</select>
+				</div>
+			</div>
+<!--Icon-->
+			<div class="screen hide" id="hAppIconScreen">
+				<h1 id="AppIconH1">Application Icon</h1>
+				<div class="text">
+					<label id="hSelectImagelabel"></label>
+					<img src="./i/exec32.png" id="imgAppIcon">
+					<div class="fl bSelectImageWr">
+						<input type="button" id="bSelectImage">
+					</div>
+					
+					<div class="sl"></div>
+				</div>
+				
+			</div>
+<!--MainMenu-->
+			<div class="screen hide" id="hMainScreen4">
+				<h1 id="MainMenuH1">Main Menu</h1>
+			</div>
+<!--Libraries-->
+			<div class="screen hide" id="hMainScreen3">
+				<h1 id="LibrariesH1 hide">Libraries</h1>
+			</div>
+
+<!--MainMenu-->
+			<div class="screen hide" id="hMainScreen5">
+				<h1 id="UIH1">Set UI</h1>
+			</div>
+		</div>
+		<div class="cf buttons tr xpfooter">
+			<input type="button" value="Prev" id="bPrev">
+			<input type="button" value="Next" id="bNext">
+			<input type="button" value="Cancel" id="bCancel">
+		</div>
+	</div>
+	
+    </body>
+    
+     <!-- dev tool -->
+    <script src="./js/dev/j.js"></script>
+    <script src="./js/dev/os.js"></script>
+    <script src="./js/dev/qt.js"></script>
+    <script src="./js/dev/phpi.js"></script>
+    <script src="./js/dev/start.js"></script>
+    
+    <!-- /dev tool -->
+    
+    <!-- shared libs  -->
+    <script type="text/javascript" src="./js/vendor/micron.js" ></script>
+    <script type="text/javascript" src="./js/vendor/php.js" ></script>
+    <script type="text/javascript" src="./js/vendor/screens.js" ></script>
+    <script type="text/javascript" src="./js/vendor/objects/recentdir.js" ></script>
+    <script type="text/javascript" src="./js/vendor/objects/settings.js" ></script>
+    <script type="text/javascript" src="./js/vendor/objects/texttransform.js" ></script>
+    <script type="text/javascript" src="./js/vendor/objects/inputvaluestorage.js" ></script>
+    <script type="text/javascript" src="./js/vendor/lang.js" ></script>
+    <!-- /shared libs  -->
+    
+    <!-- app libs  -->
+    <!-- app /libs  -->
+    
+    <!--script type="text/javascript" src="./js/src/objects/appRecentFolder.js" ></script>
+    <script type="text/javascript" src="./js/src/classes/cstoredcheckbox.js" ></script>
+    <script type="text/javascript" src="./js/src/classes/jsonCheckbox.js" ></script-->
+    
+    <script type="text/javascript" src="./js/src/classes/cscreenwindowbutton.js" ></script>
+    <script type="text/javascript" src="./js/src/classes/cscreenappname.js" ></script>
+    <script type="text/javascript" src="./js/src/classes/cscreenappicon.js" ></script>
+    <script type="text/javascript" src="./js/src/classes/ccompiler.js" ></script>
+    <script type="text/javascript" src="./js/src/objects/appcreator.js" ></script>
+    
+    <!-- locale -->
+    <script type="text/javascript" src="./js/src/lang/local.js" ></script>
+    <script type="text/javascript" src="./js/src/lang/localru.js" ></script>
+    <!-- /locale -->
+
+    
+    <script type="text/javascript" src="./js/src/app.js" ></script>
+</html>
