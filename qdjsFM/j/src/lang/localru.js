@@ -72,6 +72,12 @@ var langRu = {
 	"Send link to desktop" : "Отправить на рабочий стол ссылку",
 	"Extract files" : "Извлечь файлы",
 	"extracted" : "распакован",
+	"Export bookmarks" : "Экспорт закладок",
+	"Import bookmarks" : "Импорт закладок",
+	"Unable detect user. Restart application and try again." : "Не удалось определить пользователя. Перезапустите приложение и попробуйте снова.",
+	"Unable read directory" : "Невозможно прочитать каталог",
+	"Restart application and try again." : "Перезапустите приложение и попробуйте снова.",
+	"Select file with early seaved bookmark" : "Выбрать файл с ранними сохраненными закладками",
 	"" : ""
 };
 

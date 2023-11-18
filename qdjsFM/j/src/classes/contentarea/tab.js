@@ -554,8 +554,7 @@ Tab.prototype.onClickCreateArch = function() {
 		}
 		newName = newName.replace(/\.tar\.gz$/, '');
 		newPath = this.currentPath + '/' + newName;
-		cmd = "#!/bin/bash\ncd \"" + this.currentPath + "\"\ntar -cf  \"" + newPath + ".tar\" " + aSelectionItems.join(' ') + "\n" + 
-				"gzip \"" + newPath + ".tar\"\n";
+		cmd = "#!/bin/bash\ncd \"" + this.currentPath + "\"\ntar -cvzf  \"" + newPath + ".tar\" " + aSelectionItems.join(' ') + "\n";
 		FS.writefile(sh, cmd);
 		jexec(sh, function() {
 			alert(newName + ".tar.gz " + L("created"));

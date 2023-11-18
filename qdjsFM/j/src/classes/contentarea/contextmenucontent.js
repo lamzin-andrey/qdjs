@@ -214,6 +214,20 @@ ContextMenuContent.prototype.getBookmarkItemMenuHtml = function() {
 					<div class="contextMenuItemText">' + L("Move down") + '</div>\
 					<div class="cf"></div>\
 				</div>\
+				<div class="contextMenuItem" onclick="app.bookmarksManager.onClickExportBookmarks()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/saveAll22.png">\
+					</div>\
+					<div class="contextMenuItemText">' + L("Export bookmarks") + '</div>\
+					<div class="cf"></div>\
+				</div>\
+				<div class="contextMenuItem" onclick="app.bookmarksManager.onClickImportBookmarks()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/undo22.png">\
+					</div>\
+					<div class="contextMenuItemText">' + L("Import bookmarks") + '</div>\
+					<div class="cf"></div>\
+				</div>\
 			</div>\
 		</div>\
 		<!-- System Bookmark menu -->\
