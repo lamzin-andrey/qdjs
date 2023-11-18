@@ -20,3 +20,14 @@ function setBlackMode() {
 function setWhiteMode() {
 	$(document.body).removeClass('night');
 }
+function menuItemCreateDir()
+{
+	var s = prompt("Enter dir name");
+	if (s) {
+		try {
+			FS.mkdir(s);
+		} catch (err) {
+			alert(err);
+		}
+	}
+}
