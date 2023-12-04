@@ -41,14 +41,14 @@ function onClickAddServer(){
     appWindow('hConfigServerParams', 'Добавить сервер', onClosePopup);
     W.addHostDlg = new AddHostDlg();
     W.dataGrid.setIsFocused(false);
-    W.modalActive = 1;
-    
+    W.modalActive = 1;  
 }
 function onClickSelectServer() {
     appWindow('hManageServerDlg', 'Настройки соединения с сервером', onClosePopup);
     W.manageHostsDlg = new ManageHostDlg();
     W.dataGrid.setIsFocused(false);
     W.modalActive = 1;
+    window.colorTa.modalActive = 1;
 }
 
 function onClickDeleteConfig() {
@@ -85,6 +85,7 @@ function onResizeWindow() {
 function onClosePopup() {
     W.dataGrid.setIsFocused(true);
     W.modalActive = 0;
+    window.colorTa.modalActive = 0;
 }
 
 window.onresize = onResizeWindow;
@@ -100,6 +101,7 @@ function onLoad() {
 		var lastSize = storage('lastWndSize');
 		if (lastSize.w && lastSize.h) {
 			Qt.resizeTo(lastSize.w, lastSize.h);
+			Qt.moveTo(0, 0);
 		}
 		var lasttEdit1H = storage('lasttEdit1H');
 		if (lasttEdit1H) {
@@ -145,7 +147,7 @@ function onSqlFieldBlured() {
 
 
 function resizeWorkArea(isNoResizeWindowEvent) {
-	
+	var vp = getViewport();
 	try {
 		if (W.colorTa) {
 			// W.colorTa.emulateOnScroll();
@@ -159,7 +161,7 @@ function resizeWorkArea(isNoResizeWindowEvent) {
 	
 	if (!isNoResizeWindowEvent && W.initalizedForSaveResize) {
 		try {
-			storage('lastWndSize', {w:screen.width, h:screen.height});
+			storage('lastWndSize', {w:vp.w, h:vp.h});
 		} catch(e) {
 			alert('App::resizeWorkArea:\n' + e);
 		}

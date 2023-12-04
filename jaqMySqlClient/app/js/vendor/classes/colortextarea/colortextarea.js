@@ -169,6 +169,9 @@ ColorTextArea.prototype.emulateOnScroll = function(evt) {
  * @description Мониторит выделение
 */
 ColorTextArea.prototype.onMouseDown = function(evt) {
+	if (this.modalActive) {
+		return true;
+	}
 	this.mouseIsDown = true;
 	if (this.colorRules && this.colorRules['sl']) {
 		this.colorRules['sl'] = null;
@@ -177,17 +180,27 @@ ColorTextArea.prototype.onMouseDown = function(evt) {
 		this.subjectTa.setSelectionRange(x, x);
 		this.onInput();
 	}
+	
+	return true;
 }
 /** 
  * @description Мониторит выделение
 */
 ColorTextArea.prototype.onMouseUp = function(evt) {
+	if (this.modalActive) {
+		return true;
+	}
 	this.mouseIsDown = false;
+	
+	return true;
 }
 /** 
  * @description Мониторит выделение
 */
 ColorTextArea.prototype.onMouseMove = function(evt) {
+	if (this.modalActive) {
+		return true;
+	}
 	if (this.mouseIsDown) {
 		this.onResize();// TODO попробуй, вдруг Qt лучше! А если не лучше, удали из setListeners
 		this.onInput();
