@@ -11,6 +11,9 @@ function log(s) {
 	
 }
 function onKeyUp(evt) {
+	if (W.modalActive) {
+		return true;
+	}
     if (evt.ctrlKey) {
 		switch(evt.keyCode) {
 			case 65:
@@ -38,12 +41,14 @@ function onClickAddServer(){
     appWindow('hConfigServerParams', 'Добавить сервер', onClosePopup);
     W.addHostDlg = new AddHostDlg();
     W.dataGrid.setIsFocused(false);
+    W.modalActive = 1;
     
 }
 function onClickSelectServer() {
     appWindow('hManageServerDlg', 'Настройки соединения с сервером', onClosePopup);
     W.manageHostsDlg = new ManageHostDlg();
-    W.dataGrid.setIsFocused(false);   
+    W.dataGrid.setIsFocused(false);
+    W.modalActive = 1;
 }
 
 function onClickDeleteConfig() {
@@ -79,13 +84,14 @@ function onResizeWindow() {
 
 function onClosePopup() {
     W.dataGrid.setIsFocused(true);
+    W.modalActive = 0;
 }
 
 window.onresize = onResizeWindow;
 window.onload = onLoad;
 window.onkeyup = onKeyUp;
 function onLoad() {
-	
+	Qt.setWindowIconImage(App.dir() + '/i/icons/48.png');
     W.tEdit1 = e('tEdit1');
     W.hResultArea = e('hResultArea');
     resizeWorkArea(1);
@@ -132,7 +138,9 @@ function onSqlFieldFocused() {
 }
 
 function onSqlFieldBlured() {
-	W.dataGrid.setIsFocused(true);
+	if (!W.modalActive) {
+		W.dataGrid.setIsFocused(true);
+	}
 }
 
 

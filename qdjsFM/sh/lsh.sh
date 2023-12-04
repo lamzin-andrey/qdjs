@@ -1,2 +1,2 @@
 #! /bin/bash
-ls -alh --full-time -tr "/media/andrey/CC1EB9EA1EB9CDA8"
+ls -alh --full-time  "/opt/qt-desktop-js/apps/qdjsRootScriptAutostart"

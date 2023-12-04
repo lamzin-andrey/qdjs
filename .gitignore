@@ -31,3 +31,12 @@ qdjsFM/sh/ls.sh
 qdjsFM/sh/lsh.sh
 qdjsFM/sh/o.sh
 
+jaqGenerateDto/app/config.json
+jaqGenerateEntity/app/config.json
+jaqVideoConverter/app/config.json
+jaqVideoConverter/app/js/vendor/classes/ffmpeg/getpreview.sh
+jaqVideoConverter/app/sh.sh
+jaqVideoConverter/app/shr.sh
+qdjsAppCreator/app/config.json
+qdjsAppCreator/app/data/sh/c.sh
+qdjsFM/dialogs/mcp/sh/cp.sh

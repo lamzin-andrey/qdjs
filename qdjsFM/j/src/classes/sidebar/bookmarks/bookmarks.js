@@ -63,7 +63,6 @@ Bookmarks.prototype.createList = function(locale, user) {
 		this.addItem(user, userBookmarks[i].path.trim(), locale, userBookmarks[i].displayName, 'cmBmMenu');
 	}
 	
-	// this.addUserItems(user); // TODO
 }
 // sysCmId - задействуем потом
 Bookmarks.prototype.addItem = function(user, name, locale, displayName, userCmId, sysCmId) {
@@ -183,7 +182,7 @@ Bookmarks.prototype.addNewBm = function(path, name) {
 
 Bookmarks.prototype.readUserBookmarks = function() {
 	var bookmarksKey,
-		// bookmarks = Settings.get('bms') || {},// TODO this.getUserBookmarks()
+		// bookmarks = Settings.get('bms') || {},
 		bookmarks = this.getUserBookmarks(),
 		uaBmData,
 		uaBm;
@@ -199,7 +198,7 @@ Bookmarks.prototype.readUserBookmarks = function() {
 
 Bookmarks.prototype.writeUserBookmarks = function(list, newKey) {
 	var bookmarksKey,
-		// bookmarks = Settings.get('bms') || {},// TODO this.getUserBookmarks()
+		// bookmarks = Settings.get('bms') || {},
 		bookmarks = this.getUserBookmarks(),
 		uaBmData,
 		uaBm;
@@ -216,7 +215,7 @@ Bookmarks.prototype.writeUserBookmarks = function(list, newKey) {
 	uaBm[bookmarksKey] = list;
 	uaBmData['L'] = uaBm;
 	bookmarks[USER] = uaBmData;
-	// Settings.set('bms', bookmarks);// TODO this.setUserBookmarks(bookmarks)
+	// Settings.set('bms', bookmarks);/
 	this.setUserBookmarks(bookmarks);
 }
 
@@ -325,9 +324,6 @@ Bookmarks.prototype.onClickOpenInTerm = function() {
 }
 
 // ============= IMPORT / EXPORT Bmarks
-Bookmarks.prototype.onClickImportBookmarks = function() {
-	alert('Import');
-}
 Bookmarks.prototype.onClickExportBookmarks = function() {
 	var bookmarksCollectionDirectory = this.getBookmarksCollectionDirectory(),
 		newPath, activePath, c;

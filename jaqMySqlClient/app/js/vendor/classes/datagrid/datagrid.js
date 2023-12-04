@@ -344,17 +344,20 @@ DataGrid.prototype.getLeftCell = function(r, c) {
  * Установка слушателей событий для ячеек таблицы
 */
 DataGrid.prototype.onKeyDownCell = function(evt) {
-	if (evt.keyCode in In([27, 13, 38, 40])) { // Esc or Down or Up or Enter
-		this.updateData(evt.keyCode);
-		this.emitOnChangeCellData(evt.keyCode);
-		this.setCellViewReadable();
-	}
 	
 	//TODO если фокус в поле ввода, выходить
 	if (!this.isFocused || this.isEditMode) {
 		return true;
 	}
 	evt.preventDefault(); 
+	
+	if (evt.keyCode in In([27, 13, 38, 40])) { // Esc or Down or Up or Enter
+		this.updateData(evt.keyCode);
+		this.emitOnChangeCellData(evt.keyCode);
+		this.setCellViewReadable();
+	}
+	
+	
 	
 	var current = e('c' + this.cursorY + '_' + this.cursorX),
 		scrollFunctionName = '', isCursorKey = false;
