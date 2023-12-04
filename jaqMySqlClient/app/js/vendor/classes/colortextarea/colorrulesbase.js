@@ -8,7 +8,11 @@ ColorRuleBase.prototype.configure = function() {
 	this.cssApString = 'as';
 	this.cssString = 's';
 	this.cssComments = 'c';
+	this.cssNums = 'n';
 	this.cssRE = 'r';
+	this.singleCommentStart = '//'
+	this.commentStart = '/*';
+	this.commentEnd = '*/';
 }
 ColorRuleBase.prototype.calc = function(sValue) {
 	// Находим все комментарии в sValue
@@ -344,3 +348,157 @@ ColorRuleBase.prototype.setContext = function(colorTextArea) {
 	this.context = colorTextArea;
 }
 
+// Оптимизация 2023 12 04
+/**
+ * @description 
+ * @param {String} s
+ * @param {Number} i
+*/
+ColorRuleBase.prototype.isInComm = function(s, i) {
+	var pSingle, pStart, pEnd, pNL;
+	
+	if (!s) {
+		return false;
+	}
+	
+	// check single
+	pSingle = s.lastIndexOf(this.singleCommentStart, i);
+	if (pSingle != -1) {
+		pNL = s.lastIndexOf('\n', i);
+		if (pNL < pSingle) {
+			return true;
+		}
+	}
+	
+	pStart = s.lastIndexOf(this.commentStart, i);
+	pEnd = s.lastIndexOf(this.commentEnd, i);
+	if (pStart > -1 && pEnd < pStart) {
+		return true;
+	}
+	
+	if (sz(this.commentEnd) == 2) {
+		if (s.charAt(i) ==  this.commentEnd.charAt(0) && this.isInComm(s, i - 1)) {
+			return true;
+		}
+		
+		if (s.charAt(i) ==  this.commentEnd.charAt(1) && this.isInComm(s, i - 2)) {
+			return true;
+		}
+	}
+	
+	
+	return false;
+}
+
+
+/**
+ * @description 
+ * @param {String} s
+ * @param {Number} i
+*/
+ColorRuleBase.prototype.isKW = function(s) {
+	var i, SZ;
+	if (!this.okw) {
+		SZ = sz(this.keywords);
+		this.okw = {};
+		for (i = 0; i < SZ; i++) {
+			this.okw[ this.keywords[i] ] = 1;
+		}
+	}
+	
+	if (this.okw[s]) {
+		return true;
+	}
+	
+	return false;
+}
+
+
+/**
+ * @description 
+ * @param {String} s
+ * @param {Number} i
+*/
+ColorRuleBase.prototype.isInStr = function(s, i) {
+	return this.pIsInStr(s, i, '"');
+}
+
+/**
+ * @description 
+ * @param {String} s
+ * @param {Number} i
+*/
+ColorRuleBase.prototype.isInSingleStr = function(s, i) {
+	return this.pIsInStr(s, i, "'");
+}
+
+/**
+ * @description 
+ * @param {String} s
+ * @param {Number} i
+*/
+ColorRuleBase.prototype.isInRE = function(s, i) {
+	return false;
+}
+
+
+/**
+ * @description 
+ * @param {String} s
+ * @param {Number} i
+*/
+ColorRuleBase.prototype.pIsInStr = function(s, i, q) {
+	var c = 0, j, br = 0, ls = [], k, SZ;
+	
+	if (!s) {
+		return false;
+	}
+	
+	j = i;
+	while (j > -1) {
+		j = s.lastIndexOf(q, j);
+		if (j > -1) {
+			ls.push(j);
+			c++;
+		}
+		j--;
+		br++;
+		if (br > 500) {
+			console.log('Alarma pIsInStr, s = '  + s + ', i = ' + i + ', q = ' + q);
+			break;
+		}
+	}
+	
+	
+	if (c % 2 != 0) {
+		SZ = sz(ls);
+		for (k = 0; k < SZ; k++) {
+			if (this.isInComm(s, ls[k])) {
+				c--;
+			}
+		}
+	}
+	
+	if (c % 2 != 0) {
+		return true;
+	}
+	
+	if (s.charAt(i) == q && this.pIsInStr(s, i - 1, q)) {
+		return true;
+	}
+	
+	return false;
+}
+
+
+/**
+ * @description 
+ * @param {String} s
+ * @param {Number} i
+*/
+ColorRuleBase.prototype.isNum = function(s) {
+	
+	var inp = String(s).trim(),
+		aft = String(parseInt(s));
+	return inp == aft || inp == String(parseFloat(s));
+}

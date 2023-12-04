@@ -98,8 +98,8 @@ function dbvalue($cmd) {
 function setConnection() {
 	$link = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT) or die('Error connect to mysql');
 	mysqli_select_db($link, DB_NAME) or die('Error select db ' . DB_NAME);
-	//mysqli_query($link, 'SET NAMES UTF8');
-	mysqli_query($link, 'SET NAMES CP1251');
+	mysqli_query($link, 'SET NAMES UTF8');
+	// mysqli_query($link, 'SET NAMES CP1251');
 	return $link;
 }
 function db_escape(&$s) {

@@ -170,7 +170,7 @@ ColorTextArea.prototype.emulateOnScroll = function(evt) {
 */
 ColorTextArea.prototype.onMouseDown = function(evt) {
 	this.mouseIsDown = true;
-	if (this.colorRules['sl']) {
+	if (this.colorRules && this.colorRules['sl']) {
 		this.colorRules['sl'] = null;
 		delete this.colorRules['sl'];
 		var x = this.textCursor.getCaretPosition(this.subjectTa);
@@ -193,10 +193,68 @@ ColorTextArea.prototype.onMouseMove = function(evt) {
 		this.onInput();
 	}
 }
+
 /** 
  * @description Заворачивает каждый символ в <i> и добавляет классы подсветки символов
 */
 ColorTextArea.prototype.onInput = function(evt) {
+	if (this.inpProc) {
+		return;
+	}
+	this.inpProc = 1;
+	var s = this.subjectTa.value, i, ch, q = '', cls = 'class="kw"'; //
+	// this.colorRule.calc(s);
+	this.setRules({});
+	
+	// console.log(this.colorRule);
+	
+	// return;
+	// Переустановит (дополнит данными о позиции выделения текста) те же rules что и this.colorRule.calc
+	this.selection.calc();
+	// console.log(this.colorRules);
+	// return;
+	// ColorRule.context.setRules(rules);
+	// rules: {cssClassName: [0,5, 12,14, ...], cssClassName2: [9,14, 20,28, ...]}
+	
+	// Всем переносам строк, которые без текста добавляем пробел
+	var prevCh, lastEmptyBr = sz(s) - 1;
+	for (i = sz(s) - 1; i > -1; i--) {
+		ch = s.charAt(i);
+		if (ch == '\n' && prevCh == '\n') {
+			lastEmptyBr = i;
+		} else {
+			break;
+		}
+		prevCh = ch;
+	}
+	// alert(lastEmptyBr);
+	
+	for (i = 0; i < sz(s); i++) {
+		ch = s.charAt(i);
+		if (ch == ' ') {
+			ch = '&nbsp;';
+		}
+		if (ch == '\n') {
+			if (i < lastEmptyBr) {
+				ch = '<i><br></i>';
+			} else {
+				ch = '<i><br>&nbsp;</i>';
+			}
+		} else {
+			cls = this.getRule(i, s);
+			ch = '<i ' + cls + '>' + ch + '</i>'
+		}
+		q += ch;
+	}
+	this.mirror.innerHTML = q;
+	this.textCursor.setCursorPosition();
+	this.inpProc = 0;
+}
+
+/** 
+ * @description Заворачивает каждый символ в <i> и добавляет классы подсветки символов
+*/
+ColorTextArea.prototype.onInputV1 = function(evt) {
 	var s = this.subjectTa.value, i, ch, q = '', cls = 'class="kw"'; //
 	this.colorRule.calc(s);
 	
@@ -243,11 +301,39 @@ ColorTextArea.prototype.onInput = function(evt) {
 /** 
  * @description Этот метод определяет, надо ли подсвечивать очередной символ, и каким цветом
  * @param {Number} i
+ * @param {String} s
  * @return String 'class="kw" ' or ''
 */
-ColorTextArea.prototype.getRule = function(i) {
-	var r = this.colorRules, k, j, q = '"',
+ColorTextArea.prototype.getRule = function(i, s) {
+	var wrd = this.getWordByPos(s, i), q = '"', selectionCss = 'sl';
+	
+	if (this.colorRules && this.colorRules[selectionCss] && this.colorRule.isInDiapason(i, this.colorRules[selectionCss])) {
+		return 'class=' + q + selectionCss + q;
+	}
+	
+	if (this.colorRule.isInComm(s, i)) {
+		return 'class=' + q + this.colorRule.cssComments + q;
+	}
+	if (this.colorRule.isKW(wrd)) {
+		return 'class=' + q + this.colorRule.cssKeywords + q;
+	}
+	if (this.colorRule.isNum(wrd)) {
+		return 'class=' + q + this.colorRule.cssNums + q;
+	}
+	
+	if (this.colorRule.isInStr(s, i)) {
+		return 'class=' + q + this.colorRule.cssString + q;
+	}
+	if (this.colorRule.isInSingleStr(s, i)) {
+		return 'class=' + q + this.colorRule.cssSingleString + q;
+	}
+	if (this.colorRule.isInRE(s, i)) {
+		return 'class=' + q + this.colorRule.cssRE + q;
+	}
+	
+	/*var r = this.colorRules, k, j, q = '"',
 		selectionCss = 'sl';
+	
 	for (k in r) {
 		if (this.colorRule.isInDiapason(i, r[k])) {
 			if (r[selectionCss] && this.colorRule.isInDiapason(i, r[selectionCss])) {
@@ -255,7 +341,7 @@ ColorTextArea.prototype.getRule = function(i) {
 			}
 			return 'class=' + q + k + q;
 		}
-	}
+	}*/
 	return '';
 }
 
@@ -268,3 +354,45 @@ ColorTextArea.prototype.setRules = function(rules) {
 }
 
 
+/** 
+ * @description Получить слово в строке s в позиции курсора i
+ * Если в позиции не буква, вернет ''
+*/
+ColorTextArea.prototype.getWordByPos = function(s, i) {
+	var ch, pStartWrd, pEndWrd, breaks = [' ', '\t', '\n', '\r'];
+	if (!s) {
+		
+		return '';
+	}
+	s = String(s);
+	ch = s.charAt(i);
+	if (ch in In(breaks)) {
+		
+		return '';
+	}
+	pStartWrd = this.getNearBreak(s, i, breaks, 'lastIndexOf');
+	pEndWrd = this.getNearBreak(s, i, breaks, 'indexOf');
+	pEndWrd = pEndWrd == -1 ? sz(s) : pEndWrd;
+	pStartWrd++;
+	ch = s.substring(pStartWrd, pEndWrd).toLowerCase();
+	
+	return ch;
+}
+/** 
+ * @description Получить ближайшее вхождение символа из breaks в s начиная от позиции i
+*/
+ColorTextArea.prototype.getNearBreak = function(s, i, breaks, fn) {
+	var j, SZ = sz(breaks), m = 1000000, p, L, search = -1;
+	for (j = 0; j < SZ; j++) {
+		p = s[fn](breaks[j], i);
+		if (p > -1) {
+			L = Math.abs(i - p);
+			if (L < m) {
+				m = L;
+				search = p;
+			}
+		}
+	}
+	
+	return search;
+}

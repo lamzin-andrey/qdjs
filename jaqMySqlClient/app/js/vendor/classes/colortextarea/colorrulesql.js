@@ -10,8 +10,9 @@ ColorRuleSql.prototype.configure = function() {
 	this.cssComments = 'c';
 	this.cssApString = 'as';
 	this.cssRE = 'r';
+	this.cssNums = 'n';
 	this.keywords = ['select', 'from', 'where', 'in', 'update', 'insert', 'values', 'integer', 'primary', 'key',
-		'set', 'count', 'datetime', 
+		'set', 'count', 'datetime', 'distinct',
 		'date',
 		'tinyint',
 		'not',
@@ -32,6 +33,9 @@ ColorRuleSql.prototype.configure = function() {
 		'by',
 		'inner'
 	];
+	this.singleCommentStart = '--'
+	this.commentStart = '/*';
+	this.commentEnd = '*/';
 }
 
 /**
@@ -55,7 +59,19 @@ ColorRuleSql.prototype.checkIsStartRegExp = function(s, i) {
 	return false;
 }
 
-/* @description Определяет, не заканчивается ли регулярное выражение
+/*
+ *  @description Определяет, не заканчивается ли регулярное выражение
+ * 
+ * @param {String} s
+ * @param {Number} startREPos
+ * @param {Number} i
+*/
+ColorRuleSql.prototype.checkIsEndRE = function(s, startREPos, i) {
+	return false;
+}
+
+/*
+ *  @description Определяет, не заканчивается ли регулярное выражение
  * 
  * @param {String} s
  * @param {Number} startREPos

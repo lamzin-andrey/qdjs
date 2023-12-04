@@ -57,8 +57,16 @@ Qt5ColorTextArea.prototype.buildLayout = function() {
  * @description Заворачивает каждый символ в <i> и добавляет классы подсветки символов
 */
 Qt5ColorTextArea.prototype.onInput = function(evt) {
+	if (this.inpProc) {
+		return;
+	}
+	this.inpProc = 1;
 	var s = this.subjectTa.value, i, ch, q = '', cls = 'class="kw"'; //
-	this.colorRule.calc(s);
+	// this.colorRule.calc(s);
+	this.setRules({});
+	
+	// console.log(this.colorRule);
+	
 	// return;
 	// Переустановит (дополнит данными о позиции выделения текста) те же rules что и this.colorRule.calc
 	this.selection.calc();
@@ -92,11 +100,12 @@ Qt5ColorTextArea.prototype.onInput = function(evt) {
 				ch = '<i><br>&nbsp;</i>';
 			}
 		} else {
-			cls = this.getRule(i);
+			cls = this.getRule(i, s);
 			ch = '<i ' + cls + '>' + ch + '</i>'
 		}
 		q += ch;
 	}
 	this.mirror.innerHTML = q;
 	this.textCursor.setCursorPosition();
+	this.inpProc = 0;
 }
