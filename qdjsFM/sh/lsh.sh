@@ -1,2 +1,2 @@
 #! /bin/bash
-ls -alh --full-time  "/opt/qt-desktop-js/apps/qdjsRootScriptAutostart"
+ls -alh --full-time  "/home/andrey/hdata/hobby/2023"

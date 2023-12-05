@@ -33,7 +33,8 @@
 .popup-close {
 	float:right;
 	margin:6px 14px 0px 8px;
-	cursor:pointer;
+	/*cursor:pointer;*/
+	cursor:url('../../../../i/pointer.png'), auto;
 }
 .popup-close img {
 	width:24px;

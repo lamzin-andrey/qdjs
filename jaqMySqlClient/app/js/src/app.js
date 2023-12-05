@@ -120,6 +120,10 @@ function onLoad() {
     
     
     W.dataGrid = new SqlDataGrid('hResultArea');
+    appendChild('hResultArea', 'div', '&nbsp', {
+		id: 'hStatusText',
+		'class': 'statusText',
+	});
     W.sqlField = new SqlField(W);
     
     W.sqlField.onfocus = onSqlFieldFocused;
@@ -133,6 +137,12 @@ function onLoad() {
 		alert(W.tEdit1.selectionEnd);
 	}, 3*1000
     );*/
+}
+
+function setStatusText(s){
+	if (e('hStatusText')) {
+		e('hStatusText').innerHTML = s;
+	}
 }
 
 function onSqlFieldFocused() {
@@ -208,7 +218,7 @@ function onExecuteSql(data) {
 		if (data.n == 0) {
 			alert('Выбрано ' + data.n + ' строк');
 		}
-		// alert('Выбрано ' + data.n + ' строк');
+		setStatusText(L('Выбрано') + ' ' + data.n + ' ' + L('строк'));
 		
 		W.dataGrid.set(data.rows, data.n);
 		

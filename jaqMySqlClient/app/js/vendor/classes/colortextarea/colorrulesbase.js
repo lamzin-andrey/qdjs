@@ -499,6 +499,18 @@ ColorRuleBase.prototype.pIsInStr = function(s, i, q) {
 ColorRuleBase.prototype.isNum = function(s) {
 	
 	var inp = String(s).trim(),
-		aft = String(parseInt(s));
-	return inp == aft || inp == String(parseFloat(s));
+		aft = String(parseInt(s)), r;
+	r =  inp == aft || inp == String(parseFloat(s));
+	
+	if (r) {
+		return r;
+	}
+	
+	if (~s.indexOf(';')) {
+		s = s.replace(';', '');
+		
+		return this.isNum(s);
+	}
+	
+	return false;
 }

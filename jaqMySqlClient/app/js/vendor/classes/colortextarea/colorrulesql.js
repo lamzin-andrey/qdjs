@@ -31,6 +31,7 @@ ColorRuleSql.prototype.configure = function() {
 		'desc',
 		'asc',
 		'by',
+		'delete',
 		'inner'
 	];
 	this.singleCommentStart = '--'

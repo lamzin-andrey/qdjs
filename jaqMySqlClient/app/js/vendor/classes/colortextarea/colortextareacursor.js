@@ -119,3 +119,28 @@ ColorTextAreaCursor.prototype.getCaretPosition = function(ta) {
 	return pos;
 }
 
+/** 
+ * @description Получение номера строки курсора (нумеруем с 0)
+ * @param {TextArea} ta
+ * @return {line, column}
+*/
+ColorTextAreaCursor.prototype.getCoord = function() {
+	var ta = this.textarea,
+		s = ta.value,
+		r = {},
+		arr,
+		pos = this.getCaretPosition(ta);
+	if (pos <= 0) {
+		r.line = 0;
+		r.column = 0;
+		
+		return r;
+	}
+	s = s.substring(0, pos);
+	a = s.split('\n');
+	r.line = a.length - 1;
+	r.column = a[r.line].length;
+	
+	return r;
+}
+

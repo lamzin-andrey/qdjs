@@ -1,3 +1,13 @@
+@font-face {
+  font-family: 'arial';
+  src: url('../fonts/arial.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'arialbd';
+  src: url('../fonts/arialbd.ttf') format('truetype');
+}
+
 body {
     max-height:100%;
     overflow:hidden;
@@ -18,4 +28,15 @@ html, body {
 
 .hConfigServerParamsBody {
     padding: 10px 8px;
+}
+
+.statusText {
+	text-align:right;
+	vertical-align: bottom;
+	line-height: 24px;
+	font-family:arial
+}
+
+.pointer {
+	cursor:url('../i/pointer.png'), auto;
 }
