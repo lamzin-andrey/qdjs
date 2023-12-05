@@ -12,7 +12,7 @@ ColorRuleSql.prototype.configure = function() {
 	this.cssRE = 'r';
 	this.cssNums = 'n';
 	this.keywords = ['select', 'from', 'where', 'in', 'update', 'insert', 'values', 'integer', 'primary', 'key',
-		'set', 'count', 'datetime', 'distinct',
+		'set', 'count', 'datetime', 'distinct', 'group',
 		'date',
 		'tinyint',
 		'not',
