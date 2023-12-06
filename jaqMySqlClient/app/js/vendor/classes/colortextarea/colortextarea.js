@@ -57,14 +57,13 @@ ColorTextArea.prototype.initalizeView = function() {
 	this.subjectTa.style.wordBreak = 'break-all';
 	mirror.style['overflow-y'] = 'scroll';
 	
-	// console.log('styles.wordBreak:', 'break-word');// break-all
-	// console.log('styles.fontFamily:', styles.fontFamily);
 	// Set listeners input, resize, scroll
 	this.setListeners();
 	this.buildLayout();
 	// Set color rule class
 	// 	this.colorRule.setContext(this);
 	this.textCursor = new ColorTextAreaCursor(cursorBlock, this.subjectTa, mirror, this.container);
+	
 	this.onInput();
 	/*setTimeout(function() {
 		self.textCursor.setCursorPosition();
@@ -218,6 +217,7 @@ ColorTextArea.prototype.onMouseMove = function(evt) {
 
 /** 
  * @description Заворачивает каждый символ в <i> и добавляет классы подсветки символов
+ * При использовании не забыть startTimer();
 */
 ColorTextArea.prototype.onInputV3 = function(evt) {
 	var coord;
@@ -238,7 +238,6 @@ ColorTextArea.prototype.onInputV3 = function(evt) {
 		coord = this.textCursor.getCoord();
 		this.priorityLineN = coord.line;
 		this.onColorTick();
-		// this.doColorLine(coord.line);
 	} else {
 		this.buildText();
 	}
@@ -404,7 +403,7 @@ ColorTextArea.prototype.doColorLine = function(n) {
 			if (ch == ' ') {
 				ch = '&nbsp;';
 			}
-			cls = this.getRule(i, s);
+			cls = this.getRule(i, s, n);
 			ch = '<i ' + cls + '>' + ch + '</i>';
 			q += ch;
 		}
@@ -475,6 +474,70 @@ ColorTextArea.prototype.onInput = function(evt) {
  * @description Этот метод определяет, надо ли подсвечивать очередной символ, и каким цветом
  * @param {Number} i
  * @param {String} s
+ * @param {Number} numLine n
+ * @return String 'class="kw" ' or ''
+*/
+ColorTextArea.prototype.getRuleV3 = function(i, s, n) {
+	var wrd = this.getWordByPos(s, i), q = '"', selectionCss = 'sl',
+		globS = this.subjectTa.value,
+		globPos = this.getGlobalPos(i, s, n);
+	
+	if (this.colorRules && this.colorRules[selectionCss] && this.colorRule.isInDiapason(globPos, this.colorRules[selectionCss])) {
+		return 'class=' + q + selectionCss + q;
+	}
+	
+	if (this.colorRule.isInComm(globS, globPos)) {
+		return 'class=' + q + this.colorRule.cssComments + q;
+	}
+	if (this.colorRule.isInStr(s, i)) {
+		return 'class=' + q + this.colorRule.cssString + q;
+	}
+	if (this.colorRule.isInStr(globS, globPos)) {
+		return 'class=' + q + this.colorRule.cssString + q;
+	}
+	if (this.colorRule.isInSingleStr(s, i)) {
+		return 'class=' + q + this.colorRule.cssSingleString + q;
+	}
+	if (this.colorRule.isInSingleStr(globS, globPos)) {
+		return 'class=' + q + this.colorRule.cssSingleString + q;
+	}
+	if (this.colorRule.isKW(wrd)) {
+		return 'class=' + q + this.colorRule.cssKeywords + q;
+	}
+	if (this.colorRule.isNum(wrd)) {
+		return 'class=' + q + this.colorRule.cssNums + q;
+	}
+	
+	if (this.colorRule.isInRE(s, i)) {
+		return 'class=' + q + this.colorRule.cssRE + q;
+	}
+	
+	return '';
+}
+
+/** 
+ * @description Этот метод определяет, надо ли подсвечивать очередной символ, и каким цветом
+ * @param {Number} i позиция в строке n
+ * @param {String} s содержимое строки n
+ * @param {Number} numLine n
+ * @return String 'class="kw" ' or ''
+*/
+ColorTextArea.prototype.getGlobalPos = function(i, s, n) {
+	var globS = this.subjectTa.value, p = 0, j, a;
+	a = globS.split('\n');
+	for (j = 0; j < n; j++) {
+		p += sz(a[j]) + 1;
+	}
+	p += i;
+	
+	return p + 1;
+}
+
+
+/** 
+ * @description Этот метод определяет, надо ли подсвечивать очередной символ, и каким цветом
+ * @param {Number} i
+ * @param {String} s
  * @return String 'class="kw" ' or ''
 */
 ColorTextArea.prototype.getRule = function(i, s) {
@@ -504,17 +567,6 @@ ColorTextArea.prototype.getRule = function(i, s) {
 		return 'class=' + q + this.colorRule.cssRE + q;
 	}
 	
-	/*var r = this.colorRules, k, j, q = '"',
-		selectionCss = 'sl';
-	
-	for (k in r) {
-		if (this.colorRule.isInDiapason(i, r[k])) {
-			if (r[selectionCss] && this.colorRule.isInDiapason(i, r[selectionCss])) {
-				return 'class=' + q + selectionCss + q;
-			}
-			return 'class=' + q + k + q;
-		}
-	}*/
 	return '';
 }
 

@@ -17,5 +17,4 @@ ColorTextAreaSelection.prototype.calc = function() {
 	if (this.context && (this.context.setRules instanceof Function)) {
 		this.context.setRules(r);
 	}
-	
 }

@@ -60,7 +60,7 @@ ColorTextAreaCursor.prototype.setListeners = function() {
 */
 ColorTextAreaCursor.prototype.setCursorPositionV3 = function() {
 	var pos = this.getCaretPosition(this.textarea),
-		ls, sZ, y = 0, x = 0;
+		ls = [], sZ, y = 0, x = 0, lsb, i;
 	if (pos < 0 || isNaN(pos)) {
 		// console.log('Exit here');
 		return;
@@ -70,6 +70,13 @@ ColorTextAreaCursor.prototype.setCursorPositionV3 = function() {
 		pos = 0;
 	}*/
 	ls = ee(this.mirror, 'i');
+	/*sZ = sz(lsb);
+	for (i = 0; i < sZ; i++) {
+		if (attr(lsb[i], 'class') != 'br') {
+			ls.push(lsb[i]);
+		}
+	}*/
+	
 	// console.log('ls', ls);
 	// console.log('pos', pos);
 	sZ = sz(ls);

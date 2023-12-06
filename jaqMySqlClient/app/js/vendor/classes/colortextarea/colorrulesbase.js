@@ -327,6 +327,7 @@ ColorRuleBase.prototype.calcKeywords = function(r, s) {
  * @return Boolean
 */
 ColorRuleBase.prototype.isInDiapason = function(n, arr) {
+	// console.log(n, arr);
 	if (isU(arr)) {
 		return false;
 	}
