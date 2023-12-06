@@ -411,6 +411,7 @@ ColorRuleBase.prototype.isKW = function(s) {
 		return true;
 	}
 	
+	
 	return false;
 }
 
@@ -507,11 +508,7 @@ ColorRuleBase.prototype.isNum = function(s) {
 		return r;
 	}
 	
-	if (~s.indexOf(';')) {
-		s = s.replace(';', '');
-		
-		return this.isNum(s);
-	}
+	
 	
 	return false;
 }

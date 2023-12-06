@@ -584,7 +584,7 @@ ColorTextArea.prototype.setRules = function(rules) {
  * Если в позиции не буква, вернет ''
 */
 ColorTextArea.prototype.getWordByPos = function(s, i) {
-	var ch, pStartWrd, pEndWrd, breaks = [' ', '\t', '\n', '\r'];
+	var ch, pStartWrd, pEndWrd, breaks = [' ', '\t', '\n', '\r', ',', ';', '('];
 	if (!s) {
 		
 		return '';
