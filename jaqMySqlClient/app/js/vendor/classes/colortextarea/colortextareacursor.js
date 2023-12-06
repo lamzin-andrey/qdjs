@@ -65,10 +65,8 @@ ColorTextAreaCursor.prototype.setCursorPosition = function() {
 		// console.log('Exit here');
 		return;
 	}
-	/*pos--;
-	if (pos < 0) {
-		pos = 0;
-	}*/
+	pos++;
+	
 	ls = ee(this.mirror, 'i');
 	/*sZ = sz(lsb);
 	for (i = 0; i < sZ; i++) {
