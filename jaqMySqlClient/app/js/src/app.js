@@ -31,6 +31,10 @@ function onKeyUp(evt) {
 			case 82://TODO R
 				onClickResetWindow();
 			break;
+			
+			case 83:
+				onClickSaveSqlFile();
+			break;
 		}
     }
 	if (evt.keyCode == 27 && window.mainMenuIsHide) {
@@ -229,6 +233,10 @@ function onExecuteSql(data) {
 	if (data.status == 'error') {
 		alert(data.msg);
 	}
+}
+
+function onClickSaveSqlFile() {
+	W.sqlField.saveCurrentFile();
 }
 
 function Null() {

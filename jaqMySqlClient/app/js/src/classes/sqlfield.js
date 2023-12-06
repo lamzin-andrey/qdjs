@@ -5,11 +5,12 @@ function SqlField(mediator) {
     this.view = W.tEdit1;
     var lastFile = storage(this.SKEY_LAST_FILE);
     var value;
+    this.lastFile = lastFile;
     if (PHP.file_exists(lastFile)) {
 		var s = PHP.file_get_contents(lastFile);
-		alert('Content loaded!');
+		// alert('Content loaded!');
 		this.view.value = s;
-		alert('Content setted in ta!');
+		// alert('Content setted in ta!');
 	} else {
 		value = storage(this.SKEY);
 		
@@ -188,4 +189,10 @@ function sqlfield_onFin(stdout, stderr) {
 		r = {status: 'error', msg: 'Some went wrong'};
 	}
 	onExecuteSql(r); //it define in app.js
+}
+
+SqlField.prototype.saveCurrentFile = function() {
+	if (this.lastFile) {
+		PHP.file_put_contents(this.lastFile, this.view.value);
+	}
 }
