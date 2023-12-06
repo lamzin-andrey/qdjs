@@ -58,7 +58,7 @@ ColorTextAreaCursor.prototype.setListeners = function() {
 /** 
  * @description Устанавливает курсор в блоке соответственно реальному курсору в реальном поле ввода 
 */
-ColorTextAreaCursor.prototype.setCursorPositionV3 = function() {
+ColorTextAreaCursor.prototype.setCursorPosition = function() {
 	var pos = this.getCaretPosition(this.textarea),
 		ls = [], sZ, y = 0, x = 0, lsb, i;
 	if (pos < 0 || isNaN(pos)) {
@@ -103,7 +103,7 @@ ColorTextAreaCursor.prototype.setCursorPositionV3 = function() {
 /** 
  * @description Устанавливает курсор в блоке соответственно реальному курсору в реальном поле ввода 
 */
-ColorTextAreaCursor.prototype.setCursorPosition = function() {
+ColorTextAreaCursor.prototype.setCursorPositionV2 = function() {
 	var pos = this.getCaretPosition(this.textarea),
 		ls, sZ, y = 0, x = 0;
 	if (pos < 0 || isNaN(pos)) {

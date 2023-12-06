@@ -28,7 +28,7 @@ ColorTextArea.prototype.initalizeView = function() {
 		cursorBlock = cs(parentNode, 'cursor')[0],
 		styles,
 		self = this;
-	// this.startTimer(); // inputV3
+	this.startTimer(); // inputV3
 	if (mirror) {
 		this.mirror = mirror;
 	}
@@ -219,7 +219,7 @@ ColorTextArea.prototype.onMouseMove = function(evt) {
  * @description Заворачивает каждый символ в <i> и добавляет классы подсветки символов
  * При использовании не забыть startTimer();
 */
-ColorTextArea.prototype.onInputV3 = function(evt) {
+ColorTextArea.prototype.onInput = function(evt) {
 	var coord;
 	if (evt && !evt.char && evt.key) {
 		evt.char = evt.key;
@@ -330,7 +330,7 @@ ColorTextArea.prototype.startTimer = function() {
 	o.currentColorLine = 0;
 	this.ival = setInterval(function(){
 		o.onColorTick();
-	}, 100);
+	}, 1000);
 }
 
 /** 
@@ -418,7 +418,7 @@ ColorTextArea.prototype.doColorLine = function(n) {
  *  - Вернулся, в initalizeView отключил таймер
  * @description Заворачивает каждый символ в <i> и добавляет классы подсветки символов
 */
-ColorTextArea.prototype.onInput = function(evt) {
+ColorTextArea.prototype.onInputV2 = function(evt) {
 	if (this.inpProc) {
 		return;
 	}
@@ -477,7 +477,7 @@ ColorTextArea.prototype.onInput = function(evt) {
  * @param {Number} numLine n
  * @return String 'class="kw" ' or ''
 */
-ColorTextArea.prototype.getRuleV3 = function(i, s, n) {
+ColorTextArea.prototype.getRule = function(i, s, n) {
 	var wrd = this.getWordByPos(s, i), q = '"', selectionCss = 'sl',
 		globS = this.subjectTa.value,
 		globPos = this.getGlobalPos(i, s, n);
@@ -540,7 +540,7 @@ ColorTextArea.prototype.getGlobalPos = function(i, s, n) {
  * @param {String} s
  * @return String 'class="kw" ' or ''
 */
-ColorTextArea.prototype.getRule = function(i, s) {
+ColorTextArea.prototype.getRuleV2 = function(i, s) {
 	var wrd = this.getWordByPos(s, i), q = '"', selectionCss = 'sl';
 	
 	if (this.colorRules && this.colorRules[selectionCss] && this.colorRule.isInDiapason(i, this.colorRules[selectionCss])) {
