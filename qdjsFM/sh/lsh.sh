@@ -1,2 +1,2 @@
 #! /bin/bash
-ls -alh --full-time  "/home/andrey/hdata/programs/my/qdjs/jaqMySqlClient/app"
+ls -alh --full-time  "/home/andrey"

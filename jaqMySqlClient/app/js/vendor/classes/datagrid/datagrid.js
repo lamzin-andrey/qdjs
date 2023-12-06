@@ -346,7 +346,7 @@ DataGrid.prototype.getLeftCell = function(r, c) {
 DataGrid.prototype.onKeyDownCell = function(evt) {
 	
 	//TODO если фокус в поле ввода, выходить
-	if (!this.isFocused || this.isEditMode) {
+	if (!this.isFocused || (this.isEditMode && evt.keyCode != 13)) {
 		return true;
 	}
 	evt.preventDefault(); 
@@ -446,7 +446,7 @@ DataGrid.prototype.emitOnChangeCellData = function(keyCode) {
 		return;
 	}
 
-	if (!this.onChangeCellData || !(this.onChangeCellData instanceof Function)) {
+	if (!this.onChangeCellData || !(this.onChangeCellData[1] instanceof Function)) {
 		return;
 	}
 	
@@ -454,7 +454,7 @@ DataGrid.prototype.emitOnChangeCellData = function(keyCode) {
 	if (String(this.tableData[this.editCellY]) == u || String(this.tableData[this.editCellY][this.editCellX]) == u) {
 		return;
 	}
-	this.onChangeCellData(this.tableData[this.editCellY][this.editCellX], this.editCellY, this.editCellX);
+	this.onChangeCellData[1].call(this.onChangeCellData[0], this.tableData[this.editCellY][this.editCellX], this.editCellY, this.editCellX);
 }
 
 /**

@@ -550,6 +550,15 @@ ColorTextArea.prototype.getRule = function(i, s) {
 	if (this.colorRule.isInComm(s, i)) {
 		return 'class=' + q + this.colorRule.cssComments + q;
 	}
+	if (this.colorRule.isInAStr(s, i)) {
+		return 'class=' + q + this.colorRule.cssApString + q;
+	}
+	if (this.colorRule.isInSingleStr(s, i)) {
+		return 'class=' + q + this.colorRule.cssSingleString + q;
+	}
+	if (this.colorRule.isInStr(s, i)) {
+		return 'class=' + q + this.colorRule.cssString + q;
+	}
 	if (this.colorRule.isKW(wrd)) {
 		return 'class=' + q + this.colorRule.cssKeywords + q;
 	}
@@ -557,12 +566,6 @@ ColorTextArea.prototype.getRule = function(i, s) {
 		return 'class=' + q + this.colorRule.cssNums + q;
 	}
 	
-	if (this.colorRule.isInStr(s, i)) {
-		return 'class=' + q + this.colorRule.cssString + q;
-	}
-	if (this.colorRule.isInSingleStr(s, i)) {
-		return 'class=' + q + this.colorRule.cssSingleString + q;
-	}
 	if (this.colorRule.isInRE(s, i)) {
 		return 'class=' + q + this.colorRule.cssRE + q;
 	}

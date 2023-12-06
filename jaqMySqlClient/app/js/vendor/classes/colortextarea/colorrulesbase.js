@@ -415,6 +415,14 @@ ColorRuleBase.prototype.isKW = function(s) {
 	return false;
 }
 
+/**
+ * @description 
+ * @param {String} s
+ * @param {Number} i
+*/
+ColorRuleBase.prototype.isInAStr = function(s, i) {
+	return this.pIsInStr(s, i, '`');
+}
 
 /**
  * @description 

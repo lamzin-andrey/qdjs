@@ -213,10 +213,12 @@ function onExecuteSql(data) {
 		if (parseInt(data.rows)) {
 			//TODO показать мессагу со вставленым id
 			alert('Идентификатор вставленной записи ' + parseInt(data.rows));
+			setStatusText(L('Идентификатор вставленной записи') + ' ' + parseInt(data.rows));
 			return;
 		}
 		if (parseInt(data.ar)) {
 			alert(' Затронуто ' + data.ar + ' строк');
+			setStatusText(L('Затронуто') + ' ' + data.ar + ' ' + L('строк'));
 			return;
 		}
 		if (data.n == 0) {

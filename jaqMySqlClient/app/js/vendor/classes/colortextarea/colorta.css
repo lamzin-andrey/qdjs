@@ -5,8 +5,11 @@ i {
 	color: blue;
 	/*font-weight:bold;*/
 }
-.ss, .s, .as {
+.ss, .s {
 	color: green;
+}
+.as {
+	color: #F2068C;
 }
 .c {
 	color: gray;
