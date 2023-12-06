@@ -6,6 +6,7 @@
 */
 function Qt5ColorTextArea(blockId, colorRule) {
 	this.onChangeCursorPositionContext = this;
+	this.skipLineStatus = 0;
 	this.container = e(blockId);
 	this.subjectTa = ee(this.container, 'textarea')[0];
 	appendChild(this.container, 'div', '', {'class': 'mirror'});
@@ -30,15 +31,12 @@ Qt5ColorTextArea.prototype.onResize = function(evt) {
 	cursorBlock.style.height = styles.height;
 }
 
-
-
-
 /** 
  * 
 */
 Qt5ColorTextArea.prototype.onChangeCursorPosition = function(coord) {
 	var s = ' ';
-	if (coord && !isNaN(parseInt(coord.line))) {
+	if (!this.skipLineStatus && coord && !isNaN(parseInt(coord.line))) {
 		setStatusText(L('Line: ') + s + (coord.line + 1) + ', ' + L('Col: ') + s + (1 + coord.column));
 	}
 }

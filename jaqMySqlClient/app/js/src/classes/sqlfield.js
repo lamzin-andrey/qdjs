@@ -39,6 +39,7 @@ SqlField.prototype.setListeners = function () {
 					try {
 						self.mediator.dataGrid.clear();
 						sql = self.getActiveQuery(self.view.value.trim());
+						window.colorTa.skipLineStatus = 1;
 						setStatusText(L('Run query...'));
 						// alert(sql);
 					} catch(e) {

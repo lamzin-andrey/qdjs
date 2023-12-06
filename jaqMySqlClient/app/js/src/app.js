@@ -219,6 +219,7 @@ function onExecuteSql(data) {
 			alert('Выбрано ' + data.n + ' строк');
 		}
 		setStatusText(L('Выбрано') + ' ' + data.n + ' ' + L('строк'));
+		window.colorTa.skipLineStatus = 0;
 		
 		W.dataGrid.set(data.rows, data.n);
 		

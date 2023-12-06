@@ -28,7 +28,7 @@ ColorTextArea.prototype.initalizeView = function() {
 		cursorBlock = cs(parentNode, 'cursor')[0],
 		styles,
 		self = this;
-	// this.startTimer(); inputV3
+	// this.startTimer(); // inputV3
 	if (mirror) {
 		this.mirror = mirror;
 	}
@@ -228,15 +228,23 @@ ColorTextArea.prototype.onInputV3 = function(evt) {
 		return;
 	}
 	this.inpProc = 1;
-		
 	
-	if (evt && evt.char && this.hasLineNumber()) {
+	
+	this.setRules({});
+	// Переустановит (дополнит данными о позиции выделения текста) те же rules что и this.colorRule.calc
+	this.selection.calc();
+	
+	if (this.hasLineNumber()) {
 		coord = this.textCursor.getCoord();
-		this.updateLineText(coord.line);
-		this.doColorLine(coord.line);
+		this.priorityLineN = coord.line;
+		this.onColorTick();
+		// this.doColorLine(coord.line);
 	} else {
 		this.buildText();
 	}
+	
+	
+	
 	this.inpProc = 0;
 	
 	if (this.onChangeCursorPosition instanceof Function) {
@@ -262,13 +270,15 @@ ColorTextArea.prototype.buildText = function() {
 	var s = this.subjectTa.value, i, ch, q = '', cls = 'class="kw"',
 		closeDiv = '</div>',
 		n = 0,
-		openDiv;
+		openDiv,
+		allClosed = 0;
 	openDiv = '<div id="' + this.lineIdPrefix + n + '">';
 	q = openDiv;
+	/*
 	this.setRules({});
 	
 	// Переустановит (дополнит данными о позиции выделения текста) те же rules что и this.colorRule.calc
-	this.selection.calc();
+	this.selection.calc();*/
 	
 	// Всем переносам строк, которые без текста добавляем пробел
 	var prevCh, lastEmptyBr = sz(s) - 1;
@@ -292,13 +302,13 @@ ColorTextArea.prototype.buildText = function() {
 			n++;
 			openDiv = '<div id="' + this.lineIdPrefix + n + '">'
 			if (i < lastEmptyBr) {
-				ch = '<i><br></i>' + closeDiv + openDiv;
+				ch = '<i>&nbsp;</i>' + closeDiv + openDiv;
 			} else {
 				//ch = '<i><br></i><i><br></i>';
-				ch = '<i><br></i>' + closeDiv + openDiv;
+				ch = '<i>&nbsp;</i>' + closeDiv + openDiv;
 				n++;
 				openDiv = '<div id="' + this.lineIdPrefix + n + '">'
-				ch += '<i><br></i>' + closeDiv + openDiv + closeDiv;
+				ch += '<i>&nbsp;</i>' + closeDiv;
 			}
 		} else {
 			cls = '';
@@ -328,7 +338,7 @@ ColorTextArea.prototype.startTimer = function() {
  * @description Красим очередную строку
 */
 ColorTextArea.prototype.onColorTick = function() {
-	var total;
+	var total, i;
 	
 	if (this.colorProc) {
 		return;
@@ -341,12 +351,15 @@ ColorTextArea.prototype.onColorTick = function() {
 	}
 	this.grayLines = this.subjectTa.value.split('\n');
 	total = this.grayLines.length;
-	if (this.currentColorLine < total) {
-		this.doColorLine(this.currentColorLine);
-		this.currentColorLine++;
-	} else {
-		this.currentColorLine = 0;
+	for (i = 0; i < 100; i++) {
+		if (this.currentColorLine < total) {
+			this.doColorLine(this.currentColorLine);
+			this.currentColorLine++;
+		} else {
+			this.currentColorLine = 0;
+		}
 	}
+	
 	this.colorProc = 0;
 }
 
@@ -382,17 +395,22 @@ ColorTextArea.prototype.doColorLine = function(n) {
 	if (!s) {
 		s = '';
 	}
-	SZ = sz(s);
-	for (i = 0; i < SZ; i++) {
-		ch = s.charAt(i);
-		if (ch == ' ') {
-			ch = '&nbsp;';
+	if (s == '') {
+		q = '<i class="br">&nbsp;</i>';
+	} else {
+		SZ = sz(s);
+		for (i = 0; i < SZ; i++) {
+			ch = s.charAt(i);
+			if (ch == ' ') {
+				ch = '&nbsp;';
+			}
+			cls = this.getRule(i, s);
+			ch = '<i ' + cls + '>' + ch + '</i>';
+			q += ch;
 		}
-		cls = this.getRule(i, s);
-		ch = '<i ' + cls + '>' + ch + '</i>';
-		q += ch;
 	}
-	div.innerHTML = q;
+	
+	div.innerHTML = q + '<i class="br">&nbsp;</i>';
 }
 
 /** 
@@ -450,6 +468,8 @@ ColorTextArea.prototype.onInput = function(evt) {
 		this.onChangeCursorPosition.call(this.onChangeCursorPositionContext, this.textCursor.getCoord());
 	}
 }
+
+
 
 /** 
  * @description Этот метод определяет, надо ли подсвечивать очередной символ, и каким цветом

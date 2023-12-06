@@ -58,6 +58,44 @@ ColorTextAreaCursor.prototype.setListeners = function() {
 /** 
  * @description Устанавливает курсор в блоке соответственно реальному курсору в реальном поле ввода 
 */
+ColorTextAreaCursor.prototype.setCursorPositionV3 = function() {
+	var pos = this.getCaretPosition(this.textarea),
+		ls, sZ, y = 0, x = 0;
+	if (pos < 0 || isNaN(pos)) {
+		// console.log('Exit here');
+		return;
+	}
+	/*pos--;
+	if (pos < 0) {
+		pos = 0;
+	}*/
+	ls = ee(this.mirror, 'i');
+	// console.log('ls', ls);
+	// console.log('pos', pos);
+	sZ = sz(ls);
+	if (pos > sZ - 1) {
+		pos = sZ - 1;
+	}
+	// console.log('pos aft corr', pos);
+	if (ls[pos]) {
+		console.log('Set pos' + pos);
+		
+		y = (ls[pos].offsetTop /*- this.container.offsetTop*/ - this.textarea.scrollTop);
+		x = (ls[pos].offsetLeft /*- this.container.offsetLeft*/);
+		if (y > this.mirror.offsetHeight || y < -1) {
+			this.cursor.style.opacity = 0;
+		} else {
+			this.cursor.style.opacity = 1;
+		}
+		// console.log('ls[pos].offsetTop', y);
+		// console.log('ls[pos].offsetLeft', x);
+		this.cursor.style.top = y + 'px';
+		this.cursor.style.left = x + 'px';
+	}
+}
+/** 
+ * @description Устанавливает курсор в блоке соответственно реальному курсору в реальном поле ввода 
+*/
 ColorTextAreaCursor.prototype.setCursorPosition = function() {
 	var pos = this.getCaretPosition(this.textarea),
 		ls, sZ, y = 0, x = 0;
@@ -130,6 +168,7 @@ ColorTextAreaCursor.prototype.getCoord = function() {
 		r = {},
 		arr,
 		pos = this.getCaretPosition(ta);
+	this.lastGetPos = pos;
 	if (pos <= 0) {
 		r.line = 0;
 		r.column = 0;
