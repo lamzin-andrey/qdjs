@@ -125,6 +125,24 @@ function onClickChangeHideMode() {
 		Qt.renameMenuItem(1, 0, text);
 	}
 }
+
+function onClickNoShowCatalogs() {
+	var sName = "noShowDir", mode = intval(Settings.get(sName)), text;
+	if (1 === mode) {
+		mode = 0;
+		text = L("No show catalogs");
+	} else {
+		mode = 1;
+		text = L("Show catalogs");
+	}
+	Settings.set(sName, mode);
+	
+	if (app && app.tab) {
+		app.tab.setPath(app.tab.currentPath);
+		Qt.renameMenuItem(1, 3, text);
+	}
+}
+
 function onClickChangeAddressMode() {
 	var mode = intval(Settings.get('addressLineMode')), text;
 	if (1 === mode) {

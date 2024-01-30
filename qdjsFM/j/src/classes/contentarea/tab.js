@@ -177,6 +177,11 @@ Tab.prototype.buildList = function(lsout, calcDirSizes) {
 		}
 	}
 	this.sort.apply(files);
+	
+	if (Settings.get("noShowDir") == 1) {
+		return files;
+	}
+	
 	this.sort.apply(dirs);
 	SZ = sz(files);
 	for (i = 0; i < SZ; i++) {

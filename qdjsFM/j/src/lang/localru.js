@@ -78,6 +78,8 @@ var langRu = {
 	"Unable read directory" : "Невозможно прочитать каталог",
 	"Restart application and try again." : "Перезапустите приложение и попробуйте снова.",
 	"Select file with early seaved bookmark" : "Выбрать файл с ранними сохраненными закладками",
+	"Show catalogs" : "Показывать каталоги",
+	"No show catalogs" : "Не показывать каталоги",
 	"" : ""
 };
 
