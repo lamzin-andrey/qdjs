@@ -1,0 +1,11 @@
+#bigNum{
+  height: 40%;
+  font-size: 3em;
+  line-height: 2.55em;
+  vertical-align:center; 
+  background-color: teal;
+}
+#bigNum i{
+  display: inline-block;
+  /*background-color: aqua;*/
+}

@@ -1,0 +1,12 @@
+
+#bigNum{
+  height: 40vh;
+  font-size: 10vh;
+  line-height: 40vh;
+  vertical-align:center; 
+  background-color: teal;
+}
+#bigNum i{
+  display: inline-block;
+  background-color: aqua;
+}

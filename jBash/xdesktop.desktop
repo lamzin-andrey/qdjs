@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=JBash
+Comment=
+Exec=/opt/qt-desktop-js/apps/jBash/jBash.sh
+Icon=/opt/qt-desktop-js/apps/jBash/app/i/icons/32.png
+Path=/opt/qt-desktop-js/apps/jBash
+Categories={{category}};
+Terminal=false
+StartupNotify=false
+Name[ru]=JBash
+Name[en]=JBash

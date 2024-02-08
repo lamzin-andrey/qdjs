@@ -1,0 +1,44 @@
+.tc{
+  text-align: center;
+}
+
+#hApps{
+  text-align: left;
+  margin-top: 8px;
+}
+
+.hApp {
+  width:  68px;
+  height:  68px;
+  /*border:  aqua 1px solid;*/
+  display: inline-block;
+  text-align: center;
+}
+
+.hApp img {
+  width: 48px;
+  text-align: center;
+}
+
+.hApp u{
+  text-decoration: none;
+  color: #fff;
+  display: inline-block;
+  height: 16px;
+  line-height:  14px;
+  max-height: 18px;
+  background-color: rgba(0, 0, 0, 0.75);
+  text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 68px;
+  width:  100%;
+  font-size: 15px;
+  font-weight: bold;
+  margin-left: 6px;
+}
+
+#hSearchWrap, #iSearch{
+  /*height:  0px;
+  border: none;*/
+}
