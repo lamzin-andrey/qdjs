@@ -1,5 +1,4 @@
 var debug = false;
-window.envFile = '/opt/lampp/htdocs/backend4-105.lan/.env';
 
 window.addEventListener('load', onLoad);
 window.onkeyup = onKeyUp;

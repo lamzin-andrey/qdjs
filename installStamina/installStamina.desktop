@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Install Stamina in Xubuntu 22.04
+Comment=
+Exec=/opt/qt-desktop-js/apps/installStamina/installStamina.sh
+Icon=/opt/qt-desktop-js/apps/installStamina/app/i/icons/32.png
+Path=/opt/qt-desktop-js/apps/installStamina
+Categories={{category}};
+Terminal=false
+StartupNotify=false
+Name[ru]=Установка Stamina в Xubuntu 22.04
+Name[en]=Install Stamina in Xubuntu 22.04

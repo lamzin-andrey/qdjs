@@ -1,0 +1,126 @@
+body {
+    padding: 0px;
+    margin:0px;
+}
+
+.tr, .text-right {
+    text-align: right;
+}
+
+input[type=text],input[type=password], input[type=number] {
+    min-height:32px;
+    font-size: 20px;
+}
+
+.wBorder {
+	margin:4px;
+	padding: 4px;
+}
+
+#hLabelEntityCatalog, #hLabelCatalog, #hLabelSrvCatalog {
+	min-width:200px;
+	display:inline-block;
+}
+
+.text {
+	font-size: 10px;
+}
+
+
+.leftImage {
+	float:left;
+	background: url('../i/work/example.png');
+	background-repeat: no-repeat;
+	width: 162px;
+	/*! border: 1px solid red; */
+	height: 280px;
+}
+
+.workArea {
+	background-color: #FFF;
+	float:left;
+	width: 329px;
+	height: 280px;
+	color: #000;
+	padding-left: 12px;
+	padding-top: 0px;
+}
+
+.workArea h1{
+	font-size: 19px;
+}
+
+.workArea label {
+	display:block;
+}
+
+.workArea input[type=text] {
+	width:97%;
+	min-height:16px;
+	height: 16px;
+	font-size: 12px;
+}
+
+.windowBtns img {
+	margin-left:5px;
+}
+
+.applicationSize label {
+	display:inline;
+}
+
+.applicationSize input[type=number] {
+	width:34px;
+	-webkit-appearance: textfield;
+    appearance: textfield;
+    -moz-appearance: textfield;
+    min-height:16px;
+	height: 16px;
+	font-size: 12px;
+}
+.applicationSize i {
+	font-style: normal;
+	line-height:20px;
+	vertical-align:top;
+}
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+.buttons {
+	padding-right: 25px;
+	padding-top: 9px;
+	border-top: 1px solid #aca899;
+	/*! margin-top: 10px; */
+	background-color: #D2D0C2;
+	font-size:12px;
+}
+
+.buttons input[type=button]{
+	margin:3px;
+	min-width: 75px;
+}
+
+
+#imgAppIcon {
+	border: solid 1px gray;
+	border-radius:8px;
+	/*! margin-top: 18px; */
+	padding: 20px;
+	float:left;
+}
+
+
+#hAppIconScreen input[type=button] {
+	font-size:12px;
+}
+.bSelectImageWr {
+	line-height:123px;
+	vertical-align:bottom;
+	margin-left: 160px;
+}

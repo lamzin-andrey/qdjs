@@ -1,0 +1,61 @@
+body {
+    max-height:100%;
+    overflow:hidden;
+}
+html, body {
+    max-height:100%;
+}
+
+
+.w100 {
+    width: 100%;
+}
+
+.fl {
+	float: left;
+}
+
+.cf, .cl {
+	clear: both;
+}
+
+.no-resize {
+	resize:none;
+}
+
+textarea.w100{
+	width: 99%;
+}
+
+.wBorder {
+	border: solid 1px white;
+}
+.btn {
+	cursor:pointer;
+}
+.hide {
+	display:none;
+}
+
+#hMainScreen {
+	overflow-y:scroll;
+	/*height:600px;*/
+}
+
+.bg-wrk {
+	
+}
+.wrk {
+	/*background: url('../i/work/wizard.png');
+	background-repeat: no-repeat;
+	background-position-y: -32px;*/
+	width: 503px;
+	height: 280px;
+}
+
+.xpfooter input[type=button], #hAppIconScreen input[type=button]{
+	border-color: #b0cdf2;
+	border-radius: 7px;
+	cursor:pointer;
+	background: linear-gradient(to bottom, #FFF, #FFF,  #7AF,  #FFF);
+}

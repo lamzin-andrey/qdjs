@@ -1,0 +1,33 @@
+#hStaminaInstaller {
+    max-width:80%;
+    overflow:hidden;
+}
+
+.hStaminaInstText {
+    font-size: 12px;
+    max-width:90%;
+    word-wrap:break-word;
+}
+
+.vScroll {
+	overflow-y:scroll;
+	max-height:200px;
+}
+.vScroll p{
+	max-width:80%!important;
+	
+}
+
+#term {
+    background-color: #000;
+    color:white;
+    padding:8px;
+    font-style:normal;
+    font-family:arial;
+    font-size:14px
+}
+.bux {
+    color:#00FF00;
+    margin-right:6px;
+}
+

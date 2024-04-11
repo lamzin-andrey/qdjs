@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+	    <meta charset="UTF-8">
+	    <title>Install Stamina in Xubuntu 22.04</title>
+	    <meta name="windowButtons" content="1010" width="480" height="320"  fixed>
+	    <link rel="stylesheet" type="text/css" href="./s/g.css" />
+	    <link rel="stylesheet" type="text/css" href="./s/0.css" />
+	    <link rel="stylesheet" type="text/css" href="./s/colors.css" />
+	    <link rel="stylesheet" type="text/css" href="./s/fonts.css" />
+	    <link rel="stylesheet" type="text/css" href="./s/app.css" />
+    </head>
+    <body>
+	<div class="wrk">
+		<div class="leftImage">&nbsp;</div>
+		<div class="workArea">
+<!---->		<div class="screen bg-wrk" id="hScreen1">
+				<h1 class="hide">First screen</h1>
+				<div id="hStaminaInstaller">
+					Установка клавиатурного тренажера Stamina в Xubuntu 22.04
+				</div>
+				<div id="hStaminaInstText" class="hStaminaInstText">
+					<p>Вас приветствует установщик программы Stamina в Xubuntu 22.04.</p>
+					<p>Он скопирует нужную dll в каталог wine перед тем как запустить установщик Stamina для Windows.</p>
+					<p>Надеюсь, что это удобнее, чем копировать его вручную.</p>
+					<p>У вас должен быть установлен wine прежде, чем вы продолжитке установку.</p>
+				</div>
+			</div>
+<!---->		<div class="screen bg-wrk hide" id="hScreen2">
+				<h1 class="hide">Second screen</h1>
+				<div id="hStaminaInstaller">
+					Установка клавиатурного тренажера Stamina в Xubuntu 22.04
+				</div>
+				<div id="hStaminaInstText" class="hStaminaInstText">
+					<p>Всё получилось.</p>
+					<p>Далее будет запущен инсталлятор Stamina для windows.</p>
+					<p>В Xubuntu 22.04 он добавит на ваш рабочий стол ярлык программы Stamina.</p>
+					<p>Хорошего дня!</p>
+				</div>
+			</div>
+			<!---->		<div class="screen bg-wrk hide" id="hScreen3Sys32" >
+				<h1 class="hide">Third screen Sys32</h1>
+				<div id="hStaminaInstaller">
+					Установка клавиатурного тренажера Stamina в Xubuntu 22.04
+				</div>
+				<div id="hStaminaInstText3" class="hStaminaInstText vScroll">
+					<p>Кажется, всё получилось...</p>
+					<p>У вас точно не установлен wine 64?</p>
+					<p>Если вы уверены, что это так, можете продолжить.</p>
+					<p>В противном случае скопируйте файл mfc42.dll в каталог <i id="hSysPath">syswow64</i> вручную.</p>
+					<p>Далее будет запущен инсталлятор Stamina для windows.</p>
+					<p>В Xubuntu 18.04 или 22.04 он добавит на ваш рабочий стол ярлык программы Stamina.</p>
+					<p>Хорошего дня!</p>
+				</div>
+			</div>
+			<!---->		<div class="screen bg-wrk hide" id="hScreen4Sorry" >
+				<h1 class="hide">Sorry!</h1>
+				<div id="hStaminaInstaller">
+					Установка клавиатурного тренажера Stamina в Xubuntu 22.04
+				</div>
+				<div id="hStaminaInstText4" class="hStaminaInstText vScroll">
+					<p>Что-то пошло не так...</p>
+					<p>Придется скопировать файл mfc42.dll в каталог <i id="hSysPath2">syswow64</i> вручную.</p>
+					<p>После чего запустите инсталлятор Stamina для windows.</p>
+					<p>В Xubuntu 18.04 или 22.04 он добавит на ваш рабочий стол ярлык программы Stamina.</p>
+					<p>Хорошего дня!</p>
+				</div>
+			</div>
+			<!---->		<div class="screen bg-wrk hide" id="hScreen5NeedWine" >
+				<h1 class="hide">Sorry!</h1>
+				<div id="hStaminaInstaller">
+					Установка клавиатурного тренажера Stamina в Xubuntu 22.04
+				</div>
+				<div id="hStaminaInstText5" class="hStaminaInstText vScroll">
+					<p>Не найден каталог .wine.</p>
+					<p>Если он расположен у вас нестандартно, придется скопировать файл mfc42.dll в каталог <i id="hSysPath3">syswow64</i> вручную.</p>
+					<p>Но скоре всего, wine у вас просто не установлен, либо ещё ни разу не запускался.</p>
+					<p>Если wine установлен, но не запускался ещё ни разу выполните в терминале:</p>
+					<div class="term" id="term">
+						<i class="bux">$</i>winecfg
+					</div>
+					<p>Если wine не установлен, выполните в терминале:</p>
+					<div class="term" id="term">
+						<i class="bux">$</i>sudo apt-get install libwine libwine:i386 wine wine64 wine32:i386 fonts-wine
+					</div>
+					<p>Либо нажмите далее, чтобы запустить этот скрипт прямо из этой программы установки.</p>
+					<p>После установки wine перезапустите этот инсталлятор, чтобы установить Stamina.</p>
+				</div>
+			</div>
+		</div>
+		<div class="cf buttons tr xpfooter">
+			<input type="button" value="Prev" id="bPrev">
+			<input type="button" value="Next" id="bNext">
+			<input type="button" value="Cancel" id="bCancel">
+		</div>
+	</div>
+	
+    </body>
+    
+     <!-- dev tool -->
+    <script src="./js/dev/j.js"></script>
+    <script src="./js/dev/os.js"></script>
+    <script src="./js/dev/qt.js"></script>
+    <script src="./js/dev/phpi.js"></script>
+    <script src="./js/dev/start.js"></script>
+    
+    <!-- /dev tool -->
+    
+    <!-- shared libs  -->
+    <script type="text/javascript" src="./js/vendor/micron.js" ></script>
+    <script type="text/javascript" src="./js/vendor/php.js" ></script>
+    <script type="text/javascript" src="./js/vendor/screens.js" ></script>
+    <script type="text/javascript" src="./js/vendor/objects/env/appenv.js" ></script>
+    <script type="text/javascript" src="./js/vendor/objects/recentdir.js" ></script>
+    <script type="text/javascript" src="./js/vendor/objects/settings.js" ></script>
+    <script type="text/javascript" src="./js/vendor/objects/texttransform.js" ></script>
+    <script type="text/javascript" src="./js/vendor/objects/inputvaluestorage.js" ></script>
+    <script type="text/javascript" src="./js/vendor/lang.js" ></script>
+    <!-- /shared libs  -->
+    
+    <!-- app libs  -->
+    <!-- app /libs  -->
+    
+    <!--script type="text/javascript" src="./js/src/objects/appRecentFolder.js" ></script>
+    <script type="text/javascript" src="./js/src/classes/cstoredcheckbox.js" ></script>
+    <script type="text/javascript" src="./js/src/classes/jsonCheckbox.js" ></script-->
+    
+    <script type="text/javascript" src="./js/src/classes/cscreenwindowbutton.js" ></script>
+    <script type="text/javascript" src="./js/src/classes/cscreenappname.js" ></script>
+    <script type="text/javascript" src="./js/src/classes/cscreenappicon.js" ></script>
+    <script type="text/javascript" src="./js/src/objects/staminainstaller.js" ></script>
+    
+    <!-- locale -->
+    <script type="text/javascript" src="./js/src/lang/local.js" ></script>
+    <script type="text/javascript" src="./js/src/lang/localru.js" ></script>
+    <!-- /locale -->
+
+    
+    <script type="text/javascript" src="./js/src/app.js" ></script>
+</html>
