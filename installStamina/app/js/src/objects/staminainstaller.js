@@ -68,7 +68,7 @@ CStaminaInstaller.prototype.onClickNextScr2 = function(ev) {
 
 
 CStaminaInstaller.prototype.onClickNextScr5 = function(ev) {
-	var cmd = "#!/bin/bash\npkexec " + App.dir()
+	var cmd = "#!/bin/bash\nxfce4-terminal -e " + App.dir()
 		+ "/data/installwine.sh",
 		
 		o = this;

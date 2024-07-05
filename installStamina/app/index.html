@@ -23,7 +23,7 @@
 					<p>Вас приветствует установщик программы Stamina в Xubuntu 22.04.</p>
 					<p>Он скопирует нужную dll в каталог wine перед тем как запустить установщик Stamina для Windows.</p>
 					<p>Надеюсь, что это удобнее, чем копировать его вручную.</p>
-					<p>У вас должен быть установлен wine прежде, чем вы продолжитке установку.</p>
+					<p>У вас должен быть установлен wine прежде, чем вы продолжите установку.</p>
 				</div>
 			</div>
 <!---->		<div class="screen bg-wrk hide" id="hScreen2">
@@ -45,7 +45,7 @@
 				</div>
 				<div id="hStaminaInstText3" class="hStaminaInstText vScroll">
 					<p>Кажется, всё получилось...</p>
-					<p>У вас точно не установлен wine 64?</p>
+					<p>У вас точно не установлен wine64?</p>
 					<p>Если вы уверены, что это так, можете продолжить.</p>
 					<p>В противном случае скопируйте файл mfc42.dll в каталог <i id="hSysPath">syswow64</i> вручную.</p>
 					<p>Далее будет запущен инсталлятор Stamina для windows.</p>
@@ -81,7 +81,18 @@
 					</div>
 					<p>Если wine не установлен, выполните в терминале:</p>
 					<div class="term" id="term">
-						<i class="bux">$</i>sudo apt-get install libwine libwine:i386 wine wine64 wine32:i386 fonts-wine
+						<div>
+							<i class="bux">$</i>sudo dpkg --add-architecture i386
+						</div>
+						<div>
+							<i class="bux">$</i>sudo apt update
+						</div>
+						<div>
+							<i class="bux">$</i>sudo apt-get install libwine  wine wine64 wine32 fonts-wine
+						</div>
+						<div>
+							<i class="bux">$</i>winecfg
+						</div>
 					</div>
 					<p>Либо нажмите далее, чтобы запустить этот скрипт прямо из этой программы установки.</p>
 					<p>После установки wine перезапустите этот инсталлятор, чтобы установить Stamina.</p>
