@@ -1,0 +1,2 @@
+#! /bin/bash
+ls -lh --full-time  "/opt/qt-desktop-js/apps/qdjsFlash/app/js/app-first.js" "/opt/qt-desktop-js/apps/qdjsFlash/app/js/recentdir.js" "/opt/qt-desktop-js/apps/qdjsFlash/app/js/recentfile.js" "/opt/qt-desktop-js/apps/qdjsFlash/app/js/app.js" ""

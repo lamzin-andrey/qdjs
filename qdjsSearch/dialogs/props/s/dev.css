@@ -1,0 +1,9 @@
+body.template {
+	background-image: url('../i/layout.png');
+	background-repeat: no-repeat;
+	background-position-y: -50px;
+}
+
+.devText {
+	/*color: red!important;*/
+}

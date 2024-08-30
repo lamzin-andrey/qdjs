@@ -1,3 +1,12 @@
+@font-face {
+  font-family: 'arial';
+  src: url('../fonts/arial.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'arialbd';
+  src: url('../fonts/arialbd.ttf') format('truetype');
+}
 #inputdlgarea {
 	background-color: #E4EFFF;
 	position: fixed;

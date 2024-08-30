@@ -56,6 +56,7 @@
 		return pos;
 	}
 	function initSampleTextEditor()  {
+		MW.setIconImage(App.dir() + "/i/txt.png");
 		if (window.preInitJaqEditorApp instanceof Function) {
 			preInitJaqEditorApp();
 		}

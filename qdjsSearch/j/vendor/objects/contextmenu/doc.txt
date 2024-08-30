@@ -1,0 +1,89 @@
+ContextMenu.
+
+#cmExample {
+	position:absolute;
+	right:0px;
+	bottom:0px;
+	z-index:4;
+}
+Это пример того блока, в который динамически добавим конкретное контекстное меню.
+
+Пример добавленного из двух пунктов, один с иконкой, второй без.
+
+<div class="contextMenu">
+	<div class="contextMenuItem" onclick="app.folderContextMenu.onClickOpen()"> <!-- Здесь вызываем обработчик клика на конкретном пункте контекстного меню элемнета-->
+		<div class="contextMenuItemIcon">
+			<img src="./i/icon16.png">
+		</div>
+		<div class="contextMenuItemText">Открыть</div>
+		<div class="cf"></div>
+	</div>
+	<div class="contextMenuItem"> <!-- здесь ничего не произойдёт, так как нет onclick -->
+		<div class="contextMenuItemIcon">
+			&nbsp;
+		</div>
+		<div class="contextMenuItemText">Закрыть</div>
+		<div class="cf"></div>
+	</div>
+</div>
+			
+
+Пример элемента на странице с контекстным меню.
+
+<div class="tabContentItems" id="tabItems">
+				
+	<div data-cmid="cmExample" data-id="f1001"> <!-- При клике правой кнопкой на этом элементе html из #cmExample будет показан рядом с курсором-->
+		<div class="tabContentItem">
+			<div class="tabContentItemNameMain fl">
+				<div class="tabContentItemIcon fl">
+					<img class="imgTabContentItemIcon" src="./i/folder32.png">
+				</div>
+				<div class="tabContentItemName fl">Новая папка</div>
+				<div class="cf"></div>
+			</div>
+			
+			<div class="tabContentItemSize fl">
+				<div class="tabContentItemName">4,1 Кб</div>
+			</div>
+			
+			<div class="tabContentItemType fl">
+				<div class="tabContentItemName">Файл настроек рабочего стола</div>
+			</div>
+			
+			<div class="tabContentItemDate fl">
+				<div class="tabContentItemDate">2022-06-16 21:30:37</div>
+			</div>
+			<div class="cf"></div>
+		</div> <!-- /tabContentItem -->
+		<div class="cf"></div>
+	</div>
+	
+</div>
+
+
+Пример обработчика пункта контекстного меню Открыть
+
+// For test
+
+window.app = {
+	folderContextMenu: {
+		onClickOpen:function(){
+			alert('Will open ' + window.currentCmTargetId);
+			ContextMenuManager.hide();
+		}
+	}
+};
+
+Для данного примера
+window.currentCmTargetId
+
+Будет содержать значение f1001.
+
+Это то значение, которое мы записали в аттрибут  data-id рядом с атрибутом data-cmid
+
+data-id="f1001"
+data-cmid="cmExample"
+
+
+--------
+Логика js в каталоге выше, файл cmenu.js

@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=QdjsSearch
+Comment=Alt browser
+Exec=/opt/qt-desktop-js/apps/qdjsSearch/qdjsSearch.sh
+Icon=/opt/qt-desktop-js/apps/qdjsSearch/i/folder32.png
+Path=/opt/qt-desktop-js/apps/qdjsSearch
+Categories=Tools;
+Terminal=false
+StartupNotify=false
+Name[ru]=QDJS Поиск файлов и немного других плюшек
+Name[en]=QDJS Search and File manager
+Category=Tools;

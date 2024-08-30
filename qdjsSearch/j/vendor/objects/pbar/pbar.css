@@ -1,0 +1,38 @@
+#dompb {
+	/*background-image:url('./../../j/vendor/objects/pbar/pbar-piece.png');*/
+	background-image:url('./pbar-piece.png');
+	background-repeat: repeat-x;
+	background-position: 0 0;
+}
+.dompb {
+	background-image:url('./pbar-piece.png');
+	/*background-image: url('./../../j/vendor/objects/pbar/pbar-piece.png');*/
+	background-repeat: repeat-x;
+	background-position: 0 0;
+	height:10px;
+}
+#progressStateLabel {
+	margin-bottom:4px;
+	font-size: 11px;
+	height: 12px;
+	overflow: hidden;
+	width: 270px;
+}
+.pbarwrap {
+	width:100%;
+	border:1px solid #252526;
+	border-radius:4px;
+	height:10px;
+	background-color:white;
+	overflow:hidden;
+	/*! font-size: 10px; */
+}
+.text-center {
+	text-align:center;
+}
+.ePb {
+	display:non;
+	width: 96%;
+	margin: 70px auto;
+	font-size: 11px;
+}
