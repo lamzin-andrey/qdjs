@@ -1,2 +1,2 @@
 #! /bin/bash
-ls -alh --full-time -tr "/home/andrey"
+ls -alh --full-time  "//opt/lampp/htdocs/sl.loc/www"

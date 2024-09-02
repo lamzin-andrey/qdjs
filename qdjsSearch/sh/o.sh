@@ -1,3 +1,2 @@
 #!/bin/bash
-export LD_LIBRARY_PATH=:/usr/lib/x86_64-linux-gnu;
-xdg-open '/home/andrey/hdata/programs/my/qdjs/qdjsSearch/dialogs/mcp/j'
+xdg-open '/opt/lampp/htdocs/sl.loc/www/flash/swf/flash941.swf'

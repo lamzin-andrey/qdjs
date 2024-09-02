@@ -1,2 +1,2 @@
 #! /bin/bash
-find "/home/andrey" -type f -name *ello.js
+find "//opt/lampp/htdocs/sl.loc/www" -type f -name *.swf
