@@ -24,7 +24,7 @@ Search.prototype.setListeners = function() {
 	  o.onClickClose();
   }
   o.bSearch.onclick = function(ev) {
-	  o.onClickSearch(); // TODO
+	  o.onClickSearch();
   }
   o.bSearchBrowse.onclick = function(ev) {
 	  o.onClickBrowse(); // TODO

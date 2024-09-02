@@ -1,2 +1,2 @@
 #! /bin/bash
-find "/opt/qt-desktop-js/apps/qdjsFlash" -type f -name *.js
+find "/home/andrey" -type f -name *ello.js

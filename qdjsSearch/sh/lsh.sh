@@ -1,2 +1,2 @@
 #! /bin/bash
-ls -alh --full-time  "/opt/qt-desktop-js/apps/qdjsFM"
+ls -alh --full-time -tr "/home/andrey"

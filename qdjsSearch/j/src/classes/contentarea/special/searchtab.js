@@ -243,6 +243,36 @@ SearchTab.prototype.onKeyDown = function(evt) {
 
 
 SearchTab.prototype.searchConditionOk = function(s){
+	var o = this; 
+	return o.searchConditionContaintsSubstrOk(s) && o.searchConditionShowHidden(s);
+	
+}
+
+SearchTab.prototype.searchConditionShowHidden = function(s){
+	var a, name, line, buf; 
+	
+	if (this.searchHidden) {
+		return true;
+	}
+	
+	buf = s.split('->');
+	a = buf[0].split(/\s+/);
+	if (sz(a) < 9) {
+		return false;
+	}
+	name = a.slice(8).join(' ').replace(/^'/, '').replace(/'$/, '');
+	name = pathinfo(name);
+	name = name.basename;
+	
+	if (name.charAt(0) == ".") {
+		return false;
+	}
+	
+	
+	return true;
+}
+
+SearchTab.prototype.searchConditionContaintsSubstrOk = function(s){
 	var a, name, fh, line, buf; 
 	
 	if (!this.containtsText) {
@@ -252,9 +282,10 @@ SearchTab.prototype.searchConditionOk = function(s){
 	buf = s.split('->');
 	a = buf[0].split(/\s+/);
 	if (sz(a) < 9) {
-		return;
+		return false;
 	}
 	name = a.slice(8).join(' ').replace(/^'/, '').replace(/'$/, '');
+	
 	
 	if (FS.filesize(name) > 100*1024*1024) {
 		fh = FS.open(name, "r");
@@ -272,6 +303,7 @@ SearchTab.prototype.searchConditionOk = function(s){
 			return true;
 		}
 	}
+	
 }
 
 
