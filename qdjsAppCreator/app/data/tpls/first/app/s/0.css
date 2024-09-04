@@ -54,8 +54,13 @@ textarea.w100{
 }
 
 .xpfooter input[type=button], #hAppIconScreen input[type=button]{
-	border-color: #b0cdf2;
+	border: none;
 	border-radius: 7px;
 	cursor:pointer;
-	background: linear-gradient(to bottom, #FFF, #FFF,  #7AF,  #FFF);
+	background: linear-gradient(to top, #0063ff, white,white,white,white, white,white, #83adee);
+	box-shadow: 3px 2px 3px 0px #95a4bb;
+}
+
+.xpfooter input[type=button]:active, #hAppIconScreen input[type=button]:active{
+	background: linear-gradient(to top, #0064ff, white,white,white,white,white, #0064ff);
 }
