@@ -80,6 +80,7 @@ var langRu = {
 	"Select file with early seaved bookmark" : "Выбрать файл с ранними сохраненными закладками",
 	"Show catalogs" : "Показывать каталоги",
 	"No show catalogs" : "Не показывать каталоги",
+	"Edit" : "Редактировать",
 	"" : ""
 };
 

@@ -339,6 +339,37 @@ Tab.prototype.openAction = function(id) {
 	}
 }
 
+
+Tab.prototype.editAction = function(id) {
+	var item, path, cmd, slot, 
+		pathInfo, runner = '/usr/bin/geany';
+	if (!FS.fileExists(runner)) {
+		runner = '/usr/bin/mousepad';
+	}
+	if (!FS.fileExists(runner)) {
+		runner = '/usr/bin/gedit';
+	}
+	if (!FS.fileExists(runner)) {
+		runner = '/usr/bin/leafpad';
+	}
+	if (!FS.fileExists(runner)) {
+		runner = '/usr/bin/kate';
+	}
+	
+	item = this.getClickedItem(id);
+	path = this.currentPath + '/' + item.name;
+	pathInfo = pathinfo(path)
+	
+	path = str_replace('//', '/', path);
+	cmd = '#!/bin/bash\n' + runner + ' \'' + path + '\'';
+	
+	// cmd = '#!/bin/bash\n' + runner + ' \'' + path + '\'';
+	slot = App.dir() + '/sh/o.sh';
+	FS.writefile(slot, cmd);
+	jexec(slot, DevNull, DevNull, DevNull);
+	
+}
+
 Tab.prototype.onClickOpenWebNewTab = function() {
 	var item, path;
 	item = this.getClickedItem(currentCmTargetId);
@@ -353,6 +384,9 @@ Tab.prototype.onClickOpenWebNewTab = function() {
 
 Tab.prototype.onClickOpen = function() {
 	this.openAction(window.currentCmTargetId);
+}
+Tab.prototype.onClickEdit = function() {
+	this.editAction(window.currentCmTargetId);
 }
 Tab.prototype.onClickOpenNewTab = function() {
 	var n = this.toI(window.currentCmTargetId);

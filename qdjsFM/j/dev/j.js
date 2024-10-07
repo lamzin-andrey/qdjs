@@ -241,8 +241,8 @@ tmpfs            3,0G          68K  3,0G            1% /run/user/1000
 	
 	if (command.indexOf('/ls/') == -1 && command.indexOf('/lsh/') == -1 && (command.indexOf('ls.sh') != -1 || command.indexOf('lsh.sh') != -1) ) {
 		onFinish[1].call(onFinish[0], `итого 1,1G
--rw-rw-r--  1 andrey andrey  90K 2021-11-16 09:05:02.030072406 +0300  0000.png
--rw-rw-r--  1 andrey andrey  70K 2022-06-10 19:05:50.302340682 +0300  0000-ЛАН-10.06-1942.pdf
+-rw-rw-r--  1 andrey andrey  90K 2021-11-16 09:05:02.030072406 +0300  0000.sh
+-rw-rw-r--  1 andrey andrey  70K 2022-06-10 19:05:50.302340682 +0300  0000-ЛАН-10.06-1942.sh
 -rw-rw-r--  1 andrey andrey 727K 2022-06-09 09:04:10.968807374 +0300  000_208336_1650706208_Документы_страхового_полиса.zip
 -rw-rw-r--  1 andrey andrey 235K 2022-07-06 18:19:24.010071179 +0300  000-doubles-Screenshot_2022-07-06-18-03-29-717_ru.rosfines.android.png
 -rw-rw-r--  1 andrey andrey 190K 2022-05-20 10:11:15.833327785 +0300  000.png
@@ -560,6 +560,10 @@ window.FS = {
 	},
 	saveJpeg:function(path, base64Str, iQuality) {
 		Qt.saveJpeg(path, base64Str, iQuality);
+	},
+	mkdir:function(d){
+		console.log("mkdir " + d);
+		PHP.mkdir(d);
 	}
 };
 

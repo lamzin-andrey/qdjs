@@ -41,5 +41,6 @@ window.PHPShadow = {
 		this.file_put_contents(file, data);
 	},
 	getSysId(){return 1;},
-	exec(cmd, onFin, onStdout){console.log(`PHP run ${cmd}`);}
+	exec(cmd, onFin, onStdout){console.log(`PHP run ${cmd}`);},
+	mkdir(s){s}
 };

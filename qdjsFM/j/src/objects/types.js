@@ -49,6 +49,9 @@ window.Types = {
 			r.t = L('Desktop file');
 			r.i = App.dir() + '/i/exec32.png';
 			r.c = 'cmDesktop';
+		} else if (ext == 'sh') {
+			r.t = L('Shell script');
+			r.c = 'cmSh';
 		} else if (ext == 'swf') {
 			r.t = L('Shockwave Flash Application');
 		} else if (ext == 'exe') {

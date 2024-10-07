@@ -57,6 +57,14 @@ ContextMenuContent.prototype.getWebItemMenuHtml = function() {
 					<div class="cf"></div>\
 				</div>\
 				\
+				<div class="contextMenuItem" onclick="app.tab.onClickEdit()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/pencil16.png">\
+					</div>\
+					<div class="contextMenuItemText">' + L("Edit") + '</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
 				<div class="contextMenuItem" onclick="app.tab.onClickSendDesktop()">\
 					<div class="contextMenuItemIcon">\
 						<img src="./i/cm/desktop16.png">\
@@ -456,4 +464,175 @@ ContextMenuContent.prototype.getArjItemMenuHtml = function() {
 		</div>';
 		
 		return html;
+}
+
+ContextMenuContent.prototype.getDefaultItemMenuHtml = function() {
+	var html = '<div id="cmDefault" style="display:none">\
+			<div class="contextMenu">\
+				<div class="contextMenuItem" onclick="app.tab.onClickOpen()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/exec16.png">\
+					</div>\
+					<div class="contextMenuItemText">Открыть</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickSendDesktop()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/desktop16.png">\
+					</div>\
+					<div class="contextMenuItemText">Отправить на рабочий стол ссылку</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickCut()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/cut16.png">\
+					</div>\
+					<div class="contextMenuItemText">Вырезать</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickCopy()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/copy16.png">\
+					</div>\
+					<div class="contextMenuItemText">Копировать</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickPaste()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/pst16.png">\
+					</div>\
+					<div class="contextMenuItemText">Вставить</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickRemove()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/cross16.png">\
+					</div>\
+					<div class="contextMenuItemText">Удалить</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickRename()">\
+					<div class="contextMenuItemIcon">\
+						&nbsp;\
+					</div>\
+					<div class="contextMenuItemText">Переименовать</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickCreateArch()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/arch+16.png">\
+					</div>\
+					<div class="contextMenuItemText">Создать архив</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickProps()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/pencil16.png">\
+					</div>\
+					<div class="contextMenuItemText">Свойства</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+			</div>\
+		</div>';
+	return html;
+}
+
+
+
+ContextMenuContent.prototype.getShItemMenuHtml = function() {
+	var html = '<div id="cmSh" style="display:none">\
+			<div class="contextMenu">\
+				<div class="contextMenuItem" onclick="app.tab.onClickOpen()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/exec16.png">\
+					</div>\
+					<div class="contextMenuItemText">Открыть</div>\
+					<div class="cf"></div>\
+				</div>\
+				<div class="contextMenuItem" onclick="app.tab.onClickEdit()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/pencil16.png">\
+					</div>\
+					<div class="contextMenuItemText">' + L("Edit") + '</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickSendDesktop()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/desktop16.png">\
+					</div>\
+					<div class="contextMenuItemText">Отправить на рабочий стол ссылку</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickCut()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/cut16.png">\
+					</div>\
+					<div class="contextMenuItemText">Вырезать</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickCopy()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/copy16.png">\
+					</div>\
+					<div class="contextMenuItemText">Копировать</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickPaste()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/pst16.png">\
+					</div>\
+					<div class="contextMenuItemText">Вставить</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickRemove()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/cross16.png">\
+					</div>\
+					<div class="contextMenuItemText">Удалить</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickRename()">\
+					<div class="contextMenuItemIcon">\
+						&nbsp;\
+					</div>\
+					<div class="contextMenuItemText">Переименовать</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickCreateArch()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/arch+16.png">\
+					</div>\
+					<div class="contextMenuItemText">Создать архив</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+				<div class="contextMenuItem" onclick="app.tab.onClickProps()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/pencil16.png">\
+					</div>\
+					<div class="contextMenuItemText">Свойства</div>\
+					<div class="cf"></div>\
+				</div>\
+				\
+			</div>\
+		</div>';
+	return html;
 }
