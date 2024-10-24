@@ -1,0 +1,74 @@
+/** 2024-09-12 */
+body {
+	padding: 0;
+	margin: 0;
+}
+
+.xp {
+	background-color: #EFE9D6;
+	color:#000;
+	font-family: arial;
+}
+
+.xp fieldset legend {
+	color: blue;
+	font-family: arial;
+}
+
+div label, div input, div select {
+	display:block;
+	margin-top: 4px;
+}
+div select, div select option {
+	width: 183px;
+	background-color: #FFF;
+	height: 25px;
+}
+
+div input[type=button] {
+	display:inline-block;
+	background-color: #e4ebff;
+	border-radius: 6px;
+	border-color: #e4ebff;
+	height: 32px;
+	padding: 0px 10px;
+	font-weight: 409;
+	cursor: pointer;
+}
+
+div textarea {
+	width: 98%;
+	resize:vertical;
+}
+
+div {
+	padding: 2px 10px;
+	margin-bottom: 5px;
+}
+
+div.buttons {
+	text-align:right;
+	padding: 2px 4px;
+}
+
+
+span label, span input, span select {
+	display:inline-block;
+	margin-top: 4px;
+}
+
+
+span input[type=checkbox] {
+	margin-left:11px;
+	vertical-align: middle;
+}
+
+
+span label span {
+	line-height:25px;
+	vertical-align: sub;
+}
+
+input[type=text].long {
+	width:500px;
+}

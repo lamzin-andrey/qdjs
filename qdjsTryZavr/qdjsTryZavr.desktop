@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=QTryZavrUi
+Comment=
+Exec=/opt/qt-desktop-js/apps/qdjsTryZavr/qdjsTryZavr.sh
+Icon=/opt/qt-desktop-js/apps/qdjsTryZavr/app/i/icons/32.png
+Path=/opt/qt-desktop-js/apps/qdjsTryZavr
+Categories=Games;Game;
+Terminal=false
+StartupNotify=false
+Name[ru]=QTryZavrUi
+Name[en]=QTryZavrUi

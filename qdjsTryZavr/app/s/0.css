@@ -1,0 +1,18 @@
+textarea.outputPanel, .noresize {
+	resize:none!important;
+}
+#hLMComment {
+	font-size: 12px;
+}
+
+.fl {
+	float:left;
+}
+
+.cf {
+	clear: both;
+}
+
+h3 {
+	display: none;
+}

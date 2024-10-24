@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+	    <meta charset="UTF-8">
+	    <title>Stable Diffusion UI - Qdjs</title>
+	    <meta name="windowButtons" content="1010" width="600" height="562"  fixed>
+	    <link rel="stylesheet" type="text/css" href="./s/xplayout/xplayout.css" />
+	    <link rel="stylesheet" type="text/css" href="./s/0.css" />
+	    <link rel="stylesheet" type="text/css" href="./s/colors.css" />
+	    <link rel="stylesheet" type="text/css" href="./s/fonts.css" />
+    </head>
+    <body>
+	<div class="wrk xp">
+		<div class="workArea">
+			<div>
+				<h3>Prompt</h3>
+				<label for="iSample" id="hPrLabel">Prompt for StableDiffusion</label>
+				<textarea id="iSample" rows="4" class="noresize"></textarea>
+			</div>
+			
+			<fieldset>
+				<h3>Языковая модель</h3>
+				<legend id="hLM">Языковая модель</legend>
+				<select id="iLM">
+					<option value="dreamlike-art/dreamlike-diffusion-1.0" data-comm="Была про динозавров, но кажется вообще крутая">Dreamlike</option>
+					<option value="sd-legacy/stable-diffusion-v1-5" data-comm="Использовалась по умолчанию в WebUI">SDLegacy-v1-5</option>
+					<option value="prompthero/openjourney" data-comm="Как миджорни">Openjourney</option>
+					<option value="darkstorm2150/Protogen_v2.2_Official_Release" data-comm="Если нужна модель, заточенная под портреты">Portrait</option>
+					<!--option value="" data-comm=""></option-->
+				</select>
+				<span id="hLMComment"></span>
+			</fieldset>
+			
+			<fieldset>
+				<h3>Профили</h3>
+				<legend d="hProfiles">Профили</legend>
+				<div>
+					<select id="iProfiles">
+						<option value="standartWebUI" data-comm="Стандарт WebUI">Standart</option>
+						<option value="oldPicture" data-comm="Словно картинка из старой книги">Old Picture</option>
+					</select>
+				</div>
+				<div>
+					<span id="hProfileComment"></span>
+				</div>
+				
+				<div class="fl">
+					<label for="iNumInferenceSteps" >Number Inference Steps</label>
+					<input id="iNumInferenceSteps" type="number" for="iNumInferenceSteps" step="1">
+				</div>
+				
+				<div class="fl">
+					<label for="iGuidanceScale">Guidance Scale</label>
+					<input id="iGuidanceScale" type="number" for="iNumInferenceSteps" step="0.01">
+				</div>
+				<div class="cf"></div>
+				
+			</fieldset>
+			
+			<div>
+				<h3>Вывод</h3>
+				<label id="hOutLabel">Output:</label>
+				<textarea id="iOut" rows="4" class="outputPanel xp" readonly></textarea>
+			</div>
+		</div>
+		<div class="cf buttons tr xpfooter">
+			<input type="button" value="Generate" id="bStart">
+		</div>
+	</div>
+	
+    </body>
+    
+     <!-- dev tool -->
+    <script src="./js/dev/j.js"></script>
+    <script src="./js/dev/os.js"></script>
+    <script src="./js/dev/qt.js"></script>
+    <script src="./js/dev/phpi.js"></script>
+    <script src="./js/dev/start.js"></script>
+    
+    <!-- /dev tool -->
+    
+    <!-- shared libs  -->
+    <script type="text/javascript" src="./js/vendor/micron.js" ></script>
+    <script type="text/javascript" src="./js/vendor/php.js" ></script>
+    <script type="text/javascript" src="./js/vendor/screens.js" ></script>
+    <script type="text/javascript" src="./js/vendor/objects/recentdir.js" ></script>
+    <script type="text/javascript" src="./js/vendor/objects/settings.js" ></script>
+    <script type="text/javascript" src="./js/vendor/objects/texttransform.js" ></script>
+    
+    <script type="text/javascript" src="./js/vendor/lang.js" ></script>
+    <!-- /shared libs  -->
+    
+    <!-- app libs  -->
+    <!-- app /libs  -->
+    
+    <script type="text/javascript" src="./js/src/objects/tryzavrui.js" ></script>
+    
+    <!-- locale -->
+    <script type="text/javascript" src="./js/src/lang/local.js" ></script>
+    <script type="text/javascript" src="./js/src/lang/localru.js" ></script>
+    <!-- /locale -->
+
+    
+    <script type="text/javascript" src="./js/src/app.js" ></script>
+</html>

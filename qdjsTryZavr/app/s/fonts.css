@@ -1,0 +1,7 @@
+@font-face {
+  font-family: 'arial';
+  src: url('/opt/qt-desktop-js/lib/web/fonts/arial.ttf') format('truetype');
+}
+.body{
+	font-family: arial;
+}

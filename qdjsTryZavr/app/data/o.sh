@@ -1,0 +1,2 @@
+#!/bin/bash
+time python3 /opt/qt-desktop-js/apps/qdjsTryZavr/app/stable-diffusion/tryZavr.py "Green Sport Car" "dreamlike-art/dreamlike-diffusion-1.0"  12  0.25  > /opt/qt-desktop-js/apps/qdjsTryZavr/app/stable-diffusion/log.log 2>&1 &
