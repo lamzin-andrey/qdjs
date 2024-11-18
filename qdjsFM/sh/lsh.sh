@@ -1,2 +1,2 @@
 #! /bin/bash
-ls -alh --full-time  "/opt/lampp/htdocs/sl.loc/www/flash/swf"
+ls -alh --full-time  "/home/andrey/hdata/hobby/2024/newLife2024/killsbs"
