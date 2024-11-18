@@ -1,0 +1,51 @@
+.tableHeader, .tableHeader td {
+	background-color:#EFEDDE;
+	vertical-align:top;
+	text-align:center;
+	color:#000;
+}
+.tableHeader {
+	min-width: 50px!important;
+}
+
+.vScrollHidden {
+	overflow-y: hidden;
+}
+
+.hScrollHidden{
+	overflow-x: hidden;
+}
+
+.scroll {
+	overflow: scroll;
+}
+
+.tableHeader .vScrollHidden div {
+	border: 1px solid black;
+	text-align:center;
+	height: 18px;
+}
+
+.topBrick {
+	background-color:#EFEDDE;
+	min-width: 50px!important;
+}
+
+td {
+	background-color:#FFF;
+	color:#000;
+	min-width:200px!important;
+}
+.headerRowsInner {
+	border:none!important;
+}
+
+table.au1 td {
+	/*width:50px!important;*/
+}
+
+.editinput {
+	border:none;
+	width:100%;
+	height:100%;
+}

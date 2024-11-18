@@ -1,0 +1,7 @@
+Callbacks:
+
+var grid = new DataGrid();
+// Callback can update value, for example in csv file, or sql table
+grid.onChangeCellData = function(value, rowN, cellN) {
+	
+}

@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=JaQt Mysql Client
+Comment=
+Exec=/home/andrey/hdata/programs/my/qdjs/qdjsClickhouseClient/qdjsClickhouseClient.sh
+Icon=/home/andrey/hdata/programs/my/qdjs/qdjsClickhouseClient/app/i/icons/48.png
+Path=/home/andrey/hdata/programs/my/qdjs/qdjsClickhouseClient
+Categories=Game;
+Terminal=false
+StartupNotify=false
+Name[ru]=JaQt Mysql Client
+Name[en]=JaQt Mysql Client
+Category=Development;

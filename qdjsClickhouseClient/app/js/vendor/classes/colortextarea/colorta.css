@@ -1,0 +1,33 @@
+i {
+	font-style:normal;
+}
+.kw {
+	color: blue;
+	/*font-weight:bold;*/
+}
+.ss, .s {
+	color: green;
+}
+.as {
+	color: #F2068C;
+}
+.c {
+	color: gray;
+}
+
+.r {
+	color: brown;
+}
+
+.sl {
+	color: white!important;
+	background-color: blue!important;
+}
+.ctaBgColor {
+	background-color: white;
+	color:black;
+}
+
+.n {
+	color: #AA0000;
+}

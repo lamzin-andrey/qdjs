@@ -1,0 +1,10 @@
+<?php
+return [
+    'host' => 'localhost',
+    'port' => '8123',
+    'database' => 'dbname',
+    'username' => 'default',
+    'password' => '123456',
+    'auth_method' => 1, // On of HTTP::AUTH_METHODS_LIST
+];
+
