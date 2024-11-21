@@ -1,0 +1,86 @@
+
+
+.props-dlg {
+	background-color: #e8e8e7;
+	font-size: 12px;
+	width: 360px;
+	height: 468px;
+}
+.props-dlg  .tbs .bShared, .props-dlg  .tbs .bPerm{
+	
+	display: block;
+	border: 1px gray solid;
+	border-radius: 4px 4px 0 0;
+	background: linear-gradient(to bottom, #b4bfce, #FFF, #FFF, #b4bfce);
+	padding: 0 4px;
+	float: left;
+	height: 17px;
+	line-height: 17px;
+	cursor: pointer;
+}
+.props-dlg  .tbs .bShared.a, .props-dlg  .tbs .bPerm.a{
+	border: none;
+	border-top: 3px solid #0693e8;
+	height: 18px;
+	background: linear-gradient(to bottom,#FFF, #FFF);
+	cursor: default;
+}
+
+.props-dlg .r {
+	/*! padding-top: 11px; */
+}
+.props-dlg .rLogo {
+	height: 32px;
+	line-height: 32px;
+	padding-top: 11px;
+}
+
+.props-dlg .brd {
+  border-top: #CFCCC4 1px solid;
+  margin-top: 12px;
+}
+
+.props-dlg .tbs {
+	
+	padding-top: 4px;
+	padding-left: 8px;
+}
+
+.props-dlg .btns {
+	text-align:right;
+	margin-right: 9px;
+}
+
+.props-dlg .ic {
+	max-width: 32px;
+	max-height: 32px;
+	vertical-align: bottom;
+	float: left;
+}
+
+.props-dlg .nm {
+	vertical-align: bottom;
+	float: right;
+	width: 280px;
+	margin-top: 4px;
+}
+
+.props-dlg .w {
+	background-color: #FFF;
+	padding: 0 8px;
+	height: 400px;
+	margin: 0 8px 11px 8px;
+}
+
+.props-dlg .w .k, .props-dlg .w .v{
+	float:left;
+}
+
+.props-dlg .w .v{
+	float:right;
+	min-width: 200px;
+}
+
+.props-dlg .w .kv{
+	margin-top: 10px;
+}
