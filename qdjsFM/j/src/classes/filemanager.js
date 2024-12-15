@@ -359,6 +359,13 @@ FileManager.prototype.addContextMenuHtml = function() {
 					<div class="contextMenuItemText">Свойства</div>\
 					<div class="cf"></div>\
 				</div>\
+				<div class="contextMenuItem" onclick="app.tab.onClickResizeImages()">\
+					<div class="contextMenuItemIcon">\
+						<img src="./i/cm/exec16.png">\
+					</div>\
+					<div class="contextMenuItemText">' + L("Resize") + '</div>\
+					<div class="cf"></div>\
+				</div>\
 				\
 			</div>\
 		</div>\

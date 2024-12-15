@@ -370,6 +370,19 @@ Tab.prototype.editAction = function(id) {
 	
 }
 
+
+
+Tab.prototype.onClickResizeImages = function() {
+	var item, path, pathInfo, o = this, cmd;
+	item = o.getClickedItem(currentCmTargetId);
+	path = o.currentPath + '/' + item.name;
+	pathInfo = pathinfo(path);
+	if (FS.fileExists(path) && pathInfo.extension in In("jpeg", "jpg")) {
+		cmd = "php " + App.dir() + "/sh/p/imageresizer/iresizer.php";
+		o.exec(cmd, path, 0, DevNull, DevNull, DevNull);
+	}
+}
+
 Tab.prototype.onClickOpenWebNewTab = function() {
 	var item, path;
 	item = this.getClickedItem(currentCmTargetId);
