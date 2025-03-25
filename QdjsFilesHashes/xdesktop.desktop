@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=CheckFilesSum
+Comment=
+Exec=/opt/qt-desktop-js/apps/QdjsFilesHashes/QdjsFilesHashes.sh
+Icon=/opt/qt-desktop-js/apps/QdjsFilesHashes/app/i/icons/32.png
+Path=/opt/qt-desktop-js/apps/QdjsFilesHashes
+Categories={{category}};
+Terminal=false
+StartupNotify=false
+Name[ru]=Проверка сумм файлов
+Name[en]=CheckFilesSum

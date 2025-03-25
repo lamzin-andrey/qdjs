@@ -1,2 +1,2 @@
 #!/bin/bash
-mv /opt/qt-desktop-js/apps/WeekToDates/xdesktop.desktop /opt/qt-desktop-js/apps/WeekToDates/WeekToDates.desktop
+cp -f "/home/andrey/hdata/programs/my/qdjs/qdjsAppCreator/app/i/exec32.png" /opt/qt-desktop-js/apps/QdjsFilesHashes/app/i/icons/32.png

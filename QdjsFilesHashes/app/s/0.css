@@ -1,0 +1,78 @@
+body {
+    max-height:100%;
+    overflow:hidden;
+}
+html, body {
+    max-height:100%;
+    background-color: #EFE9D6;
+}
+
+
+.w100 {
+    width: 100%;
+}
+
+.fl {
+	float: left;
+}
+
+.cf, .cl {
+	clear: both;
+}
+
+.no-resize {
+	resize:none;
+}
+
+textarea.w100{
+	width: 99%;
+}
+
+.wBorder {
+	border: solid 1px white;
+}
+.btn {
+	cursor:pointer;
+}
+.hide {
+	display:none;
+}
+
+#hMainScreen {
+	overflow-y:scroll;
+	/*height:600px;*/
+}
+
+.bg-wrk {
+	
+}
+.wrk {
+	/*background: url('../i/work/wizard.png');
+	background-repeat: no-repeat;
+	background-position-y: -32px;*/
+}
+
+.xpfooter input[type=button], #hAppIconScreen input[type=button], .wrk input[type=button]{
+	border: none;
+	border-radius: 7px;
+	cursor:pointer;
+	background: linear-gradient(to top, #0063ff, white,white,white,white, white,white, #83adee);
+	box-shadow: 3px 2px 3px 0px #95a4bb;
+}
+
+.xpfooter input[type=button]:active, #hAppIconScreen input[type=button]:active, .wrk input[type=button]:active{
+	background: linear-gradient(to top, #0064ff, white,white,white,white,white, #0064ff);
+}
+
+
+div.tcont {
+	overflow-y:scroll;
+	max-height:600px;
+	height:350px;
+}
+
+
+#hSelectedCatalogName {
+	display: innline-block;
+	margin-left: 10px;
+}

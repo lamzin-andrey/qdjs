@@ -1,3 +1,3 @@
 #! /bin/bash
-cd /home/andrey/hdata/Audio;
-ffmpeg -i 2022-05-20-16-52-27.mp3 -ss 00:00:00 -t 00:03:12 2022-05-20-16-52-27-out.mp3
+cd /home/andrey/hdata/programs/my/qdjs/jaqMp3cut;
+ffmpeg -i 001_DALLAS-63.mp3 -ss 00:01:36 -t 00:08:05 001_DALLAS-63-out.mp3
