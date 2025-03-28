@@ -7,12 +7,10 @@ window.onkeyup = onKeyUp;
 function onLoad() {
 	try {
 		Qt.setWindowIconImage(Qt.appDir() + '/i/icons/32.png');
-		
 		W.AppCheckSum = new CAppCheckSum();
 		AppCheckSum.init();
 		W.jaqedLang = W['lang' + TextTransform.capitalize(Settings.get('lang', 'ru'))];
 		setLocale();
-		// alert('Hello!');
 	} catch (err) {
 		alert(err);
 	}

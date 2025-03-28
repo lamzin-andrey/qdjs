@@ -64,6 +64,10 @@ textarea.w100{
 	background: linear-gradient(to top, #0064ff, white,white,white,white,white, #0064ff);
 }
 
+.xpfooter input[type=button][disabled=disabled]:active, #hAppIconScreen input[type=button][disabled=disabled]:active, .wrk input[type=button][disabled=disabled]:active{
+	background: linear-gradient(to top, #0063ff, white,white,white,white, white,white, #83adee)!important;
+}
+
 
 div.tcont {
 	overflow-y:scroll;
