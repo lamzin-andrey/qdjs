@@ -87,10 +87,12 @@ function appendChild(parent, tag, innerHTML, obj, dataObj) {
 function sz(a) {
 	return a.length;
 }
-function rm(o) {
+function rm(o, a) {
 	o = e(o);
-	if (o && o.parentNode) {
+	if (!a && o && o.parentNode) {
 		o.parentNode.removeChild(o);
+	} else if (a && o && o.parentNode){
+		o.removeAttribute(a);
 	}
 }
 function attr(o, name, val) {
@@ -136,6 +138,16 @@ function In(a) {
 	}
 	return o;
 }
+
+function di(i) {
+	var s = "disabled";
+	i = e(i);
+	attr(i, s, s);
+}
+function ei(i) {
+	rm(i, "disabled");
+}
+
 /**
  * @description Индексирует массив по указанному полю
  * @param {Array} data
@@ -143,7 +155,9 @@ function In(a) {
  * @return {Object};
 */
 function storage(key, data) {
-	var L = window.localStorage;
+	//var L = window.localStorage;
+	
+	var L = window.localStorage || window.LocalStorageShim;
 	if (L) {
 		if (data === null) {
 			L.removeItem(key);
@@ -186,6 +200,13 @@ function imgToDataUri(i) {
 	}
 	return false;
 }
+
+function st(t, f, c) {
+	setTimeout(function(){
+		f.call(c);
+	}, t);
+}
+
 /**
  * @description Сохранить объект имеющий поле id в базе webSql (Chrome) по аналогии со storage
  * @param {String} table
