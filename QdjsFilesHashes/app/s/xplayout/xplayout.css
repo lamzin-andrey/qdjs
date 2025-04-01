@@ -25,7 +25,7 @@ div select, div select option {
 	height: 25px;
 }
 
-div input[type=button] {
+/*div input[type=button] {
 	display:inline-block;
 	background-color: #e4ebff;
 	border-radius: 6px;
@@ -34,7 +34,7 @@ div input[type=button] {
 	padding: 0px 10px;
 	font-weight: 409;
 	cursor: pointer;
-}
+}*/
 
 div textarea {
 	width: 98%;

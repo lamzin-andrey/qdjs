@@ -58,6 +58,9 @@ textarea.w100{
 	cursor:pointer;
 	background: linear-gradient(to top, #0063ff, white,white,white,white, white,white, #83adee);
 	box-shadow: 3px 2px 3px 0px #95a4bb;
+	font-size: 13px;
+	padding: 5px 10px;
+	display:inline-block;
 }
 
 .xpfooter input[type=button]:active, #hAppIconScreen input[type=button]:active, .wrk input[type=button]:active{
