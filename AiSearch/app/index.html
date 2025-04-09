@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="windowButtons" content="1110" width="1000" height="600" >
+    <meta charset="UTF-8">
+	    <title>AI Search</title>
+	    <meta name="windowButtons" content="1110" width="1000" height="600" >
+	    <link rel="stylesheet" type="text/css" href="./s/g.css" />
+	    <link rel="stylesheet" type="text/css" href="./s/0.css" />
+	    <link rel="stylesheet" type="text/css" href="./s/colors.css" />
+	    <link rel="stylesheet" type="text/css" href="./s/fonts.css" />
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .input-field {
+            width: 98%;
+            padding: 10px;
+            margin: 5px;
+        }
+
+        .additional-params {
+            margin-top: 20px;
+        }
+
+        .param-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .param-input {
+            padding: 10px;
+            margin: 5px;
+            flex-grow: 1; /* Fill available space */
+        }
+
+        .param-remove {
+            padding: 5px 10px;
+            margin: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            word-break: break-all; /* Prevent horizontal scroll */
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .directory-link {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .directory-link:hover {
+            color: blue;
+        }
+
+        .truncated {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px; /* Adjust as needed */
+            display: inline-block;
+        }
+
+        /* Tooltip Styles */
+        .truncated {
+            position: relative;
+        }
+
+        .truncated .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%; /* Position above the element */
+            left: 50%;
+            margin-left: -100px; /* Center the tooltip */
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .truncated:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <input type="text" id="filename" class="input-field" placeholder="File Name (Required)">
+    <div class="additional-params">
+        <select id="param-select">
+            <option value="">-- Add Parameter --</option>
+            <option value="content">Content Contains</option>
+            <option value="hidden">Show Hidden Files</option>
+            <option value="date_before">Date Modified Before</option>
+            <option value="date_after">Date Modified After</option>
+            <option value="size_larger">Size Larger Than</option>
+            <option value="size_smaller">Size Smaller Than</option>
+        </select>
+    </div>
+
+    <div id="param-inputs"></div>
+
+    <button onclick="startSearch()">Search</button>
+
+    <p id="search-status"></p>
+
+	<table>
+			<thead>
+			<tr>
+				<th>File Name</th>
+				<th>Directory</th>
+				<th>Size</th>
+				<th>Type</th>
+				<th>Date Modified</th>
+			</tr>
+			</thead>
+		</table>
+	<div class="scrolly" style="max-height:250px">
+		<table id="results-table">
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+    
+</div>
+
+<!-- dev tool -->
+    <script src="./js/dev/j.js"></script>
+    <script src="./js/dev/os.js"></script>
+    <script src="./js/dev/qt.js"></script>
+    <script src="./js/dev/phpi.js"></script>
+    <script src="./js/dev/start.js"></script>
+    
+    <!-- /dev tool -->
+    
+    <!-- shared libs  -->
+    <script type="text/javascript" src="./js/vendor/micron.js" ></script>
+    <script type="text/javascript" src="./js/vendor/php.js" ></script>
+    <script type="text/javascript" src="./js/vendor/screens.js" ></script>
+    <script type="text/javascript" src="./js/vendor/objects/recentdir.js" ></script>
+    <script type="text/javascript" src="./js/vendor/objects/settings.js" ></script>
+    <script type="text/javascript" src="./js/vendor/objects/texttransform.js" ></script>
+    <script type="text/javascript" src="./js/vendor/objects/inputvaluestorage.js" ></script>
+    <script type="text/javascript" src="./js/vendor/lang.js" ></script>
+    <!-- /shared libs  -->
+    
+    <!-- app libs  -->
+    <!-- app /libs  -->
+    
+    <!--script type="text/javascript" src="./js/src/objects/appRecentFolder.js" ></script>
+    <script type="text/javascript" src="./js/src/classes/cstoredcheckbox.js" ></script>
+    <script type="text/javascript" src="./js/src/classes/jsonCheckbox.js" ></script-->
+    
+    <script type="text/javascript" src="./js/src/classes/cscreenwindowbutton.js" ></script>
+    <script type="text/javascript" src="./js/src/classes/cscreenappname.js" ></script>
+    <script type="text/javascript" src="./js/src/classes/cscreenappicon.js" ></script>
+    <script type="text/javascript" src="./js/src/objects/appcreator.js" ></script>
+    
+    <!-- locale -->
+    <script type="text/javascript" src="./js/src/lang/local.js" ></script>
+    <script type="text/javascript" src="./js/src/lang/localru.js" ></script>
+    <!-- /locale -->
+
+    
+    <script type="text/javascript" src="./js/src/app.js" ></script>
+
+<script>
+</script>
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=AiSearch
+Comment=
+Exec=/opt/qt-desktop-js/apps/AiSearch/AiSearch.sh
+Icon=/opt/qt-desktop-js/apps/AiSearch/app/i/icons/32.png
+Path=/opt/qt-desktop-js/apps/AiSearch
+Categories={{category}};
+Terminal=false
+StartupNotify=false
+Name[ru]=AiSearch
+Name[en]=AiSearch
