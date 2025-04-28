@@ -64,5 +64,6 @@ ManageHostDlg.prototype.onClickBHostActivate = function (evt) {
     W.HostsSaver.savePhpConfig(connection.host, connection.port, connection.dbname, connection.dbuser, connection.dbpassword);
     W.HostsSaver.setHostAsActive(id);
     alert(L('Параметры соединения сохранены.'));
+    W.appWindowClose();
 }
 

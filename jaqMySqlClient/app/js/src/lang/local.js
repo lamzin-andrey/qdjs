@@ -8,7 +8,7 @@ var langEn = {
 	'bAddField' : 'Add field',
 	'bGenerate' : 'Generate',
 	'bRemove' : 'Remove',
-	'' : ''
+	'Параметры соединения сохранены.' : 'Parameters saved'
 };
 
 //var jaqedLang = langEn;

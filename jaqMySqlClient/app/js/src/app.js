@@ -9,6 +9,10 @@ function log(s) {
 }
 function onKeyUp(evt) {
 	if (W.modalActive) {
+		if (evt.keyCode == 27) {
+			W.appWindowClose();
+			onActivateSqlField();
+		}
 		return true;
 	}
     if (evt.ctrlKey) {
