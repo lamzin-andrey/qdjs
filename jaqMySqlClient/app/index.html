@@ -18,6 +18,9 @@
 			    <item onselect="onClickOpenSqlFile()" id="menuItemOpenSqlFile">Open</item>
 			    <item onselect="onClickSaveSqlFile()" id="menuItemSaveSqlFile">Save Ctrl+S</item>
 		    </menu>
+		    <menu title="Tools">
+			    <item onselect="onClickCreateInsertFromSelect()" id="menuItemCreateInsertFromSelect">INSERT... SELECT... FROM</item>
+		    </menu>
 	    </menubar>
 	    <link rel="stylesheet" type="text/css" href="./s/g.css" />
 	    <link rel="stylesheet" type="text/css" href="./s/0.css" />
@@ -117,5 +120,6 @@
     
     <!-- app /libs  -->
     
+    <script type="text/javascript" src="./js/src/classes/menutools/insertfromselect.js" ></script>
     <script type="text/javascript" src="./js/src/app.js" ></script>
 </html>

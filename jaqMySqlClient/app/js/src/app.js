@@ -135,6 +135,13 @@ function onLoad() {
     
     var sqlColorTextRules = new ColorRuleSql();
 	window.colorTa = new Qt5ColorTextArea('richTextEditor1', sqlColorTextRules);
+	
+	try {
+		W.Tools = {};
+		W.Tools.insertFromSelect = new InsertFromSelect(W.sqlField);
+	} catch(err) {
+		alert(err);
+	}
     
     /*setTimeout(function(){
 		alert(W.tEdit1.selectionStart);
@@ -209,6 +216,12 @@ function resizeWorkArea(isNoResizeWindowEvent) {
 function onExecuteSql(data) {
 	/*alert(data.status);
 	alert(data.rows[0]['id']);*/
+	
+	if (W.modeInsertFromSelectProcess) {
+		W.Tools.insertFromSelect.process(data);
+		return;
+	}
+	
 	if (data.status == 'ok') {
 		if (parseInt(data.rows)) {
 			//TODO показать мессагу со вставленым id
@@ -216,7 +229,12 @@ function onExecuteSql(data) {
 			setStatusText(L('Идентификатор вставленной записи') + ' ' + parseInt(data.rows));
 			return;
 		}
-		if (parseInt(data.ar)) {
+		if (
+				parseInt(data.ar)
+				&& SqlField.currentSql.toUpperCase().indexOf('SHOW PROCESSLIST') == -1
+				&& SqlField.currentSql.toUpperCase().indexOf('SHOW TABLES') == -1
+				&& SqlField.currentSql.toUpperCase().indexOf('SELECT') == -1
+			) {
 			alert(' Затронуто ' + data.ar + ' строк');
 			setStatusText(L('Затронуто') + ' ' + data.ar + ' ' + L('строк'));
 			return;
@@ -239,6 +257,10 @@ function onExecuteSql(data) {
 
 function onClickSaveSqlFile() {
 	W.sqlField.saveCurrentFile();
+}
+
+function onClickCreateInsertFromSelect(){
+	W.Tools.insertFromSelect.input();
 }
 
 function Null() {

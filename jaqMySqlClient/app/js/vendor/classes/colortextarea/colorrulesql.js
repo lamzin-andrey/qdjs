@@ -40,6 +40,10 @@ ColorRuleSql.prototype.configure = function() {
 		'asc',
 		'by',
 		'delete',
+		'show',
+		'processlist',
+		'kill',
+		'tables',
 		'inner'
 	];
 	this.singleCommentStart = '--'

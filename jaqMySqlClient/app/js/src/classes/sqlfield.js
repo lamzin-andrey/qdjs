@@ -177,6 +177,7 @@ SqlField.prototype.isComment = function(i) {
 }
 
 SqlField.prototype.exec = function(sql) {
+	SqlField.currentSql = sql;
 	PHP.file_put_contents(Qt.appDir() + '/p/command.sql', sql);
 	PHP.exec('php ' + Qt.appDir() + '/p/query.php', 'sqlfield_onFin', 'Null', 'Null');
 }
