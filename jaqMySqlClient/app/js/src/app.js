@@ -35,8 +35,21 @@ function onKeyUp(evt) {
 			case 83:
 				onClickSaveSqlFile();
 			break;
+			
 		}
-    }
+    } else { // End Ctrl
+		switch(evt.keyCode) {
+			case 115: //F4
+				onClosePopup();
+			break;
+			case 117: //F6
+				W.dataGrid.setIsFocused(false);
+				W.modalActive = 0;
+				window.colorTa.modalActive = 0;
+				W.tEdit1.focus();
+			break;
+		}
+	}
 	if (evt.keyCode == 27 && window.mainMenuIsHide) {
 		exitFromFullscreen();
 	}
