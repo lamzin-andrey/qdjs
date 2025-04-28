@@ -1,5 +1,5 @@
 var langRu = {
-	'Need enter table name' : 'Необходимо ввести имя файла',
+	'Need enter table name' : 'Необходимо ввести имя таблицы',
 	'Enter table name' : 'Введите имя таблицы',
 	'hLangE' : 'English',
 	'hLangR' : 'Russian',
