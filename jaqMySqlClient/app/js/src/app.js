@@ -1,8 +1,5 @@
 var debug = false;
 
-
-
-
 function log(s) {
 	if (debug) {
 		//e('log').innerHTML += '<div style="color:blue;">' + s + '</div>';
@@ -43,16 +40,19 @@ function onKeyUp(evt) {
 				onClosePopup();
 			break;
 			case 117: //F6
-				W.dataGrid.setIsFocused(false);
-				W.modalActive = 0;
-				window.colorTa.modalActive = 0;
-				W.tEdit1.focus();
+				onActivateSqlField();
 			break;
 		}
 	}
 	if (evt.keyCode == 27 && window.mainMenuIsHide) {
 		exitFromFullscreen();
 	}
+}
+function onActivateSqlField(){
+	W.dataGrid.setIsFocused(false);
+	W.modalActive = 0;
+	window.colorTa.modalActive = 0;
+	W.tEdit1.focus();
 }
 function onClickAddServer(){
     appWindow('hConfigServerParams', 'Добавить сервер', onClosePopup);
@@ -137,7 +137,7 @@ function onLoad() {
     
     
     W.dataGrid = new SqlDataGrid('hResultArea');
-    appendChild('hResultArea', 'div', '&nbsp', {
+    appendChild('hResultArea', 'div', '&nbsp;', {
 		id: 'hStatusText',
 		'class': 'statusText',
 	});
@@ -148,19 +148,10 @@ function onLoad() {
     
     var sqlColorTextRules = new ColorRuleSql();
 	window.colorTa = new Qt5ColorTextArea('richTextEditor1', sqlColorTextRules);
-	
-	try {
-		W.Tools = {};
-		W.Tools.insertFromSelect = new InsertFromSelect(W.sqlField);
-	} catch(err) {
-		alert(err);
-	}
-    
-    /*setTimeout(function(){
-		alert(W.tEdit1.selectionStart);
-		alert(W.tEdit1.selectionEnd);
-	}, 3*1000
-    );*/
+
+	W.Tools = {};
+	W.Tools.insertFromSelect = new InsertFromSelect(W.sqlField);
+	onActivateSqlField();
 }
 
 function setStatusText(s){
@@ -259,7 +250,7 @@ function onExecuteSql(data) {
 		window.colorTa.skipLineStatus = 0;
 		
 		W.dataGrid.set(data.rows, data.n);
-		
+		onClosePopup();
 		return;
 	}
 	
