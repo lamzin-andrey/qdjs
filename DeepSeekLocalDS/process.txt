@@ -1,0 +1,6 @@
+Должна пинговать порт и выводить статус сервера ollama
+http://localhost:21434/api/generate
+
+export OLLAMA_HOST=127.0.0.1:21434; ollama serve
+
+cat /home/andrey/0.txt|ollama run deepseek-r1:1.5b > /home/andrey/01.rc.html

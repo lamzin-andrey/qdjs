@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="windowButtons" width="800" height="600" content="1110" >
+    <title>DeepSeek Local Client</title>
+    <link rel="stylesheet" type="text/css" href="./s/0.css">
+</head>
+<body>
+    <div id="container">
+        <div id="sidebar">
+            <button class="compose-btn pointer" id="compose-btn">Написать промпт</button>
+            <a href="#" id="inbox-link" class="active pointer">Входящие</a>
+            <a href="#" id="sent-link" class="pointer">Отправленные</a>
+        </div>
+        <div class="sidebarPlace" id="sidebarPlace">&nbsp;</div>
+        <div id="main-content">
+            <div id="inbox-view">
+                <h2 class="stdhead">Входящие</h2>
+                <div class="stdheadph">&nbsp;</div>
+                <ul class="message-list" id="inbox-list"></ul>
+            </div>
+            <div id="sent-view" style="display:none;">
+                <h2 class="stdhead">Отправленные</h2>
+                <div class="stdheadph">&nbsp;</div>
+                <ul class="message-list" id="sent-list"></ul>
+            </div>
+            <div id="message-view" style="display:none;"></div>
+            <div id="compose-form" class="compose-form">
+                <h2>Новый промпт</h2>
+                <div class="form-group">
+                    <label for="subject">Тема:</label>
+                    <input type="text" id="subject">
+                </div>
+                <div class="form-group">
+                    <label for="message">Сообщение:</label>
+                    <textarea id="message"></textarea>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="ask-small-first">
+                    <label for="ask-small-first">Спросить сначала у 1Гб</label>
+                </div>
+                <div class="form-group">
+                    <label for="model-select">Модель:</label>
+                    <select id="model-select">
+                        <option value="deepseek-r1:8b">Модель 5Гб</option>
+                        <option value="deepseek-r1:32b">Модель 20Гб</option>
+                        <option value="deepseek-r1:1.5b">Модель 1Гб</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button class="btn btn-default pointer" id="cancel-btn">Отмена</button>
+                    <button class="btn btn-primary pointer" id="send-btn">Отправить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="status-bar">Проверка состояния сервера Ollama...</div>
+
+	<script src="./js/vendor/micron.js"></script>
+	<script src="./js/vendor/php.js"></script>
+    <script src="./js/deepseek.js"></script>
+    <script src="./js/src/objects/layout.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=DeepSeekUI
+Comment=
+Exec=/opt/qt-desktop-js/apps/DeepSeekLocalDS/DeepSeekLocalDS.sh
+Icon=/opt/qt-desktop-js/apps/DeepSeekLocalDS/app/i/icons/32.png
+Path=/opt/qt-desktop-js/apps/DeepSeekLocalDS
+Categories={{category}};
+Terminal=false
+StartupNotify=false
+Name[ru]=DeepSeekUIDS
+Name[en]=DeepSeekUIDS
