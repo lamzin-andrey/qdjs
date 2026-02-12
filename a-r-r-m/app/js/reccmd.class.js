@@ -28,10 +28,10 @@ RecordCommander.prototype.onTick = function() {
 	var h, m;
 	h = intval(date('H') );
 	m = intval(date('i') );
-	this.karl(h, m, intval(this.startTimeCtrl.targetH), intval(this.stopTimeCtrl.targetH));
+	this.karl(h, m, intval(this.startTimeCtrl.targetH), intval(this.stopTimeCtrl.targetH), intval(this.startTimeCtrl.targetM), intval(this.stopTimeCtrl.targetM));
 }
 
-RecordCommander.prototype.karl = function($h, $m, $startH, $endH) {
+RecordCommander.prototype.karl = function($h, $m, $startH, $endH, startM, endM) {
 	if ($endH == 0) {
 		$endH = 24;
 	}
@@ -39,13 +39,13 @@ RecordCommander.prototype.karl = function($h, $m, $startH, $endH) {
 		$h = 24;
 	}
 	if (!this.isRun) {
-		if ($h == $startH) {
+		if (this.isTimeToPlay($h, $m, $startH, $endH, startM, endM)) {
 			this.isRun = 1;
 			this.exec('audio-recorder -c start &');
 			this._echo("Start recording in " + $h + " " + $m);
 		}
 	} else {
-		if ($h >= $endH) {
+		if (this.isTimeToStop($h, $m, $startH, $endH, startM, endM)) {// TODO func $h >= $endH
 			this.isRun = 0;
 			this.isPause = 0;
 			this._echo("Stop in " + $h + " " + $m);
@@ -76,6 +76,30 @@ RecordCommander.prototype.karl = function($h, $m, $startH, $endH) {
 			return;
 		}
 	}
+}
+
+RecordCommander.prototype.isTimeToPlay = function(currH, currM, startH, endH, startM, endM) {
+	//return currH == startH;
+	//this._echo("currH " + currH + " currM " + currM + " startH " +  startH + 
+	// " endH " + endH + " startM " + startM + " endM " +  endM);
+	return (currH == startH && currM >= startM) && !this.isTimeToStop(currH, currM, startH, endH, startM, endM);
+}
+
+//$h >= $endH
+RecordCommander.prototype.isTimeToStop = function(currH, currM, startH, endH, startM, endM) {
+	//return $h >= $endH;
+	
+	//this._echo(currM + ", eM = " + endM);
+	
+	if (currH > endH) {
+		return true;
+	}
+	
+	if (currH == endH) {
+		return currM >= endM;
+	}
+	
+	return false;
 }
 
 

@@ -4,11 +4,13 @@ var langRu = {
 	'bytesMore19' : 'байт',
 	'Upload' : 'Загрузить',
 	"Share" : "Общие",
+	"bShared" : "Общие",
 	"Permissions" : "Права",
-	"Location" : "Размещение",
-	"Size" : "Размер",
-	"Changed" : "Изменен",
-	"Uploaded" : "Загружен",
+	"bPerm" : "Права",
+	"hLocation" : "Размещение:",
+	"hSizeLbl" : "Размер:",
+	"hChanged" : "Изменен:",
+	"hUploaded" : "Загружен:",
 	"y." : "г.",
 	"Cancel" : "Отмена",
 	"january" : "января",
@@ -23,6 +25,9 @@ var langRu = {
 	"october" : "октября",
 	"november" : "ноября",
 	"december" : "декабря",
+	"Properties" : "Свойства",
+	'bOk' : 'OK',
+	'bCc' : 'Отмена',
 	'' : ''
 };
 

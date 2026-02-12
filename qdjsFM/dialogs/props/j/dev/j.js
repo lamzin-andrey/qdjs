@@ -593,6 +593,9 @@ window.App = {
 	},
 	quit:function(){
 		Qt.quit();
+	},
+	getArgs:function(){
+		return ["", "/home/andrey/emailList.sh"];
 	}
 };
 

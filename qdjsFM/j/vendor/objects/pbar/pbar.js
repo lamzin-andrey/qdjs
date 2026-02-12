@@ -1,3 +1,4 @@
+// demo progress bar javascript
 window.onload=function(){
 	// iPercentDemo.oninput = setVal;
 	// var n = 25;

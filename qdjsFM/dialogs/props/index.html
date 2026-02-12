@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xml:lang="en" lang="en">
 <head>
-    <title>Copy files</title>
+    <title>Properties</title>
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-    <meta name="windowButtons" content="1100" width="320" height="200" fixed onlyTop>
+    <meta name="windowButtons" content="0010" width="360" height="468" fixed onlyTop>
     
     
     <!-- dev tool -->
@@ -26,29 +26,105 @@
     <script src="./j/src/lang/local.js"></script>
     <script src="./j/src/lang/localru.js"></script>
     
+    <script src="./j/src/objects/types.js"></script>
+    
     <!-- FileManagerFilePropsApp -->
     
     <!-- / FileManagerFilePropsApp -->
     
-    
+    <script src="./j/src/classes/propsdlg.js"></script>
     <script src="./j/main.js"></script>
-    
-    
+    <link href="./s/fonts.css" type="text/css" rel="stylesheet"></link>
     <link href="./s/propscontent.css" type="text/css" rel="stylesheet"></link>
-    
-    
 </head>
 <body class="template- text-center">
-	<div id="extractPBar" class="ePb">
-	 <div class="text-center" id="progressStateLabel"></div>
-	 <div style="line-height:28px;">
-		 
-		 <div class="pbarwrap">
-			<div style="width:0%;" id="dompb" class="dompb">&nbsp;</div>
-		 </div>
-		 <span id="hDestSz">2</span> <span id="hFrom">из</span> <span id="hSrcSz">7</span> 
-	 </div>
-</div>
+
+			<div class="props-dlg">
+				<div class="tbs" style="display: none;">
+					<div class="bShared a" id="bShared">Общие</div>
+					<div class="bPerm " id="bPerm">Права</div>
+					<div class="cf"></div>
+				</div>
+			<div class="w">
+				 <div class="tProps" style="display: none;">
+				   <div class="rLogo r">
+					<img src="../../i/mi/tar32.png" class="ic" onerror="fmgr.dlgProp.onErrLoadPreview(window.event)">
+					<input type="text" class="nm" value="terminator.tar.gz">
+					<div class="cf"></div>
+				   </div>
+				   <div class="brd">&nbsp;</div>
+				   <div class="r">
+					 <div class="kv">
+					   <div class="k" id="hLocation">Размещение:</div>
+					   <div class="v">Andrey/public!/AI</div>
+					   <div class="cf"></div>
+					 </div>
+					 <div class="kv">
+					   <div class="k" id="hSizeLbl">Размер:</div>
+					   <div class="v">5,72 Kb (5 857 <span>байт</span>)</div>
+					   <div class="cf"></div>
+					 </div>
+				   </div>
+				   <div class="brd">&nbsp;</div>
+				   <div class="r">
+					 <div class="kv">
+					   <div class="k" id="hChanged">Изменен:</div>
+					   <div class="v">3 февраля 2026 г., 13:01:38</div>
+					   <div class="cf"></div>
+					 </div>
+					 <div class="kv">
+					   <div class="k">Загружен:</div>
+					   <div class="v">3 февраля 2026 г., 13:01:54</div>
+					   <div class="cf"></div>
+					 </div>
+				   </div>
+				 </div><!-- tProps -->
+				 <div class="tPerm d-none" style="display: none;">
+					<div class="tl" id="tPermContainer">
+				<div class="clinkW tc">
+					<a class="clink" href="https://wkard.ru/d/drive/?action=share&amp;i=602" target="_blank">https://wkard.ru/d/drive/?action=share&amp;i=602</a> <span class="ws22px"><input type="image" src="/d/drive/pc/i/copy.png" class="bCopy"><span>
+				</span></span></div>
+				<div class="pcase">
+					<input type="radio" name="filePermissionGr" value="private" class="bFPPrivate" id="bFPPrivate1" checked="">
+					<label for="bFPPrivate1" class="hPrivateCaseLabel">Только для меня</label>
+				</div>
+				<div class="pcase">
+					<input type="radio" name="filePermissionGr" value="public" class="bFPPublic" id="bFPPublic1">
+					<label for="bFPPublic1" class="hPublicCaseLabel">Для всех</label>
+				</div>
+				<div class="pcase">
+					<input type="radio" name="filePermissionGr" value="custom" id="bFPCustom1" class="bFPCustom">
+					<label for="bFPCustom1" class="hCustomCaseLabel">Для пользователей:</label>
+				</div>
+				<div class="customUsersWrapper"></div>
+				<div class="tl">
+					<div class="clinkW">
+						<input type="text" class="srchuser" placeholder="Введите логин пользователя и найдите его">
+					</div>
+					<div class="customUsersSearchWrapper"></div>
+					
+				</div>
+				<div class="pairBtnHWr">
+					<img class="ldrw2" src="/d/drive/pc/i/ld/s.gif"><input type="button" class="bSavePermScr" value="Сохранить">
+				</div>
+			</div>
+				 </div>
+				 <div class="tPrldr">
+					 <img src="../../i/ld/s.gif" class="c fLdr" >
+				 </div>
+				 <div class="tLdr" style="display: none;">
+					<div class="ldrw">
+			<img src="/d/drive/pc/i/ld/s.gif">
+		</div>
+				 </div>
+			 </div><!-- /white -->
+			 <div class="btns">
+			   <input type="button" value="OK" class="bOk">
+			   <input type="button" value="Отмена" class="bCc">
+			 </div>
+	   </div>
+				
+
 </body>
 </html>
 

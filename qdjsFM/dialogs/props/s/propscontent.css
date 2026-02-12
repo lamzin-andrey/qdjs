@@ -1,29 +1,31 @@
-
-
+body {
+	margin:17px 0;
+	padding:0;
+}
 .props-dlg {
 	background-color: #e8e8e7;
+	font-family:Arial;
 	font-size: 12px;
 	width: 360px;
-	height: 468px;
+	height: 430px;
 }
 .props-dlg  .tbs .bShared, .props-dlg  .tbs .bPerm{
-	
 	display: block;
 	border: 1px gray solid;
 	border-radius: 4px 4px 0 0;
-	background: linear-gradient(to bottom, #b4bfce, #FFF, #FFF, #b4bfce);
+	/*! background: linear-gradient(to bottom, #b4bfce, #FFF, #FFF, #b4bfce); */
 	padding: 0 4px;
 	float: left;
 	height: 17px;
 	line-height: 17px;
-	cursor: pointer;
+	cursor:url("../../../i/pointer.png"), auto;
 }
 .props-dlg  .tbs .bShared.a, .props-dlg  .tbs .bPerm.a{
 	border: none;
 	border-top: 3px solid #0693e8;
 	height: 18px;
 	background: linear-gradient(to bottom,#FFF, #FFF);
-	cursor: default;
+	cursor:default;
 }
 
 .props-dlg .r {
@@ -34,6 +36,10 @@
 	line-height: 32px;
 	padding-top: 11px;
 }
+.props-dlg .rLogo input[type="text"]{
+	height: 22px;
+	font-size: 14px;
+}
 
 .props-dlg .brd {
   border-top: #CFCCC4 1px solid;
@@ -41,7 +47,6 @@
 }
 
 .props-dlg .tbs {
-	
 	padding-top: 4px;
 	padding-left: 8px;
 }
@@ -67,8 +72,8 @@
 
 .props-dlg .w {
 	background-color: #FFF;
-	padding: 0 8px;
-	height: 400px;
+	padding: 0 0px;
+	height: 380px;
 	margin: 0 8px 11px 8px;
 }
 
@@ -84,3 +89,27 @@
 .props-dlg .w .kv{
 	margin-top: 10px;
 }
+
+
+.props-dlg input[type="button"] {
+  border: 1px gray solid;
+  background: linear-gradient(to bottom, #b4bfce, #FFF, #FFF, #b4bfce);
+  font-size: 12px;
+  height: 26px;
+  min-width: 36px;
+}
+.fLdr {
+	padding-top: 184px;
+}
+/** utils */
+.cf {
+	clear:both;
+}
+.pointer {
+	cursor:url('../../../i/pointer.png'), auto;
+}
+.c {
+	margin:auto;
+	display: block;
+}
+/** utils */

@@ -17,6 +17,12 @@
             if (!FS.isDir(tasksPath)) {
                 FS.mkdir(tasksPath);
             }
+            // тут инициализация списка
+            try {
+				fillModelDropDown();
+			} catch(err) {
+				alert(err);
+			}
 
             // Проверяем доступность сервера Ollama
             checkOllamaServer();
@@ -27,11 +33,17 @@
             document.getElementById('send-btn').onclick = sendPrompt;
             document.getElementById('inbox-link').onclick = function onClickInbox() {
                 showView('inbox');
+                setTimeout(function(){
+					window.scrollTo(0, 0);
+				}, 100);
                 window.scrollTo(0, 0);
                 return false;
             };
             document.getElementById('sent-link').onclick = function onClickInbox() {
                 showView('sent');
+                setTimeout(function(){
+					window.scrollTo(0, 0);
+				}, 100);
                 window.scrollTo(0, 0);
                 return false;
             };
@@ -199,10 +211,16 @@
             FS.writefile(uFile, sh);
             Env.exec(uFile, function onTaskCreate() {
 				// Формируем команды
-				var cmd = '#!/bin/bash\ncat ' + inFile + ' | ollama run ' + model + ' --verbose --nowordwrap > ' + outFile;
+				var cmd = '#!/bin/bash\n' 
+				  + 'export OLLAMA_MODELS=/usr/share/ollama/.ollama/models\n'
+				  + 'export OLLAMA_HOST=127.0.0.1:21434\n'
+				  + 'cat ' + inFile + ' | ollama run ' + model + ' --verbose --nowordwrap > ' + outFile;
 				FS.writefile(shellFile, cmd);
 				
-				cmd = '#!/bin/bash\ntime ' + shellFile + '  > ' + timeFile + ' 2>&1';
+				cmd = '#!/bin/bash\n' 
+				 + 'export OLLAMA_MODELS=/usr/share/ollama/.ollama/models\n'
+				 + 'export OLLAMA_HOST=127.0.0.1:21434\n'
+				 + 'time ' + shellFile + '  > ' + timeFile + ' 2>&1';
 				FS.writefile(shellFile2, cmd);
 				
 				// Записываем промпт
@@ -314,6 +332,8 @@
             
             var taskDirs = FS.scandir(tasksPath);
             
+            
+            
             for (i = 0; i < taskDirs.length; i++) {
                 var dir = taskDirs[i];
                 if (dir === '.' || dir === '..') continue;
@@ -389,9 +409,8 @@
                 var timeContent = FS.readfile(timeFile);
                 var runFile = taskDir + '/run.sh';
                 var runContent = FS.readfile(runFile);
-                var modelMatch = runContent.match(/ollama run (deepseek-r1:\w+)/);
-                var model = modelMatch ? modelMatch[1] : 'Неизвестная модель';
-                var modelName = getModelName(model);
+                
+                var modelName = zExtractModelTechName(runContent);
                 
                 // Извлекаем think и остальной ответ
                 var thinkStart = outContent.indexOf('<think>');
@@ -451,8 +470,11 @@
             
             // Обновляем список сообщений, чтобы снять жирный шрифт с прочитанного
             loadMessages();
-            
-            window.scrollTo(0, e('message-view').offsetHeight + 1000);
+            if (type == 'inbox') {
+				window.scrollTo(0, e('message-view').offsetHeight + 1000);
+			} else {
+				window.scrollTo(0, 0);
+			}
         }
         
         function getTimeDuration(timeContent){
@@ -482,11 +504,20 @@
 
         // Вспомогательная функция для получения имени модели
         function getModelName(model) {
+			var f;
+			try {
+				f = LLMS[model];
+				return f ? f : model;
+			} catch(err) {
+				alert("Err getModelName()\n" + err);
+			}
+			// TODO remove old code
             switch(model) {
                 case 'deepseek-r1:1.5b': return 'Модель 1Гб';
                 case 'deepseek-r1:1': return 'Модель 1Гб';
                 case 'deepseek-r1:8b': return 'Модель 5Гб';
                 case 'deepseek-r1:32b': return 'Модель 20Гб';
+                case 'gpt-oss:20b': return 'Модель GPT-OSS 14Гб';
                 default: return model;
             }
         }
@@ -521,9 +552,21 @@
 		
 		function zGetModelNameFromRunFile(runFile){
 			var runContent = FS.readfile(runFile);
-			var modelMatch = runContent.match(/ollama run (deepseek-r1:\w+)/);
-			var model = modelMatch ? modelMatch[1] : 'Неизвестная модель';
+			var model = zExtractModelTechName(runContent);
 			return getModelName(model);
+		}
+		
+		function zExtractModelTechName(s) {
+			var a, i;
+			a = String(s).split("ollama run");
+			if (sz(a) > 1) {
+				s = a[1].trim();
+				a = s.split(" ");
+				if (sz(a) > 1) {
+					return a[0].trim();
+				}
+			}
+			return "Неизвестная модель";
 		}
 		
 		function zFileHasCloseCodeBlock(outFile) {
@@ -543,6 +586,17 @@
 			FS.writefile(f, sh);
 			Env.exec(f, DevNull, DevNull, DevNull);
 			showView('inbox');
+		}
+		
+		function fillModelDropDown()
+		{
+			var i, j, k = 0, s = e('model-select');
+			s.options.length = 0;
+			for (i in W.LLMS) {
+				j = new Option(LLMS[i], i);
+				s.options[k] = j;
+				k++;
+			}
 		}
 
         // Запуск приложения после загрузки страницы
