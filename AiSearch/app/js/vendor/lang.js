@@ -53,6 +53,18 @@ function setLocale() {
 				ls[i].value = L(textById);
 			}
 		}
+		
+		if (ls[i].type == 'text') {
+			textById = L(ls[i].id);
+			if (textById) {
+				// ls[i].value = textById;
+				attr(ls[i], "placeholder", textById);
+			} else {
+				textById = parseClassForButtonId(attr(ls[i], 'class'));
+				// ls[i].value = L(textById);
+				attr(ls[i], "placeholder", textById);
+			}
+		}
 	}
 }
 

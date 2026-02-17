@@ -114,7 +114,15 @@
 <body>
 
 <div class="container">
-    <input type="text" id="filename" class="input-field" placeholder="File Name (Required)">
+    <div class="input-group">
+        <label for="directory">Search Directory:</label>
+        <input type="text" id="directory" name="directory" readonly class="input-field">
+        <button id="browse-button" onclick="selectDirectory()">Select Directory</button>
+    </div>
+    <div class="input-group">
+        <label for="filename">File Name:</label>
+        <input type="text" id="filename" class="input-field" placeholder="Enter file name">
+    </div>
     <div class="additional-params">
         <select id="param-select">
             <option value="">-- Add Parameter --</option>
@@ -129,7 +137,7 @@
 
     <div id="param-inputs"></div>
 
-    <button onclick="startSearch()">Search</button>
+    <button onclick="startSearch()" id="search-button" disabled>Search</button>
 
     <p id="search-status"></p>
 
@@ -170,6 +178,7 @@
     <script type="text/javascript" src="./js/vendor/objects/settings.js" ></script>
     <script type="text/javascript" src="./js/vendor/objects/texttransform.js" ></script>
     <script type="text/javascript" src="./js/vendor/objects/inputvaluestorage.js" ></script>
+<script type="text/javascript" src="./js/vendor/objects/localstorageinterface.js" ></script>
     <script type="text/javascript" src="./js/vendor/lang.js" ></script>
     <!-- /shared libs  -->
     

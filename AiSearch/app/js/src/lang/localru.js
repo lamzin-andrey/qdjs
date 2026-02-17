@@ -42,14 +42,19 @@ var langRu = {
 	'Application class name required!' : 'Имя класса приложения обязательно для заполнения!',
 	'Application class name containts unallow symbols!' : 'Имя класса приложения содержит недопустимые символы!',
 	'Done' : 'Готово',
-	'' : '',
+	'Catalog' : 'Каталог',
+	'iCatalog' : 'Каталог',
+	'filename' : 'Введите имя файла или его часть',
+	'Clone Gnome-Search-Tool' : 'Клон Gnome-Search-Tool',
+	'content' : 'Строка в файле',
+	'input-content' : 'Строка в файле',
 	'' : '',
 	'' : '',
 	'bParse' : 'Парсить фрагмент SQL'
 };
 
-/*var jaqedLang = langRu;
-
+var jaqedLang = langRu;
+/*
 
 window.addEventListener('load', function() {
 	e('hCommentSmallText').innerHTML = L('hCommentSmallText');

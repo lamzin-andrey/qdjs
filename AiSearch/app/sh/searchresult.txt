@@ -1,0 +1,17 @@
+jbash.js|/home/andrey/hdata/programs/my/qdjs/jBash/app/js/src|4385|ext4|Thu Feb  8 19:03:22.0205836590 2024
+main.js|/home/andrey/hdata/programs/my/qdjs/jBash/app/sdcard/Android/data/land.learn242.hw/apps/MyFApp/j|94|ext4|Thu Feb  8 19:03:26.2087281800 2024
+app.es6.js|/home/andrey/hdata/programs/my/qdjs/tqdjs/app/js|83|ext4|Wed Sep 14 11:26:29.0000000000 2016
+app.js|/home/andrey/hdata/programs/my/qdjs/tqdjs/app/js|111|ext4|Wed Sep 14 11:39:31.0000000000 2016
+main.js|/home/andrey/hdata/programs/my/qdjs/amarket/offline/64-qt-js-webview-offline-installer--u18.04-qt5.2.1-r01/app/js|1952|ext4|Fri Sep 11 15:15:51.0000000000 2020
+main.js|/home/andrey/hdata/programs/my/qdjs/amarket/offline/64-qt-js-webview-offline-installer--u18.04-qt5.2.1-r00/app/js|1952|ext4|Mon Nov 23 22:49:01.0000000000 2020
+main.js|/home/andrey/hdata/programs/my/qdjs/qdjsSearch/dialogs/mcp/j|625|ext4|Mon Sep  2 14:18:42.2742390000 2024
+main.js|/home/andrey/hdata/programs/my/qdjs/qdjsSearch/dialogs/props/j|625|ext4|Mon Sep  2 14:18:41.2262340000 2024
+main.js|/home/andrey/hdata/programs/my/qdjs/qdjsSearch/j|6215|ext4|Mon Sep  2 14:18:38.7022210000 2024
+main.js|/home/andrey/hdata/programs/my/qdjs/qdjsClassicAppLayoutExample/j|3082|ext4|Fri Jun 24 12:18:28.0000000000 2022
+runtest.js|/home/andrey/hdata/programs/my/qdjs/notepad/app/js/php2jstranslator/test/testarrayslice|250|ext4|Thu May 25 16:51:44.9303532690 2023
+0.js|/home/andrey/hdata/programs/my/qdjs/notepad/app/js/php2jstranslator|548|ext4|Thu May 25 16:51:42.4023002940 2023
+main.js|/home/andrey/hdata/programs/my/qdjs/fastxampp/app/js|238|ext4|Wed Sep 14 10:56:32.0000000000 2016
+main.js|/home/andrey/hdata/programs/my/qdjs/qdjsFM/dialogs/mcp/j|625|ext4|Wed Oct 12 22:34:32.0000000000 2022
+main.js|/home/andrey/hdata/programs/my/qdjs/qdjsFM/j|6069|ext4|Tue Jan 30 12:32:27.4294769300 2024
+main.js|/home/andrey/hdata/programs/my/qdjs/installer/latest-i/qt-webview--video-converter-r06/app/js|2904|ext4|Mon Mar 15 11:12:28.0000000000 2021
+main.js|/home/andrey/hdata/programs/my/qdjs/installer/qt-webview--DTO-code-generator-r03/app/js|3297|ext4|Mon Feb 14 21:57:32.0000000000 2022

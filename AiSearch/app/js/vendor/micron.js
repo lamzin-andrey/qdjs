@@ -143,7 +143,7 @@ function In(a) {
  * @return {Object};
 */
 function storage(key, data) {
-	var L = window.localStorage;
+	var L = window.localStorage || window.LocalStorageShim;
 	if (L) {
 		if (data === null) {
 			L.removeItem(key);
