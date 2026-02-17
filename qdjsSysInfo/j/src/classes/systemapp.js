@@ -55,6 +55,7 @@ SysApp.prototype.parseSystemName = function() {
 		s = s.split('-')[0];
 		if (b.indexOf('Ubuntu') != -1) {
 			r.name = 'Ubuntu';
+			r.img = App.dir() + '/i/u.png';
 			if (FS.fileExists('/etc/xdg/xdg-xubuntu')) {
 				r.name = 'Xubuntu';
 				r.img = App.dir() + '/i/x.png';
@@ -127,7 +128,7 @@ SysApp.prototype.parseCPU = function() {
 	return r;
 }
 
-SysApp.prototype.parseMem = function() {
+SysApp.prototype.parseMem = function(forTrade) {
 	var file = App.dir() + '/sh/mem.txt', s = '', b = '', i, SZ,
 		t, r = '', basic, swap, c;
 	if (FS.fileExists(file)) {
@@ -145,13 +146,24 @@ SysApp.prototype.parseMem = function() {
 			swap = 0;
 		}
 		s = basic + swap;
-		r = s / (1024*1024);
-		b = 'GB';
-		if (r < 1.0) {
-			r *= 1024;
-			b = 'MB';
+		if (!forTrade) {
+			r = s / (1024*1024);
+			b = 'GiB';
+			if (r < 1.0) {
+				r *= 1024;
+				b = 'MiB';
+			}
+			r = Math.round(r) + ' ' + b;
+		} else {
+			r = (s * 1024) / (1000*1000*1000);
+			b = 'GB';
+			if (r < 1.0) {
+				r *= 1004;
+				b = 'MB';
+			}
+			r = Math.ceil(r) + ' ' + b;
 		}
-		r = Math.round(r) + ' ' + b;
+		
 	}
 	
 	return r;
@@ -179,7 +191,8 @@ SysApp.prototype.onSystemData = function() {
 	var systemName = this.parseSystemName(),
 		userData = this.parseUser(),
 		cpu = this.parseCPU(),
-		mem = this.parseMem();
+		mem = this.parseMem(),
+		memTrade = this.parseMem(1);
 	e('hSyslemValue').innerHTML = systemName.name;
 	if (systemName.img) {
 		attr(e('icon'), 'src', systemName.img);
@@ -191,7 +204,7 @@ SysApp.prototype.onSystemData = function() {
 	e('hModel').innerHTML = cpu.model;
 	e('hGz').innerHTML = cpu.hz;
 	
-	e('hRam').innerHTML = mem;
+	e('hRam').innerHTML = mem + '(' + memTrade + ')';
 	
 }
 SysApp.prototype.exec = function(cmd, onFinish, onStd, onErr) {
