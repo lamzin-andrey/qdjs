@@ -1,0 +1,16 @@
+input[type=button] {
+  margin-right: 5px;
+  width: 82px;
+  background: linear-gradient(to bottom,#fcfcfd, #DEE5E8);
+  border: 1px solid #548CAF;
+  border-radius: 3px;
+  font-size: 12px;
+  font-family: Arial;
+  line-height: 20px;
+  height: 28px;
+  color:#000;
+}
+
+input[type=button]:active{
+	background: linear-gradient(to top, #72a0f0, white,white,white,white,white, #72a0f0);
+}
