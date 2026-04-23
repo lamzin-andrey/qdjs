@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+	    <meta charset="UTF-8">
+	    <title>CStyle</title>
+	    <meta name="windowButtons" content="0010" width="480" height="320"  fixed>
+	    <link rel="stylesheet" type="text/css" href="./s/0.css" />
+	    <link rel="stylesheet" type="text/css" href="./s/xplayout/xplayout.css" />
+	    <link rel="stylesheet" type="text/css" href="./s/colors.css" />
+	    <link rel="stylesheet" type="text/css" href="/opt/qt-desktop-js/lib/web/arial.css" />
+    </head>
+    <body class="xp">
+		<div>
+			<fieldset>
+				<legend>Выберите каталог с файлами js</legend>
+				<input type="button" id="Browse" class="fl">
+				<div class="fl small multiline" id="hPath"></div>
+				<div class="cf"></div>
+			</fieldset>
+		</div>
+		<div class="infobox">
+			<img src="./i/icons/32.png" class="fl">
+			<div class="fl infotext">Транслированные файлы будут находиться в каталоге output рядом с выбранным каталогом.</div>
+			<div class="cf"></div>
+		</div>
+		
+		<div class="tc">
+			<input type="button" id="bStart" >
+		</div>
+    </body>
+    
+     <!-- dev tool -->
+    <script src="./js/dev/j.js"></script>
+    <script src="./js/dev/os.js"></script>
+    <script src="./js/dev/qt.js"></script>
+    <script src="./js/dev/phpi.js"></script>
+    <script src="./js/dev/start.js"></script>
+    <!-- /dev tool -->
+    
+    <!-- shared libs  -->
+    <script type="text/javascript" src="./js/vendor/micron.js" ></script>
+    <script type="text/javascript" src="./js/vendor/php.js" ></script>
+    <script type="text/javascript" src="./js/vendor/screens.js" ></script>
+    <script type="text/javascript" src="./js/vendor/objects/recentdir.js" ></script>
+    <script type="text/javascript" src="./js/vendor/objects/settings.js" ></script>
+    <script type="text/javascript" src="./js/vendor/objects/localstorageinterface.js" ></script>
+    <script type="text/javascript" src="./js/vendor/objects/texttransform.js" ></script>
+    <script type="text/javascript" src="./js/vendor/objects/inputvaluestorage.js" ></script>
+    <script type="text/javascript" src="./js/vendor/lang.js" ></script>
+    <!-- /shared libs  -->
+    
+    <!-- app libs  -->
+    <!-- app /libs  -->
+    
+    
+    <script type="text/javascript" src="./js/src/classes/csourcelistcreator.js" ></script>
+    <script type="text/javascript" src="./js/src/classes/cstylecodetranslator.js" ></script>
+    <script type="text/javascript" src="./js/src/classes/cstyletranslator.js" ></script>
+    
+    <!-- locale -->
+    <script type="text/javascript" src="./js/src/lang/local.js" ></script>
+    <script type="text/javascript" src="./js/src/lang/localru.js" ></script>
+    <!-- /locale -->
+
+    
+    <script type="text/javascript" src="./js/src/app.js" ></script>
+</html>

@@ -1,0 +1,88 @@
+body {
+    max-height:100%;
+    overflow:hidden;
+    font-family:arial;
+    padding:0;
+    margin:0;
+}
+
+html, body {
+    max-height:100%;
+}
+
+.w100 {
+    width: 100%;
+}
+
+.fl {
+	float: left;
+}
+
+.cf, .cl {
+	clear: both;
+}
+
+.tc {
+	text-align:center;
+}
+
+.no-resize {
+	resize:none;
+}
+
+textarea.w100{
+	width: 99%;
+}
+
+.pointer, .btn {
+	cursor:url('../i/pointer.png'), auto;
+}
+
+.hide, .h {
+	display:none;
+}
+
+input[type=button] {
+  margin-right: 5px;
+  min-width: 82px;
+  background: linear-gradient(to bottom,#fcfcfd, #DEE5E8);
+  border: 1px solid #548CAF;
+  border-radius: 3px;
+  font-size: 12px;
+  font-family: Arial;
+  line-height: 20px;
+  height: 28px;
+  color:#000;
+  cursor:url('../i/pointer.png'), auto;
+  display:inline-block;
+}
+
+input[type=button]:active{
+	background: linear-gradient(to top, #72a0f0, white,white,white,white,white, #72a0f0);
+}
+.multiline {
+	word-break: break-all;
+	overflow-wrap: break-word;
+}
+/** end std */
+.small {
+	font-size:12px;
+}
+
+.infotext {
+	max-width:380px;
+}
+
+.infobox {
+	border: 2px solid #c5c6c9;
+	margin:10px;
+}
+
+.infobox img {
+	margin-top:10px;
+}
+#hPath {
+  max-width: 320px;
+  max-height: 32px;
+  overflow: hidden;
+}

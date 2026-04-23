@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=CStyle
+Comment=
+Exec=/opt/qt-desktop-js/apps/CStyle/CStyle.sh
+Icon=/opt/qt-desktop-js/apps/CStyle/app/i/icons/32.png
+Path=/opt/qt-desktop-js/apps/CStyle
+Categories={{category}};
+Terminal=false
+StartupNotify=false
+Name[ru]=CStyle
+Name[en]=CStyle
