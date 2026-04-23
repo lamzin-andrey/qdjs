@@ -49,7 +49,7 @@ function setLocale() {
 			if (textById) {
 				ls[i].value = textById;
 			} else {
-				textById = parseClassForButtonId(attr(ls[i], 'class'));
+				textById = parseClassForButtonId(String(attr(ls[i], 'class')));
 				ls[i].value = L(textById);
 			}
 		}

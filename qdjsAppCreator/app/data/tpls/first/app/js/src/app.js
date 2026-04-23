@@ -7,17 +7,11 @@ window.onkeyup = onKeyUp;
 function onLoad() {
 	try {
 		Qt.setWindowIconImage(Qt.appDir() + '/i/icons/32.png');
-		//AppRecentFolder.init();
-		//AutonullCheckbox.init();
-		//JSONCheckbox.init();
-		//InsertCheckbox.init();
-		//ClassNameField.init();
-		
 		W.AppCreator = new CAppCreator();
 		AppCreator.init();
+		
 		W.jaqedLang = W['lang' + TextTransform.capitalize(Settings.get('lang', 'ru'))];
 		setLocale();
-		// alert('Hello!');
 	} catch (err) {
 		alert(err);
 	}
@@ -27,19 +21,15 @@ function onLoad() {
 
 function onKeyUp(evt) {
     if (evt.ctrlKey) {
-	switch(evt.keyCode) {
-	    case 79:	//O
-		// onClickChangeEnv();
-		break;
-	    case 81:	//Q
-		onClickExitMenu();
-		break;
-	}
-	    
+		switch(evt.keyCode) {
+			case 79:	//O
+				// onClickChangeEnv();
+			break;
+			case 81:	//Q
+				onClickExitMenu();
+			break;
+		}
     }
-	if (evt.keyCode == 27 && window.mainMenuIsHide) {
-		exitFromFullscreen();
-	}
 }
 
 function onClickExitMenu() {
@@ -69,7 +59,3 @@ function onClickSelectRu() {
 	PHP.file_put_contents(Qt.appDir() + '/index.html', s);	
 }
 
-function onClickSelectInsertGenerator()
-{	
-    Qt.newWindow(App.dir() + '/tools/insertgen/app', []);
-}
