@@ -326,3 +326,37 @@ function firstKey(o) {
 	
 	return 0;
 }
+
+
+function v(o, s) {
+	var r = s;
+	o = e(o);
+	// if (o.tagName == 'INPUT' || o.tagName == 'TEXTAREA' || o.tagName == 'SELECT') {
+	if (o.tagName in In(['INPUT', 'TEXTAREA', 'SELECT'])) {
+		if (o.type != 'checkbox') {
+			if (S(s) !== 'undefined') {
+				o.value = s;
+			} else {
+				r = o.value;
+			}
+		} else {
+			if (S(s) !== 'undefined') {
+				if (!s) {
+					o.checked = false;
+				} else {
+					o.checked = true;
+				}
+			} else {
+				r = o.checked;
+			}
+		}
+	} else {
+		if (S(s) !== 'undefined') {
+			o.innerHTML = s;
+		} else {
+			r = o.innerHTML;
+		}
+	}
+	
+	return r;
+}

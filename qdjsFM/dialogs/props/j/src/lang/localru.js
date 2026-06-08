@@ -9,6 +9,7 @@ var langRu = {
 	"bPerm" : "Права",
 	"hLocation" : "Размещение:",
 	"hSizeLbl" : "Размер:",
+	"hDimLbl" : "Разрешение:",
 	"hChanged" : "Изменен:",
 	"hUploaded" : "Загружен:",
 	"y." : "г.",
@@ -27,7 +28,10 @@ var langRu = {
 	"december" : "декабря",
 	"Properties" : "Свойства",
 	'bOk' : 'OK',
+	'bCc' : 'байт',
 	'bCc' : 'Отмена',
+	'File with this name already exists' : 'Файл с таким именем уже существует',
+	'hPermHello' : 'Выберите новые атрибуты для файла',
 	'' : ''
 };
 

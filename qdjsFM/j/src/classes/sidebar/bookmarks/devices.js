@@ -269,6 +269,23 @@ Devices.prototype.getUnknownVolume = function(uuid, oFound) {
 	return L('Unknown Vol. (') + this.unknownVolumeCounter + ')';
 }
 
+Devices.prototype.pluralizeBytesSize = function(sz, noRound) {
+	var iv, a = ['Bytes', 'KB', 'MB', 'GB', 'TB'], j = 0;
+	sz = intval(sz);
+	iv = sz;
+	while(iv / 1024 > 1) {
+		sz /= 1024;
+		iv = intval(sz);
+		j++;
+		if (j > 4){
+			sz *= 1024;
+			j = 4;
+			break; 
+		}
+	}
+	sz = round(sz, (noRound ? 2 : 0));
+	return String(sz).replace('.', ',') + " " + L(a[j]);
+}
 
 Devices.prototype.pluralizeSize = function(sz, noRound) {
 	var m = L('Bytes'), buf;
@@ -281,6 +298,10 @@ Devices.prototype.pluralizeSize = function(sz, noRound) {
 	}
 	if (sz.indexOf('K') != -1) {
 		m = L('KB');
+	}
+	
+	if (m == L('Bytes')) {
+		return this.pluralizeBytesSize(sz, noRound);
 	}
 	
 	buf = sz.split(',');
@@ -533,3 +554,13 @@ Devices.prototype.onClickEject = function() {
 	}
 }
 
+
+
+Devices.prototype.toBytes = function(v) {
+	if (v.indexOf('MB') != -1) {
+		v = v.replace(',', '.');
+		v = floatval(v);
+		v = 1024 * 1024 * v;
+	}
+	return v;
+}

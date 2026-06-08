@@ -36,6 +36,29 @@ var TextTransform = {
 		return r;
 	},
 	/**
+	 * @description Splits a long number of three characters. For example argument 1000000 return '1 000 000'
+	*/
+	money:function(s){
+		var o = this, i, a = [], j = 0;
+		s = o.nums(s);
+		for (i = s.length - 1; i > -1 ; i--, j++) {
+			if (j > 0 && (j % 3) ==  0) {
+				a.push(' ');
+			}
+			a.push(s.charAt(i));
+		}
+		s = a.reverse().join('');
+		return s;
+	},
+	/**
+	 * @description Remove all no numbers chars  
+	*/
+	nums:function(s){
+		var o = this;
+		s = String(s).replace(/[\D]/mig, '');
+		return s;
+	},
+	/**
 	 * @description 
 	 * 
 	 * Change word from value of argument n

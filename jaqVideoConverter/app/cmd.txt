@@ -35,3 +35,6 @@ ffmpeg -i 0.mts -c:v libx264 -threads 3 -pix_fmt yuv420p gar-2019-09-14.avi
 
 //--------
 ffmpeg -i dead_or_alive-hit.mp3 -ss 00:00:11 -t 00:04:49 
+
+# wav to mp3
+ffmpeg -i input.wav -codec:a libmp3lame -b:a 320k -q:a 0 -compression_level 2 output.mp3

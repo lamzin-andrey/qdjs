@@ -1,2 +1,2 @@
 #!/bin/bash
-mv /opt/qt-desktop-js/apps/TestApp4/shell.sh /opt/qt-desktop-js/apps/TestApp4/TestApp4.sh
+cp -f "/home/andrey/hdata/programs/my/qdjs/qdjsAppCreator/app/i/exec32.png" /opt/qt-desktop-js/apps/testFlex/app/i/icons/32.png

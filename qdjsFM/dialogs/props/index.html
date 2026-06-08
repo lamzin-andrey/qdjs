@@ -3,7 +3,7 @@
 <head>
     <title>Properties</title>
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-    <meta name="windowButtons" content="0010" width="360" height="468" fixed onlyTop>
+    <meta name="windowButtons" content="0010" width="365" height="488" fixed onlyTop>
     
     
     <!-- dev tool -->
@@ -18,10 +18,13 @@
     <script src="../../j/vendor/micron.js"></script>
     <script src="../../j/vendor/lang.js"></script>
     <script src="../../j/vendor/php.js"></script>
-    <!--script src="../../j/vendor/objects/recentdir.js"></script>
+    <script src="../../j/src/classes/sidebar/bookmarks/abstractlist.js"></script>
+    <script src="../../j/src/classes/sidebar/bookmarks/devices.js"></script>
+    <script src="../../j/src/classes/contentarea/filelist/item.js"></script>
+    <script src="../../j/vendor/objects/recentdir.js"></script>
     <script src="../../j/vendor/objects/texttransform.js"></script>
     <script src="../../j/vendor/objects/settings.js"></script>
-    <script src=".././j/vendor/objects/env/appenv.js"></script-->
+    <!--script src=".././j/vendor/objects/env/appenv.js"></script-->
     
     <script src="./j/src/lang/local.js"></script>
     <script src="./j/src/lang/localru.js"></script>
@@ -38,7 +41,6 @@
     <link href="./s/propscontent.css" type="text/css" rel="stylesheet"></link>
 </head>
 <body class="template- text-center">
-
 			<div class="props-dlg">
 				<div class="tbs" style="display: none;">
 					<div class="bShared a" id="bShared">Общие</div>
@@ -48,7 +50,7 @@
 			<div class="w">
 				 <div class="tProps" style="display: none;">
 				   <div class="rLogo r">
-					<img src="../../i/mi/tar32.png" class="ic" onerror="fmgr.dlgProp.onErrLoadPreview(window.event)">
+					<img id="imLogo" src="../../i/mi/tar32.png" class="ic" onerror="fmgr.dlgProp.onErrLoadPreview(window.event)">
 					<input type="text" class="nm" value="terminator.tar.gz">
 					<div class="cf"></div>
 				   </div>
@@ -56,12 +58,17 @@
 				   <div class="r">
 					 <div class="kv">
 					   <div class="k" id="hLocation">Размещение:</div>
-					   <div class="v">Andrey/public!/AI</div>
+					   <div class="v" id="hLocV">Andrey/public!/AI</div>
 					   <div class="cf"></div>
 					 </div>
 					 <div class="kv">
 					   <div class="k" id="hSizeLbl">Размер:</div>
-					   <div class="v">5,72 Kb (5 857 <span>байт</span>)</div>
+					   <div class="v" id="hSizeV">5,72 Kb (5 857 <span>байт</span>)</div>
+					   <div class="cf"></div>
+					 </div>
+					 <div class="kv h">
+					   <div class="k" id="hDimLbl">Разрешение:</div>
+					   <div class="v" id="hDimeV"></div>
 					   <div class="cf"></div>
 					 </div>
 				   </div>
@@ -69,45 +76,51 @@
 				   <div class="r">
 					 <div class="kv">
 					   <div class="k" id="hChanged">Изменен:</div>
-					   <div class="v">3 февраля 2026 г., 13:01:38</div>
-					   <div class="cf"></div>
-					 </div>
-					 <div class="kv">
-					   <div class="k">Загружен:</div>
-					   <div class="v">3 февраля 2026 г., 13:01:54</div>
+					   <div class="v" id="hChangedV">3 февраля 2026 г., 13:01:38</div>
 					   <div class="cf"></div>
 					 </div>
 				   </div>
 				 </div><!-- tProps -->
 				 <div class="tPerm d-none" style="display: none;">
 					<div class="tl" id="tPermContainer">
-				<div class="clinkW tc">
-					<a class="clink" href="https://wkard.ru/d/drive/?action=share&amp;i=602" target="_blank">https://wkard.ru/d/drive/?action=share&amp;i=602</a> <span class="ws22px"><input type="image" src="/d/drive/pc/i/copy.png" class="bCopy"><span>
-				</span></span></div>
-				<div class="pcase">
-					<input type="radio" name="filePermissionGr" value="private" class="bFPPrivate" id="bFPPrivate1" checked="">
-					<label for="bFPPrivate1" class="hPrivateCaseLabel">Только для меня</label>
-				</div>
-				<div class="pcase">
-					<input type="radio" name="filePermissionGr" value="public" class="bFPPublic" id="bFPPublic1">
-					<label for="bFPPublic1" class="hPublicCaseLabel">Для всех</label>
-				</div>
-				<div class="pcase">
-					<input type="radio" name="filePermissionGr" value="custom" id="bFPCustom1" class="bFPCustom">
-					<label for="bFPCustom1" class="hCustomCaseLabel">Для пользователей:</label>
-				</div>
-				<div class="customUsersWrapper"></div>
-				<div class="tl">
-					<div class="clinkW">
-						<input type="text" class="srchuser" placeholder="Введите логин пользователя и найдите его">
+						<!-- TODO perms-->
+						<div id="hPermHello">Выберите новые атрибуты для файла</div>
+						<fieldset>
+							<legend>Права владельца</legend>
+							<input type="checkbox" id="p1"><label for="por">Чтение</label>
+							<input type="checkbox" id="p2"><label for="pow">Запись</label>
+							<input type="checkbox" id="p3"><label for="pox">Выполнить</label>
+						</fieldset>
+						
+						<fieldset>
+							<legend>Групповые права</legend>
+							<input type="checkbox" id="p4"><label for="gor">Чтение</label>
+							<input type="checkbox" id="p5"><label for="gow">Запись</label>
+							<input type="checkbox" id="p6"><label for="gox">Выполнить</label>
+						</fieldset>
+						
+						<fieldset>
+							<legend>Публичные права</legend>
+							<input type="checkbox" id="p7"><label for="uor">Чтение</label>
+							<input type="checkbox" id="p8"><label for="uow">Запись</label>
+							<input type="checkbox" id="p9"><label for="uox">Выполнить</label>
+						</fieldset>
+						
+						<div>
+							<label>Числовое значение:</label>
+							<input type="number" id="iPerm" maxlength="3" max="777">
+						</div>
+						<div>
+							<label>Символьное значение:</label>
+							<input type="text" id="chmodMask" maxlength="10">
+						</div>
+						
+						<div class="h">
+							<input type="checkbox" id="toIn"><label for="toIn">Перенаправить во вложенные каталоги</label>
+						</div>
+						
+						<!-- /perms -->
 					</div>
-					<div class="customUsersSearchWrapper"></div>
-					
-				</div>
-				<div class="pairBtnHWr">
-					<img class="ldrw2" src="/d/drive/pc/i/ld/s.gif"><input type="button" class="bSavePermScr" value="Сохранить">
-				</div>
-			</div>
 				 </div>
 				 <div class="tPrldr">
 					 <img src="../../i/ld/s.gif" class="c fLdr" >

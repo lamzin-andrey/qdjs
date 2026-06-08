@@ -152,6 +152,11 @@ qdjsVersion
 		return 1;
 	}
 	
+	if (command.indexOf('/p.sh') != -1) {
+		onFinish[1].call(onFinish[0], `-rw-rw-r-- 1 andrey andrey 34016760 2026-02-06 07:00:01.005745109 +0300 /home/andrey/hdata/Audio/2026-02-06-06-35-00.mp3`, '');
+	}
+	
+	
 	if (command.indexOf('ls -l /dev/disk/by-label') != -1) {
 		onFinish[1].call(onFinish[0], `итого 0
 lrwxrwxrwx 1 root root 10 июл  9 08:30 D -> ../../sdb4
@@ -588,14 +593,12 @@ window.App = {
 	dir: function(){
 		return Qt.appDir();
 	},
-	getArgs: function(){
-		return Qt.getArgs();
-	},
 	quit:function(){
 		Qt.quit();
 	},
 	getArgs:function(){
-		return ["", "/home/andrey/emailList.sh"];
+		//return Qt.getArgs();
+		return ["/home/andrey/hdata/Audio/2026-02-06-06-35-00.mp3", "/home/andrey/hdata/Audio/2026-02-06-06-35-00.mp3"];
 	}
 };
 

@@ -1,0 +1,179 @@
+/* --  props-- */
+.props-dlg {
+	background-color: #e8e8e7;
+	font-size: 12px;
+	width: 360px;
+	height: 468px;
+}
+.props-dlg  .tbs .bShared, .props-dlg  .tbs .bPerm{
+	
+	display: block;
+	border: 1px gray solid;
+	border-radius: 4px 4px 0 0;
+	background: linear-gradient(to bottom, #b4bfce, #FFF, #FFF, #b4bfce);
+	padding: 0 4px;
+	float: left;
+	height: 17px;
+	line-height: 17px;
+	cursor: pointer;
+}
+.props-dlg  .tbs .bShared.a, .props-dlg  .tbs .bPerm.a{
+	border: none;
+	border-top: 3px solid #0693e8;
+	height: 18px;
+	background: linear-gradient(to bottom,#FFF, #FFF);
+	cursor: default;
+}
+
+.props-dlg .r {
+	/*! padding-top: 11px; */
+}
+.props-dlg .rLogo {
+	height: 32px;
+	line-height: 32px;
+	padding-top: 11px;
+}
+
+.props-dlg .brd {
+  border-top: #CFCCC4 1px solid;
+  margin-top: 12px;
+}
+
+.props-dlg .tbs {
+	
+	padding-top: 4px;
+	padding-left: 8px;
+}
+
+.props-dlg .btns {
+	text-align:right;
+	margin-right: 9px;
+}
+
+.props-dlg .ic {
+	max-width: 32px;
+	max-height: 32px;
+	vertical-align: bottom;
+	float: left;
+}
+
+.props-dlg .nm {
+	vertical-align: bottom;
+	float: right;
+	width: 280px;
+	margin-top: 4px;
+}
+
+.props-dlg .w {
+	background-color: #FFF;
+	padding: 0 8px;
+	height: 400px;
+	margin: 0 8px 11px 8px;
+}
+
+.props-dlg .w .k, .props-dlg .w .v{
+	float:left;
+}
+
+.props-dlg .w .v{
+	float:right;
+	min-width: 200px;
+}
+
+.props-dlg .w .kv{
+	margin-top: 10px;
+}
+
+.props-dlg .w .tLdr{
+	width:100%;
+	height:100%;
+	display:flex;
+	align-items: center;
+}
+
+.props-dlg .w .tLdr .ldrw{
+	width: 100%;
+	text-align: center;
+}
+
+.props-dlg .w .tPerm .customUsersWrapper, .props-dlg .w .tPerm .customUsersSearchWrapper {
+  max-height: 84px;
+  overflow-y: scroll;
+  border: solid 1px gray;
+  margin-top: 9px;
+}
+
+.props-dlg .w .tPerm .customUsersSearchWrapper {
+	min-height: 84px;
+}
+
+.props-dlg .w .tPerm .userCardSm {
+	border-bottom: gray 1px solid;
+}
+
+.props-dlg .w .tPerm .userCardSmAvatar img {
+	float:left;
+}
+
+.props-dlg .w .tPerm .userCardSmAvatar img {
+	max-height: 24px;
+}
+
+.props-dlg .w .tPerm .rmu{
+	cursor:pointer;
+}
+.props-dlg .w .tPerm .userCardSmNick{
+  line-height: 26px;
+  margin-left: 10px;
+  color: #13122b;
+}
+
+.props-dlg .w .tPerm .userCardSmAvatarAddBtn{
+  float:right;
+  padding-top: 4px;
+  margin-right: 4px;
+}
+
+.props-dlg .w .tPerm .userCardSmAvatarAddBtn img{
+	max-height: 22px;
+	cursor:pointer;
+}
+
+.props-dlg .w .tPerm .pairBtnHWr {
+	text-align: right;
+	margin-top:8px;
+}
+
+.props-dlg .w .tPerm .clinkW {
+	padding-top:6px;
+}
+.props-dlg .w .tPerm .clink {
+  font-size: 14px;
+  vertical-align: top;
+  line-height: 22px;
+}
+.props-dlg .w .tPerm .srchuser {
+	width: 88%;
+}
+.props-dlg .w .tPerm .clink {
+	cursor: pointer;
+}
+
+.ws22px {
+	display:inline-block;
+	width: 22px!important;
+}
+
+.props-dlg input[type=button],.info-dlg input[type=button] {
+	border: 1px gray solid;
+	background: linear-gradient(to bottom, #b4bfce, #FFF, #FFF, #b4bfce);
+	font-size: 12px;
+	height: 26px;
+	min-width: 36px;
+}
+
+.props-dlg input[type=button].ac,.info-dlg input[type=button].ac {
+  border: 1px black solid;
+  border-top: 3px solid black;
+  border-left: 2px solid black;
+}

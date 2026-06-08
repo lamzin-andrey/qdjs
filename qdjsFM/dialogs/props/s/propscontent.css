@@ -1,13 +1,14 @@
 body {
-	margin:17px 0;
+	margin:17px 0px 0px 0px;
 	padding:0;
+	-webkit-user-select:none;
 }
 .props-dlg {
 	background-color: #e8e8e7;
 	font-family:Arial;
 	font-size: 12px;
 	width: 360px;
-	height: 430px;
+	height: 470px;
 }
 .props-dlg  .tbs .bShared, .props-dlg  .tbs .bPerm{
 	display: block;
@@ -61,6 +62,7 @@ body {
 	max-height: 32px;
 	vertical-align: bottom;
 	float: left;
+	margin-left: 10px;
 }
 
 .props-dlg .nm {
@@ -73,7 +75,7 @@ body {
 .props-dlg .w {
 	background-color: #FFF;
 	padding: 0 0px;
-	height: 380px;
+	height: 370px;
 	margin: 0 8px 11px 8px;
 }
 
@@ -87,7 +89,7 @@ body {
 }
 
 .props-dlg .w .kv{
-	margin-top: 10px;
+	margin: 10px 0 0 10px;
 }
 
 
@@ -101,6 +103,19 @@ body {
 .fLdr {
 	padding-top: 184px;
 }
+
+#tPermContainer div, #tPermContainer fieldset {
+	margin: 10px;
+}
+#hPermHello {
+	padding-top: 10px;
+}
+#hLocV {
+	-webkit-user-select:text;
+	overflow-wrap: break-word;
+    width: 200px;
+}
+
 /** utils */
 .cf {
 	clear:both;
@@ -111,5 +126,13 @@ body {
 .c {
 	margin:auto;
 	display: block;
+}
+.h, .hide {
+	display:none;
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 /** utils */
