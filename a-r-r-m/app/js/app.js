@@ -13,6 +13,7 @@ function onWindowLoad() {
 		window.startTimeCtrl = new TimeControl('startTC', 'Старт в:', 'startSets');
 		window.stopTimeCtrl = new TimeControl('stopTC', 'Стоп в:', 'stopSets');
 		window.rc = new RecordCommander(window.startTimeCtrl, window.stopTimeCtrl);
+		setLocale();
 	} catch(e) {
 		document.write(e );
 	}

@@ -1,3 +1,3 @@
 #! /bin/bash
-cd /home/andrey/hdata/programs/my/qdjs/jaqMp3cut;
-ffmpeg -i has_r-n-r.mp3 -ss 00:13:11 -t 00:03:31 has_r-n-r-out.mp3
+cd /home/andrey/hdata/Audio/fond25-26/take-to-the-moon;
+ffmpeg -i 2026-06-10-15-02-00.mp3 -ss 00:05:34 -t 00:04:00 2026-06-10-15-02-00-out.mp3

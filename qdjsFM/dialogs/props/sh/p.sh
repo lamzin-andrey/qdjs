@@ -1,3 +1,2 @@
 #!/bin/bash
-cd "/home/andrey"
-ls -al --full-time "AI_mesh_rossia_think.mp3"
+cp -f "/home/andrey/Загрузки/6eW97HjC.jpeg" /home/andrey/hdata/programs/my/qdjs/qdjsFM/dialogs/props/i/t.jpeg

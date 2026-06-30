@@ -1,5 +1,11 @@
+/**
+ * 
+ * https://l.cu.ru/help
+ * */
+
 window.onload = init;
 function init(){
+	MW.setIconImage(App.dir() + '/img/iconraw.png');
 	window.procId = 0;
 	e('browse').onclick = jmp3cutOnBrowse;
 	e('convert').onclick = jmp3cutOnConvertClick;

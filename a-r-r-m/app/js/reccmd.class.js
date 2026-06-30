@@ -53,12 +53,12 @@ RecordCommander.prototype.karl = function($h, $m, $startH, $endH, startM, endM) 
 			return;
 		}
 		
-		if ($m == 32 && !this.isPause) {//33
+		if ($m == 31 && !this.isPause) {//32
 			this._echo("Pause " + $h + " " + $m);
 			this.isPause = 1;
 			this.exec('audio-recorder -c stop &');
 		}
-		if ($m == 35 && this.isPause) {//37
+		if ($m == 32 && this.isPause) {//35
 			this.isPause = 0;
 			this._echo ("Continue " + $h + " " + $m + "\n");
 			this.exec('audio-recorder -c start &');
