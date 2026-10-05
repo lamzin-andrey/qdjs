@@ -1,2 +1,3 @@
 #!/bin/bash
-cp -f "/home/andrey/Загрузки/6eW97HjC.jpeg" /home/andrey/hdata/programs/my/qdjs/qdjsFM/dialogs/props/i/t.jpeg
+cd "/home/andrey/hdata/hobby/2024-26/Learn24/NewKnowlege/AI/projects/Pandas"
+ls -al --full-time "day"

@@ -12,9 +12,11 @@ function init(){
 }
 function jmp3cutOnConvertClick() {
 	if (W.filePath && PHP.file_exists(W.filePath)) {
-		var cmd = '', dir, name = '', outfile;
-		cmd = '#! /bin/bash\ncd ' + jmp3cutGetDir() + ';\nffmpeg -i ' + jmp3cutGetName() + ' -ss ' + e('start').value + ' -t ' + e('duration').value + ' ' +
-			jmp3cutGetOutfile() + '\n';
+		var cmd = '', dir, name = '', outfile = jmp3cutGetOutfile();
+		cmd = '#! /bin/bash\ncd ' + jmp3cutGetDir() + ';\n'
+		+ 'rm -f ' + outfile + '\n'
+		+ 'ffmpeg -i ' + jmp3cutGetName() + ' -ss ' + e('start').value + ' -t ' + e('duration').value + ' ' +
+			outfile + '\n';
 		name = Qt.appDir() + '/sh.sh';
 		PHP.file_put_contents(name, cmd);
 		
