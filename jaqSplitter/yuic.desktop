@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=MoonPhase
+Exec=/home/andrey/hdata/programs/my/qdjs/jaqSplitter/jaqSplitter.sh
+Icon=edit-cut
+Path=/home/andrey/hdata/programs/my/qdjs/jaqSplitter
+Terminal=false
+StartupNotify=false
+Name[ru]=Text Splitter JAQ
