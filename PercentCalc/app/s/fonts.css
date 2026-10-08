@@ -1,0 +1,7 @@
+@font-face {
+  font-family: 'arial';
+  src: url('./fonts/arial.ttf') format('truetype');
+}
+.body{
+	font-family: arial;
+}

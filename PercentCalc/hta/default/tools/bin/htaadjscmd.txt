@@ -1,0 +1,7 @@
+htaadjscmd.exe this is copy your cmd.exe.
+Qdjs interface for HTA need unique process name, 
+then run other application.
+
+htaadjscmd.exe это просто копия вашего cmd.exe.
+Интерфейс QDJS для HTA нуждается в уникальном имени процесса, 
+когда запускает другие приложнения.

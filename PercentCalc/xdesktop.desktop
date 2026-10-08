@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Калькулятор процентов
+Comment=
+Exec=/opt/qt-desktop-js/apps/PercentCalc/PercentCalc.sh
+Icon=/opt/qt-desktop-js/apps/PercentCalc/app/i/icons/32.png
+Path=/opt/qt-desktop-js/apps/PercentCalc
+Categories=other;
+Terminal=false
+StartupNotify=false
+Name[ru]=Калькулятор процентов
+Name[en]=PCalc
