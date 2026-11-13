@@ -1,0 +1,9 @@
+[Unit]
+Description=shutdown UI tool daemon
+
+[Service]
+Type=oneshot
+ExecStart=/opt/qt-desktop-js/apps/qdjsRubilnik/app/d/landautostopd.sh
+
+[Install]
+WantedBy=multi-user.target

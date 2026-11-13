@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=AutoOff
+Comment=
+Exec=/opt/qt-desktop-js/apps/qdjsAutoStop/qdjsAutoStop.sh
+Icon=/opt/qt-desktop-js/apps/qdjsAutoStop/exit.png
+Path=/opt/qt-desktop-js/apps/qdjsAutoStop
+Categories={{category}};
+Terminal=false
+StartupNotify=false
+Name[ru]=Автоматическое выключение
+Name[en]=AutoOff

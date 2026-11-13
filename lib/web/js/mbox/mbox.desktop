@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=AutoOff
+Comment=
+Exec=/opt/qt-desktop-js/lib/web/js/mbox/mbox.sh
+Icon=/opt/qt-desktop-js/lib/web/js/mbox/app/i/xpinf.png
+Path=/opt/qt-desktop-js/lib/web/js/mbox/
+Categories=Games;
+Terminal=false
+StartupNotify=false
+Name[ru]=Информационный диалог
+Name[en]=Information dialog

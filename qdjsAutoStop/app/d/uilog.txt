@@ -1,0 +1,337 @@
+
+10:25:57
+setCountDownTime: trgDate = 2026-10-23 10:26:00
+=============
+
+10:25:57
+setCountDownTime: set h = 0, set m = 1
+=============
+
+10:25:58
+setCountDownTime: trgDate = 2026-10-23 10:26:00
+=============
+
+10:25:58
+setCountDownTime: set h = 0, set m = 1
+=============
+
+10:25:59
+setCountDownTime: trgDate = 2026-10-23 10:26:00
+=============
+
+10:25:59
+setCountDownTime: set h = 0, set m = 1
+=============
+
+10:26:00
+setCountDownTime: trgDate = 2026-10-23 10:26:00
+=============
+
+10:26:00
+setCountDownTime: set h = 0, set m = 0
+=============
+
+10:26:00
+systemctl poweroff
+=============
+
+10:26:01
+setCountDownTime: trgDate = 2026-10-23 10:26:00
+=============
+
+10:26:01
+setCountDownTime: set h = 0, set m = 0
+=============
+
+10:26:01
+systemctl poweroff
+=============
+
+10:26:02
+setCountDownTime: trgDate = 2026-10-23 10:26:00
+=============
+
+10:26:02
+setCountDownTime: set h = 0, set m = 0
+=============
+
+10:26:02
+systemctl poweroff
+=============
+
+10:26:03
+setCountDownTime: trgDate = 2026-10-23 10:26:00
+=============
+
+10:26:03
+setCountDownTime: set h = 0, set m = 0
+=============
+
+10:26:03
+systemctl poweroff
+=============
+
+10:26:04
+setCountDownTime: trgDate = 2026-10-23 10:26:00
+=============
+
+10:26:04
+setCountDownTime: set h = 0, set m = 0
+=============
+
+10:26:04
+systemctl poweroff
+=============
+
+10:26:05
+setCountDownTime: trgDate = 2026-10-23 10:26:00
+=============
+
+10:26:05
+setCountDownTime: set h = 0, set m = 0
+=============
+
+10:26:05
+systemctl poweroff
+=============
+
+10:26:06
+setCountDownTime: trgDate = 2026-10-23 10:26:00
+=============
+
+10:26:06
+setCountDownTime: set h = 0, set m = 0
+=============
+
+10:26:06
+systemctl poweroff
+=============
+
+10:26:07
+setCountDownTime: trgDate = 2026-10-23 10:26:00
+=============
+
+10:26:07
+setCountDownTime: set h = 0, set m = 0
+=============
+
+10:26:07
+systemctl poweroff
+=============
+
+10:26:08
+setCountDownTime: trgDate = 2026-10-23 10:26:00
+=============
+
+10:26:08
+setCountDownTime: set h = 0, set m = 0
+=============
+
+10:26:08
+systemctl poweroff
+=============
+
+10:26:09
+setCountDownTime: trgDate = 2026-10-23 10:26:00
+=============
+
+10:26:09
+setCountDownTime: set h = 0, set m = 0
+=============
+
+10:26:09
+systemctl poweroff
+=============
+
+10:26:10
+setCountDownTime: trgDate = 2026-10-23 10:26:00
+=============
+
+10:26:10
+setCountDownTime: set h = 0, set m = 0
+=============
+
+10:26:10
+systemctl poweroff
+=============
+
+10:26:11
+setCountDownTime: trgDate = 2026-10-23 10:26:00
+=============
+
+10:26:11
+setCountDownTime: set h = 0, set m = 0
+=============
+
+10:26:11
+systemctl poweroff
+=============
+
+10:26:12
+setCountDownTime: trgDate = 2026-10-23 10:26:00
+=============
+
+10:26:12
+setCountDownTime: set h = 0, set m = 0
+=============
+
+10:26:12
+systemctl poweroff
+=============
+
+10:26:13
+setCountDownTime: trgDate = 2026-10-23 10:26:00
+=============
+
+10:26:13
+setCountDownTime: set h = 0, set m = 0
+=============
+
+10:26:13
+systemctl poweroff
+=============
+
+10:26:14
+setCountDownTime: trgDate = 2026-10-23 10:26:00
+=============
+
+10:26:14
+setCountDownTime: set h = 0, set m = 0
+=============
+
+10:26:14
+systemctl poweroff
+=============
+
+10:26:15
+setCountDownTime: trgDate = 2026-10-23 10:26:00
+=============
+
+10:26:15
+setCountDownTime: set h = 0, set m = 0
+=============
+
+10:26:15
+systemctl poweroff
+=============
+
+10:26:16
+setCountDownTime: trgDate = 2026-10-23 10:26:00
+=============
+
+10:26:16
+setCountDownTime: set h = 0, set m = 0
+=============
+
+10:26:16
+systemctl poweroff
+=============
+
+10:26:17
+setCountDownTime: trgDate = 2026-10-23 10:26:00
+=============
+
+10:26:17
+setCountDownTime: set h = 0, set m = 0
+=============
+
+10:26:17
+systemctl poweroff
+=============
+
+10:26:18
+setCountDownTime: trgDate = 2026-10-23 10:26:00
+=============
+
+10:26:18
+setCountDownTime: set h = 0, set m = 0
+=============
+
+10:26:18
+systemctl poweroff
+=============
+
+10:26:19
+setCountDownTime: trgDate = 2026-10-23 10:26:00
+=============
+
+10:26:19
+setCountDownTime: set h = 0, set m = 0
+=============
+
+10:26:19
+systemctl poweroff
+=============
+
+10:26:20
+setCountDownTime: trgDate = 2026-10-23 10:26:00
+=============
+
+10:26:20
+setCountDownTime: set h = 0, set m = 0
+=============
+
+10:26:20
+systemctl poweroff
+=============
+
+10:26:21
+setCountDownTime: trgDate = 2026-10-23 10:26:00
+=============
+
+10:26:21
+setCountDownTime: set h = 0, set m = 0
+=============
+
+10:26:21
+systemctl poweroff
+=============
+
+10:26:22
+setCountDownTime: trgDate = 2026-10-23 10:26:00
+=============
+
+10:26:22
+setCountDownTime: set h = 0, set m = 0
+=============
+
+10:26:22
+systemctl poweroff
+=============
+
+10:26:23
+setCountDownTime: trgDate = 2026-10-23 10:26:00
+=============
+
+10:26:23
+setCountDownTime: set h = 0, set m = 0
+=============
+
+10:26:23
+systemctl poweroff
+=============
+
+10:26:24
+setCountDownTime: trgDate = 2026-10-23 10:26:00
+=============
+
+10:26:24
+setCountDownTime: set h = 0, set m = 0
+=============
+
+10:26:24
+systemctl poweroff
+=============
+
+10:26:25
+setCountDownTime: trgDate = 2026-10-23 10:26:00
+=============
+
+10:26:25
+setCountDownTime: set h = 0, set m = 0
+=============
+
+10:26:25
+systemctl poweroff
+=============
+

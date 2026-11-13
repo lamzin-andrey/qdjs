@@ -1,0 +1,2 @@
+root:root 0700  /opt/qt-desktop-js/apps/qdjsAutoStop/app/d/landautostopd.sh
+root:root 0700  /opt/qt-desktop-js/apps/qdjsAutoStop/app/d/landautostopd.py

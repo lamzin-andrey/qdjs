@@ -1,0 +1,126 @@
+html, body {
+	margin:0;
+	padding:0;
+	-webkit-user-select: none;
+	background-color: #C6D7FF;
+	font-family:Arial;
+	font-size: 12px;
+}
+
+.wframe{
+	width: 230px; 
+	height:152px; /* with top brd 184*/
+}
+
+#hLabel1 {
+	background-color: #5687FA;
+	color: #FFF;
+	font-size:11px;
+	text-align: center;
+	border: solid 1px white;
+	height: 15px;
+	vertical-align: middle;
+	display: inline-block;
+	width: 229px;
+}
+
+table {
+	width:100%;
+	background-color: #95B5FF;
+}
+
+.mainTable {
+
+	text-align: center;
+	border-top: 1px solid #000;
+	margin-top: 1px;
+	border-bottom: 1px solid #000;
+}
+
+.mainTable .lbl {}
+
+.mainTable .numv {
+	background-color: #E4ECFE;
+	color: #000080;
+	width: 39px;
+	height: 27px;
+	vertical-align: middle;
+	display: inline-block;
+	line-height: 27px;
+	margin-top: 0px;
+	font-size: 22px;
+	font-family: Tahoma;
+	margin-bottom: 4px;
+}
+
+.mainTable .mdl {
+	font-size: 22px;
+	font-family: Tahoma;
+}
+
+.spinners {
+	width:116px;
+	border-right: solid 1px #FFF;
+}
+
+.spinners img {
+	display:inline-block;
+}
+
+.spiinersph {
+	/*! border-right: 1px solid #000; */
+	/*! padding-right: 0px; */
+}
+
+.controlsph {
+	border-left: 1px solid #000;
+	padding-bottom: 7px;
+}
+
+.pbarw {
+	height:15px;
+	border: solid 1px #FFF;
+}
+
+.pbar {
+	border: solid 1px #028901;
+	margin-top: 2px;
+}
+
+#hPbarIn {
+	background-color: #028901;
+	height:10px;
+}
+
+.foot {
+	background-color: #5687FA;
+	color: #FFF;
+	font-weight: bold;
+}
+
+.foot td{
+	cursor:default;
+}
+
+#hAnim {
+	text-align:center;
+	width:94%;
+}
+
+
+#btnStart {
+	background-color: #80FF80;
+	width: 96px;
+	border-top: 1px #fff solid;
+	border-left: 1px #fff solid;
+	border-right: 2px solid #9494a2;
+	border-bottom: 2px solid #9494a2;
+}
+
+#bStart[disabled=disabled] {
+	background-color: #FF8080;
+}
+
+.mt-3 {
+	margin-top:10px;
+}

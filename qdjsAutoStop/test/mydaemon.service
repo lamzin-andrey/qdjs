@@ -1,0 +1,9 @@
+[Unit]
+Description=Run test date daemon
+
+[Service]
+Type=oneshot
+ExecStart=/opt/qt-desktop-js/apps/qdjsAutoStop/test/mydaemon.sh
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,51 @@
+body, html {
+	margin:0;
+	padding:0;
+	background-color:#ECE9D8;
+	color:#000;
+	font-family:Arial;
+	font-size:11px;
+}
+table {
+	width:100%;
+}
+
+.icn{
+	vertical-align:top;
+	width:54px;
+}
+
+.icn img{
+	margin-top:10px;
+	margin-left:10px;
+}
+
+.msg {
+	padding-top:8px;
+}
+
+.msg p{
+	margin:3px 0;
+}
+
+input[type=button] {
+  margin-right: 5px;
+  width: 82px;
+  background: linear-gradient(to bottom,#fcfcfd, #DEE5E8);
+  border: 1px solid #548CAF;
+  border-radius: 3px;
+  font-size: 12px;
+  font-family: Arial;
+  line-height: 20px;
+  height: 28px;
+  color:#000;
+}
+
+input[type=button]:active{
+	background: linear-gradient(to top, #72a0f0, white,white,white,white,white, #72a0f0);
+}
+
+
+.bplace {
+	text-align:center;
+}

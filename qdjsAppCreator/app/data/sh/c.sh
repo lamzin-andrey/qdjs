@@ -1,2 +1,2 @@
 #!/bin/bash
-cp -f "/home/andrey/hdata/programs/my/qdjs/qdjsAppCreator/app/i/exec32.png" /opt/qt-desktop-js/apps/regetapp/app/i/icons/32.png
+mv /opt/qt-desktop-js/apps/qdjsAutoStop/xdesktop.desktop /opt/qt-desktop-js/apps/qdjsAutoStop/qdjsAutoStop.desktop

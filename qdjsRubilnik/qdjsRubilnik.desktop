@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=AutoOff
+Comment=
+Exec=/opt/qt-desktop-js/apps/qdjsRubilnik/qdjsRubilnik.sh
+Icon=/opt/qt-desktop-js/apps/qdjsRubilnik/app/i/icons/48.png
+Path=/opt/qt-desktop-js/apps/qdjsRubilnik
+Categories=Utility;
+Terminal=false
+StartupNotify=false
+Name[ru]=Автоматическое выключение
+Name[en]=Auto Off
