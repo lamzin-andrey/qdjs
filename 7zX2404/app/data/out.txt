@@ -1,0 +1,23 @@
+
+7-Zip 23.01 (x64) : Copyright (c) 1999-2023 Igor Pavlov : 2023-06-20
+ 64-bit locale=ru_RU.UTF-8 Threads:32 OPEN_MAX:1024
+
+Scanning the drive for archives:
+1 file, 28940249 bytes (28 MiB)
+
+Extracting archive: /home/andrey/tmp/00/backup-2025-07-15-r2.7z
+--
+Path = /home/andrey/tmp/00/backup-2025-07-15-r2.7z
+Type = 7z
+Physical Size = 28940249
+Headers Size = 329
+Method = LZMA2:25 7zAES
+Solid = +
+Blocks = 1
+
+Everything is Ok
+
+Folders: 1
+Files: 4
+Size:       29320649
+Compressed: 28940249

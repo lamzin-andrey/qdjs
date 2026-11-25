@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=UI for extract encrypted archives
+Comment=
+Exec=/opt/qt-desktop-js/apps/7zX2404/7zX2404.sh
+Icon=/opt/qt-desktop-js/apps/7zX2404/app/i/icons/32.png
+Path=/opt/qt-desktop-js/apps/7zX2404
+Categories={{category}};
+Terminal=false
+StartupNotify=false
+Name[ru]=UI для распаковки зашифрованных архивов
+Name[en]=UI for extract encrypted archives

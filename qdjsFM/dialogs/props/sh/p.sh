@@ -1,3 +1,3 @@
 #!/bin/bash
 cd "/home/andrey"
-ls -al --full-time "0.log"
+ls -al --full-time "0.webp"
